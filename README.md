@@ -1,1 +1,11 @@
-# repo-template
+
+  # C-Financia Design Sistem DSM v1.0
+
+  This is a code bundle for C-Financia Design Sistem DSM v1.0. The original project is available at https://www.figma.com/design/hnu6vhQy4beUoXQsb6OHgr/C-Financia-Design-Sistem-DSM-v1.0.
+
+  ## Running the code
+
+  Run `npm i` to install the dependencies.
+
+  Run `npm run dev` to start the development server.
+  
