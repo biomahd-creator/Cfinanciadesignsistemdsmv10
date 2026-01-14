@@ -20,7 +20,7 @@ export function FeedbackSection() {
       <div>
         <h2 className="text-3xl font-semibold mb-2">Feedback</h2>
         <p className="text-sm text-muted-foreground">
-          Components for displaying messages, alerts and dialogs
+          Componentes para mostrar mensajes, alertas y diálogos
         </p>
       </div>
 
@@ -223,7 +223,7 @@ export function FeedbackSection() {
 
       {/* COMPOSED PATTERNS */}
       <div className="mt-12">
-        <h3 className="text-2xl font-semibold mb-6">Composed Patterns</h3>
+        <h3 className="text-2xl font-semibold mb-6">Patrones Compuestos</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Empty State Pattern */}

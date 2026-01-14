@@ -48,88 +48,88 @@ export function QuickActionToolbar() {
       {/* Main Menubar */}
       <Menubar>
         <MenubarMenu>
-          <MenubarTrigger>File</MenubarTrigger>
+          <MenubarTrigger>Archivo</MenubarTrigger>
           <MenubarContent>
             <MenubarItem>
-              New Invoice <MenubarShortcut>⌘N</MenubarShortcut>
+              Nueva Factura <MenubarShortcut>⌘N</MenubarShortcut>
             </MenubarItem>
             <MenubarItem>
-              Open <MenubarShortcut>⌘O</MenubarShortcut>
+              Abrir <MenubarShortcut>⌘O</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
             <MenubarItem>
-              Import <MenubarShortcut>⌘I</MenubarShortcut>
+              Importar <MenubarShortcut>⌘I</MenubarShortcut>
             </MenubarItem>
             <MenubarItem>
-              Export <MenubarShortcut>⌘E</MenubarShortcut>
+              Exportar <MenubarShortcut>⌘E</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
             <MenubarItem>
-              Save <MenubarShortcut>⌘S</MenubarShortcut>
+              Guardar <MenubarShortcut>⌘S</MenubarShortcut>
             </MenubarItem>
-            <MenubarItem>Save as...</MenubarItem>
+            <MenubarItem>Guardar como...</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
 
         <MenubarMenu>
-          <MenubarTrigger>Edit</MenubarTrigger>
+          <MenubarTrigger>Editar</MenubarTrigger>
           <MenubarContent>
             <MenubarItem>
-              Undo <MenubarShortcut>⌘Z</MenubarShortcut>
+              Deshacer <MenubarShortcut>⌘Z</MenubarShortcut>
             </MenubarItem>
             <MenubarItem>
-              Redo <MenubarShortcut>⇧⌘Z</MenubarShortcut>
+              Rehacer <MenubarShortcut>⇧⌘Z</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
             <MenubarItem>
-              Cut <MenubarShortcut>⌘X</MenubarShortcut>
+              Cortar <MenubarShortcut>⌘X</MenubarShortcut>
             </MenubarItem>
             <MenubarItem>
-              Copy <MenubarShortcut>⌘C</MenubarShortcut>
+              Copiar <MenubarShortcut>⌘C</MenubarShortcut>
             </MenubarItem>
             <MenubarItem>
-              Paste <MenubarShortcut>⌘V</MenubarShortcut>
+              Pegar <MenubarShortcut>⌘V</MenubarShortcut>
             </MenubarItem>
           </MenubarContent>
         </MenubarMenu>
 
         <MenubarMenu>
-          <MenubarTrigger>Operations</MenubarTrigger>
+          <MenubarTrigger>Operaciones</MenubarTrigger>
           <MenubarContent>
-            <MenubarItem>Approve Selected</MenubarItem>
-            <MenubarItem>Reject Selected</MenubarItem>
+            <MenubarItem>Aprobar Seleccionadas</MenubarItem>
+            <MenubarItem>Rechazar Seleccionadas</MenubarItem>
             <MenubarSeparator />
-            <MenubarItem>Assign Analyst</MenubarItem>
-            <MenubarItem>Change Status</MenubarItem>
+            <MenubarItem>Asignar Analista</MenubarItem>
+            <MenubarItem>Cambiar Estado</MenubarItem>
             <MenubarSeparator />
-            <MenubarItem>Send Notification</MenubarItem>
+            <MenubarItem>Enviar Notificación</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
 
         <MenubarMenu>
-          <MenubarTrigger>Reports</MenubarTrigger>
+          <MenubarTrigger>Reportes</MenubarTrigger>
           <MenubarContent>
-            <MenubarItem>Executive Dashboard</MenubarItem>
-            <MenubarItem>Portfolio Analysis</MenubarItem>
+            <MenubarItem>Dashboard Ejecutivo</MenubarItem>
+            <MenubarItem>Análisis de Cartera</MenubarItem>
             <MenubarSeparator />
-            <MenubarItem>Approval Report</MenubarItem>
-            <MenubarItem>Collection Report</MenubarItem>
+            <MenubarItem>Reporte de Aprobaciones</MenubarItem>
+            <MenubarItem>Reporte de Cobranza</MenubarItem>
             <MenubarSeparator />
-            <MenubarItem>Export to Excel</MenubarItem>
-            <MenubarItem>Export to PDF</MenubarItem>
+            <MenubarItem>Exportar a Excel</MenubarItem>
+            <MenubarItem>Exportar a PDF</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
 
         <MenubarMenu>
-          <MenubarTrigger>Help</MenubarTrigger>
+          <MenubarTrigger>Ayuda</MenubarTrigger>
           <MenubarContent>
-            <MenubarItem>Documentation</MenubarItem>
+            <MenubarItem>Documentación</MenubarItem>
             <MenubarItem>Tutorial</MenubarItem>
             <MenubarSeparator />
-            <MenubarItem>Support</MenubarItem>
-            <MenubarItem>Report a Problem</MenubarItem>
+            <MenubarItem>Soporte</MenubarItem>
+            <MenubarItem>Reportar un problema</MenubarItem>
             <MenubarSeparator />
-            <MenubarItem>About</MenubarItem>
+            <MenubarItem>Acerca de</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
@@ -145,7 +145,7 @@ export function QuickActionToolbar() {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>New Invoice (⌘N)</p>
+              <p>Nueva Factura (⌘N)</p>
             </TooltipContent>
           </Tooltip>
 
@@ -156,7 +156,7 @@ export function QuickActionToolbar() {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Import (⌘I)</p>
+              <p>Importar (⌘I)</p>
             </TooltipContent>
           </Tooltip>
 
@@ -167,7 +167,7 @@ export function QuickActionToolbar() {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Export (⌘E)</p>
+              <p>Exportar (⌘E)</p>
             </TooltipContent>
           </Tooltip>
 
@@ -184,7 +184,7 @@ export function QuickActionToolbar() {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Quick Search (⌘K)</p>
+              <p>Búsqueda Rápida (⌘K)</p>
             </TooltipContent>
           </Tooltip>
 
@@ -195,7 +195,7 @@ export function QuickActionToolbar() {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Filters</p>
+              <p>Filtros</p>
             </TooltipContent>
           </Tooltip>
 
@@ -206,7 +206,7 @@ export function QuickActionToolbar() {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Refresh (F5)</p>
+              <p>Actualizar (F5)</p>
             </TooltipContent>
           </Tooltip>
 
@@ -230,7 +230,7 @@ export function QuickActionToolbar() {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Clients</p>
+              <p>Clientes</p>
             </TooltipContent>
           </Tooltip>
 
@@ -241,7 +241,7 @@ export function QuickActionToolbar() {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Invoices</p>
+              <p>Facturas</p>
             </TooltipContent>
           </Tooltip>
 
@@ -254,7 +254,7 @@ export function QuickActionToolbar() {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Notifications</p>
+              <p>Notificaciones</p>
             </TooltipContent>
           </Tooltip>
 
@@ -265,7 +265,7 @@ export function QuickActionToolbar() {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Help (F1)</p>
+              <p>Ayuda (F1)</p>
             </TooltipContent>
           </Tooltip>
 
@@ -276,7 +276,7 @@ export function QuickActionToolbar() {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Settings</p>
+              <p>Configuración</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -284,47 +284,47 @@ export function QuickActionToolbar() {
 
       {/* Command Dialog for Quick Search */}
       <CommandDialog open={commandOpen} onOpenChange={setCommandOpen}>
-        <CommandInput placeholder="Search actions, invoices, clients..." />
+        <CommandInput placeholder="Buscar acciones, facturas, clientes..." />
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Quick Actions">
+          <CommandEmpty>No se encontraron resultados.</CommandEmpty>
+          <CommandGroup heading="Acciones Rápidas">
             <CommandItem>
               <Plus className="mr-2 h-4 w-4" />
-              <span>New Invoice</span>
+              <span>Nueva Factura</span>
             </CommandItem>
             <CommandItem>
               <Upload className="mr-2 h-4 w-4" />
-              <span>Import Documents</span>
+              <span>Importar Documentos</span>
             </CommandItem>
             <CommandItem>
               <Download className="mr-2 h-4 w-4" />
-              <span>Export Report</span>
+              <span>Exportar Reporte</span>
             </CommandItem>
           </CommandGroup>
           <CommandSeparator />
-          <CommandGroup heading="Navigation">
+          <CommandGroup heading="Navegación">
             <CommandItem>
               <BarChart3 className="mr-2 h-4 w-4" />
               <span>Dashboard</span>
             </CommandItem>
             <CommandItem>
               <FileText className="mr-2 h-4 w-4" />
-              <span>Invoice Management</span>
+              <span>Gestión de Facturas</span>
             </CommandItem>
             <CommandItem>
               <Users className="mr-2 h-4 w-4" />
-              <span>Client Management</span>
+              <span>Gestión de Clientes</span>
             </CommandItem>
           </CommandGroup>
           <CommandSeparator />
-          <CommandGroup heading="Settings">
+          <CommandGroup heading="Configuración">
             <CommandItem>
               <Settings className="mr-2 h-4 w-4" />
-              <span>Preferences</span>
+              <span>Preferencias</span>
             </CommandItem>
             <CommandItem>
               <HelpCircle className="mr-2 h-4 w-4" />
-              <span>Help Center</span>
+              <span>Centro de Ayuda</span>
             </CommandItem>
           </CommandGroup>
         </CommandList>

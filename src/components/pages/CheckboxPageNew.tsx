@@ -44,7 +44,7 @@ export function CheckboxDemo() {
 }`}
       
       // Usage
-      usage="Import the Checkbox component from @/components/ui/checkbox. Use it with Label for better accessibility. The checkbox can be controlled or uncontrolled."
+      usage="Importa el componente Checkbox desde @/components/ui/checkbox. Úsalo con Label para mejor accesibilidad. El checkbox puede ser controlado o no controlado."
       usageCode={`import { Checkbox } from "@/components/ui/checkbox";
 
 function MyForm() {
@@ -61,44 +61,44 @@ function MyForm() {
         {
           name: "checked",
           type: "boolean | 'indeterminate'",
-          description: "Controlled state of the checkbox (checked/unchecked/indeterminate)",
+          description: "Estado controlado del checkbox (checked/unchecked/indeterminate)",
         },
         {
           name: "defaultChecked",
           type: "boolean",
-          description: "Initial state of the checkbox (uncontrolled component)",
+          description: "Estado inicial del checkbox (componente no controlado)",
         },
         {
           name: "onCheckedChange",
           type: "(checked: boolean | 'indeterminate') => void",
-          description: "Callback executed when state changes",
+          description: "Callback que se ejecuta cuando cambia el estado",
         },
         {
           name: "disabled",
           type: "boolean",
           default: "false",
-          description: "Disables the checkbox and prevents interaction",
+          description: "Deshabilita el checkbox y previene interacción",
         },
         {
           name: "required",
           type: "boolean",
           default: "false",
-          description: "Marks the checkbox as required in forms",
+          description: "Marca el checkbox como requerido en formularios",
         },
         {
           name: "name",
           type: "string",
-          description: "Name of the field for HTML forms",
+          description: "Nombre del campo para formularios HTML",
         },
         {
           name: "value",
           type: "string",
-          description: "Value of the checkbox when checked (for forms)",
+          description: "Valor del checkbox cuando está checked (para formularios)",
         },
         {
           name: "id",
           type: "string",
-          description: "ID of the checkbox (useful for associating with Label)",
+          description: "ID del checkbox (útil para asociar con Label)",
         },
       ]}
       
@@ -106,7 +106,7 @@ function MyForm() {
       examples={[
         {
           title: "With Label",
-          description: "Checkbox with associated label for better accessibility",
+          description: "Checkbox con label asociado para mejor accesibilidad",
           preview: (
             <div className="flex items-center space-x-2">
               <Checkbox id="terms2" />
@@ -124,7 +124,7 @@ function MyForm() {
         },
         {
           title: "Multiple Checkboxes",
-          description: "Group of related checkboxes",
+          description: "Grupo de checkboxes relacionados",
           preview: (
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
@@ -162,7 +162,7 @@ function MyForm() {
         },
         {
           title: "Disabled State",
-          description: "Checkboxes in disabled state",
+          description: "Checkboxes en estado deshabilitado",
           preview: (
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
@@ -192,7 +192,7 @@ function MyForm() {
         },
         {
           title: "With Description",
-          description: "Checkbox with label and descriptive text",
+          description: "Checkbox con label y texto descriptivo",
           preview: (
             <div className="space-y-4">
               <div className="flex items-start space-x-2">
@@ -233,7 +233,7 @@ function MyForm() {
         },
         {
           title: "In a Form",
-          description: "Checkboxes integrated into a complete form",
+          description: "Checkboxes integrados en un formulario completo",
           preview: (
             <form className="space-y-4 max-w-md" onSubmit={(e) => e.preventDefault()}>
               <div className="space-y-3">
@@ -281,7 +281,7 @@ function MyForm() {
         },
         {
           title: "Controlled Checkbox",
-          description: "Checkbox as a controlled component with state",
+          description: "Checkbox como componente controlado con estado",
           preview: (
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
@@ -320,7 +320,7 @@ function ControlledCheckbox() {
         },
         {
           title: "Checkbox List",
-          description: "List of options with checkboxes (multi-select)",
+          description: "Lista de opciones con checkboxes (multi-select)",
           preview: (
             <div className="space-y-2">
               <Label>Select your interests</Label>
@@ -368,7 +368,7 @@ function ControlledCheckbox() {
         },
         {
           title: "Inline Checkboxes",
-          description: "Horizontally aligned checkboxes",
+          description: "Checkboxes alineados horizontalmente",
           preview: (
             <div className="space-y-3">
               <Label>Size</Label>

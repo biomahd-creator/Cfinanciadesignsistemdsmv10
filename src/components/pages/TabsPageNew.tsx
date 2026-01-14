@@ -18,13 +18,13 @@ export function TabsPageNew() {
       preview={
         <Tabs defaultValue="account" className="w-full max-w-lg">
           <TabsList>
-            <TabsTrigger value="account">Account</TabsTrigger>
-            <TabsTrigger value="password">Password</TabsTrigger>
-            <TabsTrigger value="notifications">Notifications</TabsTrigger>
+            <TabsTrigger value="account" className="font-normal">Account</TabsTrigger>
+            <TabsTrigger value="password" className="font-normal">Password</TabsTrigger>
+            <TabsTrigger value="notifications" className="font-normal">Notifications</TabsTrigger>
           </TabsList>
           <TabsContent value="account" className="space-y-4 pt-4">
             <div className="space-y-2">
-              <h4 className="font-medium">Account Settings</h4>
+              <h4 className="font-normal">Account Settings</h4>
               <p className="text-sm text-muted-foreground">
                 Manage your account settings and preferences here.
               </p>
@@ -32,7 +32,7 @@ export function TabsPageNew() {
           </TabsContent>
           <TabsContent value="password" className="space-y-4 pt-4">
             <div className="space-y-2">
-              <h4 className="font-medium">Password Settings</h4>
+              <h4 className="font-normal">Password Settings</h4>
               <p className="text-sm text-muted-foreground">
                 Update your password and security settings.
               </p>
@@ -40,7 +40,7 @@ export function TabsPageNew() {
           </TabsContent>
           <TabsContent value="notifications" className="space-y-4 pt-4">
             <div className="space-y-2">
-              <h4 className="font-medium">Notification Preferences</h4>
+              <h4 className="font-normal">Notification Preferences</h4>
               <p className="text-sm text-muted-foreground">
                 Configure how you receive notifications.
               </p>
@@ -70,7 +70,7 @@ export function TabsDemo() {
 }`}
       
       // Usage
-      usage="Import the Tabs components from @/components/ui/tabs. Use Tabs as a container, TabsList for navigation buttons, TabsTrigger for each tab, and TabsContent for the content of each panel."
+      usage="Importa los componentes Tabs desde @/components/ui/tabs. Usa Tabs como contenedor, TabsList para los botones de navegación, TabsTrigger para cada tab y TabsContent para el contenido de cada panel."
       usageCode={`import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 function MyComponent() {
@@ -91,28 +91,29 @@ function MyComponent() {
         {
           name: "defaultValue",
           type: "string",
-          description: "Default active tab (uncontrolled component)",
+          description: "Tab activo por defecto (componente no controlado)",
         },
         {
           name: "value",
           type: "string",
-          description: "Active tab (controlled component)",
+          description: "Tab activo (componente controlado)",
         },
         {
           name: "onValueChange",
           type: "(value: string) => void",
-          description: "Callback executed when the active tab changes",
+          description: "Callback que se ejecuta cuando cambia el tab activo",
         },
         {
           name: "orientation",
           type: '"horizontal" | "vertical"',
           default: '"horizontal"',
-          description: "Orientation of the tabs",
+          description: "Orientación de los tabs",
         },
         {
           name: "dir",
           type: '"ltr" | "rtl"',
-          description: "Text direction",
+          default: '"ltr"',
+          description: "Dirección del texto",
         },
       ]}
       
@@ -120,7 +121,7 @@ function MyComponent() {
       examples={[
         {
           title: "With Form Content",
-          description: "Tabs with forms in each panel",
+          description: "Tabs con formularios en cada panel",
           preview: (
             <Tabs defaultValue="account" className="w-full max-w-lg">
               <TabsList className="grid w-full grid-cols-2">
@@ -193,7 +194,7 @@ function MyComponent() {
         },
         {
           title: "With Icons",
-          description: "Tabs with icons in the triggers",
+          description: "Tabs con iconos en los triggers",
           preview: (
             <Tabs defaultValue="profile" className="w-full max-w-lg">
               <TabsList className="grid w-full grid-cols-3">
@@ -249,7 +250,7 @@ function MyComponent() {
         },
         {
           title: "Disabled Tab",
-          description: "Tabs with a disabled option",
+          description: "Tabs con una opción deshabilitada",
           preview: (
             <Tabs defaultValue="overview" className="w-full max-w-lg">
               <TabsList>
@@ -289,7 +290,7 @@ function MyComponent() {
         },
         {
           title: "With Badges",
-          description: "Tabs with badges to show counters",
+          description: "Tabs con badges para mostrar contadores",
           preview: (
             <Tabs defaultValue="all" className="w-full max-w-lg">
               <TabsList>
@@ -339,7 +340,7 @@ function MyComponent() {
         },
         {
           title: "Full Width Tabs",
-          description: "Tabs that occupy all available width",
+          description: "Tabs que ocupan todo el ancho disponible",
           preview: (
             <Tabs defaultValue="tab1" className="w-full max-w-2xl">
               <TabsList className="grid w-full grid-cols-4">
@@ -373,8 +374,8 @@ function MyComponent() {
 </Tabs>`
         },
         {
-          title: "Complete Settings Panel",
-          description: "Complete settings panel with multiple tabs",
+          title: "Settings Panel",
+          description: "Panel de configuración completo con múltiples tabs",
           preview: (
             <Tabs defaultValue="general" className="w-full max-w-2xl">
               <TabsList>
@@ -485,7 +486,7 @@ function MyComponent() {
         },
         {
           title: "Controlled Tabs",
-          description: "Tabs as a controlled component with state",
+          description: "Tabs como componente controlado con estado",
           preview: (
             <Tabs 
               defaultValue="tab1" 

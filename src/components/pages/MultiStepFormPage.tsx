@@ -14,9 +14,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { Progress } from "../ui/progress";
 import { Checkbox } from "../ui/checkbox";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
-import { CalendarIcon, Check, X, Upload, FileText, Pencil, Trash2, Plus, CheckCircle2, AlertCircle, ChevronDown, Search } from "lucide-react";
+import { CalendarIcon, Check, X, Upload, FileText, Pencil, Trash2, Plus, CheckCircle2, AlertCircle, ChevronDown, Search, HelpCircle } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
+
+import { Switch } from "../ui/switch";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 
 // Tipos
 interface Cliente {
@@ -37,6 +40,7 @@ interface Documento {
   maxSize: number;
   progress: number;
   uploaded: boolean;
+  ayuda?: string;
 }
 
 interface FormData {
@@ -72,10 +76,27 @@ interface FormData {
   tipoCuenta: string;
   numeroCuenta: string;
   
-  // Paso 5
+  // Paso 5 - Documentos
   documentos: Documento[];
-  confirmacion: boolean;
-  aceptaTerminos: boolean;
+  
+  // Paso 5 - Situación Financiera
+  obligacionesVencidas: boolean;
+  insolvencia: boolean;
+
+  // Paso 5 - Cumplimiento Legal
+  registradaPais: boolean;
+  cumpleRegulaciones: boolean;
+  actividadesIlegales: boolean;
+  esPEP: boolean;
+  investigacionesJudiciales: boolean;
+  sancionada: boolean;
+  politicasSarlaft: boolean;
+
+  // Paso 5 - Declaraciones
+  infoVeraz: boolean;
+  actualizarInfo: boolean;
+  aceptaPolitica: boolean;
+  autorizaConsulta: boolean;
 }
 
 // Datos mock
@@ -140,14 +161,28 @@ export function MultiStepFormPage() {
   const [formData, setFormData] = useState<Partial<FormData>>({
     clientes: [],
     documentos: [
-      { id: "1", nombre: "RUT (Registro Único Tributario)", archivo: null, requerido: true, tipo: "PDF/JPG/PNG", maxSize: 5, progress: 0, uploaded: false },
-      { id: "2", nombre: "Cámara de Comercio", archivo: null, requerido: true, tipo: "PDF/JPG/PNG", maxSize: 5, progress: 0, uploaded: false },
-      { id: "3", nombre: "Cédula Representante Legal", archivo: null, requerido: true, tipo: "PDF/JPG/PNG", maxSize: 5, progress: 0, uploaded: false },
-      { id: "4", nombre: "Estados Financieros", archivo: null, requerido: false, tipo: "PDF/Excel", maxSize: 10, progress: 0, uploaded: false },
-      { id: "5", nombre: "Documento Adicional", archivo: null, requerido: false, tipo: "Cualquier archivo", maxSize: 5, progress: 0, uploaded: false },
+      { id: "1", nombre: "Registro único tributario (RUT)", archivo: null, requerido: true, tipo: "PDF", maxSize: 5, progress: 0, uploaded: false },
+      { id: "2", nombre: "Composición accionaria", archivo: null, requerido: true, tipo: "PDF", maxSize: 5, progress: 0, uploaded: false },
+      { id: "3", nombre: "Certificado de cámara de comercio", archivo: null, requerido: true, tipo: "PDF", maxSize: 5, progress: 0, uploaded: false },
+      { id: "4", nombre: "Documento de identificación del Rep. Legal", archivo: null, requerido: true, tipo: "PDF/JPG", maxSize: 5, progress: 0, uploaded: false },
+      { id: "5", nombre: "Estados financieros al cierre de 2024", archivo: null, requerido: true, tipo: "PDF/Excel", maxSize: 10, progress: 0, uploaded: false },
+      { id: "6", nombre: "Estados financieros con corte del año 2025", archivo: null, requerido: false, tipo: "PDF/Excel", maxSize: 10, progress: 0, uploaded: false },
+      { id: "7", nombre: "Estado de Cuenta DIAN", archivo: null, requerido: true, tipo: "PDF", maxSize: 5, progress: 0, uploaded: false, ayuda: "Debe descargar el certificado de obligación tributaria desde el portal de la DIAN con fecha de expedición no mayor a 30 días." },
     ],
-    confirmacion: false,
-    aceptaTerminos: false,
+    // Boolean Defaults
+    obligacionesVencidas: false,
+    insolvencia: false,
+    registradaPais: true,
+    cumpleRegulaciones: true,
+    actividadesIlegales: false,
+    esPEP: false,
+    investigacionesJudiciales: false,
+    sancionada: false,
+    politicasSarlaft: true,
+    infoVeraz: false,
+    actualizarInfo: false,
+    aceptaPolitica: false,
+    autorizaConsulta: false,
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const [transactionId, setTransactionId] = useState("");
@@ -167,9 +202,11 @@ export function MultiStepFormPage() {
   ];
 
   const handleNext = () => {
-    if (validateStep(currentStep)) {
+    // Para demo: permitir avanzar sin validar si se desea, o mantener validación
+    // Si se quiere navegación libre para demo, comentar el if
+    // if (validateStep(currentStep)) {
       setCurrentStep((prev) => Math.min(prev + 1, totalSteps));
-    }
+    // }
   };
 
   const handleBack = () => {
@@ -177,6 +214,11 @@ export function MultiStepFormPage() {
   };
 
   const validateStep = (step: number): boolean => {
+    // Para demo: siempre retornar true para permitir navegación libre en los indicadores
+    // En producción, descomentar la lógica de validación
+    return true; 
+    
+    /* Lógica original de validación:
     switch (step) {
       case 1:
         return !!( 
@@ -224,10 +266,17 @@ export function MultiStepFormPage() {
       case 5:
         const docsRequeridos = formData.documentos?.filter(d => d.requerido) || [];
         const todosRequeridosSubidos = docsRequeridos.every(d => d.uploaded);
-        return todosRequeridosSubidos && formData.confirmacion && formData.aceptaTerminos;
+        return !!(
+          todosRequeridosSubidos && 
+          formData.infoVeraz && 
+          formData.actualizarInfo && 
+          formData.aceptaPolitica &&
+          formData.autorizaConsulta
+        );
       default:
         return false;
     }
+    */
   };
 
   const handleAgregarCliente = (cliente: Omit<Cliente, "id">) => {
@@ -351,49 +400,61 @@ export function MultiStepFormPage() {
 
   return (
     <div className="min-h-screen p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl mb-2">Solicitud de Factoring</h1>
-          <p className="text-[#5C5C5C]">Complete el formulario para iniciar su solicitud</p>
+          <h1 className="text-3xl mb-2 font-semibold tracking-tight text-foreground">Solicitud de Factoring</h1>
+          <p className="text-muted-foreground">Complete el formulario para iniciar su solicitud</p>
         </div>
 
         {/* Stepper */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
+        <div className="mb-8 w-full">
+          <div className="flex items-center justify-between mb-4 w-full">
             {steps.map((step, index) => (
-              <div key={step.number} className="flex items-center flex-1">
-                <div className="flex flex-col items-center flex-1">
-                  <div
-                    onClick={() => setCurrentStep(step.number)}
-                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer hover:scale-110 ${
-                      currentStep > step.number
-                        ? "bg-[#00D084] text-white"
-                        : currentStep === step.number
-                        ? "bg-[#00D084] text-white ring-4 ring-[#00D084]/20"
-                        : "bg-[#E5E7EB] text-[#9CA3AF] hover:bg-[#D1D5DB]"
-                    }`}
-                  >
-                    {currentStep > step.number ? (
-                      <Check className="w-5 h-5" />
-                    ) : (
-                      <span className="text-sm">{step.number}</span>
-                    )}
-                  </div>
-                  <p className="text-xs mt-2 text-center hidden md:block">{step.title}</p>
-                </div>
+              <div key={step.number} className="flex flex-1 items-center justify-center relative">
+                {/* Connecting line */}
                 {index < steps.length - 1 && (
                   <div
-                    className={`h-0.5 flex-1 transition-all duration-200 ${
-                      currentStep > step.number ? "bg-[#00D084]" : "bg-[#E5E7EB]"
+                    className={`absolute left-1/2 top-1/2 h-0.5 w-full -translate-y-1/2 transition-all duration-200 ${
+                      currentStep > step.number ? "bg-primary" : "bg-border"
                     }`}
                   />
                 )}
+
+                {/* Circle */}
+                <div
+                  onClick={() => setCurrentStep(step.number)}
+                  className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer hover:scale-110 ${
+                    currentStep > step.number
+                      ? "bg-primary text-primary-foreground"
+                      : currentStep === step.number
+                      ? "bg-primary text-primary-foreground ring-4 ring-primary/20"
+                      : "bg-muted text-muted-foreground hover:bg-muted/80"
+                  }`}
+                >
+                  {currentStep > step.number ? (
+                    <Check className="w-5 h-5" />
+                  ) : (
+                    <span className="text-sm font-medium">{step.number}</span>
+                  )}
+                </div>
               </div>
             ))}
           </div>
-          <div className="text-center">
-            <Badge variant="outline" className="border-[#00D084] text-[#00D084]">
+          
+          {/* Step labels below circles */}
+          <div className="flex items-start justify-between">
+            {steps.map((step) => (
+              <div key={`label-${step.number}`} className="flex-1 flex justify-center">
+                <p className={`text-xs text-center hidden md:block whitespace-nowrap px-2 font-medium ${currentStep >= step.number ? "text-foreground" : "text-muted-foreground"}`}>
+                  {step.title}
+                </p>
+              </div>
+            ))}
+          </div>
+          
+          <div className="text-center mt-4">
+            <Badge variant="default" className="bg-primary text-primary-foreground hover:bg-primary/90">
               Paso {currentStep} de {totalSteps}
             </Badge>
           </div>
@@ -402,8 +463,8 @@ export function MultiStepFormPage() {
         {/* Form Card */}
         <Card className="p-6 md:p-8">
           <div className="mb-6">
-            <h2 className="text-2xl mb-2">{steps[currentStep - 1].title}</h2>
-            <p className="text-sm text-[#9CA3AF]">{steps[currentStep - 1].description}</p>
+            <h2 className="text-2xl mb-2 font-semibold">{steps[currentStep - 1].title}</h2>
+            <p className="text-sm text-muted-foreground">{steps[currentStep - 1].description}</p>
           </div>
 
           <div className="transition-all duration-250">
@@ -457,7 +518,7 @@ export function MultiStepFormPage() {
           </div>
 
           {/* Buttons */}
-          <div className="flex gap-4 mt-8 pt-6 border-t border-[#E5E7EB]">
+          <div className="flex gap-4 mt-8 pt-6 border-t border-border">
             {currentStep > 1 && (
               <Button
                 variant="outline"
@@ -475,8 +536,11 @@ export function MultiStepFormPage() {
                     setFormData({
                       clientes: [],
                       documentos: formData.documentos,
-                      confirmacion: false,
-                      aceptaTerminos: false,
+                      // Reset booleans
+                      infoVeraz: false,
+                      actualizarInfo: false,
+                      aceptaPolitica: false,
+                      autorizaConsulta: false,
                     });
                   }
                 }}
@@ -488,19 +552,15 @@ export function MultiStepFormPage() {
 
             {currentStep < totalSteps ? (
               <Button
-                style={{ backgroundColor: validateStep(currentStep) ? "#00D084" : "#E5E7EB" }}
-                className={validateStep(currentStep) ? "" : "text-[#9CA3AF] cursor-not-allowed"}
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
                 onClick={handleNext}
-                disabled={!validateStep(currentStep)}
               >
                 Siguiente
               </Button>
             ) : (
               <Button
-                style={{ backgroundColor: validateStep(5) ? "#00D084" : "#E5E7EB" }}
-                className={validateStep(5) ? "" : "text-[#9CA3AF] cursor-not-allowed"}
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
                 onClick={handleSubmit}
-                disabled={!validateStep(5)}
               >
                 Enviar Formulario
               </Button>
@@ -513,45 +573,46 @@ export function MultiStepFormPage() {
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 rounded-full bg-[#00D084]/10 flex items-center justify-center">
-                  <CheckCircle2 className="w-10 h-10 text-[#00D084]" />
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <CheckCircle2 className="w-10 h-10 text-primary" />
                 </div>
               </div>
               <DialogTitle className="text-center text-2xl">
                 ¡Proceso Finalizado Exitosamente!
               </DialogTitle>
-              <DialogDescription className="text-center space-y-4 pt-4">
-                <p className="text-[#5C5C5C]">
-                  Tu solicitud de factoring ha sido recibida correctamente y está siendo procesada.
-                </p>
-                
-                <div className="bg-[#F8F8F8] p-4 rounded-lg">
-                  <p className="text-xs text-[#9CA3AF] mb-1">Número de referencia:</p>
-                  <p className="font-semibold text-[#00D084]">{transactionId}</p>
-                </div>
-
-                <div className="bg-[#FFF9E6] border border-[#FFE4A3] p-4 rounded-lg text-left">
-                  <p className="text-sm text-[#8B6914] mb-2">
-                    <strong>Próximos pasos:</strong>
+              <DialogDescription className="text-center space-y-4 pt-4" asChild>
+                <div>
+                  <p className="text-muted-foreground">
+                    Tu solicitud de factoring ha sido recibida correctamente y está siendo procesada.
                   </p>
-                  <ul className="text-xs text-[#8B6914] space-y-1 list-disc list-inside">
-                    <li>Recibirás un correo de confirmación en las próximas horas</li>
-                    <li>Nuestro equipo revisará tu solicitud en 2-3 días hábiles</li>
-                    <li>Serás contactado para confirmar la activación de tu cuenta</li>
-                    <li>Te notificaremos cualquier documento adicional requerido</li>
-                  </ul>
-                </div>
+                  
+                  <div className="bg-muted p-4 rounded-lg">
+                    <p className="text-xs text-muted-foreground mb-1">Número de referencia:</p>
+                    <p className="font-semibold text-primary">{transactionId}</p>
+                  </div>
 
-                <p className="text-xs text-[#9CA3AF]">
-                  Si tienes alguna pregunta, no dudes en contactarnos.
-                </p>
+                  <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg text-left dark:bg-yellow-900/20 dark:border-yellow-800">
+                    <p className="text-sm text-yellow-800 dark:text-yellow-200 mb-2">
+                      <strong>Próximos pasos:</strong>
+                    </p>
+                    <ul className="text-xs text-yellow-800 dark:text-yellow-200 space-y-1 list-disc list-inside">
+                      <li>Recibirás un correo de confirmación en las próximas horas</li>
+                      <li>Nuestro equipo revisará tu solicitud en 2-3 días hábiles</li>
+                      <li>Serás contactado para confirmar la activación de tu cuenta</li>
+                      <li>Te notificaremos cualquier documento adicional requerido</li>
+                    </ul>
+                  </div>
+
+                  <p className="text-xs text-muted-foreground">
+                    Si tienes alguna pregunta, no dudes en contactarnos.
+                  </p>
+                </div>
               </DialogDescription>
             </DialogHeader>
             <div className="flex flex-col gap-3 mt-4">
               <Button
-                style={{ backgroundColor: "#00D084" }}
+                className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
                 onClick={handleCloseSuccessModal}
-                className="w-full"
               >
                 Entendido
               </Button>
@@ -617,7 +678,7 @@ function Paso1({
     <div className="space-y-8">
       {/* SECCIÓN 1: DATOS DEL USUARIO */}
       <div>
-        <h3 className="text-sm mb-4 pb-2 border-b border-[#E5E7EB]">Datos del Usuario</h3>
+        <h3 className="text-sm mb-4 pb-2 border-b border-border">Datos del Usuario</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Nombres */}
           <div>
@@ -647,8 +708,8 @@ function Paso1({
 
           {/* Tipo de Documento */}
           <div>
-            <Label className="text-xs text-[#5C5C5C]">
-              Tipo de Documento <span className="text-[#EF4444]">*</span>
+            <Label className="text-xs text-muted-foreground">
+              Tipo de Documento <span className="text-destructive">*</span>
             </Label>
             <Select
               value={formData.tipoDocumento}
@@ -656,8 +717,8 @@ function Paso1({
             >
               <SelectTrigger className={`mt-1 transition-all duration-200 ${
                 formData.tipoDocumento
-                  ? "border-[#00D084] bg-[#F8F8F8]"
-                  : "border-[#E5E7EB] bg-[#F8F8F8] hover:border-[#D1D5DB]"
+                  ? "border-primary"
+                  : "border-input hover:border-border"
               }`}>
                 <SelectValue placeholder="Seleccionar" />
               </SelectTrigger>
@@ -667,7 +728,7 @@ function Paso1({
                 <SelectItem value="PA">Pasaporte</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-xs text-[#9CA3AF] mt-1">Tipo de identificación</p>
+            <p className="text-xs text-muted-foreground mt-1">Tipo de identificación</p>
           </div>
 
           {/* Número de Documento */}
@@ -717,7 +778,7 @@ function Paso1({
 
       {/* SECCIÓN 2: DATOS DE LA EMPRESA */}
       <div>
-        <h3 className="text-sm mb-4 pb-2 border-b border-[#E5E7EB]">Datos de la Empresa</h3>
+        <h3 className="text-sm mb-4 pb-2 border-b border-border">Datos de la Empresa</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Razón Social */}
           <div className="md:col-span-2">
@@ -734,8 +795,8 @@ function Paso1({
 
           {/* Fecha Constitución */}
           <div>
-            <Label className="text-xs text-[#5C5C5C]">
-              Fecha Constitución <span className="text-[#EF4444]">*</span>
+            <Label className="text-xs text-muted-foreground">
+              Fecha Constitución <span className="text-destructive">*</span>
             </Label>
             <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
               <PopoverTrigger asChild>
@@ -743,18 +804,18 @@ function Paso1({
                   variant="outline"
                   className={`w-full justify-start text-left transition-all duration-200 mt-1 ${
                     formData.fechaConstitucion
-                      ? "border-[#00D084] bg-[#F8F8F8]"
-                      : "border-[#E5E7EB] bg-[#F8F8F8] hover:border-[#D1D5DB]"
+                      ? "border-primary"
+                      : "border-input hover:border-border"
                   }`}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {formData.fechaConstitucion ? (
                     format(formData.fechaConstitucion, "dd/MM/yyyy", { locale: es })
                   ) : (
-                    <span className="text-[#9CA3AF]">DD/MM/YYYY</span>
+                    <span className="text-muted-foreground">DD/MM/YYYY</span>
                   )}
                   {formData.fechaConstitucion && (
-                    <Check className="ml-auto h-4 w-4 text-[#00D084]" />
+                    <Check className="ml-auto h-4 w-4 text-primary" />
                   )}
                 </Button>
               </PopoverTrigger>
@@ -771,7 +832,7 @@ function Paso1({
                 />
               </PopoverContent>
             </Popover>
-            <p className="text-xs text-[#9CA3AF] mt-1">Fecha de constitución legal</p>
+            <p className="text-xs text-muted-foreground mt-1">Fecha de constitución legal</p>
           </div>
 
           {/* NIT */}
@@ -802,8 +863,8 @@ function Paso1({
 
           {/* Actividad Económica */}
           <div>
-            <Label className="text-xs text-[#5C5C5C]">
-              Actividad Económica <span className="text-[#EF4444]">*</span>
+            <Label className="text-xs text-muted-foreground">
+              Actividad Económica <span className="text-destructive">*</span>
             </Label>
             <Select
               value={formData.actividadEconomica}
@@ -811,8 +872,8 @@ function Paso1({
             >
               <SelectTrigger className={`mt-1 transition-all duration-200 ${
                 formData.actividadEconomica
-                  ? "border-[#00D084] bg-[#F8F8F8]"
-                  : "border-[#E5E7EB] bg-[#F8F8F8] hover:border-[#D1D5DB]"
+                  ? "border-primary"
+                  : "border-input hover:border-border"
               }`}>
                 <SelectValue placeholder="Seleccionar" />
               </SelectTrigger>
@@ -826,16 +887,16 @@ function Paso1({
             </Select>
             {formData.actividadEconomica && (
               <div className="absolute right-3 top-9 pointer-events-none">
-                <Check className="h-4 w-4 text-[#00D084]" />
+                <Check className="h-4 w-4 text-primary" />
               </div>
             )}
-            <p className="text-xs text-[#9CA3AF] mt-1">Código CIIU principal</p>
+            <p className="text-xs text-muted-foreground mt-1">Código CIIU principal</p>
           </div>
 
           {/* Municipio/Sede */}
           <div>
-            <Label className="text-xs text-[#5C5C5C]">
-              Municipio/Sede <span className="text-[#EF4444]">*</span>
+            <Label className="text-xs text-muted-foreground">
+              Municipio/Sede <span className="text-destructive">*</span>
             </Label>
             <Popover open={municipioOpen} onOpenChange={setMunicipioOpen}>
               <PopoverTrigger asChild>
@@ -843,8 +904,8 @@ function Paso1({
                   variant="outline"
                   className={`w-full justify-between text-left transition-all duration-200 mt-1 ${
                     formData.municipio
-                      ? "border-[#00D084] bg-[#F8F8F8]"
-                      : "border-[#E5E7EB] bg-[#F8F8F8] hover:border-[#D1D5DB]"
+                      ? "border-primary"
+                      : "border-input hover:border-border"
                   }`}
                 >
                   {formData.municipio || "Buscar ciudad..."}
@@ -877,7 +938,7 @@ function Paso1({
                 </Command>
               </PopoverContent>
             </Popover>
-            <p className="text-xs text-[#9CA3AF] mt-1">Ciudad principal de operación</p>
+            <p className="text-xs text-muted-foreground mt-1">Ciudad principal de operación</p>
           </div>
 
           {/* Código Postal */}
@@ -947,7 +1008,7 @@ function Paso2({
   return (
     <div className="space-y-6">
       {/* Checkbox: Soy el representante legal */}
-      <div className="flex items-start gap-3 p-4 bg-[#F8F8F8] rounded-lg border border-[#E5E7EB]">
+      <div className="flex items-start gap-3 p-4 bg-muted/30 rounded-lg border border-input">
         <Checkbox
           id="soyRepresentante"
           checked={soyRepresentante}
@@ -960,7 +1021,7 @@ function Paso2({
           >
             Soy el representante legal
           </Label>
-          <p className="text-xs text-[#9CA3AF] mt-1">
+          <p className="text-xs text-muted-foreground mt-1">
             Marcar esta opción completará automáticamente los campos con tus datos personales
           </p>
         </div>
@@ -1177,7 +1238,7 @@ function Paso3({
 
           <div className="md:col-span-2 flex gap-4">
             <Button
-              style={{ backgroundColor: "#00D084" }}
+              className="bg-emerald-500 hover:bg-emerald-600 text-white"
               onClick={handleGuardarCliente}
             >
               Guardar Cliente
@@ -1207,17 +1268,17 @@ function Paso3({
   return (
     <div>
       {clientes.length === 0 ? (
-        <Card className="p-8 text-center border-dashed border-2 border-[#E5E7EB]">
+        <Card className="p-8 text-center border-dashed border-2 border-input">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-16 h-16 rounded-full bg-[#F8F8F8] flex items-center justify-center">
-              <Plus className="w-8 h-8 text-[#9CA3AF]" />
+            <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center">
+              <Plus className="w-8 h-8 text-muted-foreground" />
             </div>
             <div>
-              <p className="text-[#5C5C5C] mb-1">No hay clientes agregados</p>
-              <p className="text-xs text-[#9CA3AF]">Debe agregar al menos un cliente</p>
+              <p className="text-foreground mb-1">No hay clientes agregados</p>
+              <p className="text-xs text-muted-foreground">Debe agregar al menos un cliente</p>
             </div>
             <Button
-              style={{ backgroundColor: "#00D084" }}
+              className="bg-emerald-500 hover:bg-emerald-600 text-white"
               onClick={() => setMostrarFormCliente(true)}
             >
               <Plus className="w-4 h-4 mr-2" />
@@ -1231,17 +1292,17 @@ function Paso3({
             <div className="flex-1 w-full md:w-auto">
               {/* Input de búsqueda/filtro */}
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#9CA3AF]" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder="Buscar por nombre, NIT, contacto o email..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 pr-10 border-[#E5E7EB] bg-[#F8F8F8] focus:border-[#00D084] focus:ring-4 focus:ring-[#00D084]/10 transition-all duration-200"
+                  className="pl-10 pr-10 border-input focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-200"
                 />
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9CA3AF] hover:text-[#5C5C5C] transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -1249,10 +1310,9 @@ function Paso3({
               </div>
             </div>
             <Button
-              style={{ backgroundColor: "#00D084" }}
+              className="bg-emerald-500 hover:bg-emerald-600 text-white w-full md:w-auto"
               size="sm"
               onClick={() => setMostrarFormCliente(true)}
-              className="w-full md:w-auto"
             >
               <Plus className="w-4 h-4 mr-2" />
               Agregar Cliente
@@ -1261,7 +1321,7 @@ function Paso3({
 
           {/* Indicador de resultados */}
           <div className="mb-3 flex items-center justify-between">
-            <p className="text-sm text-[#5C5C5C]">
+            <p className="text-sm text-foreground">
               {searchQuery ? (
                 <>
                   {clientesFiltrados.length} resultado{clientesFiltrados.length !== 1 ? "s" : ""} de {clientes.length} cliente{clientes.length !== 1 ? "s" : ""}
@@ -1276,7 +1336,7 @@ function Paso3({
 
           {/* Tabla de clientes */}
           {clientesFiltrados.length > 0 ? (
-            <div className="border border-[#E5E7EB] rounded-lg overflow-hidden">
+            <div className="border border-input rounded-lg overflow-hidden">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -1293,14 +1353,14 @@ function Paso3({
                       <TableCell className="font-medium">{cliente.nombre}</TableCell>
                       <TableCell>{cliente.nit}</TableCell>
                       <TableCell className="hidden md:table-cell">{cliente.contacto}</TableCell>
-                      <TableCell className="hidden lg:table-cell text-sm text-[#5C5C5C]">{cliente.email}</TableCell>
+                      <TableCell className="hidden lg:table-cell text-sm text-foreground">{cliente.email}</TableCell>
                       <TableCell className="text-right">
                         <div className="flex gap-2 justify-end">
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => onEditarCliente(cliente.id)}
-                            className="hover:bg-[#00D084]/10 hover:text-[#00D084]"
+                            className="hover:bg-primary/10 hover:text-primary"
                           >
                             <Pencil className="w-4 h-4" />
                           </Button>
@@ -1312,9 +1372,9 @@ function Paso3({
                                 onEliminarCliente(cliente.id);
                               }
                             }}
-                            className="hover:bg-[#EF4444]/10 hover:text-[#EF4444]"
+                            className="hover:bg-destructive/10 hover:text-destructive"
                           >
-                            <Trash2 className="w-4 h-4 text-[#EF4444]" />
+                            <Trash2 className="w-4 h-4 text-destructive" />
                           </Button>
                         </div>
                       </TableCell>
@@ -1324,12 +1384,12 @@ function Paso3({
               </Table>
             </div>
           ) : (
-            <Card className="p-8 text-center border-dashed border-2 border-[#E5E7EB]">
+            <Card className="p-8 text-center border-dashed border-2 border-input">
               <div className="flex flex-col items-center gap-3">
-                <AlertCircle className="w-12 h-12 text-[#9CA3AF]" />
+                <AlertCircle className="w-12 h-12 text-muted-foreground" />
                 <div>
-                  <p className="text-[#5C5C5C] mb-1">No se encontraron resultados</p>
-                  <p className="text-xs text-[#9CA3AF]">
+                  <p className="text-foreground mb-1">No se encontraron resultados</p>
+                  <p className="text-xs text-muted-foreground">
                     No hay clientes que coincidan con "{searchQuery}"
                   </p>
                 </div>
@@ -1365,8 +1425,8 @@ function Paso4({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
-        <Label className="text-xs text-[#5C5C5C]">
-          Nombre del Banco <span className="text-[#EF4444]">*</span>
+        <Label className="text-xs text-muted-foreground">
+          Nombre del Banco <span className="text-destructive">*</span>
         </Label>
         <Select
           value={formData.nombreBanco}
@@ -1374,8 +1434,8 @@ function Paso4({
         >
           <SelectTrigger className={`mt-1 transition-all duration-200 ${
             formData.nombreBanco
-              ? "border-[#00D084] bg-[#F8F8F8]"
-              : "border-[#E5E7EB] bg-[#F8F8F8] hover:border-[#D1D5DB]"
+              ? "border-primary"
+              : "border-input hover:border-border"
           }`}>
             <SelectValue placeholder="Seleccionar banco" />
           </SelectTrigger>
@@ -1387,12 +1447,12 @@ function Paso4({
             ))}
           </SelectContent>
         </Select>
-        <p className="text-xs text-[#9CA3AF] mt-1">Entidad bancaria principal</p>
+        <p className="text-xs text-muted-foreground mt-1">Entidad bancaria principal</p>
       </div>
 
       <div>
-        <Label className="text-xs text-[#5C5C5C]">
-          Tipo de Cuenta <span className="text-[#EF4444]">*</span>
+        <Label className="text-xs text-muted-foreground">
+          Tipo de Cuenta <span className="text-destructive">*</span>
         </Label>
         <Select
           value={formData.tipoCuenta}
@@ -1400,8 +1460,8 @@ function Paso4({
         >
           <SelectTrigger className={`mt-1 transition-all duration-200 ${
             formData.tipoCuenta
-              ? "border-[#00D084] bg-[#F8F8F8]"
-              : "border-[#E5E7EB] bg-[#F8F8F8] hover:border-[#D1D5DB]"
+              ? "border-primary"
+              : "border-input hover:border-border"
           }`}>
             <SelectValue placeholder="Seleccionar tipo" />
           </SelectTrigger>
@@ -1410,7 +1470,7 @@ function Paso4({
             <SelectItem value="corriente">Corriente</SelectItem>
           </SelectContent>
         </Select>
-        <p className="text-xs text-[#9CA3AF] mt-1">Tipo de cuenta bancaria</p>
+        <p className="text-xs text-muted-foreground mt-1">Tipo de cuenta bancaria</p>
       </div>
 
       <div className="md:col-span-2">
@@ -1429,9 +1489,9 @@ function Paso4({
       </div>
 
       <div className="md:col-span-2">
-        <Alert className="border-[#00D084]/20 bg-[#00D084]/5">
-          <AlertCircle className="h-4 w-4 text-[#00D084]" />
-          <AlertDescription className="text-xs text-[#5C5C5C]">
+        <Alert className="border-primary/20 bg-primary/5">
+          <AlertCircle className="h-4 w-4 text-primary" />
+          <AlertDescription className="text-xs text-foreground">
             Esta cuenta será utilizada para los desembolsos de factoring. Asegúrate de que la información sea correcta.
           </AlertDescription>
         </Alert>
@@ -1439,6 +1499,8 @@ function Paso4({
     </div>
   );
 }
+
+import { Switch } from "../ui/switch";
 
 // ========== PASO 5: ANEXOS ==========
 function Paso5({
@@ -1455,101 +1517,188 @@ function Paso5({
   const documentos = formData.documentos || [];
 
   return (
-    <div className="space-y-6">
-      {/* Documentos */}
+    <div className="space-y-8">
+      {/* Sección Documentos Finales */}
       <div className="space-y-4">
-        <h3 className="text-sm text-[#5C5C5C]">Documentos Requeridos</h3>
-        {documentos.map((doc) => (
-          <DocumentoUpload
-            key={doc.id}
-            documento={doc}
-            onUpload={onFileUpload}
-            onEliminar={onEliminarDocumento}
-          />
-        ))}
-      </div>
-
-      {/* Resumen */}
-      <div className="pt-6 border-t border-[#E5E7EB]">
-        <h3 className="text-sm text-[#5C5C5C] mb-4">Resumen de la Solicitud</h3>
-        <Card className="p-4 bg-[#F8F8F8]">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-            <div>
-              <p className="text-[#9CA3AF]">Razón Social</p>
-              <p className="text-[#5C5C5C]">{formData.razonSocial || "-"}</p>
-            </div>
-            <div>
-              <p className="text-[#9CA3AF]">NIT</p>
-              <p className="text-[#5C5C5C]">{formData.nit || "-"}</p>
-            </div>
-            <div>
-              <p className="text-[#9CA3AF]">Representante Legal</p>
-              <p className="text-[#5C5C5C]">{formData.nombreRepresentante || "-"}</p>
-            </div>
-            <div>
-              <p className="text-[#9CA3AF]">Clientes Registrados</p>
-              <p className="text-[#5C5C5C]">{formData.clientes?.length || 0}</p>
-            </div>
-            <div>
-              <p className="text-[#9CA3AF]">Banco</p>
-              <p className="text-[#5C5C5C]">{formData.nombreBanco || "-"}</p>
-            </div>
-            <div>
-              <p className="text-[#9CA3AF]">Documentos Subidos</p>
-              <p className="text-[#5C5C5C]">
-                {documentos.filter(d => d.uploaded).length} / {documentos.filter(d => d.requerido).length} requeridos
-              </p>
-            </div>
-          </div>
-        </Card>
-      </div>
-
-      {/* Confirmación */}
-      <div className="space-y-4">
-        <div className="flex items-start gap-3">
-          <Checkbox
-            id="confirmacion"
-            checked={formData.confirmacion}
-            onCheckedChange={(checked) =>
-              setFormData({ ...formData, confirmacion: checked as boolean })
-            }
-          />
-          <Label
-            htmlFor="confirmacion"
-            className="text-xs text-[#5C5C5C] cursor-pointer"
-          >
-            Confirmo que la información proporcionada es correcta y verídica
-          </Label>
+        <div>
+          <h3 className="text-lg font-medium text-secondary">Documentos finales</h3>
+          <p className="text-sm text-destructive font-medium">* Documentos obligatorios</p>
         </div>
-
-        <div className="flex items-start gap-3">
-          <Checkbox
-            id="terminos"
-            checked={formData.aceptaTerminos}
-            onCheckedChange={(checked) =>
-              setFormData({ ...formData, aceptaTerminos: checked as boolean })
-            }
-          />
-          <Label
-            htmlFor="terminos"
-            className="text-xs text-[#5C5C5C] cursor-pointer"
-          >
-            He leído y acepto los{" "}
-            <a href="#" className="text-[#00D084] underline">
-              términos y condiciones
-            </a>
-          </Label>
+        
+        <div className="space-y-3">
+          {documentos.map((doc) => (
+            <DocumentoUpload
+              key={doc.id}
+              documento={doc}
+              onUpload={onFileUpload}
+              onEliminar={onEliminarDocumento}
+            />
+          ))}
         </div>
       </div>
 
-      {(!formData.confirmacion || !formData.aceptaTerminos) && (
-        <Alert className="border-[#EF4444]/20 bg-[#FEF2F2]">
-          <AlertCircle className="h-4 w-4 text-[#EF4444]" />
-          <AlertDescription className="text-xs text-[#EF4444]">
-            Debes aceptar la confirmación y los términos para continuar
+      {/* Sección Situación Financiera */}
+      <div className="space-y-4 pt-6 border-t border-border">
+        <h3 className="text-lg font-medium text-secondary">Situación Financiera</h3>
+        <div className="space-y-4">
+          <SwitchQuestion
+            id="obligacionesVencidas"
+            label="¿Presenta obligaciones financieras vencidas o en proceso de cobro judicial?"
+            checked={formData.obligacionesVencidas}
+            onCheckedChange={(checked) => setFormData({ ...formData, obligacionesVencidas: checked })}
+          />
+          <SwitchQuestion
+            id="insolvencia"
+            label="¿La empresa ha estado o está en proceso de insolvencia, reorganización o liquidación?"
+            checked={formData.insolvencia}
+            onCheckedChange={(checked) => setFormData({ ...formData, insolvencia: checked })}
+          />
+        </div>
+      </div>
+
+      {/* Sección Cumplimiento Legal */}
+      <div className="space-y-4 pt-6 border-t border-border">
+        <h3 className="text-lg font-medium text-secondary">Cumplimiento Legal</h3>
+        <div className="space-y-4">
+          <SwitchQuestion
+            id="registradaPais"
+            label="¿La empresa está registrada en el país donde opera?"
+            checked={formData.registradaPais}
+            onCheckedChange={(checked) => setFormData({ ...formData, registradaPais: checked })}
+          />
+          <SwitchQuestion
+            id="cumpleRegulaciones"
+            label="¿Cumple con todas las regulaciones locales e internacionales?"
+            checked={formData.cumpleRegulaciones}
+            onCheckedChange={(checked) => setFormData({ ...formData, cumpleRegulaciones: checked })}
+          />
+          <SwitchQuestion
+            id="actividadesIlegales"
+            label="¿Ha estado la empresa o alguno de sus directivos involucrado en actividades ilegales o financieras de dudosa procedencia?"
+            checked={formData.actividadesIlegales}
+            onCheckedChange={(checked) => setFormData({ ...formData, actividadesIlegales: checked })}
+          />
+          <SwitchQuestion
+            id="esPEP"
+            label="¿Algún accionista, socio o directivo es o ha sido Persona Expuesta Políticamente (PEP)?"
+            checked={formData.esPEP}
+            onCheckedChange={(checked) => setFormData({ ...formData, esPEP: checked })}
+          />
+          <SwitchQuestion
+            id="investigacionesJudiciales"
+            label="¿Alguno de los socios o directivos se encuentra o ha estado vinculado a investigaciones judiciales, disciplinarias o fiscales?"
+            checked={formData.investigacionesJudiciales}
+            onCheckedChange={(checked) => setFormData({ ...formData, investigacionesJudiciales: checked })}
+          />
+          <SwitchQuestion
+            id="sancionada"
+            label="¿Ha sido sancionada la empresa por incumplimientos tributarios o laborales?"
+            checked={formData.sancionada}
+            onCheckedChange={(checked) => setFormData({ ...formData, sancionada: checked })}
+          />
+           <SwitchQuestion
+            id="politicasSarlaft"
+            label="¿Cuenta con políticas internas de prevención de lavado de activos y financiación del terrorismo (SARLAFT / SAGRLAFT)?"
+            checked={formData.politicasSarlaft}
+            onCheckedChange={(checked) => setFormData({ ...formData, politicasSarlaft: checked })}
+          />
+        </div>
+      </div>
+
+      {/* Declaraciones Finales (Checkboxes) */}
+      <div className="space-y-4 pt-6 border-t border-border">
+        <CheckboxDeclaration
+          id="infoVeraz"
+          label="Declaro que la información suministrada es veraz, actual y verificable."
+          checked={formData.infoVeraz}
+          onCheckedChange={(checked) => setFormData({ ...formData, infoVeraz: checked as boolean })}
+        />
+        <CheckboxDeclaration
+          id="actualizarInfo"
+          label="Me comprometo a actualizar cualquier cambio relevante en la composición accionaria, revisoría fiscal o domicilio dentro de los 30 días siguientes a su ocurrencia."
+          checked={formData.actualizarInfo}
+          onCheckedChange={(checked) => setFormData({ ...formData, actualizarInfo: checked as boolean })}
+        />
+        <CheckboxDeclaration
+          id="aceptaPolitica"
+          label={
+            <span>
+              Confirmo que he leído, entiendo y acepto la{" "}
+              <a href="#" className="text-primary underline hover:text-primary/80">
+                Política de Seguridad, Privacidad y Tratamiento de Datos
+              </a>.
+            </span>
+          }
+          checked={formData.aceptaPolitica}
+          onCheckedChange={(checked) => setFormData({ ...formData, aceptaPolitica: checked as boolean })}
+        />
+        <CheckboxDeclaration
+          id="autorizaConsulta"
+          label={
+            <span>
+              Autorizo la{" "}
+              <a href="#" className="text-primary underline hover:text-primary/80">
+                consulta en centrales de riesgo y en listas restrictivas (SAGRLAFT)
+              </a>.
+            </span>
+          }
+          checked={formData.autorizaConsulta}
+          onCheckedChange={(checked) => setFormData({ ...formData, autorizaConsulta: checked as boolean })}
+        />
+      </div>
+
+      {(!formData.infoVeraz || !formData.actualizarInfo || !formData.aceptaPolitica || !formData.autorizaConsulta) && (
+        <Alert className="border-destructive/20 bg-destructive/5">
+          <AlertCircle className="h-4 w-4 text-destructive" />
+          <AlertDescription className="text-xs text-destructive">
+            Debes aceptar todas las declaraciones y autorizaciones para continuar.
           </AlertDescription>
         </Alert>
       )}
+    </div>
+  );
+}
+
+// Helper: Pregunta con Switch
+function SwitchQuestion({
+  id,
+  label,
+  checked,
+  onCheckedChange,
+}: {
+  id: string;
+  label: string;
+  checked?: boolean;
+  onCheckedChange: (checked: boolean) => void;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-4 p-3 rounded-lg hover:bg-zinc-50 transition-colors">
+      <Label htmlFor={id} className="text-sm font-normal text-foreground flex-1 cursor-pointer leading-relaxed">
+        {label}
+      </Label>
+      <Switch id={id} checked={checked} onCheckedChange={onCheckedChange} />
+    </div>
+  );
+}
+
+// Helper: Declaración con Checkbox
+function CheckboxDeclaration({
+  id,
+  label,
+  checked,
+  onCheckedChange,
+}: {
+  id: string;
+  label: React.ReactNode;
+  checked?: boolean;
+  onCheckedChange: (checked: boolean) => void;
+}) {
+  return (
+    <div className="flex items-start gap-3">
+      <Checkbox id={id} checked={checked} onCheckedChange={onCheckedChange} className="mt-0.5" />
+      <Label htmlFor={id} className="text-xs text-muted-foreground cursor-pointer leading-relaxed">
+        {label}
+      </Label>
     </div>
   );
 }
@@ -1578,8 +1727,8 @@ function InputField({
 }) {
   return (
     <div className="relative">
-      <Label className="text-xs text-[#5C5C5C]">
-        {label} {required && <span className="text-[#EF4444]">*</span>}
+      <Label className="text-xs text-muted-foreground">
+        {label} {required && <span className="text-destructive">*</span>}
       </Label>
       <div className="relative">
         <Input
@@ -1590,24 +1739,24 @@ function InputField({
           maxLength={maxLength}
           className={`mt-1 transition-all duration-200 pr-10 ${
             isValid === null
-              ? "border-[#E5E7EB] bg-[#F8F8F8] hover:border-[#D1D5DB] focus:border-[#00D084] focus:ring-4 focus:ring-[#00D084]/10"
+              ? "border-input hover:border-border focus:border-primary focus:ring-4 focus:ring-primary/10"
               : isValid
-              ? "border-[#00D084] bg-[#F8F8F8]"
-              : "border-[#EF4444] bg-[#FEF2F2]"
+              ? "border-primary"
+              : "border-destructive bg-destructive/5"
           }`}
         />
         {isValid === true && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-            <Check className="h-4 w-4 text-[#00D084]" />
+            <Check className="h-4 w-4 text-primary" />
           </div>
         )}
         {isValid === false && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-            <AlertCircle className="h-4 w-4 text-[#EF4444]" />
+            <AlertCircle className="h-4 w-4 text-destructive" />
           </div>
         )}
       </div>
-      <p className={`text-xs mt-1 ${isValid === false ? "text-[#EF4444]" : "text-[#9CA3AF]"}`}>
+      <p className={`text-xs mt-1 ${isValid === false ? "text-destructive" : "text-muted-foreground"}`}>
         {isValid === false ? "Este campo es requerido" : helper}
       </p>
     </div>
@@ -1632,62 +1781,79 @@ function DocumentoUpload({
   };
 
   return (
-    <Card className={`p-4 ${documento.uploaded ? "border-[#00D084]" : "border-[#E5E7EB]"}`}>
-      <div className="flex items-start gap-4">
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-1">
-            <p className="text-sm text-[#5C5C5C]">{documento.nombre}</p>
-            {documento.requerido && (
-              <Badge variant="outline" className="text-xs border-[#EF4444] text-[#EF4444]">
-                Requerido
-              </Badge>
-            )}
-            {documento.uploaded && (
-              <CheckCircle2 className="w-4 h-4 text-[#00D084]" />
-            )}
-          </div>
-          <p className="text-xs text-[#9CA3AF] mb-2">
-            {documento.tipo} • Máx. {documento.maxSize}MB
-          </p>
-
-          {!documento.uploaded ? (
-            <div className="border-2 border-dashed border-[#E5E7EB] rounded-lg p-4 text-center hover:border-[#00D084] transition-all duration-200">
-              <input
-                type="file"
-                id={`file-${documento.id}`}
-                className="hidden"
-                onChange={handleFileChange}
-                accept={documento.tipo === "PDF/JPG/PNG" ? ".pdf,.jpg,.jpeg,.png" : documento.tipo === "PDF/Excel" ? ".pdf,.xlsx,.xls" : "*"}
-              />
-              <label htmlFor={`file-${documento.id}`} className="cursor-pointer">
-                <Upload className="w-6 h-6 text-[#9CA3AF] mx-auto mb-2" />
-                <p className="text-xs text-[#5C5C5C]">
-                  Arrastra el archivo o{" "}
-                  <span className="text-[#00D084] underline">selecciona</span>
-                </p>
-              </label>
-            </div>
-          ) : (
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <FileText className="w-4 h-4 text-[#00D084]" />
-                <p className="text-xs text-[#5C5C5C]">{documento.archivo?.name}</p>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => onEliminar(documento.id)}
-                  className="ml-auto"
-                >
-                  <Trash2 className="w-4 h-4 text-[#EF4444]" />
-                </Button>
-              </div>
-              {documento.progress < 100 && (
-                <Progress value={documento.progress} className="h-1" />
+    <div className={`flex items-center justify-between p-3 border rounded-lg transition-colors ${
+        documento.uploaded ? "bg-green-50/50 border-green-200" : "bg-white border-zinc-200"
+      }`}>
+      <div className="flex items-center gap-3">
+        {/* Icono */}
+        <div className={`flex items-center justify-center w-10 h-10 rounded-full shrink-0 ${
+            documento.uploaded ? "bg-green-100 text-green-600" : "bg-zinc-100 text-zinc-500"
+          }`}>
+           {documento.uploaded ? <CheckCircle2 className="w-5 h-5" /> : <FileText className="w-5 h-5" />}
+        </div>
+        
+        {/* Info */}
+        <div className="flex flex-col">
+          <div className="flex items-center gap-2 flex-wrap">
+            <p className="text-sm font-medium text-zinc-700">{documento.nombre}</p>
+             {documento.ayuda && (
+                <TooltipProvider delayDuration={0}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-primary transition-colors" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="max-w-[250px] text-xs leading-normal">{documento.ayuda}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+             )}
+             {documento.requerido && !documento.uploaded && (
+                <Badge variant="outline" className="text-xs h-5 border-red-200 text-red-600 bg-red-50 font-medium">
+                  Requerido
+                </Badge>
               )}
-            </div>
+          </div>
+          <p className="text-xs text-zinc-500 truncate max-w-[200px] sm:max-w-xs">
+             {documento.uploaded 
+                ? documento.archivo?.name 
+                : `${documento.tipo} • Máx. ${documento.maxSize}MB`}
+          </p>
+          {documento.progress > 0 && documento.progress < 100 && (
+             <Progress value={documento.progress} className="h-1 w-24 mt-1" />
           )}
         </div>
       </div>
-    </Card>
+
+      {/* Acción */}
+      <div className="ml-2">
+         <input
+            type="file"
+            id={`file-${documento.id}`}
+            className="hidden"
+            onChange={handleFileChange}
+            accept={documento.tipo === "PDF/JPG/PNG" ? ".pdf,.jpg,.jpeg,.png" : documento.tipo === "PDF/Excel" ? ".pdf,.xlsx,.xls" : "*"}
+            disabled={documento.uploaded} 
+          />
+          
+          {documento.uploaded ? (
+             <Button 
+               variant="ghost" 
+               size="sm" 
+               onClick={() => onEliminar(documento.id)}
+               className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
+             >
+                <Trash2 className="w-4 h-4" />
+             </Button>
+          ) : (
+            <Button variant="outline" size="sm" asChild className="cursor-pointer h-8 text-xs border-zinc-300 hover:border-zinc-400 hover:bg-zinc-50">
+               <label htmlFor={`file-${documento.id}`}>
+                 <Upload className="w-3 h-3 mr-2" />
+                 Subir
+               </label>
+            </Button>
+          )}
+      </div>
+    </div>
   );
 }

@@ -63,12 +63,12 @@ const InputFile = React.forwardRef<HTMLInputElement, InputFileProps>(
                 className="h-auto p-0"
                 onClick={() => inputRef.current?.click()}
               >
-                Select a file
+                Selecciona un archivo
               </Button>
-              {" "}or drag and drop
+              {" "}o arrastra y suelta
             </p>
             <p className="text-muted-foreground text-xs">
-              {maxFiles === 1 ? "Maximum 1 file" : `Maximum ${maxFiles} files`}
+              {maxFiles === 1 ? "Máximo 1 archivo" : `Máximo ${maxFiles} archivos`}
             </p>
           </div>
           <input
@@ -103,7 +103,7 @@ const InputFile = React.forwardRef<HTMLInputElement, InputFileProps>(
                   className="shrink-0"
                 >
                   <X className="size-4" />
-                  <span className="sr-only">Remove file</span>
+                  <span className="sr-only">Eliminar archivo</span>
                 </Button>
               </div>
             ))}

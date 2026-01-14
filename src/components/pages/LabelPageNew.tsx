@@ -55,7 +55,7 @@ export function LabelDemo() {
 }`}
       
       // Usage
-      usage="Import the Label component from @/components/ui/label. Always use the htmlFor prop linked to the form control's id for accessibility. This allows clicking the label to activate the associated control."
+      usage="Importa el componente Label desde @/components/ui/label. Siempre usa el prop htmlFor vinculado al id del control de formulario para accesibilidad. Esto permite que al hacer clic en el label se active el control asociado."
       usageCode={`import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
@@ -73,25 +73,25 @@ function FormField() {
         {
           name: "htmlFor",
           type: "string",
-          description: "ID of the associated form control",
+          description: "ID del control de formulario asociado",
           required: true,
         },
         {
           name: "children",
           type: "ReactNode",
-          description: "Content of the label",
+          description: "Contenido del label",
           required: true,
         },
         {
           name: "className",
           type: "string",
-          description: "Additional CSS classes",
+          description: "Clases CSS adicionales",
         },
         {
           name: "asChild",
           type: "boolean",
           default: "false",
-          description: "Renders as the child of the label",
+          description: "Renderiza como hijo del label",
         },
       ]}
       
@@ -99,7 +99,7 @@ function FormField() {
       examples={[
         {
           title: "With Input",
-          description: "Basic label associated with an input",
+          description: "Label básico asociado a un input",
           preview: (
             <div className="w-full max-w-md space-y-2">
               <Label htmlFor="name">Full Name</Label>
@@ -120,7 +120,7 @@ export function LabelWithInput() {
         },
         {
           title: "Required Field Indicator",
-          description: "Label with asterisk for required fields",
+          description: "Label con asterisco para campos requeridos",
           preview: (
             <div className="w-full max-w-md space-y-4">
               <div className="space-y-2">
@@ -172,7 +172,7 @@ export function RequiredFields() {
         },
         {
           title: "With Helper Text",
-          description: "Label with additional helper text",
+          description: "Label con texto de ayuda adicional",
           preview: (
             <div className="w-full max-w-md space-y-2">
               <Label htmlFor="bio">Biography</Label>
@@ -203,7 +203,7 @@ export function LabelWithHelper() {
         },
         {
           title: "With Checkbox",
-          description: "Clickable label associated with checkbox",
+          description: "Label clickeable asociado a checkbox",
           preview: (
             <div className="w-full max-w-md space-y-3">
               <div className="flex items-center space-x-2">
@@ -245,7 +245,7 @@ export function LabelWithCheckbox() {
         },
         {
           title: "With Radio Group",
-          description: "Labels associated with radio buttons",
+          description: "Labels asociados a radio buttons",
           preview: (
             <div className="w-full max-w-md">
               <Label className="mb-3 block">Choose a plan</Label>
@@ -306,7 +306,7 @@ export function LabelWithRadio() {
         },
         {
           title: "With Switch",
-          description: "Labels for switch controls",
+          description: "Labels para controles de switch",
           preview: (
             <div className="w-full max-w-md space-y-4">
               <div className="flex items-center justify-between">
@@ -360,7 +360,7 @@ export function LabelWithSwitch() {
         },
         {
           title: "With Tooltip",
-          description: "Label with informative tooltip",
+          description: "Label con tooltip informativo",
           preview: (
             <div className="w-full max-w-md space-y-2">
               <div className="flex items-center gap-2">
@@ -407,7 +407,7 @@ export function LabelWithTooltip() {
         },
         {
           title: "Disabled Label",
-          description: "Label for disabled controls",
+          description: "Label para controles deshabilitados",
           preview: (
             <div className="w-full max-w-md space-y-4">
               <div className="space-y-2">

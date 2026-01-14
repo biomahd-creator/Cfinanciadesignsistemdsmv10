@@ -1,111 +1,194 @@
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
-import { cn } from "../../lib/utils";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { Badge } from "../ui/badge";
 
-export interface HeatmapData {
-  date: Date;
+/**
+ * 🔒 ADVANCED COMPONENT - Heatmap
+ * 
+ * Mapa de calor para visualizar datos matriciales
+ * Ideal para patrones temporales, correlaciones, actividad
+ * 
+ * Ubicación: /components/advanced/Heatmap.tsx
+ * Categoría: Data Visualization - Prioridad Media
+ * Uso: Analytics, activity tracking, patrones de uso
+ */
+
+export interface HeatmapCell {
+  row: string;
+  col: string;
   value: number;
   label?: string;
 }
 
 interface HeatmapProps {
-  data: HeatmapData[];
-  startDate?: Date;
-  endDate?: Date;
-  colorScale?: { min: string; max: string };
+  data: HeatmapCell[];
+  rows: string[];
+  columns: string[];
+  title?: string;
+  description?: string;
+  colorScale?: {
+    low: string;
+    medium: string;
+    high: string;
+  };
+  showValues?: boolean;
+  showLabels?: boolean;
   cellSize?: number;
-  cellGap?: number;
-  className?: string;
+  min?: number;
+  max?: number;
 }
 
 export function Heatmap({
   data,
-  startDate = new Date(new Date().getFullYear(), 0, 1),
-  endDate = new Date(),
-  colorScale = { min: "#f0f0f0", max: "#DEFB49" },
-  cellSize = 12,
-  cellGap = 3,
-  className,
+  rows,
+  columns,
+  title,
+  description,
+  colorScale = {
+    low: "#dbeafe",    // blue-100
+    medium: "#3b82f6", // blue-500
+    high: "#1e40af"    // blue-800
+  },
+  showValues = true,
+  showLabels = true,
+  cellSize = 60,
+  min,
+  max
 }: HeatmapProps) {
-  const getIntensityColor = (value: number, max: number) => {
-    if (value === 0) return colorScale.min;
-    const intensity = Math.min(value / max, 1);
-    // Simple interpolation between min and max colors
-    return `rgba(222, 251, 73, ${intensity})`;
+  // Calculate min and max if not provided
+  const values = data.map(d => d.value);
+  const minValue = min ?? Math.min(...values);
+  const maxValue = max ?? Math.max(...values);
+
+  const getColor = (value: number) => {
+    if (maxValue === minValue) return colorScale.medium;
+    
+    const normalized = (value - minValue) / (maxValue - minValue);
+    
+    if (normalized < 0.33) {
+      return colorScale.low;
+    } else if (normalized < 0.66) {
+      return colorScale.medium;
+    } else {
+      return colorScale.high;
+    }
   };
 
-  const maxValue = Math.max(...data.map((d) => d.value));
+  const getCellData = (row: string, col: string) => {
+    return data.find(d => d.row === row && d.col === col);
+  };
 
-  // Generate all days between start and end
-  const days: Date[] = [];
-  const current = new Date(startDate);
-  while (current <= endDate) {
-    days.push(new Date(current));
-    current.setDate(current.getDate() + 1);
+  const getTextColor = (value: number) => {
+    const normalized = (value - minValue) / (maxValue - minValue);
+    return normalized > 0.5 ? "#ffffff" : "hsl(var(--foreground))";
+  };
+
+  const content = (
+    <div className="overflow-x-auto">
+      <div className="inline-block min-w-full">
+        <table className="border-collapse">
+          <thead>
+            <tr>
+              <th className="border border-border p-2 bg-muted/30"></th>
+              {columns.map(col => (
+                <th 
+                  key={col} 
+                  className="border border-border p-2 text-sm font-semibold bg-muted/30"
+                  style={{ 
+                    width: `var(--heat-cell-size, ${cellSize}px)`, 
+                    height: `var(--heat-cell-size, ${cellSize}px)` 
+                  }}
+                >
+                  {showLabels ? col : ""}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map(row => (
+              <tr key={row}>
+                <td 
+                  className="border border-border p-2 text-sm font-semibold bg-muted/30"
+                  style={{ width: `var(--heat-cell-size, ${cellSize}px)` }}
+                >
+                  {showLabels ? row : ""}
+                </td>
+                {columns.map(col => {
+                  const cellData = getCellData(row, col);
+                  const value = cellData?.value ?? 0;
+                  const bgColor = getColor(value);
+                  const textColor = getTextColor(value);
+
+                  return (
+                    <td
+                      key={`${row}-${col}`}
+                      className="border border-border p-2 text-center transition-all hover:opacity-80 cursor-pointer"
+                      style={{ 
+                        "--heat-bg": bgColor,
+                        "--heat-color": textColor,
+                        "--heat-cell-size": `${cellSize}px`,
+                        width: `var(--heat-cell-size)`,
+                        height: `var(--heat-cell-size)`
+                      } as React.CSSProperties}
+                      data-heat-bg={true}
+                      data-heat-color={true}
+                      title={cellData?.label || `${row} - ${col}: ${value}`}
+                    >
+                      {showValues && (
+                        <div className="text-sm font-medium">
+                          {value}
+                        </div>
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Legend */}
+      <div className="flex items-center justify-center gap-4 mt-4">
+        <span className="text-sm text-muted-foreground">Min: {minValue}</span>
+        <div className="flex gap-1">
+          <div 
+            className="w-8 h-4 rounded-sm"
+            style={{ backgroundColor: `var(--legend-low, ${colorScale.low})` }}
+          />
+          <div 
+            className="w-8 h-4 rounded-sm"
+            style={{ backgroundColor: `var(--legend-medium, ${colorScale.medium})` }}
+          />
+          <div 
+            className="w-8 h-4 rounded-sm"
+            style={{ backgroundColor: `var(--legend-high, ${colorScale.high})` }}
+          />
+        </div>
+        <span className="text-sm text-muted-foreground">Max: {maxValue}</span>
+      </div>
+    </div>
+  );
+
+  if (title || description) {
+    return (
+      <Card className="w-full">
+        <CardHeader>
+          <div className="flex items-start justify-between">
+            <div>
+              <CardTitle>{title}</CardTitle>
+              {description && <CardDescription>{description}</CardDescription>}
+            </div>
+            <Badge variant="secondary">
+              {data.length} data points
+            </Badge>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {content}
+        </CardContent>
+      </Card>
+    );
   }
 
-  // Group by weeks
-  const weeks: Date[][] = [];
-  let currentWeek: Date[] = [];
-  days.forEach((day, index) => {
-    currentWeek.push(day);
-    if (day.getDay() === 6 || index === days.length - 1) {
-      weeks.push([...currentWeek]);
-      currentWeek = [];
-    }
-  });
-
-  const getDataForDate = (date: Date) => {
-    return data.find(
-      (d) => d.date.toDateString() === date.toDateString()
-    );
-  };
-
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-  };
-
-  return (
-    <TooltipProvider>
-      <div className={cn("inline-block", className)}>
-        <div className="flex gap-1">
-          {weeks.map((week, weekIndex) => (
-            <div key={weekIndex} className="flex flex-col gap-1">
-              {week.map((day, dayIndex) => {
-                const dataPoint = getDataForDate(day);
-                const value = dataPoint?.value || 0;
-                const color = getIntensityColor(value, maxValue);
-
-                return (
-                  <Tooltip key={dayIndex}>
-                    <TooltipTrigger asChild>
-                      <div
-                        className="rounded-sm cursor-pointer hover:ring-2 hover:ring-primary transition-all"
-                        style={{
-                          width: cellSize,
-                          height: cellSize,
-                          backgroundColor: color,
-                        }}
-                      />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <div className="text-xs">
-                        <div className="font-medium">{formatDate(day)}</div>
-                        <div className="text-muted-foreground">
-                          {dataPoint?.label || `${value} contributions`}
-                        </div>
-                      </div>
-                    </TooltipContent>
-                  </Tooltip>
-                );
-              })}
-            </div>
-          ))}
-        </div>
-      </div>
-    </TooltipProvider>
-  );
+  return content;
 }

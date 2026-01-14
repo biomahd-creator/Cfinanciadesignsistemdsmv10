@@ -8,7 +8,7 @@ export function AvatarPage() {
     <div className="space-y-8 max-w-4xl">
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <h2 className="text-4xl font-semibold">Avatar</h2>
+          <h2 className="text-2xl font-medium">Avatar</h2>
           <Badge>Data Display</Badge>
         </div>
         <p className="text-muted-foreground">

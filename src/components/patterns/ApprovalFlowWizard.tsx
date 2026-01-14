@@ -23,89 +23,89 @@ import { FactoringCalculator } from "./FactoringCalculator";
 
 type Step = 1 | 2 | 3 | 4 | 5;
 
-interface SelectedInvoice {
+interface FacturaSeleccionada {
   id: string;
-  client: string;
-  amount: number;
-  issueDate: string;
-  dueDate: string;
+  cliente: string;
+  monto: number;
+  fechaEmision: string;
+  fechaVencimiento: string;
 }
 
 const steps = [
   { 
     id: 1, 
-    title: "Invoice Selection", 
-    description: "Select invoices to finance",
+    title: "Selección de Facturas", 
+    description: "Selecciona las facturas a financiar",
     icon: FileText 
   },
   { 
     id: 2, 
-    title: "Credit Limit Validation", 
-    description: "Verify credit limit availability",
+    title: "Validación de Cupos", 
+    description: "Verifica disponibilidad de límite",
     icon: DollarSign 
   },
   { 
     id: 3, 
-    title: "Calculation & Terms", 
-    description: "Calculate commission and amount to receive",
+    title: "Cálculo y Términos", 
+    description: "Calcula comisión y monto a recibir",
     icon: Calculator 
   },
   { 
     id: 4, 
-    title: "Review", 
-    description: "Review and confirm operation",
+    title: "Revisión", 
+    description: "Revisa y confirma la operación",
     icon: Eye 
   },
   { 
     id: 5, 
-    title: "Confirmation", 
-    description: "Operation created successfully",
+    title: "Confirmación", 
+    description: "Operación creada exitosamente",
     icon: CheckCircle 
   },
 ];
 
-// Mock available invoices
-const availableInvoices: SelectedInvoice[] = [
+// Mock facturas disponibles
+const facturasDisponibles: FacturaSeleccionada[] = [
   {
     id: "F-2025-001",
-    client: "Distribuidora XYZ S.A.",
-    amount: 25000,
-    issueDate: "2025-12-01",
-    dueDate: "2025-01-15"
+    cliente: "Distribuidora XYZ S.A.",
+    monto: 25000,
+    fechaEmision: "2025-12-01",
+    fechaVencimiento: "2025-01-15"
   },
   {
     id: "F-2025-002",
-    client: "Distribuidora XYZ S.A.",
-    amount: 15000,
-    issueDate: "2025-12-05",
-    dueDate: "2025-01-20"
+    cliente: "Distribuidora XYZ S.A.",
+    monto: 15000,
+    fechaEmision: "2025-12-05",
+    fechaVencimiento: "2025-01-20"
   },
   {
     id: "F-2025-003",
-    client: "Distribuidora XYZ S.A.",
-    amount: 10000,
-    issueDate: "2025-12-10",
-    dueDate: "2025-01-25"
+    cliente: "Distribuidora XYZ S.A.",
+    monto: 10000,
+    fechaEmision: "2025-12-10",
+    fechaVencimiento: "2025-01-25"
   },
 ];
 
 export function ApprovalFlowWizard() {
   const [currentStep, setCurrentStep] = useState<Step>(1);
-  const [selectedInvoices, setSelectedInvoices] = useState<SelectedInvoice[]>([]);
-  const [creditValidated, setCreditValidated] = useState<boolean>(false);
-  const [calculationCompleted, setCalculationCompleted] = useState<boolean>(false);
+  const [facturasSeleccionadas, setFacturasSeleccionadas] = useState<FacturaSeleccionada[]>([]);
+  const [cupoValidado, setCupoValidado] = useState<boolean>(false);
+  const [calculoCompletado, setCalculoCompletado] = useState<boolean>(false);
 
-  const totalAmount = selectedInvoices.reduce((sum, f) => sum + f.amount, 0);
+  const montoTotal = facturasSeleccionadas.reduce((sum, f) => sum + f.monto, 0);
   const progress = (currentStep / 5) * 100;
 
   const canProceed = () => {
     switch (currentStep) {
       case 1:
-        return selectedInvoices.length > 0;
+        return facturasSeleccionadas.length > 0;
       case 2:
-        return creditValidated;
+        return cupoValidado;
       case 3:
-        return calculationCompleted;
+        return calculoCompletado;
       case 4:
         return true;
       default:
@@ -125,19 +125,19 @@ export function ApprovalFlowWizard() {
     }
   };
 
-  const handleInvoiceToggle = (invoice: SelectedInvoice) => {
-    setSelectedInvoices((prev) => {
-      const exists = prev.find((f) => f.id === invoice.id);
+  const handleFacturaToggle = (factura: FacturaSeleccionada) => {
+    setFacturasSeleccionadas((prev) => {
+      const exists = prev.find((f) => f.id === factura.id);
       if (exists) {
-        return prev.filter((f) => f.id !== invoice.id);
+        return prev.filter((f) => f.id !== factura.id);
       } else {
-        return [...prev, invoice];
+        return [...prev, factura];
       }
     });
   };
 
   const handleConfirm = () => {
-    // API call logic would go here
+    // Aquí iría la lógica de confirmación (API call, etc.)
     setCurrentStep(5);
   };
 
@@ -148,13 +148,13 @@ export function ApprovalFlowWizard() {
         <CardHeader>
           <div className="flex items-center justify-between mb-4">
             <div>
-              <CardTitle>Factoring Approval Process</CardTitle>
+              <CardTitle>Proceso de Aprobación de Factoring</CardTitle>
               <CardDescription>
-                Step {currentStep} of 5 - {steps[currentStep - 1].description}
+                Paso {currentStep} de 5 - {steps[currentStep - 1].description}
               </CardDescription>
             </div>
             <Badge variant="default" className="text-sm px-3 py-1">
-              {Math.round(progress)}% Complete
+              {Math.round(progress)}% Completado
             </Badge>
           </div>
           <Progress value={progress} className="h-2" />
@@ -214,24 +214,24 @@ export function ApprovalFlowWizard() {
           <CardDescription>{steps[currentStep - 1].description}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Step 1: Invoice Selection */}
+          {/* Step 1: Selección de Facturas */}
           {currentStep === 1 && (
             <div className="space-y-4">
               <Alert className="border-primary/50 bg-primary/5">
                 <Info className="h-4 w-4 text-primary" />
                 <AlertDescription className="text-sm">
-                  Select one or more invoices to create the factoring operation.
+                  Selecciona una o más facturas para crear la operación de factoring.
                 </AlertDescription>
               </Alert>
 
               <div className="space-y-3">
-                {availableInvoices.map((invoice) => {
-                  const isSelected = selectedInvoices.some((f) => f.id === invoice.id);
+                {facturasDisponibles.map((factura) => {
+                  const isSelected = facturasSeleccionadas.some((f) => f.id === factura.id);
                   
                   return (
                     <div
-                      key={invoice.id}
-                      onClick={() => handleInvoiceToggle(invoice)}
+                      key={factura.id}
+                      onClick={() => handleFacturaToggle(factura)}
                       className={`
                         p-4 rounded-lg border-2 cursor-pointer transition-all
                         ${isSelected 
@@ -255,14 +255,14 @@ export function ApprovalFlowWizard() {
                             )}
                           </div>
                           <div>
-                            <p className="font-semibold">{invoice.id}</p>
-                            <p className="text-sm text-muted-foreground">{invoice.client}</p>
+                            <p className="font-semibold">{factura.id}</p>
+                            <p className="text-sm text-muted-foreground">{factura.cliente}</p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <p className="text-xl font-semibold">${invoice.amount.toLocaleString()}</p>
+                          <p className="text-xl font-semibold">${factura.monto.toLocaleString()}</p>
                           <p className="text-xs text-muted-foreground">
-                            Due: {invoice.dueDate}
+                            Vence: {factura.fechaVencimiento}
                           </p>
                         </div>
                       </div>
@@ -271,18 +271,18 @@ export function ApprovalFlowWizard() {
                 })}
               </div>
 
-              {selectedInvoices.length > 0 && (
+              {facturasSeleccionadas.length > 0 && (
                 <Card className="bg-muted/20">
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-muted-foreground">Selected invoices</p>
-                        <p className="text-2xl font-semibold">{selectedInvoices.length}</p>
+                        <p className="text-sm text-muted-foreground">Facturas seleccionadas</p>
+                        <p className="text-2xl font-semibold">{facturasSeleccionadas.length}</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm text-muted-foreground">Total amount</p>
+                        <p className="text-sm text-muted-foreground">Monto total</p>
                         <p className="text-2xl font-semibold text-primary">
-                          ${totalAmount.toLocaleString()}
+                          ${montoTotal.toLocaleString()}
                         </p>
                       </div>
                     </div>
@@ -292,13 +292,13 @@ export function ApprovalFlowWizard() {
             </div>
           )}
 
-          {/* Step 2: Credit Limit Validation */}
+          {/* Step 2: Validación de Cupos */}
           {currentStep === 2 && (
             <div className="space-y-4">
               <Alert className="border-primary/50 bg-primary/5">
                 <Info className="h-4 w-4 text-primary" />
                 <AlertDescription className="text-sm">
-                  Verify that the total amount (${totalAmount.toLocaleString()}) is within the available credit limit.
+                  Verifica que el monto total (${montoTotal.toLocaleString()}) esté dentro del cupo disponible.
                 </AlertDescription>
               </Alert>
 
@@ -306,28 +306,28 @@ export function ApprovalFlowWizard() {
                 cupoTotal={500000}
                 cupoUtilizado={328000}
                 onValidate={(monto, isValid) => {
-                  setCreditValidated(isValid);
+                  setCupoValidado(isValid);
                 }}
               />
 
-              {creditValidated && (
+              {cupoValidado && (
                 <Alert className="bg-green-500/10 border-green-500/50">
                   <CheckCircle className="h-4 w-4 text-green-500" />
                   <AlertDescription className="text-sm text-green-700 dark:text-green-400">
-                    ✓ Credit limit validated successfully. You can proceed to the next step.
+                    ✓ Cupo validado correctamente. Puedes continuar al siguiente paso.
                   </AlertDescription>
                 </Alert>
               )}
             </div>
           )}
 
-          {/* Step 3: Calculation & Terms */}
+          {/* Step 3: Cálculo y Términos */}
           {currentStep === 3 && (
             <div className="space-y-4">
               <Alert className="border-primary/50 bg-primary/5">
                 <Info className="h-4 w-4 text-primary" />
                 <AlertDescription className="text-sm">
-                  Configure operation terms and calculate the commission.
+                  Configura los términos de la operación y calcula la comisión.
                 </AlertDescription>
               </Alert>
 
@@ -335,113 +335,113 @@ export function ApprovalFlowWizard() {
 
               <div className="flex items-center justify-center pt-4">
                 <Button
-                  onClick={() => setCalculationCompleted(true)}
-                  disabled={calculationCompleted}
+                  onClick={() => setCalculoCompletado(true)}
+                  disabled={calculoCompletado}
                 >
-                  {calculationCompleted ? (
+                  {calculoCompletado ? (
                     <>
                       <CheckCircle className="h-4 w-4 mr-2" />
-                      Calculation Confirmed
+                      Cálculo Confirmado
                     </>
                   ) : (
-                    "Confirm Calculation"
+                    "Confirmar Cálculo"
                   )}
                 </Button>
               </div>
             </div>
           )}
 
-          {/* Step 4: Review */}
+          {/* Step 4: Revisión */}
           {currentStep === 4 && (
             <div className="space-y-4">
               <Alert className="border-primary/50 bg-primary/5">
                 <Info className="h-4 w-4 text-primary" />
                 <AlertDescription className="text-sm">
-                  Review all details before creating the operation.
+                  Revisa todos los detalles antes de crear la operación.
                 </AlertDescription>
               </Alert>
 
               <div className="space-y-6">
-                {/* Invoices */}
+                {/* Facturas */}
                 <Card className="elevation-1">
                   <CardHeader>
-                    <CardTitle className="text-lg">Selected Invoices</CardTitle>
+                    <CardTitle className="text-lg">Facturas Seleccionadas</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
-                      {selectedInvoices.map((invoice) => (
+                      {facturasSeleccionadas.map((factura) => (
                         <div
-                          key={invoice.id}
+                          key={factura.id}
                           className="flex items-center justify-between p-3 rounded-lg border bg-muted/20"
                         >
                           <div>
-                            <p className="font-semibold">{invoice.id}</p>
-                            <p className="text-sm text-muted-foreground">{invoice.client}</p>
+                            <p className="font-semibold">{factura.id}</p>
+                            <p className="text-sm text-muted-foreground">{factura.cliente}</p>
                           </div>
-                          <p className="font-semibold">${invoice.amount.toLocaleString()}</p>
+                          <p className="font-semibold">${factura.monto.toLocaleString()}</p>
                         </div>
                       ))}
                       <Separator />
                       <div className="flex items-center justify-between p-3">
-                        <p className="font-semibold">Total Amount</p>
+                        <p className="font-semibold">Monto Total</p>
                         <p className="text-xl font-bold text-primary">
-                          ${totalAmount.toLocaleString()}
+                          ${montoTotal.toLocaleString()}
                         </p>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                {/* Terms */}
+                {/* Términos */}
                 <Card className="elevation-1">
                   <CardHeader>
-                    <CardTitle className="text-lg">Operation Terms</CardTitle>
+                    <CardTitle className="text-lg">Términos de la Operación</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
                       <div className="flex items-center justify-between p-3 rounded-lg border">
-                        <span className="text-sm text-muted-foreground">Term</span>
-                        <span className="font-semibold">30 days</span>
+                        <span className="text-sm text-muted-foreground">Plazo</span>
+                        <span className="font-semibold">30 días</span>
                       </div>
                       <div className="flex items-center justify-between p-3 rounded-lg border">
-                        <span className="text-sm text-muted-foreground">Monthly rate</span>
+                        <span className="text-sm text-muted-foreground">Tasa mensual</span>
                         <span className="font-semibold">2.5%</span>
                       </div>
                       <div className="flex items-center justify-between p-3 rounded-lg border">
-                        <span className="text-sm text-muted-foreground">Estimated commission</span>
+                        <span className="text-sm text-muted-foreground">Comisión estimada</span>
                         <span className="font-semibold text-destructive">
-                          ${(totalAmount * 0.025).toLocaleString()}
+                          ${(montoTotal * 0.025).toLocaleString()}
                         </span>
                       </div>
                       <div className="flex items-center justify-between p-3 rounded-lg border bg-green-500/10">
                         <span className="font-semibold text-green-700 dark:text-green-400">
-                          Amount to receive
+                          Monto a recibir
                         </span>
                         <span className="text-xl font-bold text-green-600 dark:text-green-400">
-                          ${(totalAmount * 0.975).toLocaleString()}
+                          ${(montoTotal * 0.975).toLocaleString()}
                         </span>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                {/* Confirmation button */}
+                {/* Botón de confirmación */}
                 <Alert variant="default" className="border-yellow-500/50 bg-yellow-500/10">
                   <AlertCircle className="h-4 w-4 text-yellow-600" />
                   <AlertDescription className="text-sm text-yellow-700 dark:text-yellow-400">
-                    By confirming, the operation will be created and sent for approval.
+                    Al confirmar, se creará la operación y se enviará para aprobación.
                   </AlertDescription>
                 </Alert>
 
                 <Button onClick={handleConfirm} className="w-full" size="lg">
                   <Send className="h-4 w-4 mr-2" />
-                  Create Operation
+                  Crear Operación
                 </Button>
               </div>
             </div>
           )}
 
-          {/* Step 5: Confirmation */}
+          {/* Step 5: Confirmación */}
           {currentStep === 5 && (
             <div className="space-y-6 text-center py-8">
               <div className="flex justify-center">
@@ -451,48 +451,48 @@ export function ApprovalFlowWizard() {
               </div>
 
               <div>
-                <h3 className="text-2xl font-semibold mb-2">Operation Created Successfully!</h3>
+                <h3 className="text-2xl font-semibold mb-2">¡Operación Creada Exitosamente!</h3>
                 <p className="text-muted-foreground">
-                  The operation has been registered and is pending approval.
+                  La operación ha sido registrada y está pendiente de aprobación.
                 </p>
               </div>
 
               <Card className="elevation-1 text-left">
                 <CardHeader>
-                  <CardTitle className="text-lg">Operation Details</CardTitle>
+                  <CardTitle className="text-lg">Detalles de la Operación</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex items-center justify-between p-3 rounded-lg bg-muted/20">
-                    <span className="text-sm text-muted-foreground">Operation ID</span>
+                    <span className="text-sm text-muted-foreground">ID de Operación</span>
                     <Badge variant="default">OP-2025-157</Badge>
                   </div>
                   <div className="flex items-center justify-between p-3 rounded-lg bg-muted/20">
-                    <span className="text-sm text-muted-foreground">Invoices included</span>
-                    <span className="font-semibold">{selectedInvoices.length}</span>
+                    <span className="text-sm text-muted-foreground">Facturas incluidas</span>
+                    <span className="font-semibold">{facturasSeleccionadas.length}</span>
                   </div>
                   <div className="flex items-center justify-between p-3 rounded-lg bg-muted/20">
-                    <span className="text-sm text-muted-foreground">Total amount</span>
-                    <span className="font-semibold">${totalAmount.toLocaleString()}</span>
+                    <span className="text-sm text-muted-foreground">Monto total</span>
+                    <span className="font-semibold">${montoTotal.toLocaleString()}</span>
                   </div>
                   <div className="flex items-center justify-between p-3 rounded-lg bg-muted/20">
-                    <span className="text-sm text-muted-foreground">Status</span>
+                    <span className="text-sm text-muted-foreground">Estado</span>
                     <Badge variant="secondary" className="bg-yellow-500/10 text-yellow-600 border-yellow-500/20">
-                      In Progress
+                      En Proceso
                     </Badge>
                   </div>
                   <div className="flex items-center justify-between p-3 rounded-lg bg-muted/20">
-                    <span className="text-sm text-muted-foreground">Creation date</span>
-                    <span className="font-semibold">{new Date().toLocaleDateString('en-US')}</span>
+                    <span className="text-sm text-muted-foreground">Fecha de creación</span>
+                    <span className="font-semibold">{new Date().toLocaleDateString('es-ES')}</span>
                   </div>
                 </CardContent>
               </Card>
 
               <div className="flex gap-3">
                 <Button variant="outline" className="flex-1" onClick={() => window.location.reload()}>
-                  Create New Operation
+                  Crear Nueva Operación
                 </Button>
                 <Button className="flex-1">
-                  View Operation
+                  Ver Operación
                 </Button>
               </div>
             </div>
@@ -509,18 +509,18 @@ export function ApprovalFlowWizard() {
             disabled={currentStep === 1}
           >
             <ChevronLeft className="h-4 w-4 mr-2" />
-            Previous
+            Anterior
           </Button>
 
           <div className="text-sm text-muted-foreground">
-            Step {currentStep} of 5
+            Paso {currentStep} de 5
           </div>
 
           <Button
             onClick={handleNext}
             disabled={!canProceed()}
           >
-            {currentStep === 4 ? "Review" : "Next"}
+            {currentStep === 4 ? "Revisar" : "Siguiente"}
             <ChevronRight className="h-4 w-4 ml-2" />
           </Button>
         </div>

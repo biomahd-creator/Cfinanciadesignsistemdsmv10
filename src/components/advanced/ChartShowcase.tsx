@@ -1,30 +1,33 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../ui/card";
 import { Badge } from "../ui/badge";
+import { Separator } from "../ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import {
   LineChart,
   Line,
-  BarChart,
+  AreaChart,
+  Area,
+  BarChart as RechartsBarChart,
   Bar,
   PieChart,
   Pie,
-  AreaChart,
-  Area,
-  RadarChart,
-  Radar,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  ComposedChart,
+  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   Legend,
   ResponsiveContainer,
-  Cell,
+  ComposedChart,
+  RadarChart,
+  Radar,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
 } from "recharts";
-import { getThemeColor, getChartColorsMap, getBrandColors, getUIColors } from "../../lib/theme-utils";
+import { TrendingUp, TrendingDown, Users, DollarSign, ShoppingCart, Activity } from "lucide-react";
+import { ChartLegendItem } from "../business/ChartLegendItem";
+import { getThemeColor, getChartColorsMap, getUIColors } from "../../lib/theme-utils";
 
 // Data
 const lineData = [
@@ -152,8 +155,8 @@ export function ChartShowcase() {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle>Monthly Invoice Trend</CardTitle>
-                  <CardDescription>Status evolution by month</CardDescription>
+                  <CardTitle>Tendencia Mensual de Facturas</CardTitle>
+                  <CardDescription>Evolución de estados por mes</CardDescription>
                 </div>
                 <Badge variant="default">Multi-line</Badge>
               </div>
@@ -272,7 +275,7 @@ export function ChartShowcase() {
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={350}>
-                <BarChart data={barData}>
+                <RechartsBarChart data={barData}>
                   <CartesianGrid strokeDasharray="3 3" stroke={border} />
                   <XAxis 
                     dataKey="category" 
@@ -290,7 +293,7 @@ export function ChartShowcase() {
                     fill={primary} 
                     radius={[8, 8, 0, 0]}
                   />
-                </BarChart>
+                </RechartsBarChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
@@ -304,7 +307,7 @@ export function ChartShowcase() {
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={horizontalBarData} layout="vertical">
+                  <RechartsBarChart data={horizontalBarData} layout="vertical">
                     <CartesianGrid strokeDasharray="3 3" stroke={border} />
                     <XAxis type="number" tick={{ fill: muted }} />
                     <YAxis 
@@ -315,7 +318,7 @@ export function ChartShowcase() {
                     />
                     <Tooltip content={<CustomTooltip />} />
                     <Bar dataKey="value" fill={success} radius={[0, 8, 8, 0]} />
-                  </BarChart>
+                  </RechartsBarChart>
                 </ResponsiveContainer>
               </CardContent>
             </Card>
@@ -327,7 +330,7 @@ export function ChartShowcase() {
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={stackedBarData}>
+                  <RechartsBarChart data={stackedBarData}>
                     <CartesianGrid strokeDasharray="3 3" stroke={border} />
                     <XAxis dataKey="month" tick={{ fill: muted }} />
                     <YAxis tick={{ fill: muted }} />
@@ -336,7 +339,7 @@ export function ChartShowcase() {
                     <Bar dataKey="pequeña" stackId="a" fill={chart2} radius={[0, 0, 0, 0]} />
                     <Bar dataKey="mediana" stackId="a" fill={primary} radius={[0, 0, 0, 0]} />
                     <Bar dataKey="grande" stackId="a" fill={success} radius={[8, 8, 0, 0]} />
-                  </BarChart>
+                  </RechartsBarChart>
                 </ResponsiveContainer>
               </CardContent>
             </Card>
@@ -388,8 +391,8 @@ export function ChartShowcase() {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle>Quarterly Revenue</CardTitle>
-                  <CardDescription>Distribution by quarter (thousands USD)</CardDescription>
+                  <CardTitle>Ingresos Trimestrales</CardTitle>
+                  <CardDescription>Distribución por quarter (miles USD)</CardDescription>
                 </div>
                 <Badge variant="secondary">Donut Chart</Badge>
               </div>
@@ -616,13 +619,13 @@ export function ChartShowcase() {
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={barData}>
+                  <RechartsBarChart data={barData}>
                     <CartesianGrid strokeDasharray="3 3" stroke={border} />
                     <XAxis dataKey="category" tick={{ fill: muted }} />
                     <YAxis tick={{ fill: muted }} />
                     <Tooltip content={<CustomTooltip />} />
                     <Bar dataKey="count" fill={chart2} radius={[8, 8, 0, 0]} />
-                  </BarChart>
+                  </RechartsBarChart>
                 </ResponsiveContainer>
               </CardContent>
             </Card>
@@ -686,7 +689,7 @@ export function ChartShowcase() {
           <Card className="elevation-1">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-base">Monthly Invoices</CardTitle>
+                <CardTitle className="text-base">Facturas del Mes</CardTitle>
                 <Badge variant="outline" className="text-xs">150px</Badge>
               </div>
             </CardHeader>
@@ -719,8 +722,8 @@ export function ChartShowcase() {
                 </LineChart>
               </ResponsiveContainer>
               <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
-                <span>Jan - Jun 2024</span>
-                <span className="font-medium text-foreground">+25% vs previous month</span>
+                <span>Ene - Jun 2024</span>
+                <span className="font-medium text-foreground">+25% vs mes anterior</span>
               </div>
             </CardContent>
           </Card>
@@ -735,7 +738,7 @@ export function ChartShowcase() {
             </CardHeader>
             <CardContent className="pb-4">
               <ResponsiveContainer width="100%" height={180}>
-                <BarChart 
+                <RechartsBarChart 
                   data={barData.slice(0, 5)} 
                   layout="vertical"
                   margin={{ top: 0, right: 10, left: 0, bottom: 0 }}
@@ -764,7 +767,7 @@ export function ChartShowcase() {
                     radius={[0, 4, 4, 0]}
                     maxBarSize={20}
                   />
-                </BarChart>
+                </RechartsBarChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
@@ -801,16 +804,14 @@ export function ChartShowcase() {
                 </ResponsiveContainer>
                 <div className="space-y-1 mt-2">
                   {pieData.slice(0, 2).map((item, i) => (
-                    <div key={i} className="flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-1.5">
-                        <div 
-                          className="w-2 h-2 rounded-full" 
-                          style={{ backgroundColor: item.color }}
-                        />
-                        <span className="text-muted-foreground">{item.name}</span>
-                      </div>
-                      <span className="font-medium">{item.value}%</span>
-                    </div>
+                    <ChartLegendItem
+                      key={i}
+                      color={item.color}
+                      label={item.name}
+                      value={`${item.value}%`}
+                      shape="circle"
+                      size="sm"
+                    />
                   ))}
                 </div>
               </CardContent>
@@ -907,7 +908,7 @@ export function ChartShowcase() {
             </CardHeader>
             <CardContent className="pb-4">
               <ResponsiveContainer width="100%" height={200}>
-                <BarChart 
+                <RechartsBarChart 
                   data={stackedBarData} 
                   margin={{ top: 5, right: 5, left: -20, bottom: 0 }}
                 >
@@ -926,22 +927,13 @@ export function ChartShowcase() {
                   <Bar dataKey="pequeña" stackId="a" fill={chart2} radius={[0, 0, 0, 0]} maxBarSize={40} />
                   <Bar dataKey="mediana" stackId="a" fill={primary} radius={[0, 0, 0, 0]} maxBarSize={40} />
                   <Bar dataKey="grande" stackId="a" fill={success} radius={[4, 4, 0, 0]} maxBarSize={40} />
-                </BarChart>
+                </RechartsBarChart>
               </ResponsiveContainer>
               {/* Manual legend for better mobile UX */}
               <div className="flex items-center justify-center gap-4 mt-3 flex-wrap">
-                <div className="flex items-center gap-1.5 text-xs">
-                  <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: chart2 }} />
-                  <span className="text-muted-foreground">Pequeña</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-xs">
-                  <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: primary }} />
-                  <span className="text-muted-foreground">Mediana</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-xs">
-                  <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: success }} />
-                  <span className="text-muted-foreground">Grande</span>
-                </div>
+                <ChartLegendItem color="chart2" label="Pequeña" />
+                <ChartLegendItem color="primary" label="Mediana" />
+                <ChartLegendItem color="success" label="Grande" />
               </div>
             </CardContent>
           </Card>

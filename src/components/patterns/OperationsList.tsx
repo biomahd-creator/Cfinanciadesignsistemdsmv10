@@ -49,7 +49,7 @@ interface Operation {
   estado: OperationStatus;
   fechaCreacion: string;
   fechaVencimiento: string;
-  invoices: number;
+  facturas: number;
   ejecutivo: string;
 }
 
@@ -66,7 +66,7 @@ const mockOperations: Operation[] = [
     estado: "Endosada",
     fechaCreacion: "2025-12-18",
     fechaVencimiento: "2025-01-17",
-    invoices: 5,
+    facturas: 5,
     ejecutivo: "María González"
   },
   {
@@ -80,7 +80,7 @@ const mockOperations: Operation[] = [
     estado: "En Proceso",
     fechaCreacion: "2025-12-17",
     fechaVencimiento: "2025-01-31",
-    invoices: 3,
+    facturas: 3,
     ejecutivo: "Juan Pérez"
   },
   {
@@ -94,7 +94,7 @@ const mockOperations: Operation[] = [
     estado: "Liquidada",
     fechaCreacion: "2025-12-16",
     fechaVencimiento: "2025-01-15",
-    invoices: 8,
+    facturas: 8,
     ejecutivo: "María González"
   },
   {
@@ -108,7 +108,7 @@ const mockOperations: Operation[] = [
     estado: "Negociada",
     fechaCreacion: "2025-12-15",
     fechaVencimiento: "2025-02-13",
-    invoices: 6,
+    facturas: 6,
     ejecutivo: "Carlos Rojas"
   },
   {
@@ -122,7 +122,7 @@ const mockOperations: Operation[] = [
     estado: "Creada",
     fechaCreacion: "2025-12-14",
     fechaVencimiento: "2025-01-13",
-    invoices: 4,
+    facturas: 4,
     ejecutivo: "Ana Martínez"
   },
   {
@@ -136,7 +136,7 @@ const mockOperations: Operation[] = [
     estado: "Rechazada",
     fechaCreacion: "2025-12-13",
     fechaVencimiento: "2025-01-27",
-    invoices: 2,
+    facturas: 2,
     ejecutivo: "Juan Pérez"
   },
   {
@@ -150,7 +150,7 @@ const mockOperations: Operation[] = [
     estado: "Endosada",
     fechaCreacion: "2025-12-12",
     fechaVencimiento: "2025-02-10",
-    invoices: 10,
+    facturas: 10,
     ejecutivo: "María González"
   },
   {
@@ -164,7 +164,7 @@ const mockOperations: Operation[] = [
     estado: "Liquidada",
     fechaCreacion: "2025-12-11",
     fechaVencimiento: "2025-01-10",
-    invoices: 5,
+    facturas: 5,
     ejecutivo: "Carlos Rojas"
   },
 ];
@@ -199,7 +199,7 @@ export function OperationsList() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  // Filtering
+  // Filtrado
   const filteredOperations = mockOperations.filter((op) => {
     const matchesSearch = 
       op.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -211,12 +211,12 @@ export function OperationsList() {
     return matchesSearch && matchesStatus;
   });
 
-  // Pagination
+  // Paginación
   const totalPages = Math.ceil(filteredOperations.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedOperations = filteredOperations.slice(startIndex, startIndex + itemsPerPage);
 
-  // Quick stats
+  // Estadísticas rápidas
   const stats = {
     total: mockOperations.length,
     enProceso: mockOperations.filter(op => op.estado === "En Proceso").length,
@@ -226,12 +226,12 @@ export function OperationsList() {
 
   const handleAction = (action: string, operationId: string) => {
     console.log(`Action: ${action} on ${operationId}`);
-    // Here would go the real logic for each action
+    // Aquí iría la lógica real de cada acción
   };
 
   return (
     <div className="space-y-6">
-      {/* Quick stats */}
+      {/* Stats rápidas */}
       <div className="grid gap-4 md:grid-cols-4">
         <Card className="elevation-1">
           <CardHeader className="pb-2">
@@ -284,7 +284,7 @@ export function OperationsList() {
         </Card>
       </div>
 
-      {/* Main table */}
+      {/* Tabla principal */}
       <Card className="elevation-2">
         <CardHeader>
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -300,12 +300,12 @@ export function OperationsList() {
             </Button>
           </div>
 
-          {/* Filters */}
+          {/* Filtros */}
           <div className="flex flex-col gap-3 md:flex-row md:items-center pt-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search by ID, client or tax ID..."
+                placeholder="Buscar por ID, cliente o RUT..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-9"
@@ -315,7 +315,7 @@ export function OperationsList() {
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className="w-full md:w-48">
                 <Filter className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="Filter by status" />
+                <SelectValue placeholder="Filtrar por estado" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Todos los estados</SelectItem>
@@ -335,7 +335,7 @@ export function OperationsList() {
         </CardHeader>
 
         <CardContent>
-          {/* Table */}
+          {/* Tabla */}
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
@@ -367,7 +367,7 @@ export function OperationsList() {
                     >
                       <td className="py-3 px-4">
                         <div className="font-medium text-sm">{op.id}</div>
-                        <div className="text-xs text-muted-foreground">{op.invoices} invoices</div>
+                        <div className="text-xs text-muted-foreground">{op.facturas} facturas</div>
                       </td>
                       <td className="py-3 px-4">
                         <div className="font-medium text-sm">{op.cliente}</div>
@@ -454,11 +454,11 @@ export function OperationsList() {
             </table>
           </div>
 
-          {/* Pagination */}
+          {/* Paginación */}
           {filteredOperations.length > 0 && (
             <div className="flex items-center justify-between pt-4">
               <div className="text-sm text-muted-foreground">
-                Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredOperations.length)} of {filteredOperations.length} operations
+                Mostrando {startIndex + 1} a {Math.min(startIndex + itemsPerPage, filteredOperations.length)} de {filteredOperations.length} operaciones
               </div>
               
               <div className="flex items-center gap-2">
@@ -469,7 +469,7 @@ export function OperationsList() {
                   disabled={currentPage === 1}
                 >
                   <ChevronLeft className="h-4 w-4 mr-1" />
-                  Previous
+                  Anterior
                 </Button>
                 
                 <div className="flex items-center gap-1">
@@ -492,7 +492,7 @@ export function OperationsList() {
                   onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                   disabled={currentPage === totalPages}
                 >
-                  Next
+                  Siguiente
                   <ChevronRight className="h-4 w-4 ml-1" />
                 </Button>
               </div>

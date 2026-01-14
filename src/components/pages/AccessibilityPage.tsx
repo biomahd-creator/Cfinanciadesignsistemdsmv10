@@ -1,10 +1,14 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
-import { CheckCircle, AlertCircle, Info } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Button } from "../ui/button";
 import { Progress } from "../ui/progress";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Eye, Keyboard, MousePointer, Volume2, CheckCircle2, XCircle, CheckCircle, Info, AlertCircle } from "lucide-react";
+import { useState } from "react";
+import { ColorBox } from "../business/ColorBox";
+import { ContrastPreview } from "../business/ContrastPreview";
 
 export function AccessibilityPage() {
   // Helper function to calculate contrast ratio
@@ -48,9 +52,9 @@ export function AccessibilityPage() {
     { name: "Success", color: "#22c55e", usage: "Estados exitosos" },
     { name: "Warning", color: "#f59e0b", usage: "Advertencias" },
     { name: "Info", color: "#0ea5e9", usage: "Información" },
-    { name: "Focus Ring", color: "#DEFB49", usage: "Anillo de foco" },
-    { name: "Selection Background", color: "#DEFB49", usage: "Selection background" },
-    { name: "Selection Text", color: "#1C2D3A", usage: "Selected text" },
+    { name: "Focus Ring", color: "#884cc16cc16", usage: "Anillo de foco" },
+    { name: "Selection Background", color: "#884cc16cc16", usage: "Fondo de selección" },
+    { name: "Selection Text", color: "#1C2D3A", usage: "Texto seleccionado" },
   ];
 
   const lightBg = "#FFFFFF";
@@ -61,36 +65,36 @@ export function AccessibilityPage() {
     score: 98,
     criteria: {
       perceivable: [
-        { id: "1.1.1", name: "Alternative text", status: "pass", level: "A" },
-        { id: "1.3.1", name: "Information and relationships", status: "pass", level: "A" },
-        { id: "1.4.1", name: "Use of color", status: "pass", level: "A" },
-        { id: "1.4.3", name: "Contrast (Minimum)", status: "pass", level: "AA" },
-        { id: "1.4.11", name: "Non-text contrast", status: "pass", level: "AA" },
+        { id: "1.1.1", name: "Texto alternativo", status: "pass", level: "A" },
+        { id: "1.3.1", name: "Información y relaciones", status: "pass", level: "A" },
+        { id: "1.4.1", name: "Uso del color", status: "pass", level: "A" },
+        { id: "1.4.3", name: "Contraste (Mínimo)", status: "pass", level: "AA" },
+        { id: "1.4.11", name: "Contraste no textual", status: "pass", level: "AA" },
       ],
       operable: [
-        { id: "2.1.1", name: "Keyboard", status: "pass", level: "A" },
-        { id: "2.1.2", name: "No keyboard traps", status: "pass", level: "A" },
-        { id: "2.4.1", name: "Avoid blocks", status: "pass", level: "A" },
-        { id: "2.4.3", name: "Focus order", status: "pass", level: "A" },
-        { id: "2.4.7", name: "Visible focus", status: "pass", level: "AA" },
+        { id: "2.1.1", name: "Teclado", status: "pass", level: "A" },
+        { id: "2.1.2", name: "Sin trampas de teclado", status: "pass", level: "A" },
+        { id: "2.4.1", name: "Evitar bloques", status: "pass", level: "A" },
+        { id: "2.4.3", name: "Orden del foco", status: "pass", level: "A" },
+        { id: "2.4.7", name: "Foco visible", status: "pass", level: "AA" },
       ],
       understandable: [
-        { id: "3.1.1", name: "Page language", status: "pass", level: "A" },
-        { id: "3.2.1", name: "On focus", status: "pass", level: "A" },
-        { id: "3.3.1", name: "Error identification", status: "pass", level: "A" },
-        { id: "3.3.2", name: "Labels or instructions", status: "pass", level: "A" },
+        { id: "3.1.1", name: "Idioma de la página", status: "pass", level: "A" },
+        { id: "3.2.1", name: "Al recibir el foco", status: "pass", level: "A" },
+        { id: "3.3.1", name: "Identificación de errores", status: "pass", level: "A" },
+        { id: "3.3.2", name: "Etiquetas o instrucciones", status: "pass", level: "A" },
       ],
       robust: [
-        { id: "4.1.1", name: "Parsing", status: "pass", level: "A" },
-        { id: "4.1.2", name: "Name, role, value", status: "pass", level: "A" },
-        { id: "4.1.3", name: "Status messages", status: "pass", level: "AA" },
+        { id: "4.1.1", name: "Procesamiento", status: "pass", level: "A" },
+        { id: "4.1.2", name: "Nombre, función, valor", status: "pass", level: "A" },
+        { id: "4.1.3", name: "Mensajes de estado", status: "pass", level: "AA" },
       ],
     },
   };
 
   const features = [
     {
-      category: "Keyboard Navigation",
+      category: "Navegación por Teclado",
       items: [
         { name: "Tab navigation", implemented: true, keys: "Tab / Shift+Tab" },
         { name: "Skip links", implemented: true, keys: "Tab (primer elemento)" },
@@ -110,17 +114,17 @@ export function AccessibilityPage() {
       ],
     },
     {
-      category: "Color Contrast",
+      category: "Contraste de Color",
       items: [
-        { name: "Primary text: 7.2:1", implemented: true, wcag: "AAA" },
-        { name: "Secondary text: 5.1:1", implemented: true, wcag: "AA" },
-        { name: "Primary (#DEFB49): 8.9:1", implemented: true, wcag: "AAA" },
-        { name: "Buttons: 4.8:1", implemented: true, wcag: "AA" },
-        { name: "Borders: 3.2:1", implemented: true, wcag: "AA" },
+        { name: "Texto principal: 7.2:1", implemented: true, wcag: "AAA" },
+        { name: "Texto secundario: 5.1:1", implemented: true, wcag: "AA" },
+        { name: "Primary (#884cc16cc16): 77.22:1", implemented: true, wcag: "AAA" },
+        { name: "Botones: 4.8:1", implemented: true, wcag: "AA" },
+        { name: "Bordes: 3.2:1", implemented: true, wcag: "AA" },
       ],
     },
     {
-      category: "Semantic HTML",
+      category: "Semántica HTML",
       items: [
         { name: "<nav> para navegación", implemented: true },
         { name: "<main> para contenido", implemented: true },
@@ -134,9 +138,9 @@ export function AccessibilityPage() {
   const colorContrasts = [
     {
       name: "Primary on Secondary",
-      fg: "#DEFB49",
+      fg: "#884cc16cc16",
       bg: "#1C2D3A",
-      ratio: "8.9:1",
+      ratio: "77.22:1",
       level: "AAA",
       pass: true,
     },
@@ -179,7 +183,7 @@ export function AccessibilityPage() {
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <h2 className="text-4xl font-semibold">WCAG Accessibility</h2>
+          <h2 className="text-2xl font-medium">Accesibilidad WCAG</h2>
           <Badge className="bg-green-500 text-white">AA Compliant</Badge>
         </div>
         <p className="text-muted-foreground">
@@ -239,10 +243,10 @@ export function AccessibilityPage() {
       {/* Alert */}
       <Alert className="bg-primary/5 border-primary/20">
         <Info className="h-4 w-4" />
-        <AlertTitle>Accessibility as a Priority</AlertTitle>
+        <AlertTitle>Accesibilidad como Prioridad</AlertTitle>
         <AlertDescription>
-          This system complies with WCAG 2.1 Level AA, ensuring that all people
-          can use the application independently of their capabilities.
+          Este sistema cumple con WCAG 2.1 Nivel AA, garantizando que todas las personas
+          puedan usar la aplicación independientemente de sus capacidades.
         </AlertDescription>
       </Alert>
 
@@ -252,7 +256,7 @@ export function AccessibilityPage() {
       <Tabs defaultValue="criteria" className="w-full">
         <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="criteria">Criterios WCAG</TabsTrigger>
-          <TabsTrigger value="features">Features</TabsTrigger>
+          <TabsTrigger value="features">Características</TabsTrigger>
           <TabsTrigger value="contrast">Contraste</TabsTrigger>
           <TabsTrigger value="customizer">Customizer Colors</TabsTrigger>
           <TabsTrigger value="testing">Testing</TabsTrigger>
@@ -470,18 +474,12 @@ export function AccessibilityPage() {
 
                     <div className="flex items-center gap-4">
                       <div className="flex-1 flex items-center gap-3">
-                        <div
-                          className="w-12 h-12 rounded border"
-                          style={{ backgroundColor: contrast.fg }}
-                        />
+                        <ColorBox color={contrast.fg} size="md" />
                         <span className="text-sm font-mono">{contrast.fg}</span>
                       </div>
                       <span className="text-muted-foreground">on</span>
                       <div className="flex-1 flex items-center gap-3">
-                        <div
-                          className="w-12 h-12 rounded border"
-                          style={{ backgroundColor: contrast.bg }}
-                        />
+                        <ColorBox color={contrast.bg} size="md" />
                         <span className="text-sm font-mono">{contrast.bg}</span>
                       </div>
                     </div>
@@ -663,14 +661,14 @@ export function AccessibilityPage() {
         <TabsContent value="testing" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Testing Tools</CardTitle>
+              <CardTitle>Herramientas de Testing</CardTitle>
               <CardDescription>
-                How to verify system accessibility
+                Cómo verificar la accesibilidad del sistema
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-3">
-                <h4 className="font-medium">Screen Readers</h4>
+                <h4 className="font-medium">Lectores de Pantalla</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-500" />
@@ -690,11 +688,11 @@ export function AccessibilityPage() {
               <Separator />
 
               <div className="space-y-3">
-                <h4 className="font-medium">Browser Extensions</h4>
+                <h4 className="font-medium">Extensiones del Navegador</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-500" />
-                    axe DevTools - Automatic auditing
+                    axe DevTools - Auditoría automática
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-500" />
@@ -710,19 +708,19 @@ export function AccessibilityPage() {
               <Separator />
 
               <div className="space-y-3">
-                <h4 className="font-medium">Manual Testing</h4>
+                <h4 className="font-medium">Pruebas Manuales</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-500" />
-                    Navigate only with keyboard (Tab, Enter, Esc, Arrows)
+                    Navegar solo con teclado (Tab, Enter, Esc, Flechas)
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-500" />
-                    Verify contrast with online tools
+                    Verificar contraste con herramientas online
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-500" />
-                    Increase zoom to 200% and verify readability
+                    Aumentar zoom al 200% y verificar legibilidad
                   </li>
                 </ul>
               </div>

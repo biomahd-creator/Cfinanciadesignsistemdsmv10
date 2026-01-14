@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { ColorBox } from "../business/ColorBox";
+import { ColorPresetButton } from "../business/ColorPresetButton";
 
 const presetColors = [
   "#DEFB49", // Primary
@@ -36,10 +38,7 @@ export function ColorPicker({ value = "#DEFB49", onChange }: ColorPickerProps) {
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" className="w-full justify-start gap-2">
-          <div
-            className="h-6 w-6 rounded border"
-            style={{ backgroundColor: color }}
-          />
+          <ColorBox color={color} />
           <span className="flex-1 text-left">{color}</span>
         </Button>
       </PopoverTrigger>
@@ -49,13 +48,10 @@ export function ColorPicker({ value = "#DEFB49", onChange }: ColorPickerProps) {
             <Label>Colores Predefinidos</Label>
             <div className="grid grid-cols-6 gap-2">
               {presetColors.map((presetColor) => (
-                <button
+                <ColorPresetButton
                   key={presetColor}
-                  className="h-8 w-8 rounded border-2 hover:scale-110 transition-transform"
-                  style={{
-                    backgroundColor: presetColor,
-                    borderColor: color === presetColor ? "#DEFB49" : "transparent",
-                  }}
+                  color={presetColor}
+                  isSelected={color === presetColor}
                   onClick={() => handleColorChange(presetColor)}
                 />
               ))}
@@ -86,7 +82,7 @@ export function ColorPicker({ value = "#DEFB49", onChange }: ColorPickerProps) {
             <Label>Vista Previa</Label>
             <div
               className="h-20 rounded-lg border"
-              style={{ backgroundColor: color }}
+              style={{ backgroundColor: `var(--color-preview, ${color})` }}
             />
           </div>
         </div>

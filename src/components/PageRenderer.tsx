@@ -1,13 +1,29 @@
 import { PageId } from "./SidebarNew";
+// ⚠️ CRITICAL: Este archivo mapea TODOS los PageIds a sus componentes
+// ⚠️ ANTES DE MODIFICAR: Leer /DSM_ARCHITECTURE.md sección "PageRenderer"
+// ⚠️ CADA CASO requiere:
+//    1. Import del componente (arriba)
+//    2. Case en el switch (abajo)
+//    3. PageId existente en SidebarNew.tsx
+// ⚠️ NO eliminar imports/casos sin verificar referencias
+// ⚠️ Total de casos: 107+ (verificar en DSM_ARCHITECTURE.md)
+
 import {
   HomePage,
   DSMDashboardPage,
+  ButtonPage,
   ButtonPageNew,
+  TogglePage,
   TogglePageNew,
+  ToggleGroupPage,
   ToggleGroupPageNew,
   AccessibilityPage,
   BrandLayoutPage,
   ThemeCustomizerPage,
+  DatePickerPage,
+  ComboboxPage,
+  FormPage,
+  InputOTPPage,
   AlertDialogPage,
   ToastPage,
   DrawerPage,
@@ -16,28 +32,43 @@ import {
   MenubarPage,
   NavigationMenuPage,
   ContextMenuPage,
+  InputPage,
   InputPageNew,
   InputFilePage,
+  TextareaPage,
   TextareaPageNew,
   TextareaAutoresizePage,
+  SelectPage,
   SelectPageNew,
+  CheckboxPage,
   CheckboxPageNew,
+  RadioGroupPage,
   RadioGroupPageNew,
+  SwitchPage,
   SwitchPageNew,
+  SliderPage,
   SliderPageNew,
+  CalendarPage,
   CalendarPageNew,
+  LabelPage,
   LabelPageNew,
+  CardPage,
   CardPageNew,
+  BadgePage,
   BadgePageNew,
+  TablePage,
   TablePageNew,
   AvatarPage,
   SeparatorPage,
+  TabsPage,
   TabsPageNew,
   BreadcrumbPage,
   CommandPage,
   DropdownMenuPage,
   PaginationPage,
+  AlertPage,
   AlertPageNew,
+  DialogPage,
   DialogPageNew,
   TooltipPage,
   ProgressPage,
@@ -65,6 +96,7 @@ import {
   InvoiceGeneratorPage,
   InvoiceUploadPage,
   FactoringSelectionShowcasePage,
+  FactoringDashboardPage,
   OperationsListPage,
   ApprovalFlowPage,
   LiquidityCalculatorPage,
@@ -72,68 +104,35 @@ import {
   CFDashboardPage,
   AdminPortalPage,
   GridShowcasePage,
-  FactoringOperationPage,
   DatePickerPageNew,
   ComboboxPageNew,
   FormPageNew,
   InputOTPPageNew,
-  KPIShowcasePage,
-  GettingStartedPage,
-  ColorPalettePage,
-  TypographyScalePage,
-  ComponentMaturityPage,
-  APIReferencePage,
-  MigrationGuidesPage,
-  ContributingPage,
-  TimePickerPage,
-  AutocompletePage,
-  ImageCropperPage,
-  SignaturePadPage,
-  ChatInterfacePage,
-  CommentsSystemPage,
-  NotificationCenterPage,
-  BottomSheetPage,
-  ActionSheetPage,
-  PullToRefreshPage,
-  SwipeableCardsPage,
-  ImageGalleryPage,
-  VideoPlayerPage,
-  AudioPlayerPage,
-  PDFViewerPage,
-  ImageComparisonPage,
-  MarkdownEditorPage,
-  CodeEditorPage,
-  FormulaEditorPage,
-  AIChatInterfacePage,
-  VideoConferencingPage,
-  ScreenRecordingPage,
-  WorkflowBuilderPage,
-  PermissionManagementPage,
-  AuditLogPage,
-  CollaborativeCursorsPage,
-  RealtimeCollaborationPage,
-  PaymentFormPage,
-  EditableTablePage,
-  LoginFormPage,
-  EmptyStatePage,
-  ModalFormPage,
-  TableActionsPage,
-  SearchCommandPage,
-  SidebarLayoutPage,
+  StatusKPIsPage,
+  SidebarShowcasePage,
+  MultiStepWizardPage,
   MultiStepFormPage,
-  FunnelChartPage,
-  GaugesPage,
-  HeatmapPage,
-  InfiniteScrollPage,
-  MasonryGridPage,
-  SparklinesPage,
-  VirtualListPage,
+  MultiStepFormVerticalPage,
+  MultiStepWizardVerticalPage,
+  BusinessComponentsPage,
+  DataVisualizationPage,
+  AdvancedFormsPage,
+  HelpSystemDemoPage,
+  AnimationsPage,
+  IconGalleryPage,
+  ChangelogPage
 } from "./pages";
 
+import { PaymentForm } from "./patterns/PaymentForm";
+import { EditableTable } from "./patterns/EditableTable";
+import { KPIShowcase } from "./patterns/KPIShowcase";
+
 // Import section components for grouped patterns/atomic
+import { ComposedPatternsSection } from "./sections/ComposedPatternsSection";
 import { AtomicDesignSection } from "./sections/AtomicDesignSection";
-import { ComparisonSection } from "./sections/ComparisonSection";
 import { ShadcnOfficialComparison } from "./sections/ShadcnOfficialComparison";
+// AdvancedComponentsSection is no longer used for routing
+// import { AdvancedComponentsSection } from "./sections/AdvancedComponentsSection";
 
 interface PageRendererProps {
   pageId: PageId;
@@ -146,13 +145,12 @@ export function PageRenderer({ pageId }: PageRendererProps) {
     // ===== HOME =====
     case "home":
       return <HomePage />;
-    case "getting-started":
-      return <GettingStartedPage />;
     case "dsm-dashboard":
       return <DSMDashboardPage />;
       
     // ===== ACTIONS =====
     case "button":
+      return <ButtonPageNew />;
     case "button-new":
       return <ButtonPageNew />;
     case "toggle":
@@ -162,19 +160,23 @@ export function PageRenderer({ pageId }: PageRendererProps) {
 
     // ===== FORMS =====
     case "input":
+      return <InputPage />;
     case "input-new":
       return <InputPageNew />;
     case "input-file":
       return <InputFilePage />;
     case "textarea":
+      return <TextareaPage />;
     case "textarea-new":
       return <TextareaPageNew />;
     case "textarea-autoresize":
       return <TextareaAutoresizePage />;
     case "select":
+      return <SelectPage />;
     case "select-new":
       return <SelectPageNew />;
     case "checkbox":
+      return <CheckboxPage />;
     case "checkbox-new":
       return <CheckboxPageNew />;
     case "radio-group":
@@ -184,29 +186,35 @@ export function PageRenderer({ pageId }: PageRendererProps) {
     case "slider":
       return <SliderPageNew />;
     case "calendar":
+      return <CalendarPage />;
     case "calendar-new":
       return <CalendarPageNew />;
     case "label":
       return <LabelPageNew />;
     case "date-picker":
+      return <DatePickerPage />;
     case "date-picker-new":
       return <DatePickerPageNew />;
     case "date-range-picker":
       return <DateRangePickerPage />;
     case "combobox":
+      return <ComboboxPage />;
     case "combobox-new":
       return <ComboboxPageNew />;
     case "multi-select":
       return <MultiSelectPage />;
     case "form":
+      return <FormPage />;
     case "form-new":
       return <FormPageNew />;
     case "input-otp":
+      return <InputOTPPage />;
     case "input-otp-new":
       return <InputOTPPageNew />;
 
     // ===== NAVIGATION =====
     case "tabs":
+      return <TabsPage />;
     case "tabs-new":
       return <TabsPageNew />;
     case "breadcrumb":
@@ -226,12 +234,15 @@ export function PageRenderer({ pageId }: PageRendererProps) {
 
     // ===== DATA DISPLAY =====
     case "card":
+      return <CardPage />;
     case "card-new":
       return <CardPageNew />;
     case "badge":
+      return <BadgePage />;
     case "badge-new":
       return <BadgePageNew />;
     case "table":
+      return <TablePage />;
     case "table-new":
       return <TablePageNew />;
     case "avatar":
@@ -243,9 +254,11 @@ export function PageRenderer({ pageId }: PageRendererProps) {
 
     // ===== FEEDBACK =====
     case "alert":
+      return <AlertPage />;
     case "alert-new":
       return <AlertPageNew />;
     case "dialog":
+      return <DialogPage />;
     case "dialog-new":
       return <DialogPageNew />;
     case "tooltip":
@@ -266,6 +279,8 @@ export function PageRenderer({ pageId }: PageRendererProps) {
       return <DrawerPage />;
 
     // ===== LAYOUT =====
+    case "sidebar-showcase":
+      return <SidebarShowcasePage />;
     case "accordion":
       return <AccordionPage />;
     case "carousel":
@@ -276,6 +291,8 @@ export function PageRenderer({ pageId }: PageRendererProps) {
       return <ScrollAreaPage />;
     case "resizable":
       return <ResizablePage />;
+    case "grid-showcase":
+      return <GridShowcasePage />;
 
     // ===== PATTERNS =====
     case "invoice-generator":
@@ -283,31 +300,35 @@ export function PageRenderer({ pageId }: PageRendererProps) {
     case "invoice-upload":
       return <InvoiceUploadPage />;
     case "payment-form":
-      return <PaymentFormPage />;
+      return <PaymentForm />;
     case "editable-table":
-      return <EditableTablePage />;
-    case "login-form":
-      return <LoginFormPage />;
-    case "empty-state":
-      return <EmptyStatePage />;
-    case "modal-form":
-      return <ModalFormPage />;
-    case "sidebar-layout":
-      return <SidebarLayoutPage />;
+      return <EditableTable />;
+    case "stats-dashboard":
+    case "quick-action":
+    case "data-table-advanced":
+    case "advanced-filter":
+    case "approval-timeline":
+      return <ComposedPatternsSection />;
+    case "multi-step-wizard":
+      return <MultiStepWizardPage />;
     case "multi-step-form":
       return <MultiStepFormPage />;
-    case "table-actions":
-      return <TableActionsPage />;
-    case "search-command":
-      return <SearchCommandPage />;
+    case "multi-step-form-vertical":
+      return <MultiStepFormVerticalPage />;
+    case "multi-step-wizard-vertical":
+      return <MultiStepWizardVerticalPage />;
 
     // ===== ATOMIC DESIGN =====
     case "atomic-atoms":
+      return <AtomicDesignSection key="atoms" defaultTab="atoms" />;
     case "atomic-molecules":
+      return <AtomicDesignSection key="molecules" defaultTab="molecules" />;
     case "atomic-organisms":
+      return <AtomicDesignSection key="organisms" defaultTab="organisms" />;
     case "atomic-templates":
+      return <AtomicDesignSection key="templates" defaultTab="templates" />;
     case "atomic-pages":
-      return <AtomicDesignSection />;
+      return <AtomicDesignSection key="pages" defaultTab="pages" />;
 
     // ===== ADVANCED =====
     case "charts":
@@ -334,34 +355,26 @@ export function PageRenderer({ pageId }: PageRendererProps) {
       return <PivotTablePage />;
     case "export-data":
       return <ExportDataPage />;
-    case "funnel-chart":
-      return <FunnelChartPage />;
-    case "gauges":
-      return <GaugesPage />;
-    case "heatmap":
-      return <HeatmapPage />;
-    case "infinite-scroll":
-      return <InfiniteScrollPage />;
-    case "masonry-grid":
-      return <MasonryGridPage />;
-    case "sparklines":
-      return <SparklinesPage />;
-    case "virtual-list":
-      return <VirtualListPage />;
+
+    // ===== BUSINESS COMPONENTS (HIGH PRIORITY) =====
+    case "business-components":
+      return <BusinessComponentsPage />;
+
+    // ===== DATA VISUALIZATION (MEDIUM PRIORITY) =====
+    case "data-visualization":
+      return <DataVisualizationPage />;
+
+    // ===== ADVANCED FORMS (MEDIUM PRIORITY) =====
+    case "advanced-forms":
+      return <AdvancedFormsPage />;
 
     // ===== PAGES (REAL) =====
     case "kpi-showcase":
-      return <KPIShowcasePage />;
-    case "operations-dashboard":
-      return <OperationsListPage />;
-    case "approval-workflows":
-      return <ApprovalFlowPage />;
+      return <KPIShowcase />;
     case "factoring-selection":
       return <FactoringSelectionShowcasePage />;
     case "factoring-dashboard":
-      return <KPIShowcasePage />;
-    case "factoring-operation-test":
-      return <FactoringOperationPage />;
+      return <FactoringDashboardPage />;
     case "operations-list":
       return <OperationsListPage />;
     case "approval-flow":
@@ -374,38 +387,10 @@ export function PageRenderer({ pageId }: PageRendererProps) {
       return <CFDashboardPage />;
     case "admin-portal":
       return <AdminPortalPage />;
-    case "grid-showcase":
-      return <GridShowcasePage />;
-    case "stats-dashboard":
-      return <KPIShowcasePage />;
-
-    // ===== DESIGN FOUNDATIONS =====
-    case "design-tokens":
-      return <ThemeCustomizerPage />;
-    case "color-palette":
-      return <ColorPalettePage />;
-    case "typography-scale":
-      return <TypographyScalePage />;
-    case "logo-iconography":
-      return <BrandLayoutPage />;
-    case "component-showcase":
-      return <DSMDashboardPage />;
-
-    // ===== QUALITY & METRICS =====
-    case "component-maturity":
-      return <ComponentMaturityPage />;
-
-    // ===== DOCUMENTATION =====
-    case "api-reference":
-      return <APIReferencePage />;
-    case "migration-guides":
-      return <MigrationGuidesPage />;
-    case "contributing":
-      return <ContributingPage />;
+    case "status-kpis":
+      return <StatusKPIsPage />;
 
     // ===== SPECIAL PAGES =====
-    case "comparison":
-      return <ComparisonSection />;
     case "official":
       return <ShadcnOfficialComparison />;
     case "accessibility":
@@ -416,72 +401,14 @@ export function PageRenderer({ pageId }: PageRendererProps) {
       return <ElevationPage />;
     case "theme-customizer":
       return <ThemeCustomizerPage />;
-
-    // ===== ADVANCED FORM INPUTS =====
-    case "time-picker":
-      return <TimePickerPage />;
-    case "autocomplete":
-      return <AutocompletePage />;
-    case "image-cropper":
-      return <ImageCropperPage />;
-    case "signature-pad":
-      return <SignaturePadPage />;
-
-    // ===== COMMUNICATION =====
-    case "chat-interface":
-      return <ChatInterfacePage />;
-    case "comments-system":
-      return <CommentsSystemPage />;
-    case "notification-center":
-      return <NotificationCenterPage />;
-
-    // ===== MOBILE COMPONENTS =====
-    case "bottom-sheet":
-      return <BottomSheetPage />;
-    case "action-sheet":
-      return <ActionSheetPage />;
-    case "pull-to-refresh":
-      return <PullToRefreshPage />;
-    case "swipeable-cards":
-      return <SwipeableCardsPage />;
-
-    // ===== MEDIA COMPONENTS =====
-    case "image-gallery":
-      return <ImageGalleryPage />;
-    case "video-player":
-      return <VideoPlayerPage />;
-    case "audio-player":
-      return <AudioPlayerPage />;
-    case "pdf-viewer":
-      return <PDFViewerPage />;
-    case "image-comparison":
-      return <ImageComparisonPage />;
-
-    // ===== RICH EDITORS =====
-    case "markdown-editor":
-      return <MarkdownEditorPage />;
-    case "code-editor":
-      return <CodeEditorPage />;
-    case "formula-editor":
-      return <FormulaEditorPage />;
-
-    // ===== HERO UI PRO =====
-    case "ai-chat":
-      return <AIChatInterfacePage />;
-    case "video-conferencing":
-      return <VideoConferencingPage />;
-    case "screen-recording":
-      return <ScreenRecordingPage />;
-    case "collaborative-cursors":
-      return <CollaborativeCursorsPage />;
-    case "realtime-collab":
-      return <RealtimeCollaborationPage />;
-    case "workflow-builder":
-      return <WorkflowBuilderPage />;
-    case "permission-mgmt":
-      return <PermissionManagementPage />;
-    case "audit-log":
-      return <AuditLogPage />;
+    case "help-system-demo":
+      return <HelpSystemDemoPage />;
+    case "animations":
+      return <AnimationsPage />;
+    case "icon-gallery":
+      return <IconGalleryPage />;
+    case "changelog":
+      return <ChangelogPage />;
 
     default:
       return <HomePage />;

@@ -22,8 +22,8 @@ interface MultiSelectProps {
   disabled?: boolean;
 }
 
-const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
-  ({ options, selected, onChange, placeholder = "Select options...", className, disabled }, ref) => {
+const MultiSelect = React.forwardRef<HTMLDivElement, MultiSelectProps>(
+  ({ options, selected, onChange, placeholder = "Selecciona opciones...", className, disabled }, ref) => {
     const [open, setOpen] = React.useState(false);
 
     const handleSelect = (value: string) => {
@@ -39,13 +39,6 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
       onChange(selected.filter((item) => item !== value));
     };
 
-    const handleToggle = (value: string) => {
-      const newSelected = selected.includes(value)
-        ? selected.filter((item) => item !== value)
-        : [...selected, value];
-      onChange(newSelected);
-    };
-
     const selectedOptions = options.filter((option) => selected.includes(option.value));
 
     return (
@@ -56,55 +49,50 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            disabled={disabled}
             className={cn(
               "hover:bg-muted/50 w-full justify-between",
               selected.length > 0 ? "h-auto min-h-9" : "h-9",
+              disabled && "opacity-50 pointer-events-none cursor-not-allowed",
               className
             )}
+            asChild
           >
-            <div className="flex flex-wrap gap-1.5">
-              {selected.length === 0 ? (
-                <span className="text-muted-foreground">{placeholder}</span>
-              ) : (
-                selectedOptions.map((option) => (
-                  <Badge
-                    key={option.value}
-                    variant="secondary"
-                    className="gap-1 pr-1"
-                  >
-                    <span>{option.label}</span>
-                    <span
-                      role="button"
-                      tabIndex={0}
-                      className="ring-offset-background hover:bg-muted rounded-full outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer"
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                      }}
-                      onClick={(e) => handleRemove(option.value, e)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault();
-                          handleRemove(option.value, e as any);
-                        }
-                      }}
+            <div tabIndex={0}>
+              <div className="flex flex-wrap gap-1.5">
+                {selected.length === 0 ? (
+                  <span className="text-muted-foreground">{placeholder}</span>
+                ) : (
+                  selectedOptions.map((option) => (
+                    <Badge
+                      key={option.value}
+                      variant="secondary"
+                      className="gap-1 pr-1"
                     >
-                      <X className="size-3" />
-                      <span className="sr-only">Remove {option.label}</span>
-                    </span>
-                  </Badge>
-                ))
-              )}
+                      <span>{option.label}</span>
+                      <button
+                        className="ring-offset-background hover:bg-muted rounded-full outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                        }}
+                        onClick={(e) => handleRemove(option.value, e)}
+                      >
+                        <X className="size-3" />
+                        <span className="sr-only">Eliminar {option.label}</span>
+                      </button>
+                    </Badge>
+                  ))
+                )}
+              </div>
+              <ChevronsUpDown className="text-muted-foreground ml-2 size-4 shrink-0 opacity-50" />
             </div>
-            <ChevronsUpDown className="text-muted-foreground ml-2 size-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-full p-0" align="start">
           <Command>
-            <CommandInput placeholder="Search..." />
+            <CommandInput placeholder="Buscar..." />
             <CommandList>
-              <CommandEmpty>No options found.</CommandEmpty>
+              <CommandEmpty>No se encontraron opciones.</CommandEmpty>
               <CommandGroup>
                 {options.map((option) => {
                   const isSelected = selected.includes(option.value);

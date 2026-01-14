@@ -18,10 +18,10 @@ import { Separator } from "../ui/separator";
 import { CheckCircle, Circle } from "lucide-react";
 
 const steps = [
-  { id: "info", label: "Basic Information", icon: "1" },
-  { id: "details", label: "Financial Details", icon: "2" },
-  { id: "documents", label: "Documentation", icon: "3" },
-  { id: "review", label: "Review", icon: "4" },
+  { id: "info", label: "Información Básica", icon: "1" },
+  { id: "details", label: "Detalles Financieros", icon: "2" },
+  { id: "documents", label: "Documentación", icon: "3" },
+  { id: "review", label: "Revisión", icon: "4" },
 ];
 
 export function MultiStepWizard() {
@@ -45,13 +45,13 @@ export function MultiStepWizard() {
     <Card>
       <CardHeader>
         <div className="space-y-4">
-          <CardTitle>Factoring Application</CardTitle>
+          <CardTitle>Solicitud de Factoring</CardTitle>
 
           {/* Progress Bar */}
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">
-                Step {currentStep + 1} of {steps.length}
+                Paso {currentStep + 1} de {steps.length}
               </span>
               <span className="font-medium">{Math.round(progress)}%</span>
             </div>
@@ -114,25 +114,25 @@ export function MultiStepWizard() {
           <TabsContent value="info" className="space-y-4 mt-0">
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="company">Company Name</Label>
-                <Input id="company" placeholder="Ex: ABC Company Ltd." />
+                <Label htmlFor="company">Nombre de la Empresa</Label>
+                <Input id="company" placeholder="Ej: Empresa ABC S.A." />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="rut">Tax ID</Label>
+                  <Label htmlFor="rut">RUT</Label>
                   <Input id="rut" placeholder="12.345.678-9" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone</Label>
+                  <Label htmlFor="phone">Teléfono</Label>
                   <Input id="phone" placeholder="+56 9 1234 5678" />
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Contact Email</Label>
+                <Label htmlFor="email">Email de Contacto</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="contact@company.com"
+                  placeholder="contacto@empresa.cl"
                 />
               </div>
             </div>
@@ -142,28 +142,28 @@ export function MultiStepWizard() {
           <TabsContent value="details" className="space-y-4 mt-0">
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="amount">Requested Amount</Label>
-                <Input id="amount" placeholder="$5,000,000" />
+                <Label htmlFor="amount">Monto Solicitado</Label>
+                <Input id="amount" placeholder="$5.000.000" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="term">Term</Label>
+                <Label htmlFor="term">Plazo</Label>
                 <Select>
                   <SelectTrigger id="term">
-                    <SelectValue placeholder="Select term" />
+                    <SelectValue placeholder="Seleccionar plazo" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="30">30 days</SelectItem>
-                    <SelectItem value="60">60 days</SelectItem>
-                    <SelectItem value="90">90 days</SelectItem>
-                    <SelectItem value="120">120 days</SelectItem>
+                    <SelectItem value="30">30 días</SelectItem>
+                    <SelectItem value="60">60 días</SelectItem>
+                    <SelectItem value="90">90 días</SelectItem>
+                    <SelectItem value="120">120 días</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="purpose">Financing Purpose</Label>
+                <Label htmlFor="purpose">Propósito del Financiamiento</Label>
                 <Textarea
                   id="purpose"
-                  placeholder="Briefly describe the use of funds..."
+                  placeholder="Describe brevemente el uso de los fondos..."
                   rows={4}
                 />
               </div>
@@ -174,21 +174,21 @@ export function MultiStepWizard() {
           <TabsContent value="documents" className="space-y-4 mt-0">
             <div className="space-y-4">
               <p className="text-sm text-muted-foreground">
-                Please attach the following documents:
+                Por favor, adjunta los siguientes documentos:
               </p>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div className="flex items-center gap-3">
                     <Circle className="h-4 w-4 text-muted-foreground" />
                     <div>
-                      <p className="font-medium text-sm">Original Invoice</p>
+                      <p className="font-medium text-sm">Factura Original</p>
                       <p className="text-xs text-muted-foreground">
-                        PDF format
+                        Formato PDF
                       </p>
                     </div>
                   </div>
                   <Button variant="outline" size="sm">
-                    Upload
+                    Subir
                   </Button>
                 </div>
                 <div className="flex items-center justify-between p-3 border rounded-lg">
@@ -196,29 +196,29 @@ export function MultiStepWizard() {
                     <Circle className="h-4 w-4 text-muted-foreground" />
                     <div>
                       <p className="font-medium text-sm">
-                        Debt Certificate
+                        Certificado de Deuda
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        PDF format
+                        Formato PDF
                       </p>
                     </div>
                   </div>
                   <Button variant="outline" size="sm">
-                    Upload
+                    Subir
                   </Button>
                 </div>
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div className="flex items-center gap-3">
                     <Circle className="h-4 w-4 text-muted-foreground" />
                     <div>
-                      <p className="font-medium text-sm">Company Tax ID</p>
+                      <p className="font-medium text-sm">RUT de la Empresa</p>
                       <p className="text-xs text-muted-foreground">
-                        PDF format
+                        Formato PDF
                       </p>
                     </div>
                   </div>
                   <Button variant="outline" size="sm">
-                    Upload
+                    Subir
                   </Button>
                 </div>
               </div>
@@ -230,31 +230,31 @@ export function MultiStepWizard() {
             <div className="space-y-4">
               <div className="rounded-lg border p-4 space-y-4">
                 <div>
-                  <h4 className="font-medium mb-3">Application Summary</h4>
+                  <h4 className="font-medium mb-3">Resumen de Solicitud</h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Company:</span>
-                      <span className="font-medium">ABC Company Ltd.</span>
+                      <span className="text-muted-foreground">Empresa:</span>
+                      <span className="font-medium">Empresa ABC S.A.</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Tax ID:</span>
+                      <span className="text-muted-foreground">RUT:</span>
                       <span className="font-medium">12.345.678-9</span>
                     </div>
                     <Separator />
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Amount:</span>
-                      <span className="font-medium">$5,000,000</span>
+                      <span className="text-muted-foreground">Monto:</span>
+                      <span className="font-medium">$5.000.000</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Term:</span>
-                      <span className="font-medium">90 days</span>
+                      <span className="text-muted-foreground">Plazo:</span>
+                      <span className="font-medium">90 días</span>
                     </div>
                     <Separator />
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">
-                        Documents:
+                        Documentos:
                       </span>
-                      <Badge variant="secondary">3 files</Badge>
+                      <Badge variant="secondary">3 archivos</Badge>
                     </div>
                   </div>
                 </div>
@@ -262,7 +262,9 @@ export function MultiStepWizard() {
 
               <div className="rounded-lg bg-muted/50 p-4">
                 <p className="text-sm text-muted-foreground">
-                  By submitting this application, I confirm that all provided information is truthful and authorize the necessary verifications to be carried out.
+                  Al enviar esta solicitud, confirmo que toda la información
+                  proporcionada es verídica y autorizo a realizar las
+                  verificaciones necesarias.
                 </p>
               </div>
             </div>
@@ -278,12 +280,12 @@ export function MultiStepWizard() {
             onClick={handlePrevious}
             disabled={currentStep === 0}
           >
-            Previous
+            Anterior
           </Button>
           {currentStep === steps.length - 1 ? (
-            <Button>Submit Application</Button>
+            <Button>Enviar Solicitud</Button>
           ) : (
-            <Button onClick={handleNext}>Next</Button>
+            <Button onClick={handleNext}>Siguiente</Button>
           )}
         </div>
       </CardContent>

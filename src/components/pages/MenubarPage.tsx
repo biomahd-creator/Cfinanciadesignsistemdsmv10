@@ -22,7 +22,7 @@ export function MenubarPage() {
     <div className="space-y-8">
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-4xl font-semibold">Menubar</h1>
+          <h1 className="text-2xl font-medium">Menubar</h1>
           <Badge>Navigation</Badge>
         </div>
         <p className="text-muted-foreground">
@@ -34,13 +34,13 @@ export function MenubarPage() {
 
       <div className="space-y-4">
         <div>
-          <h2 className="text-2xl font-semibold mb-2">Complete Menubar</h2>
-          <p className="text-muted-foreground">Full example with File, Edit, View</p>
+          <h2 className="text-2xl font-semibold mb-2">Menubar Completo</h2>
+          <p className="text-muted-foreground">Ejemplo completo con File, Edit, View</p>
         </div>
         <Card>
           <CardHeader>
             <CardTitle>Application Menubar</CardTitle>
-            <CardDescription>Complete menubar with all features</CardDescription>
+            <CardDescription>Barra de menús completa con todas las características</CardDescription>
           </CardHeader>
           <CardContent>
             <Menubar>
@@ -142,7 +142,7 @@ export function MenubarPage() {
         <Card>
           <CardHeader>
             <CardTitle>Simple Menubar</CardTitle>
-            <CardDescription>Basic menus without nesting</CardDescription>
+            <CardDescription>Menús básicos sin anidación</CardDescription>
           </CardHeader>
           <CardContent>
             <Menubar>
@@ -182,14 +182,14 @@ export function MenubarPage() {
 
       <div className="space-y-4">
         <div>
-          <h2 className="text-2xl font-semibold mb-2">Features</h2>
-          <p className="text-muted-foreground">Available item types</p>
+          <h2 className="text-2xl font-semibold mb-2">Características</h2>
+          <p className="text-muted-foreground">Tipos de items disponibles</p>
         </div>
         <div className="grid md:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
               <CardTitle>Checkbox Items</CardTitle>
-              <CardDescription>Items with checked state</CardDescription>
+              <CardDescription>Items con estado checked</CardDescription>
             </CardHeader>
             <CardContent>
               <Menubar>
@@ -208,7 +208,7 @@ export function MenubarPage() {
           <Card>
             <CardHeader>
               <CardTitle>Radio Items</CardTitle>
-              <CardDescription>Items with unique selection</CardDescription>
+              <CardDescription>Items con selección única</CardDescription>
             </CardHeader>
             <CardContent>
               <Menubar>
@@ -233,7 +233,7 @@ export function MenubarPage() {
       <div className="grid md:grid-cols-2 gap-4">
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">✅ When to use</CardTitle>
+            <CardTitle className="text-base">✅ Cuándo usar</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-muted-foreground">
             <p>• Aplicaciones desktop-style</p>

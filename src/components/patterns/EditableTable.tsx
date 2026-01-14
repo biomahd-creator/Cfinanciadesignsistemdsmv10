@@ -382,7 +382,7 @@ export function EditableTable() {
                                 <CalendarIcon className="h-4 w-4" />
                                 {editValue instanceof Date
                                   ? format(editValue, "dd/MM/yyyy", { locale: es })
-                                  : "Select date"}
+                                  : "Seleccionar"}
                               </Button>
                             </PopoverTrigger>
                             <PopoverContent className="w-auto p-0" align="start">

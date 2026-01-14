@@ -13,7 +13,7 @@ export function ActionsSection() {
       <div>
         <h2 className="text-3xl font-semibold mb-2">Actions</h2>
         <p className="text-sm text-muted-foreground">
-          Components for user actions and interactions
+          Componentes para acciones e interacciones del usuario
         </p>
       </div>
 

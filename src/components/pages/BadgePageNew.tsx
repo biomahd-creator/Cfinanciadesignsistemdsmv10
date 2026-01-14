@@ -42,7 +42,7 @@ export function BadgeDemo() {
 }`}
       
       // Usage
-      usage="Import the Badge component from @/components/ui/badge and use it to display labels, statuses, categories, or notifications."
+      usage="Importa el componente Badge desde @/components/ui/badge y úsalo para mostrar etiquetas, estados, categorías o notificaciones."
       usageCode={`import { Badge } from "@/components/ui/badge";
 
 function MyComponent() {
@@ -57,17 +57,17 @@ function MyComponent() {
           name: "variant",
           type: '"default" | "secondary" | "outline" | "destructive" | "success" | "warning" | "info" | "neutral"',
           default: '"default"',
-          description: "Visual style of the badge",
+          description: "Estilo visual del badge",
         },
         {
           name: "className",
           type: "string",
-          description: "Additional CSS classes for the badge",
+          description: "Clases CSS adicionales para el badge",
         },
         {
           name: "children",
           type: "ReactNode",
-          description: "Content of the badge (text, icons, etc.)",
+          description: "Contenido del badge (texto, iconos, etc.)",
           required: true,
         },
       ]}
@@ -76,7 +76,7 @@ function MyComponent() {
       examples={[
         {
           title: "All Variants",
-          description: "All available badge variants, including semantic ones.",
+          description: "Todas las variantes disponibles del badge, incluyendo semánticas.",
           preview: (
             <div className="flex flex-wrap gap-3">
               <Badge>Default</Badge>
@@ -100,7 +100,7 @@ function MyComponent() {
         },
         {
           title: "With Icons",
-          description: "Badges with Lucide React icons for better visual context.",
+          description: "Badges con iconos de Lucide React para mayor contexto visual.",
           preview: (
             <div className="flex flex-wrap gap-3">
               <Badge variant="success" className="gap-1">
@@ -150,7 +150,7 @@ function MyComponent() {
         },
         {
           title: "Status Indicators",
-          description: "Badges to show statuses with visual indicators and correct semantic colors.",
+          description: "Badges para mostrar estados con indicadores visuales y colores semánticos correctos.",
           preview: (
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2">
@@ -205,7 +205,7 @@ function MyComponent() {
         },
         {
           title: "Semantic Usage",
-          description: "Use of semantic variants instead of manual colors.",
+          description: "Uso de variantes semánticas en lugar de colores manuales.",
           preview: (
             <div className="flex flex-wrap gap-3">
               <Badge variant="info">
@@ -233,7 +233,7 @@ function MyComponent() {
         },
         {
           title: "Notification Badges",
-          description: "Badges to display notification counters with high contrast.",
+          description: "Badges para mostrar contadores de notificaciones con alto contraste.",
           preview: (
             <div className="flex flex-wrap gap-6">
               <div className="relative inline-block">
@@ -272,7 +272,7 @@ function MyComponent() {
         },
         {
           title: "Tag System",
-          description: "Badges as removable tags or categories.",
+          description: "Badges como tags o categorías removibles.",
           preview: (
             <div className="flex flex-wrap gap-2">
               <Badge variant="neutral" className="gap-1.5 pr-1">

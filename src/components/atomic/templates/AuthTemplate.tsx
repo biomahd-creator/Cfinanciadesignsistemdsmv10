@@ -11,7 +11,7 @@ export function AuthTemplate({ children }: AuthTemplateProps) {
         {/* Left Side - Branding */}
         <div className="hidden lg:block space-y-6">
           <div>
-            <h1 className="text-5xl font-semibold mb-4">Factoring Pro</h1>
+            <h1 className="text-2xl font-medium mb-4">Factoring Pro</h1>
             <p className="text-xl text-muted-foreground">
               Sistema integral de gestión de facturas y financiamiento
             </p>

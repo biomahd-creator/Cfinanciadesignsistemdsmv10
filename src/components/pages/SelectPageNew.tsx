@@ -67,7 +67,7 @@ export function SelectDemo() {
 }`}
       
       // Usage
-      usage="Import Select components from @/components/ui/select. You need SelectTrigger for the button opening the menu, SelectValue for the placeholder, SelectContent for the options container, and SelectItem for each option."
+      usage="Importa los componentes Select desde @/components/ui/select. Necesitas SelectTrigger para el botón que abre el menú, SelectValue para el placeholder, SelectContent para el contenedor de opciones y SelectItem para cada opción."
       usageCode={`import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 function MyForm() {
@@ -89,40 +89,40 @@ function MyForm() {
         {
           name: "defaultValue",
           type: "string",
-          description: "Default value of the select (uncontrolled component)",
+          description: "Valor por defecto del select (componente no controlado)",
         },
         {
           name: "value",
           type: "string",
-          description: "Controlled value of the select (controlled component)",
+          description: "Valor controlado del select (componente controlado)",
         },
         {
           name: "onValueChange",
           type: "(value: string) => void",
-          description: "Callback executed when the selected value changes",
+          description: "Callback que se ejecuta cuando cambia el valor seleccionado",
         },
         {
           name: "disabled",
           type: "boolean",
           default: "false",
-          description: "Disables the entire select",
+          description: "Deshabilita el select completo",
         },
         {
           name: "name",
           type: "string",
-          description: "Name of the field for HTML forms",
+          description: "Nombre del campo para formularios HTML",
         },
         {
           name: "required",
           type: "boolean",
           default: "false",
-          description: "Marks the select as required in forms",
+          description: "Marca el select como requerido en formularios",
         },
         {
           name: "dir",
           type: '"ltr" | "rtl"',
           default: '"ltr"',
-          description: "Text direction (left-to-right or right-to-left)",
+          description: "Dirección del texto (left-to-right o right-to-left)",
         },
       ]}
       
@@ -130,7 +130,7 @@ function MyForm() {
       examples={[
         {
           title: "With Label",
-          description: "Select with descriptive label and helper text",
+          description: "Select con label descriptivo y helper text",
           preview: (
             <div className="grid gap-2 max-w-sm">
               <Label htmlFor="country">Country</Label>
@@ -171,7 +171,7 @@ function MyForm() {
         },
         {
           title: "Disabled",
-          description: "Select in disabled state",
+          description: "Select en estado deshabilitado",
           preview: (
             <div className="grid gap-2 max-w-sm">
               <Label htmlFor="disabled">Disabled Select</Label>
@@ -197,7 +197,7 @@ function MyForm() {
         },
         {
           title: "With Groups",
-          description: "Select with grouped options using SelectGroup",
+          description: "Select con opciones agrupadas usando SelectGroup",
           preview: (
             <div className="grid gap-2 max-w-sm">
               <Label htmlFor="timezone">Timezone</Label>
@@ -249,7 +249,7 @@ function MyForm() {
         },
         {
           title: "With Icons",
-          description: "Select items with decorative icons",
+          description: "Select items con iconos decorativos",
           preview: (
             <div className="grid gap-2 max-w-sm">
               <Label htmlFor="location">Location Type</Label>
@@ -304,7 +304,7 @@ function MyForm() {
         },
         {
           title: "Form Integration",
-          description: "Select integrated in a complete form",
+          description: "Select integrado en un formulario completo",
           preview: (
             <form className="grid gap-4 max-w-sm" onSubmit={(e) => e.preventDefault()}>
               <div className="grid gap-2">
@@ -366,7 +366,7 @@ function MyForm() {
         },
         {
           title: "Scrollable Content",
-          description: "Select with many options (internal scroll)",
+          description: "Select con muchas opciones (scroll interno)",
           preview: (
             <div className="grid gap-2 max-w-sm">
               <Label htmlFor="year">Birth Year</Label>
@@ -405,7 +405,7 @@ function MyForm() {
         },
         {
           title: "Controlled Component",
-          description: "Select as controlled component with state",
+          description: "Select como componente controlado con estado",
           preview: (
             <div className="grid gap-4 max-w-sm">
               <div className="grid gap-2">
@@ -450,7 +450,7 @@ function ControlledSelect() {
         },
         {
           title: "Error State",
-          description: "Select with error state and validation message",
+          description: "Select con estado de error y mensaje de validación",
           preview: (
             <div className="grid gap-2 max-w-sm">
               <Label htmlFor="error">Category *</Label>

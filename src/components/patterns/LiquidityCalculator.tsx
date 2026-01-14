@@ -270,7 +270,7 @@ export function LiquidityCalculator() {
                 <p className="text-sm text-muted-foreground mb-2">
                   Recibes en 24 horas
                 </p>
-                <p className="text-4xl font-bold text-primary mb-1">
+                <p className="text-4xl font-bold text-foreground mb-1">
                   {formatCOP(netoARecibir)}
                 </p>
                 <Badge variant="outline" className="mt-2">

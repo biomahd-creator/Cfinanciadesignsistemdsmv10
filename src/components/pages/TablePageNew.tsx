@@ -100,7 +100,7 @@ export function TableDemo() {
 }`}
       
       // Usage
-      usage="Import the Table components from @/components/ui/table. Use Table as a container, TableHeader for headers, TableBody for data rows, and TableCell for each cell."
+      usage="Importa los componentes Table desde @/components/ui/table. Usa Table como contenedor, TableHeader para los encabezados, TableBody para las filas de datos y TableCell para cada celda."
       usageCode={`import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 function MyTable() {
@@ -127,12 +127,12 @@ function MyTable() {
         {
           name: "className",
           type: "string",
-          description: "Additional CSS classes to customize the table",
+          description: "Clases CSS adicionales para personalizar la tabla",
         },
         {
           name: "children",
           type: "ReactNode",
-          description: "Content of the table (TableHeader, TableBody, TableFooter, TableCaption)",
+          description: "Contenido de la tabla (TableHeader, TableBody, TableFooter, TableCaption)",
           required: true,
         },
       ]}
@@ -141,7 +141,7 @@ function MyTable() {
       examples={[
         {
           title: "With Footer",
-          description: "Table with footer for totals",
+          description: "Tabla con pie de página para totales",
           preview: (
             <div className="rounded-md border w-full">
               <Table>
@@ -193,8 +193,227 @@ function MyTable() {
 </Table>`
         },
         {
-          title: "With Action Buttons",
-          description: "Table with quick action buttons",
+          title: "With Actions",
+          description: "Tabla con acciones por fila usando Dropdown Menu",
+          preview: (
+            <div className="rounded-md border w-full">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Role</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {users.map((user) => (
+                    <TableRow key={user.email}>
+                      <TableCell className="font-medium">{user.name}</TableCell>
+                      <TableCell>{user.email}</TableCell>
+                      <TableCell>
+                        <Badge variant="outline">{user.role}</Badge>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="h-8 w-8 p-0">
+                              <span className="sr-only">Open menu</span>
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem>View details</DropdownMenuItem>
+                            <DropdownMenuItem>Edit user</DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem className="text-destructive">
+                              Delete user
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          ),
+          code: `<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead className="text-right">Actions</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    {users.map((user) => (
+      <TableRow key={user.email}>
+        <TableCell>{user.name}</TableCell>
+        <TableCell className="text-right">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm">
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>View</DropdownMenuItem>
+              <DropdownMenuItem>Edit</DropdownMenuItem>
+              <DropdownMenuItem>Delete</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>`
+        },
+        {
+          title: "Compact Table",
+          description: "Tabla con filas más compactas",
+          preview: (
+            <div className="rounded-md border w-full">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="h-8">ID</TableHead>
+                    <TableHead className="h-8">Status</TableHead>
+                    <TableHead className="h-8 text-right">Amount</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {invoices.slice(0, 4).map((invoice) => (
+                    <TableRow key={invoice.id} className="h-8">
+                      <TableCell className="py-2 font-medium">{invoice.id}</TableCell>
+                      <TableCell className="py-2">
+                        <Badge variant="outline" className="text-xs">
+                          {invoice.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="py-2 text-right">{invoice.amount}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          ),
+          code: `<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead className="h-8">ID</TableHead>
+      <TableHead className="h-8">Status</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    {data.map((item) => (
+      <TableRow key={item.id} className="h-8">
+        <TableCell className="py-2">{item.id}</TableCell>
+        <TableCell className="py-2">{item.status}</TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>`
+        },
+        {
+          title: "Striped Rows",
+          description: "Tabla con filas alternadas para mejor legibilidad",
+          preview: (
+            <div className="rounded-md border w-full">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Invoice</TableHead>
+                    <TableHead>Method</TableHead>
+                    <TableHead className="text-right">Amount</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {invoices.map((invoice, index) => (
+                    <TableRow 
+                      key={invoice.id}
+                      className={index % 2 === 0 ? "bg-muted/50" : ""}
+                    >
+                      <TableCell className="font-medium">{invoice.id}</TableCell>
+                      <TableCell>{invoice.method}</TableCell>
+                      <TableCell className="text-right">{invoice.amount}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          ),
+          code: `<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Invoice</TableHead>
+      <TableHead>Amount</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    {data.map((item, index) => (
+      <TableRow 
+        key={item.id}
+        className={index % 2 === 0 ? "bg-muted/50" : ""}
+      >
+        <TableCell>{item.id}</TableCell>
+        <TableCell>{item.amount}</TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>`
+        },
+        {
+          title: "Hoverable Rows",
+          description: "Tabla con efecto hover en las filas",
+          preview: (
+            <div className="rounded-md border w-full">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Role</TableHead>
+                    <TableHead>Status</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {users.map((user) => (
+                    <TableRow 
+                      key={user.email}
+                      className="hover:bg-muted/50 cursor-pointer transition-colors"
+                    >
+                      <TableCell className="font-medium">{user.name}</TableCell>
+                      <TableCell>{user.role}</TableCell>
+                      <TableCell>
+                        <Badge 
+                          variant={user.status === "Active" ? "default" : "secondary"}
+                        >
+                          {user.status}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          ),
+          code: `<Table>
+  <TableBody>
+    {users.map((user) => (
+      <TableRow 
+        key={user.id}
+        className="hover:bg-muted/50 cursor-pointer transition-colors"
+      >
+        <TableCell>{user.name}</TableCell>
+        <TableCell>{user.role}</TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>`
+        },
+        {
+          title: "With Icon Buttons",
+          description: "Tabla con botones de acción rápida",
           preview: (
             <div className="rounded-md border w-full">
               <Table>
@@ -267,150 +486,8 @@ function MyTable() {
 </Table>`
         },
         {
-          title: "Compact Rows",
-          description: "Table with more compact rows",
-          preview: (
-            <div className="rounded-md border w-full">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="h-8">ID</TableHead>
-                    <TableHead className="h-8">Status</TableHead>
-                    <TableHead className="h-8 text-right">Amount</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {invoices.slice(0, 4).map((invoice) => (
-                    <TableRow key={invoice.id} className="h-8">
-                      <TableCell className="py-2 font-medium">{invoice.id}</TableCell>
-                      <TableCell className="py-2">
-                        <Badge variant="outline" className="text-xs">
-                          {invoice.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="py-2 text-right">{invoice.amount}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          ),
-          code: `<Table>
-  <TableHeader>
-    <TableRow>
-      <TableHead className="h-8">ID</TableHead>
-      <TableHead className="h-8">Status</TableHead>
-    </TableRow>
-  </TableHeader>
-  <TableBody>
-    {data.map((item) => (
-      <TableRow key={item.id} className="h-8">
-        <TableCell className="py-2">{item.id}</TableCell>
-        <TableCell className="py-2">{item.status}</TableCell>
-      </TableRow>
-    ))}
-  </TableBody>
-</Table>`
-        },
-        {
-          title: "Striped Rows",
-          description: "Table with alternating rows for better readability",
-          preview: (
-            <div className="rounded-md border w-full">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Invoice</TableHead>
-                    <TableHead>Method</TableHead>
-                    <TableHead className="text-right">Amount</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {invoices.map((invoice, index) => (
-                    <TableRow 
-                      key={invoice.id}
-                      className={index % 2 === 0 ? "bg-muted/50" : ""}
-                    >
-                      <TableCell className="font-medium">{invoice.id}</TableCell>
-                      <TableCell>{invoice.method}</TableCell>
-                      <TableCell className="text-right">{invoice.amount}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          ),
-          code: `<Table>
-  <TableHeader>
-    <TableRow>
-      <TableHead>Invoice</TableHead>
-      <TableHead>Amount</TableHead>
-    </TableRow>
-  </TableHeader>
-  <TableBody>
-    {data.map((item, index) => (
-      <TableRow 
-        key={item.id}
-        className={index % 2 === 0 ? "bg-muted/50" : ""}
-      >
-        <TableCell>{item.id}</TableCell>
-        <TableCell>{item.amount}</TableCell>
-      </TableRow>
-    ))}
-  </TableBody>
-</Table>`
-        },
-        {
-          title: "Hoverable Rows",
-          description: "Table with hover effect on rows",
-          preview: (
-            <div className="rounded-md border w-full">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Role</TableHead>
-                    <TableHead>Status</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {users.map((user) => (
-                    <TableRow 
-                      key={user.email}
-                      className="hover:bg-muted/50 cursor-pointer transition-colors"
-                    >
-                      <TableCell className="font-medium">{user.name}</TableCell>
-                      <TableCell>{user.role}</TableCell>
-                      <TableCell>
-                        <Badge 
-                          variant={user.status === "Active" ? "default" : "secondary"}
-                        >
-                          {user.status}
-                        </Badge>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          ),
-          code: `<Table>
-  <TableBody>
-    {users.map((user) => (
-      <TableRow 
-        key={user.id}
-        className="hover:bg-muted/50 cursor-pointer transition-colors"
-      >
-        <TableCell>{user.name}</TableCell>
-        <TableCell>{user.role}</TableCell>
-      </TableRow>
-    ))}
-  </TableBody>
-</Table>`
-        },
-        {
           title: "Sortable Headers",
-          description: "Table with sortable headers (visual)",
+          description: "Tabla con encabezados ordenables (visual)",
           preview: (
             <div className="rounded-md border w-full">
               <Table>
@@ -473,7 +550,7 @@ function MyTable() {
         },
         {
           title: "Empty State",
-          description: "Table showing empty state when there's no data",
+          description: "Tabla mostrando estado vacío cuando no hay datos",
           preview: (
             <div className="rounded-md border w-full">
               <Table>

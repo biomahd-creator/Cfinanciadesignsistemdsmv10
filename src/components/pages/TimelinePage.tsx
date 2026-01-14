@@ -31,7 +31,7 @@ export function TimelinePage() {
     <div className="space-y-8 max-w-4xl">
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <h2 className="text-4xl font-semibold">Timeline</h2>
+          <h2 className="text-2xl font-medium">Timeline</h2>
           <Badge>Advanced</Badge>
           <Badge variant="outline" className="border-green-500 text-green-500">New</Badge>
         </div>

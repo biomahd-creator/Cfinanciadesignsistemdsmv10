@@ -11,7 +11,7 @@ export function HoverCardPage() {
     <div className="space-y-8">
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-4xl font-semibold">Hover Card</h1>
+          <h1 className="text-2xl font-medium">Hover Card</h1>
           <Badge>Data Display</Badge>
         </div>
         <p className="text-muted-foreground">
@@ -23,8 +23,8 @@ export function HoverCardPage() {
 
       <div className="space-y-4">
         <div>
-          <h2 className="text-2xl font-semibold mb-2">Basic Hover Card</h2>
-          <p className="text-muted-foreground">User profile preview</p>
+          <h2 className="text-2xl font-semibold mb-2">Hover Card Básico</h2>
+          <p className="text-muted-foreground">Preview de perfil de usuario</p>
         </div>
         <Card>
           <CardHeader>
@@ -70,8 +70,8 @@ export function HoverCardPage() {
 
       <div className="space-y-4">
         <div>
-          <h2 className="text-2xl font-semibold mb-2">Usage Examples</h2>
-          <p className="text-muted-foreground">Different hover card contexts</p>
+          <h2 className="text-2xl font-semibold mb-2">Ejemplos de Uso</h2>
+          <p className="text-muted-foreground">Diferentes contextos del hover card</p>
         </div>
         <div className="grid md:grid-cols-2 gap-6">
           <Card>
@@ -92,8 +92,8 @@ export function HoverCardPage() {
                     <div className="space-y-2">
                       <h4 className="font-semibold">shadcn/ui</h4>
                       <p className="text-sm text-muted-foreground">
-                        Beautifully designed and accessible UI components that you can
-                        copy and paste into your apps.
+                        Componentes de UI bellamente diseñados y accesibles que puedes
+                        copiar y pegar en tus apps.
                       </p>
                       <div className="flex items-center gap-2 pt-2">
                         <ExternalLink className="h-4 w-4" />
@@ -220,7 +220,7 @@ export function HoverCardPage() {
                         </p>
                         <Separator />
                         <p className="text-xs text-muted-foreground">
-                          ✓ We will never share your email with third parties
+                          ✓ Nunca compartiremos tu email con terceros
                         </p>
                       </div>
                     </HoverCardContent>
@@ -237,7 +237,7 @@ export function HoverCardPage() {
       <div className="grid md:grid-cols-2 gap-4">
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">✅ When to use</CardTitle>
+            <CardTitle className="text-base">✅ Cuándo usar</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-muted-foreground">
             <p>• Previews de perfiles de usuario</p>
@@ -263,7 +263,7 @@ export function HoverCardPage() {
 
       <Card className="bg-primary/5 border-primary/20">
         <CardHeader>
-          <CardTitle>♿ Accessibility</CardTitle>
+          <CardTitle>♿ Accesibilidad</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2 text-sm">
           <p>✓ <strong>Keyboard accessible</strong> - Se abre con focus</p>
@@ -277,8 +277,8 @@ export function HoverCardPage() {
 
       <Card className="bg-muted/50">
         <CardHeader>
-          <CardTitle>Composition</CardTitle>
-          <CardDescription>shadcn/ui components used</CardDescription>
+          <CardTitle>Composición</CardTitle>
+          <CardDescription>Componentes shadcn/ui utilizados</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">

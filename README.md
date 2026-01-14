@@ -1,7 +1,7 @@
 
-  # C-Financia Design Sistem DSM v1.0
+  # C-Financia DSM v1.0
 
-  This is a code bundle for C-Financia Design Sistem DSM v1.0. The original project is available at https://www.figma.com/design/hnu6vhQy4beUoXQsb6OHgr/C-Financia-Design-Sistem-DSM-v1.0.
+  This is a code bundle for C-Financia DSM v1.0. The original project is available at https://www.figma.com/design/hnu6vhQy4beUoXQsb6OHgr/C-Financia-DSM-v1.0.
 
   ## Running the code
 

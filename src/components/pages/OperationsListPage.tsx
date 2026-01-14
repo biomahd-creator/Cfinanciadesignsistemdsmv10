@@ -11,7 +11,7 @@ export function OperationsListPage() {
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <h2 className="text-4xl font-semibold">Operations List</h2>
+          <h2 className="text-2xl font-medium">Operations List</h2>
           <Badge variant="default" className="bg-blue-500 hover:bg-blue-600">
             <FileText className="h-3 w-3 mr-1" />
             Business Pattern

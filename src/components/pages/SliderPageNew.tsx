@@ -32,7 +32,7 @@ export function SliderDemo() {
 }`}
       
       // Usage
-      usage="Import the Slider component from @/components/ui/slider. Ideal for volume, brightness, price ranges, percentages, and any numeric value within a range. Always use with a Label for accessibility."
+      usage="Importa el componente Slider desde @/components/ui/slider. Ideal para volumen, brillo, rangos de precios, porcentajes, y cualquier valor numérico dentro de un rango. Usa siempre con un Label para accesibilidad."
       usageCode={`import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 
@@ -54,53 +54,53 @@ function VolumeControl() {
         {
           name: "value",
           type: "number[]",
-          description: "Controlled value of the slider (array for multiple thumbs)",
+          description: "Valor controlado del slider (array para múltiples thumbs)",
         },
         {
           name: "defaultValue",
           type: "number[]",
           default: "[0]",
-          description: "Initial uncontrolled value",
+          description: "Valor inicial no controlado",
         },
         {
           name: "onValueChange",
           type: "(value: number[]) => void",
-          description: "Callback when the value changes",
+          description: "Callback cuando cambia el valor",
         },
         {
           name: "min",
           type: "number",
           default: "0",
-          description: "Minimum value of the range",
+          description: "Valor mínimo del rango",
         },
         {
           name: "max",
           type: "number",
           default: "100",
-          description: "Maximum value of the range",
+          description: "Valor máximo del rango",
         },
         {
           name: "step",
           type: "number",
           default: "1",
-          description: "Increment between values",
+          description: "Incremento entre valores",
         },
         {
           name: "disabled",
           type: "boolean",
           default: "false",
-          description: "Disables the slider",
+          description: "Deshabilita el slider",
         },
         {
           name: "orientation",
           type: '"horizontal" | "vertical"',
           default: '"horizontal"',
-          description: "Orientation of the slider",
+          description: "Orientación del slider",
         },
         {
           name: "className",
           type: "string",
-          description: "Additional CSS classes",
+          description: "Clases CSS adicionales",
         },
       ]}
       
@@ -108,7 +108,7 @@ function VolumeControl() {
       examples={[
         {
           title: "Basic Slider",
-          description: "Simple slider with default value",
+          description: "Slider simple con valor por defecto",
           preview: (
             <div className="w-full max-w-md space-y-2">
               <Label>Basic Slider</Label>
@@ -129,7 +129,7 @@ export function BasicSlider() {
         },
         {
           title: "Volume Control",
-          description: "Slider with icons and visible value in real time",
+          description: "Slider con iconos y valor visible en tiempo real",
           preview: (
             <VolumeControlExample />
           ),
@@ -166,7 +166,7 @@ export function VolumeControl() {
         },
         {
           title: "Different Steps",
-          description: "Sliders with different increments",
+          description: "Sliders con diferentes incrementos",
           preview: (
             <div className="w-full max-w-md space-y-6">
               <div className="space-y-2">
@@ -209,7 +209,7 @@ export function DifferentSteps() {
         },
         {
           title: "Price Range",
-          description: "Slider for selecting price range",
+          description: "Slider para seleccionar rango de precios",
           preview: (
             <PriceRangeExample />
           ),

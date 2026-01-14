@@ -38,7 +38,7 @@ export function ButtonDemo() {
 }`}
       
       // Usage
-      usage="Import the Button component from @/components/ui/button and use it with different variants according to your design needs."
+      usage="Importa el componente Button desde @/components/ui/button y úsalo con diferentes variantes según tu necesidad de diseño."
       usageCode={`import { Button } from "@/components/ui/button";
 
 function MyComponent() {
@@ -55,35 +55,35 @@ function MyComponent() {
           name: "variant",
           type: '"default" | "secondary" | "destructive" | "outline" | "ghost" | "link"',
           default: '"default"',
-          description: "Visual style of the button",
+          description: "Estilo visual del botón",
         },
         {
           name: "size",
           type: '"default" | "sm" | "lg" | "icon"',
           default: '"default"',
-          description: "Size of the button",
+          description: "Tamaño del botón",
         },
         {
           name: "asChild",
           type: "boolean",
           default: "false",
-          description: "Renders the button as its direct child (useful for links)",
+          description: "Renderiza el botón como su hijo directo (útil para links)",
         },
         {
           name: "disabled",
           type: "boolean",
           default: "false",
-          description: "Disables the button",
+          description: "Deshabilita el botón",
         },
         {
           name: "onClick",
           type: "() => void",
-          description: "Function to execute on click",
+          description: "Función que se ejecuta al hacer click",
         },
         {
           name: "className",
           type: "string",
-          description: "Additional CSS classes",
+          description: "Clases CSS adicionales",
         },
       ]}
       
@@ -91,7 +91,7 @@ function MyComponent() {
       examples={[
         {
           title: "With Icon",
-          description: "Buttons with Lucide React icons",
+          description: "Botones con iconos de Lucide React",
           preview: (
             <div className="flex flex-wrap gap-4">
               <Button>
@@ -132,7 +132,7 @@ export function ButtonWithIcon() {
         },
         {
           title: "Loading State",
-          description: "Button with loading state using Loader2 icon",
+          description: "Botón con estado de carga utilizando el icono Loader2",
           preview: (
             <div className="flex flex-wrap gap-4">
               <Button disabled>
@@ -159,7 +159,7 @@ export function ButtonLoading() {
         },
         {
           title: "Sizes",
-          description: "Different sizes available for the button",
+          description: "Diferentes tamaños disponibles para el botón",
           preview: (
             <div className="flex flex-wrap items-center gap-4">
               <Button size="sm">Small</Button>
@@ -188,7 +188,7 @@ export function ButtonSizes() {
         },
         {
           title: "Icon Placements",
-          description: "Icon placement to the right or icon only",
+          description: "Ubicación del icono a la derecha o solo icono",
           preview: (
             <div className="flex flex-wrap gap-4">
               <Button>
@@ -233,14 +233,14 @@ export function ButtonIconPositions() {
         },
         {
           title: "Social Login",
-          description: "Buttons for social authentication",
+          description: "Botones para autenticación social",
           preview: (
             <div className="flex flex-col gap-3 w-full max-w-sm">
               <Button variant="outline" className="w-full">
                 <Mail className="mr-2 h-4 w-4" />
                 Login with Email
               </Button>
-              <Button className="w-full bg-[#333] hover:bg-[#333]/90 text-white">
+              <Button variant="secondary" className="w-full">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -270,7 +270,7 @@ export function SocialButtons() {
         <Mail className="mr-2 h-4 w-4" />
         Login with Email
       </Button>
-      <Button className="w-full bg-[#333] hover:bg-[#333]/90 text-white">
+      <Button variant="secondary" className="w-full">
         <GithubIcon className="mr-2 h-4 w-4" />
         Login with GitHub
       </Button>
@@ -280,7 +280,7 @@ export function SocialButtons() {
         },
         {
           title: "Disabled State",
-          description: "Buttons in disabled state",
+          description: "Botones en estado deshabilitado",
           preview: (
             <div className="flex flex-wrap gap-4">
               <Button disabled>Default</Button>
@@ -304,7 +304,7 @@ export function ButtonDisabled() {
         },
         {
           title: "Outline Variants",
-          description: "Outline variant in all sizes with and without icons",
+          description: "Variante outline en todos los tamaños con y sin iconos",
           preview: (
             <div className="flex flex-col gap-4">
               <div className="flex flex-wrap items-center gap-4">
@@ -355,7 +355,7 @@ export function OutlineButtons() {
         },
         {
           title: "Ghost Variants",
-          description: "Ghost variant for subtle secondary actions",
+          description: "Variante ghost para acciones secundarias sutiles",
           preview: (
             <div className="flex flex-col gap-4">
               <div className="flex flex-wrap items-center gap-4">
@@ -406,7 +406,7 @@ export function GhostButtons() {
         },
         {
           title: "Link Variants",
-          description: "Link variant for text with link style",
+          description: "Variante link para texto con estilo de enlace",
           preview: (
             <div className="flex flex-col gap-4">
               <div className="flex flex-wrap items-center gap-4">
@@ -451,7 +451,7 @@ export function LinkButtons() {
         },
         {
           title: "Icon Only Buttons",
-          description: "Buttons with only icons in all variants and sizes",
+          description: "Botones con solo iconos en todas las variantes y tamaños",
           preview: (
             <div className="flex flex-col gap-4">
               <div className="flex flex-wrap items-center gap-4">
@@ -521,7 +521,7 @@ export function IconOnlyButtons() {
         },
         {
           title: "As Link",
-          description: "Button rendered as a link using the asChild prop",
+          description: "Botón renderizado como enlace utilizando la prop asChild",
           preview: (
             <div className="flex flex-wrap gap-4">
               <Button asChild>

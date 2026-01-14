@@ -177,19 +177,19 @@ export function PaymentForm() {
                   <div className="relative z-10 flex flex-col justify-between h-full">
                     <div className="flex justify-between items-start">
                       <div className="h-8 w-12 bg-yellow-500/80 rounded-md"></div>
-                      <span className="font-mono text-lg tracking-widest">VISA</span>
+                      <span className="font-mono text-lg">VISA</span>
                     </div>
                     <div className="space-y-4">
-                      <div className="font-mono text-xl tracking-widest text-shadow">
+                      <div className="font-mono text-xl text-shadow">
                         {cardNumber || "•••• •••• •••• ••••"}
                       </div>
-                      <div className="flex justify-between text-xs uppercase tracking-wider opacity-80">
+                      <div className="flex justify-between text-xs uppercase opacity-80">
                         <div className="flex flex-col">
-                          <span className="text-[10px]">Card Holder</span>
+                          <span className="text-xs">Card Holder</span>
                           <span className="font-semibold text-sm">{name || "NOMBRE APELLIDO"}</span>
                         </div>
                         <div className="flex flex-col">
-                          <span className="text-[10px]">Expires</span>
+                          <span className="text-xs">Expires</span>
                           <span className="font-semibold text-sm">{expiry || "MM/YY"}</span>
                         </div>
                       </div>

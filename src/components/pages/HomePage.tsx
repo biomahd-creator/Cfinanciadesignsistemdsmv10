@@ -22,48 +22,48 @@ import { Logo } from "../Logo";
 
 export function HomePage() {
   const stats = [
-    { label: "Total Components", value: "110+", icon: Package, color: "text-primary" },
+    { label: "Componentes Totales", value: "125+", icon: Package, color: "text-primary" },
     { label: "DSM Migration", value: "100%", icon: Sparkles, color: "text-green-500" },
-    { label: "Official Components", value: "43", icon: CheckCircle2, color: "text-success" },
-    { label: "WCAG AA Compliance", value: "98%", icon: Accessibility, color: "text-warning" },
+    { label: "Componentes Oficiales", value: "48", icon: CheckCircle2, color: "text-success" },
+    { label: "Compliance WCAG AA", value: "98%", icon: Accessibility, color: "text-warning" },
   ];
 
   const features = [
     {
       icon: Palette,
       title: "Design Tokens",
-      description: "Design system based on CSS tokens with corporate colors #DEFB49 and #1C2D3A",
-      badge: "Active"
+      description: "Sistema de diseño basado en tokens CSS con colores corporativos #884cc16cc16 (Verde Lima) y #1C2D3A (Azul Oscuro)",
+      badge: "Activo"
     },
     {
       icon: Accessibility,
       title: "WCAG 2.1 AA Compliant",
-      description: "98% compliance with optimized contrast ratios for accessibility",
-      badge: "Verified"
+      description: "98% de cumplimiento con ratios de contraste optimizados para accesibilidad",
+      badge: "Verificado"
     },
     {
       icon: Layers,
       title: "Atomic Design",
-      description: "Hierarchical architecture with Atoms, Molecules, Organisms, Templates and Pages",
-      badge: "Implemented"
+      description: "Arquitectura jerárquica con Atoms, Molecules, Organisms, Templates y Pages",
+      badge: "Implementado"
     },
     {
       icon: Code2,
       title: "shadcn/ui Base",
-      description: "Built on official shadcn/ui components with Radix UI primitives",
-      badge: "Stable"
+      description: "Construido sobre componentes oficiales de shadcn/ui con Radix UI primitives",
+      badge: "Estable"
     },
     {
       icon: Zap,
-      title: "Reactive & Dynamic",
-      description: "Real-time Theme Customizer with light/dark mode support",
+      title: "Reactivos y Dinámicos",
+      description: "Theme Customizer en tiempo real con soporte para modo claro/oscuro",
       badge: "Live"
     },
     {
       icon: Shield,
-      title: "Satoshi Typography",
-      description: "Unique typographic system with predefined scales and consistent weights",
-      badge: "System"
+      title: "Tipografía Satoshi",
+      description: "Sistema tipográfico único con escalas predefinidas y pesos consistentes",
+      badge: "Sistema"
     },
   ];
 
@@ -77,9 +77,10 @@ export function HomePage() {
   ];
 
   const progress = {
-    components: 90, // 43/48 official components
-    patterns: 100, // 11/11 complete patterns
-    pages: 100, // 4/4 real pages
+    components: 100, // 48/48 componentes oficiales shadcn/ui
+    patterns: 100, // 21/21 patterns completos
+    business: 100, // 15/15 business components
+    advanced: 100, // 25/25 advanced components
     accessibility: 98, // WCAG compliance
   };
 
@@ -101,22 +102,22 @@ export function HomePage() {
           <h1 className="mb-4">
             Design System Manager
           </h1>
-          <p className="text-muted-foreground max-w-2xl mb-6">
-            Complete design system for Factoring applications, built with React, 
-            Tailwind CSS and shadcn/ui. Focused on accessibility, consistency and scalability.
+          <p className="text-lg text-muted-foreground max-w-2xl mb-6 font-light">
+            Sistema de diseño completo para aplicaciones de Factoring, construido con React, 
+            Tailwind CSS y shadcn/ui. Enfocado en accesibilidad, consistencia y escalabilidad.
           </p>
           <div className="flex flex-wrap gap-3">
             <Badge variant="outline" className="gap-2">
               <Activity className="h-3 w-3" />
-              Last update: December 2024
+              Última actualización: Diciembre 2024
             </Badge>
             <Badge variant="outline" className="gap-2">
               <Users className="h-3 w-3" />
-              Atomic Design methodology
+              Metodología Atomic Design
             </Badge>
             <Badge variant="outline" className="gap-2">
               <TrendingUp className="h-3 w-3" />
-              110+ Components
+              125+ Componentes
             </Badge>
           </div>
         </div>
@@ -146,47 +147,56 @@ export function HomePage() {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-primary" />
-            <CardTitle>Implementation Status</CardTitle>
+            <CardTitle>Estado de Implementación</CardTitle>
           </div>
           <CardDescription>
-            Current development progress of the Design System
+            Progreso actual del desarrollo del Design System
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Official shadcn/ui Components</span>
+              <span className="text-muted-foreground">Componentes Oficiales shadcn/ui</span>
               <span className="font-semibold">{progress.components}%</span>
             </div>
             <Progress value={progress.components} className="h-2" />
-            <p className="text-xs text-muted-foreground">43/48 components implemented</p>
+            <p className="text-xs text-muted-foreground">48/48 componentes implementados</p>
           </div>
 
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Composite Patterns</span>
+              <span className="text-muted-foreground">Patterns Compuestos</span>
               <span className="font-semibold">{progress.patterns}%</span>
             </div>
             <Progress value={progress.patterns} className="h-2" />
-            <p className="text-xs text-muted-foreground">11/11 UX patterns complete</p>
+            <p className="text-xs text-muted-foreground">21/21 patterns de UX completos</p>
           </div>
 
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Real Pages (Factoring)</span>
-              <span className="font-semibold">{progress.pages}%</span>
+              <span className="text-muted-foreground">Componentes de Negocio</span>
+              <span className="font-semibold">{progress.business}%</span>
             </div>
-            <Progress value={progress.pages} className="h-2" />
-            <p className="text-xs text-muted-foreground">4/4 functional pages implemented</p>
+            <Progress value={progress.business} className="h-2" />
+            <p className="text-xs text-muted-foreground">15/15 componentes de negocio implementados</p>
           </div>
 
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">WCAG 2.1 AA Accessibility</span>
+              <span className="text-muted-foreground">Componentes Avanzados</span>
+              <span className="font-semibold">{progress.advanced}%</span>
+            </div>
+            <Progress value={progress.advanced} className="h-2" />
+            <p className="text-xs text-muted-foreground">25/25 componentes avanzados implementados</p>
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">Accesibilidad WCAG 2.1 AA</span>
               <span className="font-semibold">{progress.accessibility}%</span>
             </div>
             <Progress value={progress.accessibility} className="h-2" />
-            <p className="text-xs text-muted-foreground">Optimized contrast ratios</p>
+            <p className="text-xs text-muted-foreground">Ratios de contraste optimizados</p>
           </div>
         </CardContent>
       </Card>
@@ -194,9 +204,9 @@ export function HomePage() {
       {/* Features Grid */}
       <div>
         <div className="mb-6">
-          <h2 className="mb-2">Main Features</h2>
+          <h2 className="mb-2">Características Principales</h2>
           <p className="text-muted-foreground">
-            Foundations and pillars of the Design System
+            Fundamentos y pilares del Design System
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -227,13 +237,13 @@ export function HomePage() {
       <div>
         <div className="mb-6">
           <div className="flex items-center gap-3 mb-2">
-            <h2>Hero UI Pro Level Components</h2>
+            <h2>Componentes Nivel Hero UI Pro</h2>
             <Badge variant="default" className="text-xs">
               Premium Features
             </Badge>
           </div>
           <p className="text-muted-foreground">
-            Advanced components inspired by Hero UI Pro that elevate the system beyond basic shadcn/ui
+            Componentes avanzados inspirados en Hero UI Pro que elevan el sistema más allá de shadcn/ui básico
           </p>
         </div>
 
@@ -253,7 +263,7 @@ export function HomePage() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-3">
-                6 types of professional charts with full integration to the Theme Customizer and dynamic support for light/dark mode.
+                6 tipos de gráficos profesionales con integración completa al Theme Customizer y soporte dinámico para modo claro/oscuro.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary" className="text-xs">Line</Badge>
@@ -277,11 +287,11 @@ export function HomePage() {
                   TanStack Table
                 </Badge>
               </div>
-              <CardTitle className="text-lg">Advanced Data Tables</CardTitle>
+              <CardTitle className="text-lg">Data Tables Avanzadas</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-3">
-                Tables with sorting, filtering, pagination, multiple selection and data export.
+                Tablas con ordenamiento, filtrado, paginación, selección múltiple y exportación de datos.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary" className="text-xs">Sorting</Badge>
@@ -307,7 +317,7 @@ export function HomePage() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-3">
-                Complete WYSIWYG editor with text formatting, lists, links, images and markdown.
+                Editor WYSIWYG completo con formato de texto, listas, links, imágenes y markdown.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary" className="text-xs">Bold/Italic</Badge>
@@ -333,12 +343,12 @@ export function HomePage() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-3">
-                Drag & drop board for task management with customizable columns and visual states.
+                Tablero drag & drop para gestión de tareas con columnas personalizables y estado visual.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary" className="text-xs">Drag & Drop</Badge>
-                <Badge variant="secondary" className="text-xs">Columns</Badge>
-                <Badge variant="secondary" className="text-xs">States</Badge>
+                <Badge variant="secondary" className="text-xs">Columnas</Badge>
+                <Badge variant="secondary" className="text-xs">Estados</Badge>
               </div>
             </CardContent>
           </Card>
@@ -358,7 +368,7 @@ export function HomePage() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-3">
-                Dropzone with drag & drop, image preview, type validation and upload progress.
+                Zona de carga con drag & drop, preview de imágenes, validación de tipos y progreso de carga.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary" className="text-xs">Drag & Drop</Badge>
@@ -383,7 +393,7 @@ export function HomePage() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-3">
-                Multi-selectors with chips, filtered search and timeline component for flows.
+                Selectores múltiples con chips, búsqueda filtrada y componente de línea de tiempo para flujos.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary" className="text-xs">Multi Select</Badge>
@@ -402,24 +412,24 @@ export function HomePage() {
                 <Scale className="h-5 w-5 text-primary" />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold mb-2">Comparison with Hero UI</h3>
+                <h3 className="font-semibold mb-2">Comparación con Hero UI</h3>
                 <p className="text-sm text-muted-foreground mb-3">
-                  This Design System implements advanced components that are normally only found 
-                  in premium libraries like Hero UI Pro ($299), but maintaining full code control 
-                  and the flexibility of shadcn/ui (free and open-source).
+                  Este Design System implementa componentes avanzados que normalmente solo se encuentran 
+                  en bibliotecas premium como Hero UI Pro ($299), pero manteniendo el control total del código 
+                  y la flexibilidad de shadcn/ui (gratuito y open-source).
                 </p>
                 <div className="grid grid-cols-2 gap-4 text-xs">
                   <div>
                     <p className="font-semibold mb-1">Hero UI Pro</p>
-                    <p className="text-muted-foreground">• License: $299</p>
-                    <p className="text-muted-foreground">• 100+ components</p>
-                    <p className="text-muted-foreground">• Closed source code</p>
+                    <p className="text-muted-foreground">• Licencia: $299</p>
+                    <p className="text-muted-foreground">• 100+ componentes</p>
+                    <p className="text-muted-foreground">• Código cerrado</p>
                   </div>
                   <div>
-                    <p className="font-semibold mb-1">Our DSM</p>
-                    <p className="text-muted-foreground">• License: Open Source</p>
-                    <p className="text-muted-foreground">• 110+ components</p>
-                    <p className="text-muted-foreground">• Full code control</p>
+                    <p className="font-semibold mb-1">Nuestro DSM</p>
+                    <p className="text-muted-foreground">• Licencia: Open Source</p>
+                    <p className="text-muted-foreground">• 110+ componentes</p>
+                    <p className="text-muted-foreground">• Control total del código</p>
                   </div>
                 </div>
               </div>
@@ -436,9 +446,9 @@ export function HomePage() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Code2 className="h-5 w-5 text-chart-2" />
-              <CardTitle>Technology Stack</CardTitle>
+              <CardTitle>Stack Tecnológico</CardTitle>
             </div>
-            <CardDescription>Libraries and frameworks used</CardDescription>
+            <CardDescription>Librerías y frameworks utilizados</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
@@ -458,26 +468,26 @@ export function HomePage() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Shield className="h-5 w-5 text-success" />
-              <CardTitle>WCAG Heuristics</CardTitle>
+              <CardTitle>Heurísticas WCAG</CardTitle>
             </div>
-            <CardDescription>Accessibility standards compliance</CardDescription>
+            <CardDescription>Cumplimiento de estándares de accesibilidad</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-start gap-3">
               <CheckCircle2 className="h-5 w-5 text-success mt-0.5" />
               <div>
-                <p className="text-sm font-medium">Color Contrast</p>
+                <p className="text-sm font-medium">Contraste de Color</p>
                 <p className="text-xs text-muted-foreground">
-                  Ratios above 4.5:1 for normal text and 3:1 for large text
+                  Ratios superiores a 4.5:1 para texto normal y 3:1 para texto grande
                 </p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle2 className="h-5 w-5 text-success mt-0.5" />
               <div>
-                <p className="text-sm font-medium">Keyboard Navigation</p>
+                <p className="text-sm font-medium">Navegación por Teclado</p>
                 <p className="text-xs text-muted-foreground">
-                  All interactive components are accessible via Tab/Enter/Escape
+                  Todos los componentes interactivos son accesibles vía Tab/Enter/Escape
                 </p>
               </div>
             </div>
@@ -486,7 +496,7 @@ export function HomePage() {
               <div>
                 <p className="text-sm font-medium">Screen Readers</p>
                 <p className="text-xs text-muted-foreground">
-                  ARIA labels and semantic roles in all components
+                  ARIA labels y roles semánticos en todos los componentes
                 </p>
               </div>
             </div>
@@ -495,7 +505,7 @@ export function HomePage() {
               <div>
                 <p className="text-sm font-medium">Focus Visible</p>
                 <p className="text-xs text-muted-foreground">
-                  Focus ring (#DEFB49) clearly visible in light and dark modes
+                  Ring de enfoque (#884cc16cc16) claramente visible en modo claro y oscuro
                 </p>
               </div>
             </div>
@@ -511,13 +521,13 @@ export function HomePage() {
               <Activity className="h-5 w-5 text-warning" />
             </div>
             <div className="flex-1">
-              <h3 className="font-semibold mb-2">Continuously Evolving System</h3>
+              <h3 className="font-semibold mb-2">Sistema en Construcción Continua</h3>
               <p className="text-sm text-muted-foreground mb-3">
-                This Design System is actively under development. Components are regularly updated 
-                with accessibility improvements, performance enhancements and new features.
+                Este Design System está en desarrollo activo. Los componentes se actualizan 
+                regularmente con mejoras de accesibilidad, rendimiento y nuevas funcionalidades.
               </p>
               <p className="text-xs text-muted-foreground">
-                <strong>Last update:</strong> December 2024 • <strong>Version:</strong> DSM v1.0.0 • <strong>Phase:</strong> Iterative Development
+                <strong>Última actualización:</strong> Diciembre 2024 • <strong>Versión:</strong> DSM v1.0.0 • <strong>Fase:</strong> Desarrollo Iterativo
               </p>
             </div>
           </div>

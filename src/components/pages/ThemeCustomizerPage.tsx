@@ -117,7 +117,7 @@ export function ThemeCustomizerPage() {
       <div>
         <div className="flex items-center gap-3 mb-2">
           <Palette className="h-8 w-8 text-primary" />
-          <h1 className="text-4xl font-semibold">Theme Customizer</h1>
+          <h1 className="text-2xl font-medium">Theme Customizer</h1>
           <Badge variant="secondary">
             <Sparkles className="h-3 w-3 mr-1" />
             Live Preview
@@ -165,8 +165,8 @@ export function ThemeCustomizerPage() {
               <Button onClick={() => handlePreset("default")} variant="outline" className="h-auto py-4">
                 <div className="flex items-center gap-2">
                   <div className="flex gap-1">
-                    <div className="h-6 w-6 rounded-full bg-[#DEFB49] border-2 border-border" />
-                    <div className="h-6 w-6 rounded-full bg-[#1C2D3A] border-2 border-border" />
+                    <div className="h-6 w-6 rounded-full bg-primary border-2 border-border" />
+                    <div className="h-6 w-6 rounded-full bg-secondary border-2 border-border" />
                   </div>
                   <span>Default</span>
                 </div>
@@ -280,7 +280,7 @@ export function ThemeCustomizerPage() {
                       />
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      Primary color for CTAs, active states and highlighted elements
+                      Color principal para CTAs, estados activos y elementos destacados
                     </p>
                   </div>
 
@@ -302,7 +302,7 @@ export function ThemeCustomizerPage() {
                       />
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      Secondary color for primary text and dark backgrounds
+                      Color secundario para texto principal y fondos oscuros
                     </p>
                   </div>
 
@@ -428,13 +428,13 @@ export function ThemeCustomizerPage() {
                   {/* Preview */}
                   <div className="p-4 border rounded-lg space-y-2 bg-muted/20">
                     <p className="text-sm">
-                      Example:{" "}
+                      Ejemplo:{" "}
                       <a href="#" style={{ color: config.link }} className="underline">
-                        This is a link
+                        Este es un enlace
                       </a>
-                      {" "}and{" "}
+                      {" "}y{" "}
                       <a href="#" style={{ color: config.linkHover }} className="underline">
-                        this one is on hover
+                        este está en hover
                       </a>
                     </p>
                   </div>
@@ -548,7 +548,7 @@ export function ThemeCustomizerPage() {
                       />
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      Focus ring color for interactive elements (accessibility)
+                      Color del anillo de foco en elementos interactivos (accesibilidad)
                     </p>
                   </div>
 
@@ -583,10 +583,10 @@ export function ThemeCustomizerPage() {
                         outlineOffset: "2px"
                       }}
                     >
-                      Button with Focus Ring
+                      Botón con Focus Ring
                     </Button>
                     <p className="text-sm p-2" style={{ backgroundColor: config.selection + "40" }}>
-                      This text has the selection color applied
+                      Este texto tiene el color de selección aplicado
                     </p>
                   </div>
                 </div>
@@ -714,12 +714,12 @@ export function ThemeCustomizerPage() {
                   <div className="space-y-3">
                     <Label>Preview</Label>
                     <div className="space-y-3">
-                      <Input placeholder="Example input" />
-                      <Input type="email" placeholder="email@example.com" />
+                      <Input placeholder="Ejemplo de input" />
+                      <Input type="email" placeholder="correo@ejemplo.com" />
                       <Input type="number" placeholder="123456" />
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      Inputs above use the configured colors according to the active theme
+                      Los inputs arriba usan los colores configurados según el tema activo
                     </p>
                   </div>
                 </div>
@@ -812,8 +812,98 @@ export function ThemeCustomizerPage() {
                     />
                     <div className="space-y-2 mt-4">
                       <p style={{ fontSize: config.fontSize }}>
-                        This is sample text with the configured base size
+                        Este es un texto de ejemplo con el tamaño base configurado
                       </p>
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Font Weights */}
+                  <div className="space-y-4">
+                    <h4 className="font-medium text-sm">Font Weights</h4>
+                    
+                    {/* Light */}
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <Label>Light Weight (font-light)</Label>
+                        <span className="text-sm text-muted-foreground font-mono">{config.fontWeightLight}</span>
+                      </div>
+                      <Slider
+                        value={[parseInt(config.fontWeightLight)]}
+                        onValueChange={(value) => handleColorChange("fontWeightLight", value[0].toString())}
+                        min={100}
+                        max={900}
+                        step={100}
+                      />
+                    </div>
+
+                    {/* Normal */}
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <Label>Normal Weight (font-normal)</Label>
+                        <span className="text-sm text-muted-foreground font-mono">{config.fontWeightNormal}</span>
+                      </div>
+                      <Slider
+                        value={[parseInt(config.fontWeightNormal)]}
+                        onValueChange={(value) => handleColorChange("fontWeightNormal", value[0].toString())}
+                        min={100}
+                        max={900}
+                        step={100}
+                      />
+                    </div>
+
+                    {/* Medium */}
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <Label>Medium Weight (font-medium)</Label>
+                        <span className="text-sm text-muted-foreground font-mono">{config.fontWeightMedium}</span>
+                      </div>
+                      <Slider
+                        value={[parseInt(config.fontWeightMedium)]}
+                        onValueChange={(value) => handleColorChange("fontWeightMedium", value[0].toString())}
+                        min={100}
+                        max={900}
+                        step={100}
+                      />
+                    </div>
+
+                    {/* Semibold */}
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <Label>Semibold Weight (font-semibold)</Label>
+                        <span className="text-sm text-muted-foreground font-mono">{config.fontWeightSemibold}</span>
+                      </div>
+                      <Slider
+                        value={[parseInt(config.fontWeightSemibold)]}
+                        onValueChange={(value) => handleColorChange("fontWeightSemibold", value[0].toString())}
+                        min={100}
+                        max={900}
+                        step={100}
+                      />
+                    </div>
+
+                    {/* Bold */}
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <Label>Bold Weight (font-bold)</Label>
+                        <span className="text-sm text-muted-foreground font-mono">{config.fontWeightBold}</span>
+                      </div>
+                      <Slider
+                        value={[parseInt(config.fontWeightBold)]}
+                        onValueChange={(value) => handleColorChange("fontWeightBold", value[0].toString())}
+                        min={100}
+                        max={900}
+                        step={100}
+                      />
+                    </div>
+
+                    <div className="space-y-2 mt-4 p-4 bg-muted/20 rounded-lg">
+                      <p className="font-light">Texto Light ({config.fontWeightLight})</p>
+                      <p className="font-normal">Texto Normal ({config.fontWeightNormal})</p>
+                      <p className="font-medium">Texto Medium ({config.fontWeightMedium})</p>
+                      <p className="font-semibold">Texto Semibold ({config.fontWeightSemibold})</p>
+                      <p className="font-bold">Texto Bold ({config.fontWeightBold})</p>
                     </div>
                   </div>
                 </div>
@@ -872,7 +962,7 @@ export function ThemeCustomizerPage() {
                 <Card className="p-4">
                   <h4 className="font-semibold mb-2">Card Title</h4>
                   <p className="text-sm text-muted-foreground mb-3">
-                    This is an example card with the custom theme applied.
+                    Este es un ejemplo de card con el tema personalizado aplicado.
                   </p>
                   <Button size="sm">Action</Button>
                 </Card>
@@ -949,13 +1039,13 @@ export function ThemeCustomizerPage() {
         <div className="flex items-start gap-3">
           <Sparkles className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
           <div className="space-y-2">
-            <h4 className="font-semibold">How to use Theme Customizer</h4>
+            <h4 className="font-semibold">Cómo usar el Theme Customizer</h4>
             <ul className="text-sm text-muted-foreground space-y-1">
-              <li>• Changes apply in real-time to all system components</li>
-              <li>• Use presets to start quickly or customize each color individually</li>
-              <li>• Export your configuration to share it or save it as backup</li>
-              <li>• Settings are automatically saved in the browser's localStorage</li>
-              <li>• Chart colors are automatically used in all Recharts graphs</li>
+              <li>• Los cambios se aplican en tiempo real a todos los componentes del sistema</li>
+              <li>• Usa los presets para empezar rápido o customiza cada color individualmente</li>
+              <li> Exporta tu configuración para compartirla o guardarla como respaldo</li>
+              <li>• Los ajustes se guardan automáticamente en localStorage del navegador</li>
+              <li>• Los colores de charts se usan automáticamente en todos los gráficos de Recharts</li>
             </ul>
           </div>
         </div>

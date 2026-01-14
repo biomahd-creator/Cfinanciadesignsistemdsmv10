@@ -48,7 +48,7 @@ export function ToggleDemo() {
 }`}
       
       // Usage
-      usage="Import the Toggle component from @/components/ui/toggle and use it for binary states (on/off). Ideal for text editor toolbars, filters, and UI controls that need to remember their state."
+      usage="Importa el componente Toggle desde @/components/ui/toggle y úsalo para estados binarios (on/off). Ideal para barras de herramientas de edición de texto, filtros, y controles de UI que necesitan recordar su estado."
       usageCode={`import { Toggle } from "@/components/ui/toggle";
 import { Bold } from "lucide-react";
 
@@ -66,46 +66,46 @@ function TextEditor() {
           name: "variant",
           type: '"default" | "outline"',
           default: '"default"',
-          description: "Visual style of the toggle",
+          description: "Estilo visual del toggle",
         },
         {
           name: "size",
           type: '"default" | "sm" | "lg"',
           default: '"default"',
-          description: "Size of the toggle",
+          description: "Tamaño del toggle",
         },
         {
           name: "defaultPressed",
           type: "boolean",
           default: "false",
-          description: "Initial state of the toggle (uncontrolled)",
+          description: "Estado inicial del toggle (no controlado)",
         },
         {
           name: "pressed",
           type: "boolean",
-          description: "Controlled state of the toggle",
+          description: "Estado controlado del toggle",
         },
         {
           name: "onPressedChange",
           type: "(pressed: boolean) => void",
-          description: "Callback when the state changes",
+          description: "Callback cuando cambia el estado",
         },
         {
           name: "disabled",
           type: "boolean",
           default: "false",
-          description: "Disables the toggle",
+          description: "Deshabilita el toggle",
         },
         {
           name: "aria-label",
           type: "string",
-          description: "Accessible label (required)",
+          description: "Etiqueta accesible (requerida)",
           required: true,
         },
         {
           name: "className",
           type: "string",
-          description: "Additional CSS classes",
+          description: "Clases CSS adicionales",
         },
       ]}
       
@@ -113,7 +113,7 @@ function TextEditor() {
       examples={[
         {
           title: "Text Formatting Toolbar",
-          description: "Common toolbar for text editors",
+          description: "Barra de herramientas común para editores de texto",
           preview: (
             <div className="flex gap-2">
               <Toggle aria-label="Toggle bold">
@@ -160,7 +160,7 @@ export function TextFormattingToolbar() {
         },
         {
           title: "Outline Variants",
-          description: "Toggle with outline variant in all sizes",
+          description: "Toggle con variante outline en todos los tamaños",
           preview: (
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-4">
@@ -195,7 +195,7 @@ import { Italic, Bold, Underline } from "lucide-react";
 export function OutlineToggles() {
   return (
     <div className="flex flex-col gap-4">
-      {/* Sizes */}
+      {/* Tamaños */}
       <div className="flex gap-4">
         <Toggle variant="outline" size="sm">
           <Italic className="h-4 w-4" />
@@ -208,7 +208,7 @@ export function OutlineToggles() {
         </Toggle>
       </div>
       
-      {/* With text and states */}
+      {/* Con texto y estados */}
       <div className="flex gap-4">
         <Toggle variant="outline">
           <Italic className="mr-2 h-4 w-4" />
@@ -225,7 +225,7 @@ export function OutlineToggles() {
         },
         {
           title: "Sizes",
-          description: "Different sizes available for the toggle",
+          description: "Diferentes tamaños disponibles para el toggle",
           preview: (
             <div className="flex items-center gap-4">
               <Toggle size="sm" aria-label="Small toggle">
@@ -260,7 +260,7 @@ export function ToggleSizes() {
         },
         {
           title: "With Text",
-          description: "Toggle with combined text and icon",
+          description: "Toggle con texto e icono combinados",
           preview: (
             <div className="flex flex-wrap gap-4">
               <Toggle aria-label="Toggle italic">
@@ -301,7 +301,7 @@ export function ToggleWithText() {
         },
         {
           title: "Alignment Controls",
-          description: "Toggle for text alignment controls",
+          description: "Toggle para controles de alineación de texto",
           preview: (
             <div className="flex gap-2">
               <Toggle aria-label="Align left" defaultPressed>
@@ -336,7 +336,7 @@ export function AlignmentControls() {
         },
         {
           title: "List Controls",
-          description: "Toggle for list controls",
+          description: "Toggle para controles de listas",
           preview: (
             <div className="flex gap-2">
               <Toggle variant="outline" aria-label="Unordered list">
@@ -371,7 +371,7 @@ export function ListControls() {
         },
         {
           title: "Disabled States",
-          description: "Toggle in disabled states",
+          description: "Toggle en estados deshabilitados",
           preview: (
             <div className="flex flex-wrap gap-4">
               <Toggle disabled aria-label="Disabled off">
@@ -409,7 +409,7 @@ export function DisabledToggles() {
         },
         {
           title: "Controlled State",
-          description: "Toggle with controlled state using React state",
+          description: "Toggle con estado controlado usando React state",
           preview: (
             <div className="flex flex-col gap-4">
               <Toggle aria-label="Toggle bold">
@@ -417,8 +417,8 @@ export function DisabledToggles() {
                 Bold
               </Toggle>
               <p className="text-muted-foreground">
-                Use the <code className="text-xs bg-muted px-1 py-0.5 rounded">pressed</code> and{" "}
-                <code className="text-xs bg-muted px-1 py-0.5 rounded">onPressedChange</code> props to control the state
+                Usa la prop <code className="text-xs bg-muted px-1 py-0.5 rounded">pressed</code> y{" "}
+                <code className="text-xs bg-muted px-1 py-0.5 rounded">onPressedChange</code> para controlar el estado
               </p>
             </div>
           ),

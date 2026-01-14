@@ -18,23 +18,13 @@ import {
   Home,
   TrendingUp,
   Search,
+  PanelLeft,
   X,
-  BookOpen,
-  BarChart3,
-  Wrench,
-  Rocket,
-  CheckCircle2,
-  FileText,
-  Package,
-  Ruler,
-  Eye,
-  PieChart,
-  Target,
-  Settings,
-  Code,
-  Smartphone,
-  Film,
-  Edit3,
+  Briefcase,
+  Box,
+  Clapperboard,
+  ImageIcon,
+  BookOpen
 } from "lucide-react";
 import { useState } from "react";
 import {
@@ -56,18 +46,26 @@ import {
   SidebarRail,
   SidebarGroup,
   SidebarGroupLabel,
+  useSidebar,
 } from "./ui/sidebar";
 import { Badge } from "./ui/badge";
 import { Logo } from "./Logo";
 
+// ⚠️ CRITICAL: PageId es la FUENTE DE VERDAD de todos los IDs de página
+// ⚠️ ANTES DE MODIFICAR: Leer /DSM_ARCHITECTURE.md sección "MAPA COMPLETO DE PageId"
+// ⚠️ Cada PageId DEBE tener:
+//    1. Caso en PageRenderer.tsx (switch statement)
+//    2. Import del componente en PageRenderer.tsx
+//    3. Item en menuSections array (abajo en línea 102+)
+// ⚠️ NO eliminar PageId sin buscar TODAS las referencias (Ctrl+F)
 export type PageId =
-  // Quick Start
-  | "home" | "getting-started" | "dsm-dashboard"
+  // Home
+  | "home" | "dsm-dashboard"
   // Actions
   | "button" | "button-new" | "toggle" | "toggle-group"
   // Forms
   | "input" | "input-new" | "input-file" | "select" | "select-new" | "checkbox" | "checkbox-new" | "radio-group" | "switch" | "slider" 
-  | "textarea" | "textarea-autoresize" | "calendar" | "calendar-new" | "form" | "form-new" | "input-otp" | "input-otp-new" | "label" | "combobox" | "combobox-new" | "multi-select" | "date-picker" | "date-picker-new" | "date-range-picker"
+  | "textarea" | "textarea-new" | "textarea-autoresize" | "calendar" | "calendar-new" | "form" | "form-new" | "input-otp" | "input-otp-new" | "label" | "combobox" | "combobox-new" | "multi-select" | "date-picker" | "date-picker-new" | "date-range-picker"
   // Navigation
   | "tabs" | "tabs-new" | "breadcrumb" | "command" | "dropdown-menu" | "menubar" 
   | "navigation-menu" | "pagination" | "context-menu"
@@ -77,41 +75,26 @@ export type PageId =
   | "alert" | "alert-new" | "alert-dialog" | "dialog" | "dialog-new" | "toast" | "tooltip" | "progress" 
   | "skeleton" | "sheet" | "drawer" | "popover"
   // Layout
-  | "accordion" | "carousel" | "collapsible" | "resizable" | "scroll-area"
+  | "accordion" | "carousel" | "collapsible" | "resizable" | "scroll-area" | "sidebar-showcase"
   // Patterns
   | "invoice-generator" | "payment-form" | "editable-table" | "invoice-upload"
-  | "login-form" | "stats-dashboard" | "empty-state" | "modal-form"  
-  | "sidebar-layout" | "table-actions" | "search-command" | "multi-step-form"
+  | "stats-dashboard" | "quick-action" | "data-table-advanced" | "advanced-filter" | "approval-timeline" | "multi-step-wizard" | "multi-step-form" | "multi-step-form-vertical" | "multi-step-wizard-vertical"
   // Atomic
   | "atomic-atoms" | "atomic-molecules" | "atomic-organisms" | "atomic-templates" | "atomic-pages"
   // Advanced
   | "charts" | "color-picker" | "rating" | "kanban" | "date-range-advanced" | "file-uploader" | "rich-text-editor" | "timeline" | "data-table" | "tree-table" | "pivot-table" | "export-data"
-  // Advanced Form Inputs (NEW)
-  | "time-picker" | "autocomplete" | "image-cropper" | "signature-pad"
-  // Communication (NEW)
-  | "chat-interface" | "comments-system" | "notification-center"
-  // Mobile Components (NEW)
-  | "bottom-sheet" | "action-sheet" | "pull-to-refresh" | "swipeable-cards"
-  // Media Components (NEW)
-  | "image-gallery" | "video-player" | "audio-player" | "pdf-viewer" | "image-comparison"
-  // Rich Editors (NEW)
-  | "markdown-editor" | "code-editor" | "formula-editor"
-  // Hero UI Pro (NEW)
-  | "ai-chat" | "video-conferencing" | "screen-recording" | "collaborative-cursors" 
-  | "realtime-collab" | "workflow-builder" | "permission-mgmt" | "audit-log"
-  // Design Foundations
-  | "design-tokens" | "color-palette" | "typography-scale" | "logo-iconography" | "component-showcase"
+  // Business Components (High Priority)
+  | "business-components"
+  // Data Visualization (Medium Priority)
+  | "data-visualization"
+  // Advanced Forms (Medium Priority)
+  | "advanced-forms"
   // Special
-  | "comparison" | "official" | "accessibility" | "brand-layout" | "theme-customizer" | "elevation" | "grid-showcase"
-  // Implementation - Real Pages
-  | "factoring-selection" | "factoring-dashboard" | "operations-list" | "approval-flow" | "kpi-showcase" | "factoring-operation-test"
-  | "operations-dashboard" | "approval-workflows"
+  | "official" | "accessibility" | "brand-layout" | "theme-customizer" | "elevation" | "grid-showcase" | "help-system-demo" | "animations" | "icon-gallery" | "changelog"
+  // Pages (Real Pages)
+  | "factoring-selection" | "factoring-dashboard" | "operations-list" | "approval-flow" | "kpi-showcase" | "status-kpis"
   // C-Financia Platform
-  | "liquidity-calculator" | "onboarding" | "cf-dashboard" | "admin-portal"
-  // Quality & Metrics
-  | "component-maturity"
-  // Documentation (Future)
-  | "api-reference" | "migration-guides" | "contributing";
+  | "liquidity-calculator" | "onboarding" | "cf-dashboard" | "admin-portal" | "brief-dashboard";
 
 interface SidebarProps extends React.ComponentProps<typeof Sidebar> {
   activePage: PageId;
@@ -122,7 +105,6 @@ interface MenuItem {
   id: PageId;
   label: string;
   new?: boolean;
-  subItems?: MenuItem[]; // 🆕 Support for nested sub-items
 }
 
 interface MenuSection {
@@ -135,25 +117,9 @@ interface MenuSection {
 
 export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps) {
   const [searchQuery, setSearchQuery] = useState("");
+  const { toggleSidebar } = useSidebar();
 
-  // ========================================
-  // 1️⃣ QUICK START
-  // ========================================
-  const quickStartSection: MenuSection = {
-    id: "quick-start",
-    label: "Quick Start",
-    icon: Zap,
-    items: [
-      { id: "home", label: "Home" },
-      { id: "getting-started", label: "Getting Started" },
-      { id: "dsm-dashboard", label: "DSM Dashboard" },
-    ],
-  };
-
-  // ========================================
-  // 2️⃣ LIBRARY (Component Catalog)
-  // ========================================
-  const libraryComponents: MenuSection[] = [
+  const menuSections: MenuSection[] = [
     {
       id: "actions",
       label: "Actions",
@@ -171,47 +137,23 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
       icon: FormInput,
       count: 17,
       items: [
-        { 
-          id: "input-new", 
-          label: "Text Inputs",
-          subItems: [
-            { id: "input-new", label: "Input" },
-            { id: "input-file", label: "Input File" },
-            { id: "textarea", label: "Textarea" },
-            { id: "textarea-autoresize", label: "Textarea Autoresize" },
-            { id: "input-otp-new", label: "Input OTP" },
-          ]
-        },
-        { 
-          id: "select-new", 
-          label: "Selection",
-          subItems: [
-            { id: "select-new", label: "Select" },
-            { id: "checkbox-new", label: "Checkbox" },
-            { id: "radio-group", label: "Radio Group" },
-            { id: "switch", label: "Switch" },
-            { id: "combobox-new", label: "Combobox" },
-            { id: "multi-select", label: "Multi Select" },
-          ]
-        },
-        { 
-          id: "calendar-new", 
-          label: "Date & Time",
-          subItems: [
-            { id: "calendar-new", label: "Calendar" },
-            { id: "date-picker-new", label: "Date Picker" },
-            { id: "date-range-picker", label: "Date Range Picker" },
-          ]
-        },
-        { 
-          id: "slider", 
-          label: "Other Inputs",
-          subItems: [
-            { id: "slider", label: "Slider" },
-            { id: "form-new", label: "Form" },
-            { id: "label", label: "Label" },
-          ]
-        },
+        { id: "input-new", label: "Input" },
+        { id: "input-file", label: "Input File" },
+        { id: "textarea-new", label: "Textarea" },
+        { id: "textarea-autoresize", label: "Textarea Autoresize" },
+        { id: "select-new", label: "Select" },
+        { id: "checkbox-new", label: "Checkbox" },
+        { id: "radio-group", label: "Radio Group" },
+        { id: "switch", label: "Switch" },
+        { id: "slider", label: "Slider" },
+        { id: "calendar-new", label: "Calendar" },
+        { id: "date-picker-new", label: "Date Picker" },
+        { id: "date-range-picker", label: "Date Range Picker" },
+        { id: "combobox-new", label: "Combobox" },
+        { id: "multi-select", label: "Multi Select" },
+        { id: "form-new", label: "Form" },
+        { id: "input-otp-new", label: "Input OTP" },
+        { id: "label", label: "Label" },
       ],
     },
     {
@@ -220,26 +162,14 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
       icon: Compass,
       count: 8,
       items: [
-        { 
-          id: "tabs-new", 
-          label: "Menu Components",
-          subItems: [
-            { id: "dropdown-menu", label: "Dropdown Menu" },
-            { id: "menubar", label: "Menubar" },
-            { id: "navigation-menu", label: "Navigation Menu" },
-            { id: "context-menu", label: "Context Menu" },
-            { id: "command", label: "Command" },
-          ]
-        },
-        { 
-          id: "breadcrumb", 
-          label: "Navigation Elements",
-          subItems: [
-            { id: "tabs-new", label: "Tabs" },
-            { id: "breadcrumb", label: "Breadcrumb" },
-            { id: "pagination", label: "Pagination" },
-          ]
-        },
+        { id: "tabs-new", label: "Tabs" },
+        { id: "breadcrumb", label: "Breadcrumb" },
+        { id: "command", label: "Command" },
+        { id: "dropdown-menu", label: "Dropdown Menu" },
+        { id: "menubar", label: "Menubar" },
+        { id: "navigation-menu", label: "Navigation Menu" },
+        { id: "pagination", label: "Pagination" },
+        { id: "context-menu", label: "Context Menu" },
       ],
     },
     {
@@ -248,30 +178,12 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
       icon: Grid3x3,
       count: 6,
       items: [
-        { 
-          id: "card-new", 
-          label: "Containers",
-          subItems: [
-            { id: "card-new", label: "Card" },
-            { id: "separator", label: "Separator" },
-          ]
-        },
-        { 
-          id: "table-new", 
-          label: "Data Tables",
-          subItems: [
-            { id: "table-new", label: "Table" },
-          ]
-        },
-        { 
-          id: "badge-new", 
-          label: "Indicators",
-          subItems: [
-            { id: "badge-new", label: "Badge" },
-            { id: "avatar", label: "Avatar" },
-            { id: "hover-card", label: "Hover Card" },
-          ]
-        },
+        { id: "card-new", label: "Card" },
+        { id: "table-new", label: "Table" },
+        { id: "badge-new", label: "Badge" },
+        { id: "avatar", label: "Avatar" },
+        { id: "hover-card", label: "Hover Card" },
+        { id: "separator", label: "Separator" },
       ],
     },
     {
@@ -280,653 +192,401 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
       icon: MessageSquare,
       count: 10,
       items: [
-        { 
-          id: "alert-new", 
-          label: "Alerts & Dialogs",
-          subItems: [
-            { id: "alert-new", label: "Alert" },
-            { id: "alert-dialog", label: "Alert Dialog" },
-            { id: "dialog-new", label: "Dialog" },
-            { id: "sheet", label: "Sheet" },
-            { id: "drawer", label: "Drawer" },
-          ]
-        },
-        { 
-          id: "toast", 
-          label: "Notifications",
-          subItems: [
-            { id: "toast", label: "Toast (Sonner)" },
-            { id: "tooltip", label: "Tooltip" },
-            { id: "popover", label: "Popover" },
-          ]
-        },
-        { 
-          id: "progress", 
-          label: "Loading States",
-          subItems: [
-            { id: "progress", label: "Progress" },
-            { id: "skeleton", label: "Skeleton" },
-          ]
-        },
+        { id: "alert-new", label: "Alert" },
+        { id: "alert-dialog", label: "Alert Dialog" },
+        { id: "dialog-new", label: "Dialog" },
+        { id: "toast", label: "Toast (Sonner)" },
+        { id: "tooltip", label: "Tooltip" },
+        { id: "progress", label: "Progress" },
+        { id: "skeleton", label: "Skeleton" },
+        { id: "sheet", label: "Sheet" },
+        { id: "drawer", label: "Drawer" },
+        { id: "popover", label: "Popover" },
       ],
     },
     {
       id: "layout",
       label: "Layout",
       icon: LayoutGrid,
-      count: 5,
+      count: 7,
       items: [
         { id: "accordion", label: "Accordion" },
         { id: "carousel", label: "Carousel" },
         { id: "collapsible", label: "Collapsible" },
         { id: "resizable", label: "Resizable" },
         { id: "scroll-area", label: "Scroll Area" },
+        { id: "sidebar-showcase", label: "Sidebar" },
+        { id: "grid-showcase", label: "Grid Showcase" },
       ],
     },
-  ];
-
-  // ========================================
-  // 3️⃣ DESIGN FOUNDATIONS
-  // ========================================
-  const designFoundationsSection: MenuSection = {
-    id: "design-foundations",
-    label: "Design Foundations",
-    icon: Ruler,
-    items: [
-      { id: "theme-customizer", label: "Design Tokens", new: true },
-      { id: "color-palette", label: "Color Palette", new: true },
-      { id: "typography-scale", label: "Typography Scale" },
-      { id: "elevation", label: "Elevation & Shadows", new: true },
-      { id: "grid-showcase", label: "Grid & Spacing" },
-    ],
-  };
-
-  // ========================================
-  // 4️⃣ BRAND & VISUALS
-  // ========================================
-  const brandVisualsSection: MenuSection = {
-    id: "brand-visuals",
-    label: "Brand & Visuals",
-    icon: Palette,
-    items: [
-      { id: "brand-layout", label: "Brand Layout" },
-      { id: "component-showcase", label: "Component Showcase" },
-    ],
-  };
-
-  // ========================================
-  // 5️⃣ DATA VISUALIZATION
-  // ========================================
-  const dataVisualizationSection: MenuSection = {
-    id: "data-visualization",
-    label: "Data Visualization",
-    icon: PieChart,
-    items: [
-      { id: "charts", label: "Charts (Recharts)" },
-      { id: "kpi-showcase", label: "KPI Cards" },
-      { id: "stats-dashboard", label: "Stats Dashboard" },
-      { id: "tree-table", label: "Tree Table" },
-      { id: "pivot-table", label: "Pivot Table" },
-      { id: "data-table", label: "Advanced Data Table" },
-      { id: "export-data", label: "Export Data" },
-    ],
-  };
-
-  // ========================================
-  // 6️⃣ QUALITY & METRICS
-  // ========================================
-  const qualityMetricsSection: MenuSection = {
-    id: "quality-metrics",
-    label: "Quality & Metrics",
-    icon: Target,
-    items: [
-      { id: "accessibility", label: "Accessibility (WCAG)" },
-      { id: "official", label: "Official Verification" },
-      { id: "comparison", label: "Hero UI Comparison" },
-    ],
-  };
-
-  // ========================================
-  // 7️⃣ TOOLS & REFERENCE
-  // ========================================
-  const toolsReferenceSection: MenuSection = {
-    id: "tools-reference",
-    label: "Tools & Reference",
-    icon: Wrench,
-    items: [
-      { id: "atomic-atoms", label: "Atomic: Atoms" },
-      { id: "atomic-molecules", label: "Atomic: Molecules" },
-      { id: "atomic-organisms", label: "Atomic: Organisms" },
-      { id: "atomic-templates", label: "Atomic: Templates" },
-      { id: "atomic-pages", label: "Atomic: Pages" },
-    ],
-  };
-
-  // ========================================
-  // 8️⃣ IMPLEMENTATION (Real-World Examples)
-  // ========================================
-  const implementationSections: MenuSection[] = [
     {
-      id: "factoring-patterns",
-      label: "Factoring Patterns",
+      id: "patterns",
+      label: "Business Patterns",
       icon: Layers,
-      count: 10,
+      count: 13,
       items: [
         { id: "invoice-generator", label: "Invoice Generator", new: true },
-        { id: "invoice-upload", label: "Invoice Upload", new: true },
+        { id: "invoice-upload", label: "Carga de Facturas", new: true },
         { id: "payment-form", label: "Payment Form", new: true },
         { id: "editable-table", label: "Editable Table", new: true },
-        { id: "login-form", label: "Login Form" },
-        { id: "empty-state", label: "Empty State" },
-        { id: "modal-form", label: "Modal Form" },
-        { id: "sidebar-layout", label: "Sidebar Layout" },
-        { id: "table-actions", label: "Table with Actions" },
-        { id: "search-command", label: "Search Command" },
-        { id: "multi-step-form", label: "Multi-Step Form" },
+        { id: "stats-dashboard", label: "Stats Dashboard" },
+        { id: "quick-action", label: "Quick Action Toolbar" },
+        { id: "data-table-advanced", label: "Data Table Advanced", new: true },
+        { id: "advanced-filter", label: "Advanced Filter Panel", new: true },
+        { id: "approval-timeline", label: "Approval Timeline" },
+        { id: "multi-step-wizard", label: "Multi-Step Wizard" },
+        { id: "multi-step-form", label: "Multi-Step Form", new: true },
+        { id: "multi-step-form-vertical", label: "Multi-Step Form Vertical", new: true },
+        { id: "multi-step-wizard-vertical", label: "Multi-Step Wizard Vertical", new: true },
       ],
     },
     {
-      id: "factoring-pages",
-      label: "Factoring Platform",
-      icon: Rocket,
-      count: 8,
+      id: "business",
+      label: "Business Modules",
+      icon: Briefcase,
+      count: 10,
       items: [
-        { id: "factoring-selection", label: "Factoring Selection" },
-        { id: "factoring-dashboard", label: "Factoring Dashboard" },
-        { id: "operations-dashboard", label: "Operations Dashboard", new: true },
-        { id: "operations-list", label: "Operations List" },
-        { id: "approval-workflows", label: "Approval Workflows", new: true },
-        { id: "approval-flow", label: "Approval Flow" },
-        { id: "liquidity-calculator", label: "Liquidity Calculator" },
-        { id: "factoring-operation-test", label: "Operation Test" },
+        { id: "cf-dashboard", label: "Dashboard Principal", new: true },
+        { id: "admin-portal", label: "Portal Administrativo", new: true },
+        { id: "factoring-dashboard", label: "Factoring Dashboard", new: true },
+        { id: "operations-list", label: "Operations List", new: true },
+        { id: "factoring-selection", label: "Invoice Selection", new: true },
+        { id: "approval-flow", label: "Approval Flow", new: true },
+        { id: "status-kpis", label: "Status KPIs", new: true },
+        { id: "kpi-showcase", label: "KPI Showcase", new: true },
+        { id: "liquidity-calculator", label: "Calculadora Liquidez", new: true },
+        { id: "onboarding", label: "Onboarding", new: true },
       ],
     },
     {
-      id: "advanced-components",
-      label: "Advanced Components",
+      id: "atomic",
+      label: "Atomic Design",
+      icon: Atom,
+      count: 5,
+      items: [
+        { id: "atomic-atoms", label: "Atoms" },
+        { id: "atomic-molecules", label: "Molecules" },
+        { id: "atomic-organisms", label: "Organisms" },
+        { id: "atomic-templates", label: "Templates" },
+        { id: "atomic-pages", label: "Pages" },
+      ],
+    },
+    {
+      id: "advanced",
+      label: "Advanced",
       icon: Sparkles,
-      count: 6,
+      count: 14,
       items: [
+        { id: "charts", label: "Charts" },
+        { id: "data-visualization", label: "Data Visualization", new: true },
+        { id: "advanced-forms", label: "Advanced Forms", new: true },
+        { id: "data-table", label: "Data Table" },
+        { id: "tree-table", label: "Tree Table" },
+        { id: "pivot-table", label: "Pivot Table" },
+        { id: "export-data", label: "Export Data" },
         { id: "color-picker", label: "Color Picker" },
         { id: "rating", label: "Rating" },
         { id: "kanban", label: "Kanban Board" },
+        { id: "date-range-advanced", label: "Date Range" },
         { id: "file-uploader", label: "File Uploader" },
         { id: "rich-text-editor", label: "Rich Text Editor" },
         { id: "timeline", label: "Timeline" },
       ],
     },
     {
-      id: "advanced-form-inputs",
-      label: "Advanced Form Inputs",
-      icon: FormInput,
-      count: 4,
+      id: "business-components",
+      label: "Business Components",
+      icon: Box,
+      count: 1,
       items: [
-        { id: "time-picker", label: "Time Picker" },
-        { id: "autocomplete", label: "Autocomplete" },
-        { id: "image-cropper", label: "Image Cropper" },
-        { id: "signature-pad", label: "Signature Pad" },
-      ],
-    },
-    {
-      id: "communication",
-      label: "Communication",
-      icon: MessageSquare,
-      count: 3,
-      items: [
-        { id: "chat-interface", label: "Chat Interface" },
-        { id: "comments-system", label: "Comments System" },
-        { id: "notification-center", label: "Notification Center" },
-      ],
-    },
-    {
-      id: "mobile-components",
-      label: "Mobile Components",
-      icon: Smartphone,
-      count: 4,
-      items: [
-        { id: "bottom-sheet", label: "Bottom Sheet" },
-        { id: "action-sheet", label: "Action Sheet" },
-        { id: "pull-to-refresh", label: "Pull to Refresh" },
-        { id: "swipeable-cards", label: "Swipeable Cards" },
-      ],
-    },
-    {
-      id: "media-components",
-      label: "Media Components",
-      icon: Film,
-      count: 5,
-      items: [
-        { id: "image-gallery", label: "Image Gallery" },
-        { id: "video-player", label: "Video Player" },
-        { id: "audio-player", label: "Audio Player" },
-        { id: "pdf-viewer", label: "PDF Viewer" },
-        { id: "image-comparison", label: "Image Comparison" },
-      ],
-    },
-    {
-      id: "rich-editors",
-      label: "Rich Editors",
-      icon: Edit3,
-      count: 3,
-      items: [
-        { id: "markdown-editor", label: "Markdown Editor" },
-        { id: "code-editor", label: "Code Editor" },
-        { id: "formula-editor", label: "Formula Editor" },
-      ],
-    },
-    {
-      id: "hero-ui-pro",
-      label: "Hero UI Pro",
-      icon: Atom,
-      count: 8,
-      items: [
-        { id: "ai-chat", label: "AI Chat" },
-        { id: "video-conferencing", label: "Video Conferencing" },
-        { id: "screen-recording", label: "Screen Recording" },
-        { id: "collaborative-cursors", label: "Collaborative Cursors" },
-        { id: "realtime-collab", label: "Realtime Collaboration" },
-        { id: "workflow-builder", label: "Workflow Builder" },
-        { id: "permission-mgmt", label: "Permission Management" },
-        { id: "audit-log", label: "Audit Log" },
+        { id: "business-components", label: "All Business Components", new: true },
       ],
     },
   ];
 
-  // ========================================
-  // 9️⃣ DOCUMENTATION
-  // ========================================
-  const documentationSection: MenuSection = {
-    id: "documentation",
-    label: "Documentation",
-    icon: BookOpen,
-    items: [
-      { id: "api-reference", label: "API Reference" },
-      { id: "migration-guides", label: "Migration Guides" },
-      { id: "contributing", label: "Contributing" },
-    ],
+  const designSystemPages: MenuItem[] = [
+    { id: "brand-layout", label: "Brand Layout" },
+    { id: "theme-customizer", label: "Theme Customizer" },
+    { id: "elevation", label: "Elevation Styles" },
+  ];
+
+  const resourcePages: MenuItem[] = [
+    { id: "animations", label: "Animations", new: true },
+    { id: "icon-gallery", label: "Icon Gallery", new: true },
+    { id: "help-system-demo", label: "Help System" },
+  ];
+
+  const specialPages: MenuItem[] = [
+    { id: "official", label: "Official Verification" },
+    { id: "accessibility", label: "WCAG Accessibility" },
+    { id: "changelog", label: "Changelog" },
+  ];
+
+  // Helper to check if a section contains the active page
+  const isSectionActive = (sectionItems: MenuItem[]) => {
+    return sectionItems.some(item => item.id === activePage);
   };
 
-  // Determine which sections should be open by default
-  const getDefaultOpenSections = () => {
-    const openSections: string[] = [];
-    
-    // Helper function to check if an item or its sub-items match the active page
-    const hasActivePage = (item: MenuItem): boolean => {
-      if (item.id === activePage) return true;
-      if (item.subItems) {
-        return item.subItems.some((subItem) => hasActivePage(subItem));
-      }
-      return false;
-    };
-    
-    // Check Library sections
-    libraryComponents.forEach((section) => {
-      section.items.forEach((item) => {
-        if (hasActivePage(item)) {
-          openSections.push(section.id);
-          if (item.subItems) {
-            openSections.push(`sub-${item.id}`);
-          }
-        }
-      });
-    });
+  // Flatten items for search
+  const allItems = [
+    ...menuSections.flatMap(section => section.items.map(item => ({ 
+      ...item, 
+      section: section.label, 
+      icon: section.icon 
+    }))),
+    ...resourcePages.map(item => ({ 
+      ...item, 
+      section: "Analysis", 
+      icon: Sparkles 
+    })),
+    ...specialPages.map(item => ({ 
+      ...item, 
+      section: "Analysis", 
+      icon: Sparkles 
+    })),
+    ...designSystemPages.map(item => ({ 
+      ...item, 
+      section: "Design System", 
+      icon: Sparkles 
+    }))
+  ];
 
-    // Check Implementation sections
-    implementationSections.forEach((section) => {
-      section.items.forEach((item) => {
-        if (hasActivePage(item)) {
-          openSections.push(section.id);
-          if (item.subItems) {
-            openSections.push(`sub-${item.id}`);
-          }
-        }
-      });
-    });
-
-    // Check other main sections
-    if (quickStartSection.items.some((item) => hasActivePage(item))) {
-      openSections.push(quickStartSection.id);
-    }
-    if (designFoundationsSection.items.some((item) => hasActivePage(item))) {
-      openSections.push(designFoundationsSection.id);
-    }
-    if (brandVisualsSection.items.some((item) => hasActivePage(item))) {
-      openSections.push(brandVisualsSection.id);
-    }
-    if (dataVisualizationSection.items.some((item) => hasActivePage(item))) {
-      openSections.push(dataVisualizationSection.id);
-    }
-    if (qualityMetricsSection.items.some((item) => hasActivePage(item))) {
-      openSections.push(qualityMetricsSection.id);
-    }
-    if (toolsReferenceSection.items.some((item) => hasActivePage(item))) {
-      openSections.push(toolsReferenceSection.id);
-    }
-    if (documentationSection.items.some((item) => hasActivePage(item))) {
-      openSections.push(documentationSection.id);
-    }
-
-    return openSections;
-  };
-
-  const [openSections, setOpenSections] = useState<string[]>(getDefaultOpenSections());
-
-  const toggleSection = (sectionId: string) => {
-    setOpenSections((prev) =>
-      prev.includes(sectionId)
-        ? prev.filter((id) => id !== sectionId)
-        : [...prev, sectionId]
-    );
-  };
-
-  const filteredLibrary = libraryComponents.map((section) => ({
-    ...section,
-    items: section.items.filter((item) =>
-      item.label.toLowerCase().includes(searchQuery.toLowerCase())
-    ),
-  })).filter((section) => section.items.length > 0);
-
-  const filteredImplementation = implementationSections.map((section) => ({
-    ...section,
-    items: section.items.filter((item) =>
-      item.label.toLowerCase().includes(searchQuery.toLowerCase())
-    ),
-  })).filter((section) => section.items.length > 0);
-
-  const renderMenuItem = (item: MenuItem, level: number = 0) => {
-    // Si tiene sub-items, renderizar como un collapsible anidado
-    if (item.subItems && item.subItems.length > 0) {
-      const subKey = `sub-${item.id}`;
-      const isOpen = openSections.includes(subKey);
-      
-      return (
-        <Collapsible
-          key={item.id}
-          open={isOpen}
-          onOpenChange={() => toggleSection(subKey)}
-        >
-          <SidebarMenuItem>
-            <CollapsibleTrigger asChild>
-              <SidebarMenuSubButton 
-                className={`
-                  ${level > 0 ? "pl-8" : "pl-4"}
-                  hover:bg-muted/50 transition-colors duration-200
-                  ${isOpen ? "text-foreground" : "text-muted-foreground"}
-                `}
-              >
-                <span className="text-xs font-semibold">{item.label}</span>
-                <ChevronRight
-                  className={`
-                    ml-auto h-3.5 w-3.5 shrink-0
-                    transition-all duration-200 ease-in-out
-                    ${isOpen ? "rotate-90 text-primary" : "text-muted-foreground"}
-                  `}
-                />
-              </SidebarMenuSubButton>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="transition-all duration-200 ease-in-out">
-              <SidebarMenuSub className="ml-3 mt-1 border-l-2 border-primary/30 pl-3 space-y-0.5">
-                {item.subItems.map((subItem) => renderMenuItem(subItem, level + 1))}
-              </SidebarMenuSub>
-            </CollapsibleContent>
-          </SidebarMenuItem>
-        </Collapsible>
-      );
-    }
-    
-    // Renderizar item normal
-    const isActive = activePage === item.id;
-    
-    return (
-      <SidebarMenuItem key={item.id}>
-        <SidebarMenuSubButton
-          isActive={isActive}
-          onClick={() => onPageChange(item.id)}
-          className={`
-            ${level > 0 ? "pl-6" : "pl-4"}
-            text-sm hover:bg-muted/50 transition-all duration-200
-            ${isActive ? "bg-primary/10 text-primary font-medium border-l-2 border-primary" : "border-l-2 border-transparent"}
-          `}
-        >
-          <span className={isActive ? "font-medium" : ""}>{item.label}</span>
-          {item.new && (
-            <Badge 
-              variant="default" 
-              className="ml-auto h-5 px-1.5 text-[10px] font-semibold bg-primary text-primary-foreground"
-            >
-              NEW
-            </Badge>
-          )}
-        </SidebarMenuSubButton>
-      </SidebarMenuItem>
-    );
-  };
-
-  const renderSection = (section: MenuSection, isNested: boolean = false) => (
-    <Collapsible
-      key={section.id}
-      open={openSections.includes(section.id)}
-      onOpenChange={() => toggleSection(section.id)}
-    >
-      <SidebarMenuItem>
-        <CollapsibleTrigger asChild>
-          <SidebarMenuButton className={isNested ? "pl-6" : ""}>
-            <section.icon className="h-4 w-4" />
-            <span>{section.label}</span>
-            {section.count && (
-              <Badge variant="secondary" className="ml-auto h-5 px-1.5 text-xs">
-                {section.count}
-              </Badge>
-            )}
-            <ChevronRight
-              className={`ml-auto h-4 w-4 transition-transform ${
-                openSections.includes(section.id) ? "rotate-90" : ""
-              }`}
-            />
-          </SidebarMenuButton>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <SidebarMenuSub>
-            {section.items.map((item) => renderMenuItem(item))}
-          </SidebarMenuSub>
-        </CollapsibleContent>
-      </SidebarMenuItem>
-    </Collapsible>
-  );
-
-  const renderSimpleSection = (section: MenuSection) => (
-    <Collapsible
-      key={section.id}
-      open={openSections.includes(section.id)}
-      onOpenChange={() => toggleSection(section.id)}
-    >
-      <SidebarMenuItem>
-        <CollapsibleTrigger asChild>
-          <SidebarMenuButton>
-            <section.icon className="h-4 w-4" />
-            <span>{section.label}</span>
-            <ChevronRight
-              className={`ml-auto h-4 w-4 transition-transform ${
-                openSections.includes(section.id) ? "rotate-90" : ""
-              }`}
-            />
-          </SidebarMenuButton>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <SidebarMenuSub>
-            {section.items.map(renderMenuItem)}
-          </SidebarMenuSub>
-        </CollapsibleContent>
-      </SidebarMenuItem>
-    </Collapsible>
-  );
+  const searchResults = searchQuery 
+    ? allItems.filter(item => item.label.toLowerCase().includes(searchQuery.toLowerCase()))
+    : [];
 
   return (
-    <Sidebar {...props}>
-      <SidebarHeader className="border-b px-6 py-4">
-        <Logo />
-      </SidebarHeader>
-
-      <SidebarContent>
-        {/* Search */}
-        <SidebarGroup className="px-4 py-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search components..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-md border bg-background px-9 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            )}
+    <Sidebar 
+      collapsible="icon" 
+      {...props} 
+      className="border-r border-sidebar-border"
+    >
+      <SidebarHeader>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-3 px-2 py-2">
+            <Logo size="md" variant="auto" className="flex-shrink-0" />
           </div>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                isActive={activePage === "home"}
+                onClick={() => onPageChange("home")}
+                tooltip="Home"
+                className="w-full"
+              >
+                <Home className="h-4 w-4" />
+                <span className="text-sidebar-foreground">Home</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+
+          {/* Search Input */}
+          <div className="px-2 pb-2">
+            <div className="relative group/search">
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-sidebar-foreground/50 transition-colors group-focus-within/search:text-primary" />
+              <input
+                type="text"
+                placeholder="Buscar componente..."
+                className="w-full rounded-md bg-sidebar-accent/20 border border-sidebar-border/50 pl-9 pr-8 py-2 text-sm text-sidebar-foreground placeholder:text-sidebar-foreground/40 focus:outline-none focus:ring-1 focus:ring-primary/50 focus:bg-sidebar-accent/30 focus:border-primary/50 transition-all"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              {searchQuery && (
+                <button 
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-2 top-2.5 text-sidebar-foreground/50 hover:text-sidebar-foreground p-0.5 hover:bg-sidebar-accent/50 rounded-sm transition-colors"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </SidebarHeader>
+      
+      <SidebarContent className="overflow-y-auto no-scrollbar">
+        {searchQuery ? (
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-sidebar-foreground/90 px-2 mb-2">
+              Resultados ({searchResults.length})
+            </SidebarGroupLabel>
+            <SidebarMenu>
+              {searchResults.length > 0 ? (
+                searchResults.map((item) => (
+                  <SidebarMenuItem key={item.id}>
+                    <SidebarMenuButton
+                      isActive={activePage === item.id}
+                      onClick={() => {
+                        onPageChange(item.id);
+                        // Optional: keep search active or clear it? keeping it active is usually better for browsing results
+                      }}
+                      tooltip={item.label}
+                      className="h-auto py-2"
+                    >
+                      {item.icon ? <item.icon className="h-4 w-4 shrink-0" /> : <Sparkles className="h-4 w-4 shrink-0" />}
+                      <div className="flex flex-col gap-0.5 items-start overflow-hidden w-full">
+                        <span className="text-sidebar-foreground truncate w-full">{item.label}</span>
+                        <span className="text-xs text-sidebar-foreground/50 uppercase">{item.section}</span>
+                      </div>
+                      {item.new && (
+                        <Badge variant="default" className="ml-auto h-4 px-1 text-xs border-none bg-primary text-primary-foreground font-medium">
+                          NEW
+                        </Badge>
+                      )}
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))
+              ) : (
+                <div className="px-4 py-12 flex flex-col items-center text-center gap-2">
+                   <div className="h-12 w-12 rounded-full bg-sidebar-accent/20 flex items-center justify-center text-sidebar-foreground/30">
+                     <Search className="h-6 w-6" />
+                   </div>
+                   <p className="text-sm text-sidebar-foreground/60">
+                     No se encontraron resultados para "{searchQuery}"
+                   </p>
+                </div>
+              )}
+            </SidebarMenu>
+          </SidebarGroup>
+        ) : (
+          <>
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-sidebar-foreground/90">DSM Progress</SidebarGroupLabel>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                isActive={activePage === "dsm-dashboard"}
+                onClick={() => onPageChange("dsm-dashboard")}
+                tooltip="DSM Dashboard"
+                className="w-full"
+              >
+                <Sparkles className="h-4 w-4 text-primary" />
+                <span className="text-sidebar-foreground">DSM Dashboard</span>
+                <Badge variant="success" className="ml-auto h-4 px-1 text-xs border-none font-medium">
+                  100%
+                </Badge>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
         </SidebarGroup>
 
-        {!searchQuery && (
-          <>
-            {/* 1️⃣ QUICK START */}
-            <SidebarGroup>
-              <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground px-4 mb-2">
-                Quick Start
-              </SidebarGroupLabel>
-              <SidebarMenu>
-                {renderSimpleSection(quickStartSection)}
-              </SidebarMenu>
-            </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-sidebar-foreground/90">Components</SidebarGroupLabel>
+          <SidebarMenu>
+            {menuSections.map((section) => (
+              <Collapsible
+                key={section.id}
+                asChild
+                defaultOpen={isSectionActive(section.items) || section.id === "actions"}
+                className="group/collapsible"
+              >
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton>
+                      <section.icon />
+                      <span className="text-sidebar-foreground text-sm font-medium not-italic">{section.label}</span>
+                      <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 text-sidebar-foreground/80" />
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      {section.items.map((item) => (
+                        <SidebarMenuSubItem key={item.id}>
+                          <SidebarMenuSubButton 
+                            asChild 
+                            isActive={activePage === item.id}
+                            onClick={() => onPageChange(item.id)}
+                            className="cursor-pointer"
+                          >
+                            <span className="flex flex-1 items-center gap-2 overflow-hidden text-sidebar-foreground">
+                              <span className="truncate">{item.label}</span>
+                              {item.new && (
+                                <Badge variant="default" className="shrink-0 h-4 px-1 text-xs border-none font-medium">
+                                  NEW
+                                </Badge>
+                              )}
+                            </span>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      ))}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
 
-            {/* 2️⃣ LIBRARY */}
-            <SidebarGroup>
-              <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground px-4 mb-2">
-                Component Library
-              </SidebarGroupLabel>
-              <SidebarMenu>
-                {libraryComponents.map((section) => renderSection(section))}
-              </SidebarMenu>
-            </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-sidebar-foreground/90">Recursos</SidebarGroupLabel>
+          <SidebarMenu>
+            {resourcePages.map((page) => (
+              <SidebarMenuItem key={page.id}>
+                <SidebarMenuButton 
+                  isActive={activePage === page.id}
+                  onClick={() => onPageChange(page.id)}
+                  tooltip={page.label}
+                >
+                  {page.id === "help-system-demo" && <Zap />}
+                  {page.id === "animations" && <Clapperboard />}
+                  {page.id === "icon-gallery" && <ImageIcon />}
+                  <span className="flex flex-1 items-center gap-2 overflow-hidden text-sidebar-foreground group-data-[active=true]/menu-button:text-sidebar-primary-foreground group-data-[active=true]/menu-button:font-medium">
+                    <span className="truncate">{page.label}</span>
+                    {page.new && (
+                      <Badge variant="default" className="shrink-0 h-4 px-1 text-xs border-none font-medium">
+                        NEW
+                      </Badge>
+                    )}
+                  </span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
 
-            {/* 3️⃣ DESIGN FOUNDATIONS */}
-            <SidebarGroup>
-              <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground px-4 mb-2">
-                Design Foundations
-              </SidebarGroupLabel>
-              <SidebarMenu>
-                {renderSimpleSection(designFoundationsSection)}
-              </SidebarMenu>
-            </SidebarGroup>
-
-            {/* 4️⃣ BRAND & VISUALS */}
-            <SidebarGroup>
-              <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground px-4 mb-2">
-                Brand & Visuals
-              </SidebarGroupLabel>
-              <SidebarMenu>
-                {renderSimpleSection(brandVisualsSection)}
-              </SidebarMenu>
-            </SidebarGroup>
-
-            {/* 5️⃣ DATA VISUALIZATION */}
-            <SidebarGroup>
-              <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground px-4 mb-2">
-                Data Visualization
-              </SidebarGroupLabel>
-              <SidebarMenu>
-                {renderSimpleSection(dataVisualizationSection)}
-              </SidebarMenu>
-            </SidebarGroup>
-
-            {/* 6️⃣ QUALITY & METRICS */}
-            <SidebarGroup>
-              <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground px-4 mb-2">
-                Quality & Metrics
-              </SidebarGroupLabel>
-              <SidebarMenu>
-                {renderSimpleSection(qualityMetricsSection)}
-              </SidebarMenu>
-            </SidebarGroup>
-
-            {/* 7️⃣ TOOLS & REFERENCE */}
-            <SidebarGroup>
-              <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground px-4 mb-2">
-                Tools & Reference
-              </SidebarGroupLabel>
-              <SidebarMenu>
-                {renderSimpleSection(toolsReferenceSection)}
-              </SidebarMenu>
-            </SidebarGroup>
-
-            {/* 8️⃣ IMPLEMENTATION */}
-            <SidebarGroup>
-              <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground px-4 mb-2">
-                Implementation
-              </SidebarGroupLabel>
-              <SidebarMenu>
-                {implementationSections.map((section) => renderSection(section))}
-              </SidebarMenu>
-            </SidebarGroup>
-
-            {/* 9️⃣ DOCUMENTATION */}
-            <SidebarGroup>
-              <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground px-4 mb-2">
-                Documentation
-              </SidebarGroupLabel>
-              <SidebarMenu>
-                {renderSimpleSection(documentationSection)}
-              </SidebarMenu>
-            </SidebarGroup>
-          </>
-        )}
-
-        {/* Search Results */}
-        {searchQuery && (
-          <>
-            {filteredLibrary.length > 0 && (
-              <SidebarGroup>
-                <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground px-4 mb-2">
-                  Library Results
-                </SidebarGroupLabel>
-                <SidebarMenu>
-                  {filteredLibrary.map((section) => renderSection(section))}
-                </SidebarMenu>
-              </SidebarGroup>
-            )}
-
-            {filteredImplementation.length > 0 && (
-              <SidebarGroup>
-                <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground px-4 mb-2">
-                  Implementation Results
-                </SidebarGroupLabel>
-                <SidebarMenu>
-                  {filteredImplementation.map((section) => renderSection(section))}
-                </SidebarMenu>
-              </SidebarGroup>
-            )}
-
-            {filteredLibrary.length === 0 && filteredImplementation.length === 0 && (
-              <SidebarGroup className="px-4">
-                <p className="text-sm text-muted-foreground text-center py-8">
-                  No components found matching "{searchQuery}"
-                </p>
-              </SidebarGroup>
-            )}
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-sidebar-foreground/90">Verificación</SidebarGroupLabel>
+          <SidebarMenu>
+            {specialPages.map((page) => (
+              <SidebarMenuItem key={page.id}>
+                <SidebarMenuButton 
+                  isActive={activePage === page.id}
+                  onClick={() => onPageChange(page.id)}
+                  tooltip={page.label}
+                >
+                  {page.id === "official" && <CheckCircle />}
+                  {page.id === "accessibility" && <Accessibility />}
+                  {page.id === "changelog" && <BookOpen />}
+                  <span className="text-sidebar-foreground group-data-[active=true]/menu-button:text-sidebar-primary-foreground group-data-[active=true]/menu-button:font-medium">{page.label}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
           </>
         )}
       </SidebarContent>
 
-      <SidebarFooter className="border-t p-4">
-        <div className="text-xs text-muted-foreground text-center space-y-1">
-          <p className="font-medium">Component Showcase v2.0</p>
-          <p>C-Financia Design System</p>
-        </div>
+      <SidebarFooter>
+         <div className="p-4 bg-sidebar-accent/10 rounded-lg m-2 group-data-[collapsible=icon]:hidden">
+            <div className="flex items-center gap-2 text-sidebar-foreground/90 text-xs">
+              <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+              <span>125+ Componentes</span>
+            </div>
+         </div>
+         
+         <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton 
+                onClick={toggleSidebar} 
+                tooltip="Colapsar Sidebar"
+              >
+                <PanelLeft className="h-4 w-4" />
+                <span>Colapsar Sidebar</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+         </SidebarMenu>
       </SidebarFooter>
-
       <SidebarRail />
     </Sidebar>
   );

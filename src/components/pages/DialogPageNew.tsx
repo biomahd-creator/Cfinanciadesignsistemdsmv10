@@ -103,7 +103,7 @@ export function DialogDemo() {
 }`}
       
       // Usage
-      usage="Import Dialog components from @/components/ui/dialog. Use DialogTrigger for the button that opens the dialog, DialogContent for the modal container, DialogHeader for the header, and DialogFooter for action buttons."
+      usage="Importa los componentes Dialog desde @/components/ui/dialog. Usa DialogTrigger para el botón que abre el dialog, DialogContent para el contenedor modal, DialogHeader para el encabezado y DialogFooter para los botones de acción."
       usageCode={`import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 function MyComponent() {
@@ -124,24 +124,24 @@ function MyComponent() {
         {
           name: "open",
           type: "boolean",
-          description: "Controlled state of the dialog (open/closed)",
+          description: "Estado controlado del dialog (abierto/cerrado)",
         },
         {
           name: "defaultOpen",
           type: "boolean",
           default: "false",
-          description: "Initial state of the dialog (uncontrolled component)",
+          description: "Estado inicial del dialog (componente no controlado)",
         },
         {
           name: "onOpenChange",
           type: "(open: boolean) => void",
-          description: "Callback executed when the dialog state changes",
+          description: "Callback que se ejecuta cuando cambia el estado del dialog",
         },
         {
           name: "modal",
           type: "boolean",
           default: "true",
-          description: "If true, blocks interaction with content underneath the dialog",
+          description: "Si true, bloquea la interacción con el contenido debajo del dialog",
         },
       ]}
       
@@ -149,7 +149,7 @@ function MyComponent() {
       examples={[
         {
           title: "With Form",
-          description: "Dialog with complete form and validation",
+          description: "Dialog con formulario completo y validación",
           preview: (
             <Dialog>
               <DialogTrigger asChild>
@@ -215,7 +215,7 @@ function MyComponent() {
         },
         {
           title: "Destructive Action",
-          description: "Dialog to confirm destructive actions with warning",
+          description: "Dialog para confirmar acciones destructivas con warning",
           preview: (
             <Dialog>
               <DialogTrigger asChild>
@@ -274,7 +274,7 @@ function MyComponent() {
         },
         {
           title: "Custom Width",
-          description: "Dialog with custom width",
+          description: "Dialog con ancho personalizado",
           preview: (
             <Dialog>
               <DialogTrigger asChild>
@@ -314,7 +314,7 @@ function MyComponent() {
         },
         {
           title: "Scrollable Content",
-          description: "Dialog with content exceeding height and scrolling",
+          description: "Dialog con contenido que excede la altura y hace scroll",
           preview: (
             <Dialog>
               <DialogTrigger asChild>
@@ -361,7 +361,7 @@ function MyComponent() {
         },
         {
           title: "Upload Dialog",
-          description: "Dialog for uploading files with preview",
+          description: "Dialog para subir archivos con preview",
           preview: (
             <Dialog>
               <DialogTrigger asChild>
@@ -417,7 +417,7 @@ function MyComponent() {
         },
         {
           title: "Settings Dialog",
-          description: "Settings dialog with multiple sections",
+          description: "Dialog de configuración con múltiples secciones",
           preview: (
             <Dialog>
               <DialogTrigger asChild>
@@ -488,7 +488,7 @@ function MyComponent() {
         },
         {
           title: "Controlled Dialog",
-          description: "Controlled dialog with external state",
+          description: "Dialog controlado con estado externo",
           preview: (
             <Dialog>
               <DialogTrigger asChild>

@@ -44,7 +44,7 @@ export function LayoutSection() {
       <div>
         <h2 className="text-3xl font-semibold mb-2">Layout</h2>
         <p className="text-sm text-muted-foreground">
-          Components for content structure and organization
+          Componentes para estructura y organización del contenido
         </p>
       </div>
 
@@ -258,7 +258,7 @@ export function LayoutSection() {
 
       {/* COMPOSED PATTERNS */}
       <div className="mt-12">
-        <h3 className="text-2xl font-semibold mb-6">Composed Patterns</h3>
+        <h3 className="text-2xl font-semibold mb-6">Patrones Compuestos</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Sidebar Layout Pattern */}
@@ -377,7 +377,7 @@ export function LayoutSection() {
                 </SheetHeader>
                 <div className="space-y-6 py-6">
                   <div>
-                    <Label className="mb-3 block font-semibold">Category</Label>
+                    <Label className="mb-3 block font-medium">Category</Label>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <Checkbox id="filter-electronics" defaultChecked />
@@ -409,7 +409,7 @@ export function LayoutSection() {
                   </div>
                   <Separator />
                   <div>
-                    <Label className="mb-3 block font-semibold">Availability</Label>
+                    <Label className="mb-3 block font-medium">Availability</Label>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <Checkbox id="filter-stock" defaultChecked />

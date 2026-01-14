@@ -1,0 +1,277 @@
+import { CheckCircle, Circle, Minus } from "lucide-react";
+import { Card, CardContent } from "../ui/card";
+import { Progress } from "../ui/progress";
+import { cn } from "../../lib/utils";
+
+/**
+ * 🔒 ADVANCED COMPONENT - Step Indicator
+ * 
+ * Componente reutilizable para mostrar progreso en procesos multi-paso
+ * Soporta orientación horizontal y vertical, con estados: pending, active, completed
+ * 
+ * Ubicación: /components/advanced/StepIndicator.tsx
+ * Categoría: Advanced Forms - Prioridad Media
+ * Uso: Wizards, onboarding, checkout flows, form progression
+ */
+
+export interface Step {
+  id: string;
+  title: string;
+  description?: string;
+  icon?: React.ReactNode;
+}
+
+interface StepIndicatorProps {
+  steps: Step[];
+  currentStep: number;
+  orientation?: "horizontal" | "vertical";
+  variant?: "default" | "compact" | "minimal";
+  showProgress?: boolean;
+  showLabels?: boolean;
+  clickable?: boolean;
+  onStepClick?: (stepIndex: number) => void;
+  className?: string;
+}
+
+export function StepIndicator({
+  steps,
+  currentStep,
+  orientation = "horizontal",
+  variant = "default",
+  showProgress = true,
+  showLabels = true,
+  clickable = false,
+  onStepClick,
+  className
+}: StepIndicatorProps) {
+  const progress = ((currentStep) / (steps.length - 1)) * 100;
+
+  const handleStepClick = (index: number) => {
+    if (clickable && onStepClick && index <= currentStep) {
+      onStepClick(index);
+    }
+  };
+
+  // Minimal variant - solo progress bar
+  if (variant === "minimal") {
+    return (
+      <div className={cn("space-y-2", className)}>
+        <div className="flex items-center justify-between text-sm">
+          <span className="text-muted-foreground">
+            Step {currentStep + 1} of {steps.length}
+          </span>
+          <span className="font-medium">{Math.round(progress)}%</span>
+        </div>
+        <Progress value={progress} className="h-2" />
+      </div>
+    );
+  }
+
+  // Compact variant - solo círculos sin labels
+  if (variant === "compact") {
+    return (
+      <div className={cn("space-y-4", className)}>
+        {showProgress && (
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">
+                Step {currentStep + 1} of {steps.length}
+              </span>
+              <span className="font-medium">{Math.round(progress)}%</span>
+            </div>
+            <Progress value={progress} className="h-2" />
+          </div>
+        )}
+
+        <div className="flex items-center justify-between gap-2">
+          {steps.map((step, index) => {
+            const isActive = index === currentStep;
+            const isCompleted = index < currentStep;
+            const canClick = clickable && index <= currentStep;
+
+            return (
+              <div key={step.id} className="flex items-center flex-1">
+                <button
+                  onClick={() => handleStepClick(index)}
+                  disabled={!canClick}
+                  className={cn(
+                    "flex h-8 w-8 items-center justify-center rounded-full border-2 transition-all",
+                    isCompleted && "border-primary bg-primary text-primary-foreground",
+                    isActive && "border-primary bg-background text-primary scale-110",
+                    !isActive && !isCompleted && "border-muted bg-background text-muted-foreground",
+                    canClick && "cursor-pointer hover:scale-110",
+                    !canClick && "cursor-not-allowed"
+                  )}
+                >
+                  {isCompleted ? (
+                    <CheckCircle className="h-4 w-4" />
+                  ) : (
+                    <Circle className="h-4 w-4" />
+                  )}
+                </button>
+                {index < steps.length - 1 && (
+                  <div
+                    className={cn(
+                      "flex-1 h-0.5 mx-2 transition-colors",
+                      index < currentStep ? "bg-primary" : "bg-muted"
+                    )}
+                  />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  // Horizontal orientation (default)
+  if (orientation === "horizontal") {
+    return (
+      <div className={cn("space-y-6", className)}>
+        {showProgress && (
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">
+                Step {currentStep + 1} of {steps.length}
+              </span>
+              <span className="font-medium">{Math.round(progress)}%</span>
+            </div>
+            <Progress value={progress} className="h-2" />
+          </div>
+        )}
+
+        <div className="flex items-start justify-between">
+          {steps.map((step, index) => {
+            const isActive = index === currentStep;
+            const isCompleted = index < currentStep;
+            const canClick = clickable && index <= currentStep;
+
+            return (
+              <div key={step.id} className="flex items-center flex-1">
+                <div className="flex flex-col items-center gap-2 flex-1">
+                  <button
+                    onClick={() => handleStepClick(index)}
+                    disabled={!canClick}
+                    className={cn(
+                      "flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all",
+                      isCompleted && "border-primary bg-primary text-primary-foreground",
+                      isActive && "border-primary bg-background text-primary ring-4 ring-primary/20",
+                      !isActive && !isCompleted && "border-muted bg-background text-muted-foreground",
+                      canClick && "cursor-pointer hover:scale-110",
+                      !canClick && "cursor-not-allowed"
+                    )}
+                  >
+                    {step.icon ? (
+                      isCompleted ? (
+                        <CheckCircle className="h-5 w-5" />
+                      ) : (
+                        step.icon
+                      )
+                    ) : (
+                      <span className="font-semibold">{index + 1}</span>
+                    )}
+                  </button>
+
+                  {showLabels && (
+                    <div className="text-center">
+                      <p
+                        className={cn(
+                          "text-sm font-medium",
+                          (isActive || isCompleted) ? "text-foreground" : "text-muted-foreground"
+                        )}
+                      >
+                        {step.title}
+                      </p>
+                      {step.description && (
+                        <p className="text-xs text-muted-foreground mt-0.5">
+                          {step.description}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {index < steps.length - 1 && (
+                  <Minus
+                    className={cn(
+                      "h-5 w-full mx-2 transition-colors",
+                      index < currentStep ? "text-primary" : "text-muted"
+                    )}
+                  />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  // Vertical orientation
+  return (
+    <div className={cn("space-y-1", className)}>
+      {steps.map((step, index) => {
+        const isActive = index === currentStep;
+        const isCompleted = index < currentStep;
+        const canClick = clickable && index <= currentStep;
+
+        return (
+          <div key={step.id} className="flex items-start gap-4">
+            <div className="flex flex-col items-center">
+              <button
+                onClick={() => handleStepClick(index)}
+                disabled={!canClick}
+                className={cn(
+                  "flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all",
+                  isCompleted && "border-primary bg-primary text-primary-foreground",
+                  isActive && "border-primary bg-background text-primary ring-4 ring-primary/20",
+                  !isActive && !isCompleted && "border-muted bg-background text-muted-foreground",
+                  canClick && "cursor-pointer hover:scale-110",
+                  !canClick && "cursor-not-allowed"
+                )}
+              >
+                {step.icon ? (
+                  isCompleted ? (
+                    <CheckCircle className="h-5 w-5" />
+                  ) : (
+                    step.icon
+                  )
+                ) : (
+                  <span className="font-semibold">{index + 1}</span>
+                )}
+              </button>
+
+              {index < steps.length - 1 && (
+                <div
+                  className={cn(
+                    "w-0.5 h-16 my-1 transition-colors",
+                    index < currentStep ? "bg-primary" : "bg-muted"
+                  )}
+                />
+              )}
+            </div>
+
+            {showLabels && (
+              <div className="flex-1 pb-8">
+                <p
+                  className={cn(
+                    "font-medium",
+                    (isActive || isCompleted) ? "text-foreground" : "text-muted-foreground"
+                  )}
+                >
+                  {step.title}
+                </p>
+                {step.description && (
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {step.description}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}

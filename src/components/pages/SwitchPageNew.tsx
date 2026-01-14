@@ -47,7 +47,7 @@ export function SwitchDemo() {
 }`}
       
       // Usage
-      usage="Import the Switch component from @/components/ui/switch. Ideal for configuration settings, permissions, and any binary option (on/off). Always use an associated Label with htmlFor for accessibility."
+      usage="Importa el componente Switch desde @/components/ui/switch. Ideal para ajustes de configuración, permisos, y cualquier opción binaria (on/off). Siempre usa un Label asociado con htmlFor para accesibilidad."
       usageCode={`import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 
@@ -65,46 +65,46 @@ function Settings() {
         {
           name: "checked",
           type: "boolean",
-          description: "Controlled state of the switch",
+          description: "Estado controlado del switch",
         },
         {
           name: "defaultChecked",
           type: "boolean",
           default: "false",
-          description: "Initial uncontrolled state",
+          description: "Estado inicial no controlado",
         },
         {
           name: "onCheckedChange",
           type: "(checked: boolean) => void",
-          description: "Callback when the state changes",
+          description: "Callback cuando cambia el estado",
         },
         {
           name: "disabled",
           type: "boolean",
           default: "false",
-          description: "Disables the switch",
+          description: "Deshabilita el switch",
         },
         {
           name: "required",
           type: "boolean",
           default: "false",
-          description: "Required field in forms",
+          description: "Campo requerido en formularios",
         },
         {
           name: "name",
           type: "string",
-          description: "Field name (for forms)",
+          description: "Nombre del campo (para formularios)",
         },
         {
           name: "id",
           type: "string",
-          description: "ID to associate with Label",
+          description: "ID para asociar con Label",
           required: true,
         },
         {
           name: "className",
           type: "string",
-          description: "Additional CSS classes",
+          description: "Clases CSS adicionales",
         },
       ]}
       
@@ -112,7 +112,7 @@ function Settings() {
       examples={[
         {
           title: "Basic Switch",
-          description: "Simple switch with label",
+          description: "Switch simple con label",
           preview: (
             <div className="flex items-center space-x-2">
               <Switch id="basic" />
@@ -133,7 +133,7 @@ export function BasicSwitch() {
         },
         {
           title: "With Descriptions",
-          description: "Switches with additional descriptions in horizontal layout",
+          description: "Switches con descripciones adicionales en layout horizontal",
           preview: (
             <div className="space-y-4 max-w-md">
               <div className="flex items-center justify-between">
@@ -191,7 +191,7 @@ export function SwitchWithDescriptions() {
         },
         {
           title: "With Icons",
-          description: "Switches with icons for better visual UX",
+          description: "Switches con iconos para mejor UX visual",
           preview: (
             <div className="space-y-4">
               <div className="flex items-center justify-between max-w-xs">
@@ -253,7 +253,7 @@ export function SwitchWithIcons() {
         },
         {
           title: "Card Layout",
-          description: "Switches organized in cards for visual grouping",
+          description: "Switches organizados en cards para agrupación visual",
           preview: (
             <div className="grid gap-4 max-w-md">
               <Card className="p-4">
@@ -342,7 +342,7 @@ export function CardLayoutSwitch() {
         },
         {
           title: "Controlled State",
-          description: "Switch with controlled state using React state",
+          description: "Switch con estado controlado mediante React state",
           preview: (
             <SwitchControlledExample />
           ),
@@ -366,7 +366,7 @@ export function ControlledSwitch() {
         </Label>
       </div>
       
-      <p className="text-muted-foreground">
+      <p className="text-sm text-muted-foreground">
         Current state: <strong>{isEnabled ? "ON" : "OFF"}</strong>
       </p>
     </div>
@@ -375,7 +375,7 @@ export function ControlledSwitch() {
         },
         {
           title: "Disabled States",
-          description: "Switch in disabled states (on and off)",
+          description: "Switch en estados deshabilitados (on y off)",
           preview: (
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
@@ -409,7 +409,7 @@ export function DisabledSwitch() {
         },
         {
           title: "Settings Panel",
-          description: "Complete settings panel with multiple switches",
+          description: "Panel completo de configuración con múltiples switches",
           preview: (
             <div className="max-w-md space-y-1 border rounded-lg p-4">
               <h3 className="font-semibold mb-4">Privacy Settings</h3>
@@ -501,7 +501,7 @@ export function SettingsPanel() {
         },
         {
           title: "With Confirmation",
-          description: "Switch that requires confirmation when activated",
+          description: "Switch que requiere confirmación al activarse",
           preview: (
             <SwitchWithConfirmation />
           ),

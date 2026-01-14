@@ -6,11 +6,11 @@ import { useTheme } from "./ThemeProvider";
 interface LogoProps {
   className?: string;
   size?: "sm" | "md" | "lg" | "xl";
-  variant?: "light" | "dark";
+  variant?: "light" | "dark" | "auto";
 }
 
-export function Logo({ className, size = "md", variant = "light" }: LogoProps) {
-  const { config } = useTheme();
+export function Logo({ className, size = "md", variant = "auto" }: LogoProps) {
+  const { config, theme } = useTheme();
   
   const sizeClasses = {
     sm: "h-6 w-auto",
@@ -29,7 +29,12 @@ export function Logo({ className, size = "md", variant = "light" }: LogoProps) {
     );
   }
 
-  const LogoComponent = variant === "dark" ? Capa1Dark : Capa1;
+  // Auto-detect theme if variant is "auto"
+  const effectiveVariant = variant === "auto" 
+    ? (theme === "dark" ? "dark" : "light")
+    : variant;
+
+  const LogoComponent = effectiveVariant === "dark" ? Capa1Dark : Capa1;
 
   return (
     <div className={cn(sizeClasses[size], className)}>

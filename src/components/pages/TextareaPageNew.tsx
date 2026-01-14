@@ -33,7 +33,7 @@ export function TextareaDemo() {
 }`}
       
       // Usage
-      usage="Import the Textarea component from @/components/ui/textarea. Ideal for forms that require multi-line text input such as comments, descriptions, messages, or any content that exceeds a single line."
+      usage="Importa el componente Textarea desde @/components/ui/textarea. Ideal para formularios que requieren entrada de texto multilínea como comentarios, descripciones, mensajes, o cualquier contenido que supere una sola línea."
       usageCode={`import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 
@@ -55,50 +55,50 @@ function ContactForm() {
         {
           name: "placeholder",
           type: "string",
-          description: "Helper text when empty",
+          description: "Texto de ayuda cuando está vacío",
         },
         {
           name: "disabled",
           type: "boolean",
           default: "false",
-          description: "Disables the textarea",
+          description: "Deshabilita el textarea",
         },
         {
           name: "rows",
           type: "number",
           default: "3",
-          description: "Number of visible lines",
+          description: "Número de líneas visibles",
         },
         {
           name: "value",
           type: "string",
-          description: "Controlled value of the textarea",
+          description: "Valor controlado del textarea",
         },
         {
           name: "defaultValue",
           type: "string",
-          description: "Initial uncontrolled value",
+          description: "Valor inicial no controlado",
         },
         {
           name: "onChange",
           type: "(e: ChangeEvent<HTMLTextAreaElement>) => void",
-          description: "Callback when the value changes",
+          description: "Callback cuando cambia el valor",
         },
         {
           name: "maxLength",
           type: "number",
-          description: "Maximum character length",
+          description: "Longitud máxima de caracteres",
         },
         {
           name: "required",
           type: "boolean",
           default: "false",
-          description: "Required field in forms",
+          description: "Campo requerido en formularios",
         },
         {
           name: "className",
           type: "string",
-          description: "Additional CSS classes",
+          description: "Clases CSS adicionales",
         },
       ]}
       
@@ -106,7 +106,7 @@ function ContactForm() {
       examples={[
         {
           title: "With Label",
-          description: "Textarea with descriptive label for better accessibility",
+          description: "Textarea con label descriptivo para mejor accesibilidad",
           preview: (
             <div className="w-full max-w-md space-y-2">
               <Label htmlFor="message">Message</Label>
@@ -133,7 +133,7 @@ export function TextareaWithLabel() {
         },
         {
           title: "Different Sizes",
-          description: "Size control using the rows prop",
+          description: "Control del tamaño mediante la prop rows",
           preview: (
             <div className="w-full max-w-md space-y-4">
               <div className="space-y-2">
@@ -176,7 +176,7 @@ export function TextareaSizes() {
         },
         {
           title: "With Helper Text",
-          description: "Textarea with helper text and character counter",
+          description: "Textarea con texto de ayuda y contador de caracteres",
           preview: (
             <div className="w-full max-w-md space-y-2">
               <Label htmlFor="bio">Bio</Label>
@@ -211,7 +211,7 @@ export function TextareaWithHelper() {
         },
         {
           title: "Character Counter",
-          description: "Textarea with real-time character counter",
+          description: "Textarea con contador de caracteres en tiempo real",
           preview: (
             <TextareaWithCounter />
           ),
@@ -243,7 +243,7 @@ export function TextareaWithCounter() {
         },
         {
           title: "Disabled State",
-          description: "Textarea in disabled state",
+          description: "Textarea en estado deshabilitado",
           preview: (
             <div className="w-full max-w-md space-y-4">
               <div className="space-y-2">
@@ -291,7 +291,7 @@ export function DisabledTextarea() {
         },
         {
           title: "Form Integration",
-          description: "Textarea integrated in a complete form",
+          description: "Textarea integrado en un formulario completo",
           preview: (
             <div className="w-full max-w-md space-y-4">
               <div className="space-y-2">
@@ -351,7 +351,7 @@ export function EmailForm() {
         },
         {
           title: "Required Field",
-          description: "Textarea as a required field with visual indicator",
+          description: "Textarea como campo requerido con indicador visual",
           preview: (
             <div className="w-full max-w-md space-y-2">
               <Label htmlFor="required">
@@ -392,7 +392,7 @@ export function RequiredTextarea() {
         },
         {
           title: "With Error State",
-          description: "Textarea showing an error state",
+          description: "Textarea mostrando un estado de error",
           preview: (
             <div className="w-full max-w-md space-y-2">
               <Label htmlFor="error">Description</Label>

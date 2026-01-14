@@ -184,7 +184,7 @@ export function InvoiceGenerator() {
                   <span className="text-2xl font-bold tracking-tight">Financio</span>
                 </div>
                 <div className="text-right">
-                  <h2 className="text-3xl font-bold text-muted-foreground/20 uppercase tracking-widest">Factura</h2>
+                  <h2 className="text-3xl font-bold text-muted-foreground/20 uppercase">Factura</h2>
                   <div className="mt-2 flex items-center justify-end gap-2">
                     <span className="font-medium text-sm text-muted-foreground">Nº:</span>
                     <Input 
@@ -201,11 +201,11 @@ export function InvoiceGenerator() {
               {/* Info Emisor y Receptor */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div className="space-y-3">
-                  <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
+                  <Label className="text-xs font-medium text-muted-foreground uppercase flex items-center gap-2">
                     <Building2 className="h-3 w-3" /> De (Emisor)
                   </Label>
                   <div className="space-y-1">
-                    <Input className="font-semibold text-lg border-none px-0 h-auto focus-visible:ring-0 rounded-none bg-transparent placeholder:text-muted-foreground/50" placeholder="Nombre de tu Empresa" defaultValue="Financio Solutions S.L." />
+                    <Input className="text-lg border-none px-0 h-auto focus-visible:ring-0 rounded-none bg-transparent placeholder:text-muted-foreground/50" placeholder="Nombre de tu Empresa" defaultValue="Financio Solutions S.L." />
                     <Input className="text-sm border-none px-0 h-auto focus-visible:ring-0 rounded-none bg-transparent text-muted-foreground" placeholder="Dirección línea 1" defaultValue="Calle Innovación 123" />
                     <Input className="text-sm border-none px-0 h-auto focus-visible:ring-0 rounded-none bg-transparent text-muted-foreground" placeholder="Dirección línea 2" defaultValue="28001, Madrid, España" />
                     <Input className="text-sm border-none px-0 h-auto focus-visible:ring-0 rounded-none bg-transparent text-muted-foreground" placeholder="Email de contacto" defaultValue="billing@financio.com" />
@@ -214,11 +214,11 @@ export function InvoiceGenerator() {
                 </div>
                 
                 <div className="space-y-3">
-                  <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
+                  <Label className="text-xs font-medium text-muted-foreground uppercase flex items-center gap-2">
                     <User className="h-3 w-3" /> Para (Cliente)
                   </Label>
                   <div className="space-y-1">
-                    <Input className="font-semibold text-lg border-dashed border-input px-2 h-9 bg-accent/10" placeholder="Nombre del Cliente" />
+                    <Input className="text-lg border-dashed border-input px-2 h-9 bg-accent/10" placeholder="Nombre del Cliente" />
                     <Input className="text-sm border-dashed border-input px-2 h-8 bg-transparent" placeholder="Dirección del Cliente" />
                     <Input className="text-sm border-dashed border-input px-2 h-8 bg-transparent" placeholder="Ciudad, País" />
                     <Input className="text-sm border-dashed border-input px-2 h-8 bg-transparent" placeholder="Email del Cliente" />
@@ -252,7 +252,7 @@ export function InvoiceGenerator() {
               {/* Tabla de Items */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <Label className="text-base font-semibold">Conceptos</Label>
+                  <Label className="text-base font-medium">Conceptos</Label>
                   <Button size="sm" variant="ghost" onClick={addItem} className="h-8 text-primary">
                     <Plus className="h-4 w-4 mr-1" /> Añadir Línea
                   </Button>
@@ -402,7 +402,7 @@ export function InvoiceGenerator() {
               <div className="space-y-2">
                 <Label>Color de Marca</Label>
                 <div className="flex gap-2">
-                  <div className="h-6 w-6 rounded-full bg-[#DEFB49] border-2 border-primary cursor-pointer ring-2 ring-offset-2 ring-primary"></div>
+                  <div className="h-6 w-6 rounded-full bg-primary border-2 border-border cursor-pointer ring-2 ring-offset-2 ring-primary"></div>
                   <div className="h-6 w-6 rounded-full bg-blue-500 cursor-pointer hover:opacity-80"></div>
                   <div className="h-6 w-6 rounded-full bg-purple-500 cursor-pointer hover:opacity-80"></div>
                   <div className="h-6 w-6 rounded-full bg-red-500 cursor-pointer hover:opacity-80"></div>
@@ -429,10 +429,10 @@ export function InvoiceGenerator() {
                       <span className="text-xs text-muted-foreground">{inv.client}</span>
                     </div>
                     <div className="flex flex-col items-end gap-1">
-                      <Badge variant={inv.status === "Paid" ? "default" : inv.status === "Sent" ? "secondary" : "outline"} className="text-[10px] h-5">
+                      <Badge variant={inv.status === "Paid" ? "default" : inv.status === "Sent" ? "secondary" : "outline"} className="text-xs h-5 font-medium">
                         {inv.status}
                       </Badge>
-                      <span className="text-[10px] text-muted-foreground">{inv.date}</span>
+                      <span className="text-xs text-muted-foreground">{inv.date}</span>
                     </div>
                   </div>
                 ))}

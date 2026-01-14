@@ -78,7 +78,7 @@ export function NavigationSection() {
       <div>
         <h2 className="text-3xl font-semibold mb-2">Navigation</h2>
         <p className="text-sm text-muted-foreground">
-          Components for navigation and content structure
+          Componentes para navegación y estructuración de contenido
         </p>
       </div>
 
@@ -428,7 +428,7 @@ export function NavigationSection() {
 
       {/* COMPOSED PATTERNS */}
       <div className="mt-12">
-        <h3 className="text-2xl font-semibold mb-6">Composed Patterns</h3>
+        <h3 className="text-2xl font-semibold mb-6">Patrones Compuestos</h3>
       </div>
     </div>
   );

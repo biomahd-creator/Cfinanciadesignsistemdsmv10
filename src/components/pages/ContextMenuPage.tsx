@@ -21,7 +21,7 @@ export function ContextMenuPage() {
     <div className="space-y-8">
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-4xl font-semibold">Context Menu</h1>
+          <h1 className="text-2xl font-medium">Context Menu</h1>
           <Badge>Navigation</Badge>
         </div>
         <p className="text-muted-foreground">
@@ -33,13 +33,13 @@ export function ContextMenuPage() {
 
       <div className="space-y-4">
         <div>
-          <h2 className="text-2xl font-semibold mb-2">Basic Context Menu</h2>
-          <p className="text-muted-foreground">Right-click on the gray area</p>
+          <h2 className="text-2xl font-semibold mb-2">Context Menu Básico</h2>
+          <p className="text-muted-foreground">Click derecho en el área gris</p>
         </div>
         <Card>
           <CardHeader>
             <CardTitle>Right Click Menu</CardTitle>
-            <CardDescription>Right-click to see the context menu</CardDescription>
+            <CardDescription>Haz click derecho para ver el menú contextual</CardDescription>
           </CardHeader>
           <CardContent>
             <ContextMenu>
@@ -157,7 +157,7 @@ export function ContextMenuPage() {
               <ContextMenu>
                 <ContextMenuTrigger className="flex h-[150px] w-full items-center justify-center rounded-md border border-dashed text-sm p-4">
                   <p className="text-center">
-                    Select this text and right-click to see options
+                    Selecciona este texto y haz click derecho para ver opciones
                   </p>
                 </ContextMenuTrigger>
                 <ContextMenuContent>
@@ -176,7 +176,14 @@ export function ContextMenuPage() {
                   <ContextMenuSeparator />
                   <ContextMenuItem>Select All</ContextMenuItem>
                   <ContextMenuSeparator />
-                  <ContextMenuItem>Format</ContextMenuItem>
+                  <ContextMenuSub>
+                    <ContextMenuSubTrigger>Format</ContextMenuSubTrigger>
+                    <ContextMenuSubContent>
+                      <ContextMenuItem>Bold</ContextMenuItem>
+                      <ContextMenuItem>Italic</ContextMenuItem>
+                      <ContextMenuItem>Underline</ContextMenuItem>
+                    </ContextMenuSubContent>
+                  </ContextMenuSub>
                 </ContextMenuContent>
               </ContextMenu>
             </CardContent>
@@ -212,7 +219,7 @@ export function ContextMenuPage() {
       <div className="grid md:grid-cols-2 gap-4">
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">✅ When to use</CardTitle>
+            <CardTitle className="text-base">✅ Cuándo usar</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-muted-foreground">
             <p>• Acciones contextuales sobre elementos</p>

@@ -48,7 +48,7 @@ export function AlertDemo() {
 }`}
       
       // Usage
-      usage="Import the Alert components from @/components/ui/alert. Use Alert as the container, AlertTitle for the title, and AlertDescription for the message. Optionally add an icon."
+      usage="Importa los componentes Alert desde @/components/ui/alert. Usa Alert como contenedor, AlertTitle para el título y AlertDescription para el mensaje. Opcionalmente agrega un icono."
       usageCode={`import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 function MyComponent() {
@@ -66,17 +66,17 @@ function MyComponent() {
           name: "variant",
           type: '"default" | "destructive"',
           default: '"default"',
-          description: "Visual style of the alert (default or destructive/error)",
+          description: "Estilo visual del alert (default o destructivo/error)",
         },
         {
           name: "className",
           type: "string",
-          description: "Additional CSS classes for the alert",
+          description: "Clases CSS adicionales para el alert",
         },
         {
           name: "children",
           type: "ReactNode",
-          description: "Content of the alert (AlertTitle, AlertDescription, icons, etc.)",
+          description: "Contenido del alert (AlertTitle, AlertDescription, iconos, etc.)",
           required: true,
         },
       ]}
@@ -85,7 +85,7 @@ function MyComponent() {
       examples={[
         {
           title: "All Variants",
-          description: "Default and destructive variants of the alert",
+          description: "Variantes default y destructive del alert",
           preview: (
             <div className="grid gap-4 max-w-2xl">
               <Alert>
@@ -123,7 +123,7 @@ function MyComponent() {
         },
         {
           title: "Success Alert",
-          description: "Custom alert for success messages",
+          description: "Alert personalizado para mensajes de éxito",
           preview: (
             <Alert className="border-green-500/50 bg-green-500/10 text-green-700 dark:text-green-400">
               <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
@@ -143,7 +143,7 @@ function MyComponent() {
         },
         {
           title: "Warning Alert",
-          description: "Custom alert for warning messages",
+          description: "Alert personalizado para advertencias",
           preview: (
             <Alert className="border-yellow-500/50 bg-yellow-500/10 text-yellow-700 dark:text-yellow-400">
               <AlertTriangle className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
@@ -163,7 +163,7 @@ function MyComponent() {
         },
         {
           title: "Info Alert",
-          description: "Informational alert with custom style",
+          description: "Alert informativo con estilo personalizado",
           preview: (
             <Alert className="border-blue-500/50 bg-blue-500/10 text-blue-700 dark:text-blue-400">
               <Info className="h-4 w-4 text-blue-600 dark:text-blue-400" />
@@ -183,7 +183,7 @@ function MyComponent() {
         },
         {
           title: "Without Icon",
-          description: "Alert without icon, text only",
+          description: "Alert sin icono, solo con texto",
           preview: (
             <Alert>
               <AlertTitle>Important Update</AlertTitle>
@@ -201,7 +201,7 @@ function MyComponent() {
         },
         {
           title: "With Actions",
-          description: "Alert with action buttons",
+          description: "Alert con botones de acción",
           preview: (
             <Alert>
               <Terminal className="h-4 w-4" />
@@ -229,7 +229,7 @@ function MyComponent() {
         },
         {
           title: "With Link",
-          description: "Alert with inline link",
+          description: "Alert con enlace inline",
           preview: (
             <Alert>
               <Mail className="h-4 w-4" />
@@ -255,7 +255,7 @@ function MyComponent() {
         },
         {
           title: "Compact Alert",
-          description: "Compact alert without title, description only",
+          description: "Alert compacto sin título, solo descripción",
           preview: (
             <div className="grid gap-3 max-w-2xl">
               <Alert>
@@ -289,7 +289,7 @@ function MyComponent() {
         },
         {
           title: "Notification Style",
-          description: "Notification style alert with side border",
+          description: "Alert estilo notificación con borde lateral",
           preview: (
             <div className="grid gap-4 max-w-2xl">
               <Alert className="border-l-4 border-l-blue-500">
@@ -335,7 +335,7 @@ function MyComponent() {
         },
         {
           title: "Multi-line Content",
-          description: "Alert with long content and multiple paragraphs",
+          description: "Alert con contenido largo y múltiples párrafos",
           preview: (
             <Alert>
               <Info className="h-4 w-4" />

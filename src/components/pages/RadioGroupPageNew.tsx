@@ -55,7 +55,7 @@ export function RadioGroupDemo() {
 }`}
       
       // Usage
-      usage="Import RadioGroup and RadioGroupItem from @/components/ui/radio-group. Use RadioGroup as a container with value/defaultValue for state control. Each RadioGroupItem must have a unique value and an associated Label with htmlFor for accessibility."
+      usage="Importa RadioGroup y RadioGroupItem desde @/components/ui/radio-group. Usa RadioGroup como contenedor con value/defaultValue para control del estado. Cada RadioGroupItem debe tener un value único y un Label asociado con htmlFor para accesibilidad."
       usageCode={`import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 
@@ -83,39 +83,39 @@ function NotificationSettings() {
         {
           name: "value",
           type: "string",
-          description: "Controlled value of the selected radio",
+          description: "Valor controlado del radio seleccionado",
         },
         {
           name: "defaultValue",
           type: "string",
-          description: "Initial uncontrolled value",
+          description: "Valor inicial no controlado",
         },
         {
           name: "onValueChange",
           type: "(value: string) => void",
-          description: "Callback when selection changes",
+          description: "Callback cuando cambia la selección",
         },
         {
           name: "disabled",
           type: "boolean",
           default: "false",
-          description: "Disables the entire group",
+          description: "Deshabilita todo el grupo",
         },
         {
           name: "required",
           type: "boolean",
           default: "false",
-          description: "Required field in forms",
+          description: "Campo requerido en formularios",
         },
         {
           name: "name",
           type: "string",
-          description: "Group name (for forms)",
+          description: "Nombre del grupo (para formularios)",
         },
         {
           name: "className",
           type: "string",
-          description: "Additional CSS classes for the container",
+          description: "Clases CSS adicionales para el contenedor",
         },
       ]}
       
@@ -123,7 +123,7 @@ function NotificationSettings() {
       examples={[
         {
           title: "Basic Options",
-          description: "Simple radio group with basic options",
+          description: "Radio group simple con opciones básicas",
           preview: (
             <RadioGroup defaultValue="comfortable">
               <div className="flex items-center space-x-2">
@@ -164,7 +164,7 @@ export function BasicRadioGroup() {
         },
         {
           title: "With Descriptions",
-          description: "Radio buttons with additional descriptions",
+          description: "Radio buttons con descripciones adicionales",
           preview: (
             <RadioGroup defaultValue="basic" className="space-y-3">
               <div className="flex items-start space-x-3">
@@ -237,7 +237,7 @@ export function RadioWithDescriptions() {
         },
         {
           title: "Card Style Options",
-          description: "Radio buttons inside cards for better UI",
+          description: "Radio buttons dentro de cards para mejor UI",
           preview: (
             <RadioGroup defaultValue="card-1" className="grid gap-4">
               <div>
@@ -317,7 +317,7 @@ export function CardStyleRadio() {
         },
         {
           title: "Payment Method Selector",
-          description: "Radio group to select payment method with icons",
+          description: "Radio group para seleccionar método de pago con iconos",
           preview: (
             <RadioGroup defaultValue="card" className="space-y-3">
               <div className="flex items-center space-x-3">
@@ -379,7 +379,7 @@ export function PaymentMethodSelector() {
         },
         {
           title: "Horizontal Layout",
-          description: "Radio group in horizontal layout",
+          description: "Radio group en disposición horizontal",
           preview: (
             <RadioGroup defaultValue="yes" className="flex gap-4">
               <div className="flex items-center space-x-2">
@@ -420,7 +420,7 @@ export function HorizontalRadioGroup() {
         },
         {
           title: "Disabled State",
-          description: "Radio group in disabled state",
+          description: "Radio group en estado deshabilitado",
           preview: (
             <RadioGroup defaultValue="disabled-1" disabled>
               <div className="flex items-center space-x-2">
@@ -461,7 +461,7 @@ export function DisabledRadioGroup() {
         },
         {
           title: "Form Integration",
-          description: "Radio group inside a complete form",
+          description: "Radio group dentro de un formulario completo",
           preview: (
             <div className="space-y-4 max-w-md">
               <div className="space-y-2">

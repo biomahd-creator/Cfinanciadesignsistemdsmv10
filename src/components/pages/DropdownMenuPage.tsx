@@ -1,292 +1,96 @@
-import { ComponentShowcase } from "../ui/component-showcase";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-  DropdownMenuCheckboxItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-} from "../ui/dropdown-menu";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
-import {
-  Cloud,
-  CreditCard,
-  Github,
-  Keyboard,
-  LifeBuoy,
-  LogOut,
-  Mail,
-  MessageSquare,
-  Plus,
-  PlusCircle,
-  Settings,
-  User,
-  UserPlus,
-  Users,
-} from "lucide-react";
-import { useState } from "react";
+import { Badge } from "../ui/badge";
+import { Separator } from "../ui/separator";
+import { ChevronDown } from "lucide-react";
 
 export function DropdownMenuPage() {
-  const [showStatusBar, setShowStatusBar] = useState(true);
-  const [showActivityBar, setShowActivityBar] = useState(false);
-  const [showPanel, setShowPanel] = useState(false);
-  const [position, setPosition] = useState("bottom");
-
   return (
-    <ComponentShowcase
-      title="Dropdown Menu"
-      description="Displays a menu to the user — such as a set of actions or functions — triggered by a button."
-      category="Navigation"
-      
-      // Main Preview
-      preview={
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">Open Menu</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <User className="mr-2 h-4 w-4" />
-                <span>Profile</span>
-                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard className="mr-2 h-4 w-4" />
-                <span>Billing</span>
-                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
-                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Keyboard className="mr-2 h-4 w-4" />
-                <span>Keyboard shortcuts</span>
-                <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Users className="mr-2 h-4 w-4" />
-                <span>Team</span>
-              </DropdownMenuItem>
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  <UserPlus className="mr-2 h-4 w-4" />
-                  <span>Invite users</span>
-                </DropdownMenuSubTrigger>
-                <DropdownMenuPortal>
-                  <DropdownMenuSubContent>
-                    <DropdownMenuItem>
-                      <Mail className="mr-2 h-4 w-4" />
-                      <span>Email</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <MessageSquare className="mr-2 h-4 w-4" />
-                      <span>Message</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <PlusCircle className="mr-2 h-4 w-4" />
-                      <span>More...</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuPortal>
-              </DropdownMenuSub>
-              <DropdownMenuItem>
-                <Plus className="mr-2 h-4 w-4" />
-                <span>New Team</span>
-                <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Github className="mr-2 h-4 w-4" />
-              <span>GitHub</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <LifeBuoy className="mr-2 h-4 w-4" />
-              <span>Support</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem disabled>
-              <Cloud className="mr-2 h-4 w-4" />
-              <span>API</span>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOut className="mr-2 h-4 w-4" />
-              <span>Log out</span>
-              <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      }
-      
-      // Main Code
-      code={`import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+    <div className="space-y-8 max-w-4xl">
+      <div>
+        <div className="flex items-center gap-3 mb-2">
+          <h2 className="text-2xl font-medium">Dropdown Menu</h2>
+          <Badge>Navigation</Badge>
+        </div>
+        <p className="text-muted-foreground">
+          Displays a menu to the user triggered by a button or other element
+        </p>
+      </div>
 
-export function DropdownMenuDemo() {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline">Open Menu</Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          {/* ... other items */}
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
-}`}
-      
-      // Usage
-      usage="The Dropdown Menu is built using Radix UI's Dropdown Menu. It supports submenus, checkboxes, and radio groups."
-      usageCode={`import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"`}
-      
-      // Props Documentation
-      props={[
-        {
-          name: "asChild",
-          type: "boolean",
-          default: "false",
-          description: "Change the underlying element for the trigger",
-        },
-        {
-          name: "align",
-          type: '"start" | "center" | "end"',
-          default: '"center"',
-          description: "Alignment of the menu content",
-        }
-      ]}
-      
-      // Examples
-      examples={[
-        {
-          title: "Checkboxes",
-          description: "Dropdown menu with checkbox items",
-          preview: (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline">Open Options</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>Appearance</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuCheckboxItem
-                  checked={showStatusBar}
-                  onCheckedChange={setShowStatusBar}
-                >
-                  Status Bar
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={showActivityBar}
-                  onCheckedChange={setShowActivityBar}
-                  disabled
-                >
-                  Activity Bar
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={showPanel}
-                  onCheckedChange={setShowPanel}
-                >
-                  Panel
-                </DropdownMenuCheckboxItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ),
-          code: `<DropdownMenu>
-  <DropdownMenuTrigger asChild>
-    <Button variant="outline">Open Options</Button>
-  </DropdownMenuTrigger>
-  <DropdownMenuContent className="w-56">
-    <DropdownMenuLabel>Appearance</DropdownMenuLabel>
-    <DropdownMenuSeparator />
-    <DropdownMenuCheckboxItem
-      checked={showStatusBar}
-      onCheckedChange={setShowStatusBar}
-    >
-      Status Bar
-    </DropdownMenuCheckboxItem>
-    <DropdownMenuCheckboxItem
-      checked={showActivityBar}
-      onCheckedChange={setShowActivityBar}
-      disabled
-    >
-      Activity Bar
-    </DropdownMenuCheckboxItem>
-  </DropdownMenuContent>
-</DropdownMenu>`
-        },
-        {
-          title: "Radio Group",
-          description: "Dropdown menu with radio items",
-          preview: (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline">Open Position</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-                  <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
-                </DropdownMenuRadioGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ),
-          code: `<DropdownMenu>
-  <DropdownMenuTrigger asChild>
-    <Button variant="outline">Open Position</Button>
-  </DropdownMenuTrigger>
-  <DropdownMenuContent className="w-56">
-    <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
-    <DropdownMenuSeparator />
-    <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-      <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
-      <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
-      <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
-    </DropdownMenuRadioGroup>
-  </DropdownMenuContent>
-</DropdownMenu>`
-        }
-      ]}
-    />
+      <Separator />
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Simple Dropdown</CardTitle>
+          <CardDescription>Basic dropdown with menu items</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">
+                Open Menu <ChevronDown className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Billing</DropdownMenuItem>
+              <DropdownMenuItem>Team</DropdownMenuItem>
+              <DropdownMenuItem>Subscription</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>With Checkboxes</CardTitle>
+          <CardDescription>Dropdown with selectable items</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">Preferences</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>View Options</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuCheckboxItem checked>
+                Status Bar
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem>Activity Bar</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem checked>
+                Panel
+              </DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Radio Group</CardTitle>
+          <CardDescription>Dropdown with radio selection</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">Position</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuRadioGroup value="bottom">
+                <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

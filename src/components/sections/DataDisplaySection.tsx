@@ -15,7 +15,7 @@ export function DataDisplaySection() {
       <div>
         <h2 className="text-3xl font-semibold mb-2">Data Display</h2>
         <p className="text-sm text-muted-foreground">
-          Components for displaying and visualizing data
+          Componentes para mostrar y visualizar datos
         </p>
       </div>
 
@@ -243,7 +243,7 @@ export function DataDisplaySection() {
 
       {/* COMPOSED PATTERNS */}
       <div className="mt-12">
-        <h3 className="text-2xl font-semibold mb-6">Composed Patterns</h3>
+        <h3 className="text-2xl font-semibold mb-6">Patrones Compuestos</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Stats Card Pattern */}

@@ -39,7 +39,7 @@ export function AdvancedComponentsSection() {
                 <div>
                   <CardTitle>Data Visualization - Charts</CardTitle>
                   <CardDescription>
-                    Interactive charts using Recharts
+                    Gráficos interactivos usando Recharts
                   </CardDescription>
                 </div>
                 <Badge variant="default">Recharts</Badge>
@@ -210,17 +210,17 @@ export function AdvancedComponentsSection() {
                   <h4 className="font-medium mb-3">Estados</h4>
                   <div className="space-y-4">
                     <div className="flex items-center gap-4">
-                      <span className="text-sm w-24">Interactive:</span>
+                      <span className="text-sm w-24">Interactivo:</span>
                       <Rating value={0} />
                       <span className="text-xs text-muted-foreground">
-                        (Hover and click to select)
+                        (Hover y click para seleccionar)
                       </span>
                     </div>
                     <div className="flex items-center gap-4">
-                      <span className="text-sm w-24">Read-only:</span>
+                      <span className="text-sm w-24">Solo lectura:</span>
                       <Rating value={4} readonly />
                       <span className="text-xs text-muted-foreground">
-                        (Not editable)
+                        (No editable)
                       </span>
                     </div>
                   </div>
@@ -320,14 +320,14 @@ export function AdvancedComponentsSection() {
               <CardContent className="space-y-4">
                 <Combobox
                   options={[
-                    { value: "empresa-abc", label: "Company ABC Inc." },
-                    { value: "comercial-xyz", label: "Commercial XYZ Ltd." },
-                    { value: "industrias-def", label: "Industries DEF Inc." },
-                    { value: "servicios-ghi", label: "Services GHI Ltd." },
+                    { value: "empresa-abc", label: "Empresa ABC S.A." },
+                    { value: "comercial-xyz", label: "Comercial XYZ Ltda." },
+                    { value: "industrias-def", label: "Industrias DEF S.A." },
+                    { value: "servicios-ghi", label: "Servicios GHI Ltda." },
                     { value: "tech-solutions", label: "Tech Solutions Ltd." },
                   ]}
-                  placeholder="Select company..."
-                  emptyText="Company not found."
+                  placeholder="Seleccionar empresa..."
+                  emptyText="No se encontró la empresa."
                 />
                 
                 <Separator />

@@ -69,18 +69,18 @@ export function InvoiceUploadPage() {
           <Badge variant="outline" className="text-primary border-primary">New Feature</Badge>
           <span className="text-sm text-muted-foreground">Patterns / Invoices</span>
         </div>
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">Invoice Upload</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">Carga de Facturas</h1>
         <p className="text-lg text-muted-foreground max-w-2xl">
-          Unified module for uploading invoices via XML/PDF files or manual entry of CUFE/CUDE codes.
+          Módulo unificado para la carga de facturas mediante archivos XML/PDF o ingreso manual de códigos CUFE/CUDE.
         </p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Bulk Upload</CardTitle>
+            <CardTitle>Carga Masiva</CardTitle>
             <CardDescription>
-              Start the invoice upload process for factoring or confirming.
+              Inicie el proceso de carga de facturas para factoring o confirming.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -89,21 +89,21 @@ export function InvoiceUploadPage() {
                 <Upload className="h-6 w-6 text-primary" />
               </div>
               <div className="space-y-1">
-                <p className="font-medium">Upload new invoices</p>
-                <p className="text-sm text-muted-foreground">Supports XML, PDF and CUFE codes</p>
+                <p className="font-medium">Subir nuevas facturas</p>
+                <p className="text-sm text-muted-foreground">Soporta XML, PDF y códigos CUFE</p>
               </div>
               <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                   <Button className="gap-2">
                     <Plus className="h-4 w-4" />
-                    New Upload
+                    Nueva Carga
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col p-0 gap-0">
                   <DialogHeader className="p-6 pb-2">
-                    <DialogTitle>Upload Invoices</DialogTitle>
+                    <DialogTitle>Cargar Facturas</DialogTitle>
                     <DialogDescription>
-                      Select the upload method for your electronic documents.
+                      Seleccione el método de carga para sus documentos electrónicos.
                     </DialogDescription>
                   </DialogHeader>
                   
@@ -112,20 +112,20 @@ export function InvoiceUploadPage() {
                       <TabsList className="grid w-full grid-cols-2 mb-6">
                         <TabsTrigger value="files" className="gap-2">
                           <FileText className="h-4 w-4" />
-                          Files
+                          Archivos
                         </TabsTrigger>
                         <TabsTrigger value="cufes" className="gap-2">
                           <FileCode className="h-4 w-4" />
-                          CUFE Codes
+                          Códigos CUFE
                         </TabsTrigger>
                       </TabsList>
 
                       <TabsContent value="files" className="mt-0 space-y-4">
                         <Alert className="bg-blue-50/50 border-blue-200 text-blue-800 dark:bg-blue-950/20 dark:border-blue-800 dark:text-blue-300">
                           <AlertCircle className="h-4 w-4" />
-                          <AlertTitle>Recommendation</AlertTitle>
+                          <AlertTitle>Recomendación</AlertTitle>
                           <AlertDescription>
-                            Upload XML files for faster and more accurate processing.
+                            Suba los archivos XML para un procesamiento más rápido y preciso.
                           </AlertDescription>
                         </Alert>
                         
@@ -142,25 +142,25 @@ export function InvoiceUploadPage() {
                       <TabsContent value="cufes" className="mt-0 space-y-4">
                         <div className="space-y-4">
                           <div className="space-y-2">
-                            <Label htmlFor="cufes">Enter CUFE / CUDE codes</Label>
+                            <Label htmlFor="cufes">Ingrese los códigos CUFE / CUDE</Label>
                             <Textarea
                               id="cufes"
-                              placeholder="Paste codes here (one per line or comma separated)...&#10;cufe1...&#10;cufe2..."
+                              placeholder="Pegue aquí los códigos (uno por línea o separados por coma)...&#10;cufe1...&#10;cufe2..."
                               className="min-h-[200px] font-mono text-xs leading-relaxed resize-none"
                               value={cufes}
                               onChange={(e) => setCufes(e.target.value)}
                             />
                             <p className="text-xs text-muted-foreground flex justify-between">
-                              <span>Supports multiple codes</span>
-                              <span>{cufes.split(/\n|,/).filter(s => s.trim().length > 0).length} codes detected</span>
+                              <span>Soporta múltiples códigos</span>
+                              <span>{cufes.split(/\n|,/).filter(s => s.trim().length > 0).length} códigos detectados</span>
                             </p>
                           </div>
 
                           <Alert>
                             <CheckCircle2 className="h-4 w-4" />
-                            <AlertTitle>Automatic Validation</AlertTitle>
+                            <AlertTitle>Validación Automática</AlertTitle>
                             <AlertDescription>
-                              The system will validate the existence and status of each invoice in the DIAN.
+                              El sistema validará la existencia y estado de cada factura en la DIAN.
                             </AlertDescription>
                           </Alert>
                         </div>
@@ -173,22 +173,22 @@ export function InvoiceUploadPage() {
                        {uploadStatus === "success" ? (
                          <div className="flex items-center gap-2 text-green-600 font-medium animate-in fade-in slide-in-from-bottom-2">
                            <CheckCircle2 className="h-5 w-5" />
-                           <span>Upload successful</span>
+                           <span>Carga exitosa</span>
                          </div>
                        ) : (
                          <span className="text-xs text-muted-foreground">
-                           {activeTab === "files" ? "Formats: PDF, XML" : "Real-time DIAN validation"}
+                           {activeTab === "files" ? "Formatos: PDF, XML" : "Validación DIAN en tiempo real"}
                          </span>
                        )}
                        
                        <div className="flex gap-2">
-                         <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
+                         <Button variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
                          {activeTab === "cufes" && (
                            <Button 
                              onClick={handleCufeSubmit} 
                              disabled={!cufes.trim() || isProcessing}
                            >
-                             {isProcessing ? "Processing..." : "Upload Codes"}
+                             {isProcessing ? "Procesando..." : "Cargar Códigos"}
                            </Button>
                          )}
                          {/* Button for files is handled inside FileUploader, but we could override or hide it there to put it here if we wanted consistent footer actions. 
@@ -206,9 +206,9 @@ export function InvoiceUploadPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Recent Uploads</CardTitle>
+            <CardTitle>Últimas Cargas</CardTitle>
             <CardDescription>
-              Recent history of processed invoices.
+              Historial reciente de facturas procesadas.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -220,11 +220,11 @@ export function InvoiceUploadPage() {
                   </div>
                   <div className="flex-1 min-w-0 space-y-1">
                     <div className="flex items-center justify-between">
-                      <p className="font-medium text-sm truncate">Invoice Batch #{202400 + i}</p>
-                      <span className="text-xs text-muted-foreground">{i * 2}h ago</span>
+                      <p className="font-medium text-sm truncate">Lote de Facturas #{202400 + i}</p>
+                      <span className="text-xs text-muted-foreground">Hace {i * 2}h</span>
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      Imported via {i === 2 ? "Manual CUFE" : "XML File"} • 15 documents
+                      Importado vía {i === 2 ? "CUFE Manual" : "Archivo XML"} • 15 documentos
                     </p>
                   </div>
                   <Button variant="ghost" size="icon" className="h-8 w-8">

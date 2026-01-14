@@ -90,10 +90,10 @@ export function CFDashboard() {
     { mes: 'May', liquidez: 145000000, comisiones: 3200000 },
   ];
 
-  const estadoFacturas = [
+  const pieDataEstados = [
     { estado: 'Aprobadas', cantidad: 8, color: '#4ade80' },
     { estado: 'En revisión', cantidad: 3, color: '#fbbf24' },
-    { estado: 'Desembolsadas', cantidad: 12, color: '#DEFB49' },
+    { estado: 'Desembolsadas', cantidad: 12, color: '#84cc16' },
     { estado: 'Pagadas', cantidad: 28, color: '#60a5fa' },
   ];
 
@@ -241,8 +241,8 @@ export function CFDashboard() {
               <AreaChart data={liquidezMensual}>
                 <defs>
                   <linearGradient id="colorLiquidez" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#DEFB49" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#DEFB49" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#84cc16" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="#84cc16" stopOpacity={0}/>
                   </linearGradient>
                   <linearGradient id="colorComisiones" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8}/>
@@ -265,7 +265,7 @@ export function CFDashboard() {
                   type="monotone" 
                   dataKey="liquidez" 
                   name="Liquidez Obtenida"
-                  stroke="#DEFB49" 
+                  stroke="#84cc16" 
                   fillOpacity={1} 
                   fill="url(#colorLiquidez)" 
                 />
@@ -296,7 +296,7 @@ export function CFDashboard() {
               <ResponsiveContainer width="50%" height={250}>
                 <PieChart>
                   <Pie
-                    data={estadoFacturas}
+                    data={pieDataEstados}
                     cx="50%"
                     cy="50%"
                     innerRadius={60}
@@ -304,7 +304,7 @@ export function CFDashboard() {
                     dataKey="cantidad"
                     paddingAngle={2}
                   >
-                    {estadoFacturas.map((entry, index) => (
+                    {pieDataEstados.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
@@ -319,7 +319,7 @@ export function CFDashboard() {
               </ResponsiveContainer>
 
               <div className="flex-1 space-y-3">
-                {estadoFacturas.map((item, index) => (
+                {pieDataEstados.map((item, index) => (
                   <div key={index} className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div 

@@ -57,7 +57,9 @@ export function ShadcnOfficialComparison() {
       { name: "Toggle Group", category: "Actions", status: "✅" },
       { name: "Tooltip", category: "Feedback", status: "✅" },
     ],
-    missing: [],
+    missing: [
+      { name: "Aspect Ratio", category: "Data Display", status: "❌", note: "Not implemented" },
+    ],
     charts: [
       { name: "Area Chart", status: "✅" },
       { name: "Bar Chart", status: "✅" },

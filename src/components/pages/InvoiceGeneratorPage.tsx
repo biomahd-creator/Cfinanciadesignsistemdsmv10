@@ -74,7 +74,7 @@ export function InvoiceGeneratorPage() {
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-4xl font-semibold">Invoice Generator</h1>
+          <h1 className="text-2xl font-medium">Invoice Generator</h1>
           <Badge variant="default">💼 Business</Badge>
           <Badge variant="secondary">NEW</Badge>
         </div>

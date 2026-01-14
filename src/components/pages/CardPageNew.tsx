@@ -68,7 +68,7 @@ export function CardDemo() {
 }`}
       
       // Usage
-      usage="Import Card components from @/components/ui/card and compose them as needed. You can use CardHeader, CardContent, CardFooter, CardTitle, and CardDescription to structure your content."
+      usage="Importa los componentes Card desde @/components/ui/card y compónlos según necesites. Puedes usar CardHeader, CardContent, CardFooter, CardTitle y CardDescription para estructurar tu contenido."
       usageCode={`import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 function MyComponent() {
@@ -89,12 +89,12 @@ function MyComponent() {
         {
           name: "className",
           type: "string",
-          description: "Additional CSS classes for the card container",
+          description: "Clases CSS adicionales para el contenedor del card",
         },
         {
           name: "children",
           type: "ReactNode",
-          description: "Content of the card (CardHeader, CardContent, CardFooter, etc.)",
+          description: "Contenido del card (CardHeader, CardContent, CardFooter, etc.)",
           required: true,
         },
       ]}
@@ -103,7 +103,7 @@ function MyComponent() {
       examples={[
         {
           title: "Basic Card",
-          description: "Simple card with only header and content",
+          description: "Card simple con solo header y content",
           preview: (
             <Card className="max-w-md">
               <CardHeader>
@@ -133,7 +133,7 @@ function MyComponent() {
         },
         {
           title: "Card with Actions",
-          description: "Card with action buttons in the footer",
+          description: "Card con botones de acción en el footer",
           preview: (
             <Card className="max-w-md">
               <CardHeader>
@@ -169,7 +169,7 @@ function MyComponent() {
         },
         {
           title: "Card Grid Layout",
-          description: "Multiple cards in a responsive grid",
+          description: "Múltiples cards en un grid responsive",
           preview: (
             <div className="grid gap-4 md:grid-cols-3">
               <Card>
@@ -224,7 +224,7 @@ function MyComponent() {
         },
         {
           title: "Card with Badge",
-          description: "Card with badge in the header",
+          description: "Card con badge en el header",
           preview: (
             <Card className="max-w-md">
               <CardHeader>
@@ -264,7 +264,7 @@ function MyComponent() {
         },
         {
           title: "Card with Icon",
-          description: "Card with decorative icon",
+          description: "Card con icono decorativo",
           preview: (
             <div className="grid gap-4 md:grid-cols-2 max-w-2xl">
               <Card>
@@ -320,7 +320,7 @@ function MyComponent() {
         },
         {
           title: "Interactive Card",
-          description: "Clickable card with hover state",
+          description: "Card clickeable con hover state",
           preview: (
             <Card className="max-w-md cursor-pointer transition-all hover:shadow-lg hover:scale-[1.02]">
               <CardHeader>
@@ -378,7 +378,7 @@ function MyComponent() {
         },
         {
           title: "Nested Cards",
-          description: "Nested cards for complex layouts",
+          description: "Cards anidados para layouts complejos",
           preview: (
             <Card className="max-w-2xl">
               <CardHeader>
@@ -427,7 +427,7 @@ function MyComponent() {
         },
         {
           title: "Card with Custom Styling",
-          description: "Card with custom borders and colors",
+          description: "Card con bordes y colores personalizados",
           preview: (
             <div className="grid gap-4 md:grid-cols-2 max-w-2xl">
               <Card className="border-l-4 border-l-primary">

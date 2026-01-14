@@ -1,11 +1,9 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
 import { Badge } from "./badge";
 import { Separator } from "./separator";
 import { CodeBlock } from "./code-block";
-import { Button } from "./button";
-import { Copy, Check } from "lucide-react";
 
 interface ComponentShowcaseProps {
   title: string;
@@ -41,14 +39,6 @@ export function ComponentShowcase({
   props,
   examples,
 }: ComponentShowcaseProps) {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyCode = async () => {
-    await navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -68,31 +58,9 @@ export function ComponentShowcase({
 
       {/* Main Preview & Code */}
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <div className="space-y-1.5">
-            <CardTitle>Preview</CardTitle>
-            <CardDescription>Vista previa interactiva del componente</CardDescription>
-          </div>
-          <div className="flex items-center gap-2">
-             <Button
-                variant="outline"
-                size="sm"
-                className="h-8 text-xs"
-                onClick={handleCopyCode}
-              >
-                {copied ? (
-                  <>
-                    <Check className="mr-2 h-3 w-3" />
-                    Copied Code
-                  </>
-                ) : (
-                  <>
-                    <Copy className="mr-2 h-3 w-3" />
-                    Copy Code
-                  </>
-                )}
-              </Button>
-          </div>
+        <CardHeader>
+          <CardTitle>Preview</CardTitle>
+          <CardDescription>Vista previa interactiva del componente</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="preview" className="w-full">
@@ -102,10 +70,8 @@ export function ComponentShowcase({
             </TabsList>
 
             <TabsContent value="preview" className="space-y-4">
-              <div className="relative group">
-                <div className="flex items-center justify-center min-h-[200px] rounded-lg border bg-muted/20 p-8">
-                  {preview}
-                </div>
+              <div className="flex items-center justify-center min-h-[200px] rounded-lg border bg-muted/20 p-8">
+                {preview}
               </div>
             </TabsContent>
 
@@ -141,20 +107,20 @@ export function ComponentShowcase({
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-3 px-4 font-semibold text-sm">Prop</th>
-                    <th className="text-left py-3 px-4 font-semibold text-sm">Type</th>
-                    <th className="text-left py-3 px-4 font-semibold text-sm">Default</th>
-                    <th className="text-left py-3 px-4 font-semibold text-sm">Description</th>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-3 px-4 font-semibold text-sm text-foreground">Prop</th>
+                    <th className="text-left py-3 px-4 font-semibold text-sm text-foreground">Type</th>
+                    <th className="text-left py-3 px-4 font-semibold text-sm text-foreground">Default</th>
+                    <th className="text-left py-3 px-4 font-semibold text-sm text-foreground">Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   {props.map((prop) => (
-                    <tr key={prop.name} className="border-b">
+                    <tr key={prop.name} className="border-b border-border">
                       <td className="py-3 px-4">
-                        <code className="text-sm font-mono bg-muted px-1.5 py-0.5 rounded">
+                        <code className="text-sm font-mono bg-secondary/10 dark:bg-secondary/20 text-foreground px-1.5 py-0.5 rounded border border-border">
                           {prop.name}
-                          {prop.required && <span className="text-red-500 ml-1">*</span>}
+                          {prop.required && <span className="text-destructive ml-1">*</span>}
                         </code>
                       </td>
                       <td className="py-3 px-4">
@@ -164,7 +130,7 @@ export function ComponentShowcase({
                       </td>
                       <td className="py-3 px-4">
                         {prop.default ? (
-                          <code className="text-sm font-mono bg-muted px-1.5 py-0.5 rounded">
+                          <code className="text-sm font-mono bg-secondary/10 dark:bg-secondary/20 text-foreground px-1.5 py-0.5 rounded border border-border">
                             {prop.default}
                           </code>
                         ) : (

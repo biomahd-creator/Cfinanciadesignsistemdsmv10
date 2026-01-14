@@ -277,7 +277,7 @@ export function TreeTablePage() {
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-4xl font-semibold">Tree Table</h1>
+          <h1 className="text-2xl font-medium">Tree Table</h1>
           <Badge variant="default">📱 Responsive</Badge>
           <Badge variant="secondary">NEW</Badge>
         </div>
@@ -385,7 +385,7 @@ export function TreeTablePage() {
       {/* Features */}
       <Card>
         <CardHeader>
-          <CardTitle>Main Features</CardTitle>
+          <CardTitle>Características Principales</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-2 gap-4">
@@ -413,7 +413,7 @@ export function TreeTablePage() {
                 <li>• Indicador visual de scroll en dispositivos móviles</li>
                 <li>• Hover states con transiciones suaves</li>
                 <li>• Compatible con modo claro/oscuro</li>
-                <li>• Tipografía Satoshi y tokens de color #DEFB49 / #1C2D3A</li>
+                <li>• Tipografía Satoshi y tokens de color #884cc16cc16 (Primary Verde Lima) / #1C2D3A (Secondary Azul Oscuro)</li>
                 <li>• Espaciado consistente (Tailwind spacing)</li>
                 <li>• Truncado de texto largo con ellipsis</li>
                 <li>• Accesibilidad WCAG AA (aria-labels, keyboard navigation)</li>

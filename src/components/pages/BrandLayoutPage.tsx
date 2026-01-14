@@ -2,9 +2,11 @@ import { Card } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
 import { Logo } from "../Logo";
-import { Copy, Check, Ruler, Grid3x3, Palette, Type } from "lucide-react";
+import { Palette, Ruler, Grid3x3, Type } from "lucide-react";
 import { useState } from "react";
-import { Button } from "../ui/button";
+import { ColorSwatch } from "../business/ColorSwatch";
+import { GridSystemPreview } from "../business/GridSystemPreview";
+import { SpacingPreview } from "../business/SpacingPreview";
 
 export function BrandLayoutPage() {
   const [copiedColor, setCopiedColor] = useState<string | null>(null);
@@ -19,16 +21,19 @@ export function BrandLayoutPage() {
     {
       id: "primary",
       name: "Primary",
-      hex: "#DEFB49",
-      rgb: "rgb(222, 251, 73)",
+      hex: "#884cc16cc16",
+      rgb: "rgb(13132, 20404, 2222)",
       usage: "CTAs, estados activos, focus rings",
+      contrast: "AA",
+      contrast: "WCAG AAA (7.2:1 sobre secondary)",
     },
     {
       id: "secondary",
       name: "Secondary",
       hex: "#1C2D3A",
       rgb: "rgb(28, 45, 58)",
-      usage: "Primary text, backgrounds, dark elements",
+      usage: "Texto principal, fondos, elementos oscuros",
+      contrast: "WCAG AAA (14.9:1 sobre blanco)",
     },
   ];
 
@@ -55,10 +60,10 @@ export function BrandLayoutPage() {
       <div>
         <div className="flex items-center gap-3 mb-2">
           <Palette className="h-8 w-8 text-primary" />
-          <h1 className="text-4xl font-semibold">Brand & Layout Guidelines</h1>
+          <h1 className="text-2xl font-medium">Brand & Layout Guidelines</h1>
         </div>
         <p className="text-muted-foreground">
-          Complete design system: brand, colors, typography and grid system
+          Sistema de diseño completo: marca, colores, tipografía y grid system
         </p>
       </div>
 
@@ -78,7 +83,7 @@ export function BrandLayoutPage() {
           
           {/* Logo for Light Backgrounds */}
           <div className="mb-8">
-            <h4 className="font-medium text-sm mb-4 text-muted-foreground">For light backgrounds</h4>
+            <h4 className="font-medium text-sm mb-4 text-muted-foreground">Para fondos claros</h4>
             <div className="space-y-8">
               {/* Extra Large */}
               <div className="flex items-center gap-8 p-6 bg-muted/50 rounded-lg">
@@ -122,7 +127,7 @@ export function BrandLayoutPage() {
 
           {/* Logo for Dark Backgrounds */}
           <div>
-            <h4 className="font-medium text-sm mb-4 text-muted-foreground">For dark backgrounds</h4>
+            <h4 className="font-medium text-sm mb-4 text-muted-foreground">Para fondos oscuros</h4>
             <div className="space-y-8">
               {/* Extra Large */}
               <div className="flex items-center gap-8 p-6 bg-secondary rounded-lg">
@@ -171,19 +176,19 @@ export function BrandLayoutPage() {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
                 <span className="text-primary mt-1">•</span>
-                <span><strong>Minimum size:</strong> 24px height (h-6) to ensure readability</span>
+                <span><strong>Minimum size:</strong> 24px height (h-6) para garantizar legibilidad</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-primary mt-1">•</span>
-                <span><strong>Clear space:</strong> Maintain space equivalent to logo height around it</span>
+                <span><strong>Clear space:</strong> Mantener espacio equivalente a la altura del logo alrededor</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-primary mt-1">•</span>
-                <span><strong>Backgrounds:</strong> Use "light" variant for light backgrounds and "dark" for dark backgrounds</span>
+                <span><strong>Backgrounds:</strong> Usar variante "light" para fondos claros y "dark" para fondos oscuros</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-primary mt-1">•</span>
-                <span><strong>Do not modify:</strong> Do not stretch, rotate or change logo proportions</span>
+                <span><strong>No modificar:</strong> No estirar, rotar o cambiar proporciones del logo</span>
               </li>
             </ul>
           </div>
@@ -195,68 +200,17 @@ export function BrandLayoutPage() {
           
           <div className="grid md:grid-cols-2 gap-6">
             {colors.map((color) => (
-              <div key={color.id} className="space-y-4">
-                {/* Color Swatch */}
-                <div
-                  className="h-32 rounded-lg shadow-sm border border-border flex items-center justify-center"
-                  style={{ backgroundColor: color.hex }}
-                >
-                  <span
-                    className="font-semibold text-lg"
-                    style={{ 
-                      color: color.id === "primary" ? "#1C2D3A" : "#ffffff" 
-                    }}
-                  >
-                    {color.name}
-                  </span>
-                </div>
-
-                {/* Color Info */}
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-muted/50 rounded-md">
-                    <div>
-                      <p className="text-xs text-muted-foreground">HEX</p>
-                      <p className="font-mono text-sm">{color.hex}</p>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => copyToClipboard(color.hex, `${color.id}-hex`)}
-                      className="h-8 w-8"
-                    >
-                      {copiedColor === `${color.id}-hex` ? (
-                        <Check className="h-4 w-4 text-primary" />
-                      ) : (
-                        <Copy className="h-4 w-4" />
-                      )}
-                    </Button>
-                  </div>
-
-                  <div className="flex items-center justify-between p-3 bg-muted/50 rounded-md">
-                    <div>
-                      <p className="text-xs text-muted-foreground">RGB</p>
-                      <p className="font-mono text-sm">{color.rgb}</p>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => copyToClipboard(color.rgb, `${color.id}-rgb`)}
-                      className="h-8 w-8"
-                    >
-                      {copiedColor === `${color.id}-rgb` ? (
-                        <Check className="h-4 w-4 text-primary" />
-                      ) : (
-                        <Copy className="h-4 w-4" />
-                      )}
-                    </Button>
-                  </div>
-
-                  <div className="p-3 bg-muted/50 rounded-md">
-                    <p className="text-xs text-muted-foreground mb-1">Usage</p>
-                    <p className="text-sm">{color.usage}</p>
-                  </div>
-                </div>
-              </div>
+              <ColorSwatch
+                key={color.id}
+                id={color.id}
+                name={color.name}
+                hex={color.hex}
+                rgb={color.rgb}
+                usage={color.usage}
+                isPrimary={color.id === "primary"}
+                copiedColor={copiedColor}
+                onCopy={copyToClipboard}
+              />
             ))}
           </div>
         </Card>
@@ -270,55 +224,111 @@ export function BrandLayoutPage() {
 
           <div className="space-y-6">
             {/* Font Family */}
-            <div className="p-4 bg-muted/50 rounded-lg">
-              <p className="text-sm text-muted-foreground mb-2">Font Family</p>
+            <div className="p-4 bg-muted/50 rounded-lg border-2 border-primary/20">
+              <p className="text-sm text-muted-foreground mb-2">Font Family (Única permitida)</p>
               <p className="text-2xl font-semibold">Satoshi</p>
               <p className="text-sm text-muted-foreground mt-2">
-                Fuente única del sistema - Variable font
+                ⚠️ IMPORTANTE: Satoshi es la ÚNICA fuente permitida en todo el sistema
               </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Variable font · Weights: 300-700 · Letter-spacing: 0.025em
+              </p>
+            </div>
+
+            {/* Font Weights Available */}
+            <div className="p-4 bg-muted/50 rounded-lg">
+              <p className="text-sm font-medium mb-4">Font Weights (Satoshi)</p>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="font-light text-lg">Light (300)</span>
+                  <span className="text-xs text-muted-foreground">font-light</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-normal text-lg">Normal (400)</span>
+                  <span className="text-xs text-muted-foreground">font-normal</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-lg">Medium (500)</span>
+                  <span className="text-xs text-muted-foreground">font-medium</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-semibold text-lg">Semibold (600)</span>
+                  <span className="text-xs text-muted-foreground">font-semibold</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-lg">Bold (700)</span>
+                  <span className="text-xs text-muted-foreground">font-bold</span>
+                </div>
+              </div>
             </div>
 
             {/* Type Scale */}
             <div>
-              <p className="text-sm font-medium mb-4">Type Scale</p>
+              <p className="text-sm font-medium mb-4">Type Scale (Satoshi en todos los tamaños)</p>
               <div className="space-y-4">
                 <div className="p-4 border border-border rounded-lg">
                   <p className="text-5xl font-semibold mb-2">Heading 1</p>
-                  <p className="text-xs text-muted-foreground font-mono">
-                    text-5xl · font-semibold · 48px
+                  <p className="text-xs text-muted-foreground">
+                    text-5xl · font-semibold · 48px · Satoshi
                   </p>
                 </div>
                 <div className="p-4 border border-border rounded-lg">
                   <p className="text-3xl font-semibold mb-2">Heading 2</p>
-                  <p className="text-xs text-muted-foreground font-mono">
-                    text-3xl · font-semibold · 30px
+                  <p className="text-xs text-muted-foreground">
+                    text-3xl · font-semibold · 30px · Satoshi
                   </p>
                 </div>
                 <div className="p-4 border border-border rounded-lg">
                   <p className="text-xl font-semibold mb-2">Heading 3</p>
-                  <p className="text-xs text-muted-foreground font-mono">
-                    text-xl · font-semibold · 20px
+                  <p className="text-xs text-muted-foreground">
+                    text-xl · font-semibold · 20px · Satoshi
                   </p>
                 </div>
                 <div className="p-4 border border-border rounded-lg">
                   <p className="text-base mb-2">Body Text</p>
-                  <p className="text-xs text-muted-foreground font-mono">
-                    text-base · font-normal · 16px
+                  <p className="text-xs text-muted-foreground">
+                    text-base · font-normal · 16px · Satoshi
                   </p>
                 </div>
                 <div className="p-4 border border-border rounded-lg">
                   <p className="text-sm mb-2">Small Text</p>
-                  <p className="text-xs text-muted-foreground font-mono">
-                    text-sm · font-normal · 14px
+                  <p className="text-xs text-muted-foreground">
+                    text-sm · font-normal · 14px · Satoshi
                   </p>
                 </div>
                 <div className="p-4 border border-border rounded-lg">
                   <p className="text-xs mb-2">Caption</p>
-                  <p className="text-xs text-muted-foreground font-mono">
-                    text-xs · font-medium · 12px
+                  <p className="text-xs text-muted-foreground">
+                    text-xs · font-medium · 12px · Satoshi
                   </p>
                 </div>
               </div>
+            </div>
+
+            {/* Typography Rules */}
+            <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+              <h4 className="font-semibold mb-3 flex items-center gap-2 text-destructive">
+                <span className="h-2 w-2 rounded-full bg-destructive" />
+                Reglas de Tipografía (CRÍTICO)
+              </h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="text-destructive mt-1">✗</span>
+                  <span><strong>PROHIBIDO:</strong> Usar cualquier fuente que no sea Satoshi</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-destructive mt-1">✗</span>
+                  <span><strong>PROHIBIDO:</strong> Importar otras fuentes (Inter, Roboto, Arial, etc.)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">✓</span>
+                  <span><strong>CORRECTO:</strong> Satoshi se aplica automáticamente desde globals.css</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">✓</span>
+                  <span><strong>CORRECTO:</strong> font-family: 'Satoshi', sans-serif</span>
+                </li>
+              </ul>
             </div>
           </div>
         </Card>
@@ -340,36 +350,13 @@ export function BrandLayoutPage() {
 
           <div className="space-y-8">
             {gridExamples.map((grid) => (
-              <div key={grid.device} className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="font-semibold">{grid.device}</h4>
-                    <p className="text-sm text-muted-foreground">
-                      {grid.columns} columnas · Gutter {grid.gutter} · Margin {grid.margin}
-                    </p>
-                  </div>
-                  <Badge>{grid.columns} cols</Badge>
-                </div>
-
-                {/* Visual Grid Representation */}
-                <div 
-                  className="grid gap-3 p-6 bg-muted/30 rounded-lg border border-border"
-                  style={{
-                    gridTemplateColumns: `repeat(${grid.columns}, 1fr)`,
-                  }}
-                >
-                  {Array.from({ length: grid.columns }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="h-20 bg-primary/20 border-2 border-primary/40 rounded flex items-center justify-center"
-                    >
-                      <span className="text-xs font-mono text-muted-foreground">
-                        {i + 1}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <GridSystemPreview
+                key={grid.device}
+                device={grid.device}
+                columns={grid.columns}
+                gutter={grid.gutter}
+                margin={grid.margin}
+              />
             ))}
           </div>
 
@@ -412,31 +399,17 @@ export function BrandLayoutPage() {
           </div>
 
           <p className="text-sm text-muted-foreground mb-6">
-            Spacing system based on 4px multiples for visual consistency
+            Sistema de espaciado basado en múltiplos de 4px para consistencia visual
           </p>
 
           <div className="space-y-3">
             {spacing.map((space) => (
-              <div
+              <SpacingPreview
                 key={space.name}
-                className="flex items-center gap-6 p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors"
-              >
-                <div className="w-24">
-                  <p className="font-mono text-sm font-medium">{space.name}</p>
-                  <p className="text-xs text-muted-foreground">{space.multiplier} base</p>
-                </div>
-                
-                <div className="flex-1">
-                  <div
-                    className="h-8 bg-primary rounded"
-                    style={{ width: space.value }}
-                  />
-                </div>
-
-                <div className="w-20 text-right">
-                  <p className="font-mono text-sm">{space.value}</p>
-                </div>
-              </div>
+                name={space.name}
+                value={space.value}
+                multiplier={space.multiplier}
+              />
             ))}
           </div>
 

@@ -32,7 +32,7 @@ const components = [
   {
     title: "Scroll Area",
     href: "#",
-    description: "Custom scrollable and styled area.",
+    description: "Área con scroll personalizado y estilizado.",
   },
   {
     title: "Tabs",
@@ -51,7 +51,7 @@ export function NavigationMenuPage() {
     <div className="space-y-8">
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-4xl font-semibold">Navigation Menu</h1>
+          <h1 className="text-2xl font-medium">Navigation Menu</h1>
           <Badge>Navigation</Badge>
         </div>
         <p className="text-muted-foreground">
@@ -179,7 +179,7 @@ export function NavigationMenuPage() {
       <div className="grid md:grid-cols-2 gap-4">
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">✅ When to use</CardTitle>
+            <CardTitle className="text-base">✅ Cuándo usar</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-muted-foreground">
             <p>• Navegación principal de sitios web</p>

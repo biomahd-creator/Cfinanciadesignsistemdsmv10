@@ -20,7 +20,7 @@ export function DashboardTemplate({
         {/* Page Header */}
         {(title || description) && (
           <div className="mb-8">
-            <h1 className="text-4xl font-semibold mb-2">{title}</h1>
+            <h1 className="text-2xl font-medium mb-2">{title}</h1>
             {description && (
               <p className="text-muted-foreground">{description}</p>
             )}

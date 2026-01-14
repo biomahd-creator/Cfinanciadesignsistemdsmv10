@@ -21,11 +21,11 @@ export function AlertDialogPage() {
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-4xl font-semibold">Alert Dialog</h1>
+          <h1 className="text-2xl font-medium">Alert Dialog</h1>
           <Badge>Feedback</Badge>
         </div>
         <p className="text-muted-foreground">
-          Modal dialog for important interruptions that require user confirmation
+          Modal dialog para interrupciones importantes que requieren confirmación del usuario
         </p>
       </div>
 
@@ -34,34 +34,34 @@ export function AlertDialogPage() {
       {/* Basic Alert Dialog */}
       <div className="space-y-4">
         <div>
-          <h2 className="text-2xl font-semibold mb-2">Basic Alert Dialog</h2>
-          <p className="text-muted-foreground">Simple confirmation with two actions</p>
+          <h2 className="text-2xl font-semibold mb-2">Alert Dialog Básico</h2>
+          <p className="text-muted-foreground">Confirmación simple con dos acciones</p>
         </div>
         <Card>
           <CardHeader>
-            <CardTitle>Action Confirmation</CardTitle>
-            <CardDescription>Ask for confirmation before performing a destructive action</CardDescription>
+            <CardTitle>Confirmación de Acción</CardTitle>
+            <CardDescription>Pide confirmación antes de realizar una acción destructiva</CardDescription>
           </CardHeader>
           <CardContent>
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button variant="destructive">
                   <Trash2 className="h-4 w-4 mr-2" />
-                  Delete Account
+                  Eliminar Cuenta
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogTitle>¿Estás absolutamente seguro?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete your account
-                    and remove all your data from our servers.
+                    Esta acción no se puede deshacer. Esto eliminará permanentemente tu cuenta
+                    y removerá todos tus datos de nuestros servidores.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
                   <AlertDialogAction className="bg-red-600 hover:bg-red-700">
-                    Yes, delete account
+                    Sí, eliminar cuenta
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
@@ -75,8 +75,8 @@ export function AlertDialogPage() {
       {/* Different Alert Types */}
       <div className="space-y-4">
         <div>
-          <h2 className="text-2xl font-semibold mb-2">Types of Alert Dialog</h2>
-          <p className="text-muted-foreground">Different usage contexts</p>
+          <h2 className="text-2xl font-semibold mb-2">Tipos de Alert Dialog</h2>
+          <p className="text-muted-foreground">Diferentes contextos de uso</p>
         </div>
         <div className="grid md:grid-cols-2 gap-6">
           {/* Warning Alert */}
@@ -84,32 +84,32 @@ export function AlertDialogPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5 text-yellow-600" />
-                Warning
+                Advertencia
               </CardTitle>
-              <CardDescription>Alert dialog with warning tone</CardDescription>
+              <CardDescription>Alert dialog con tono de advertencia</CardDescription>
             </CardHeader>
             <CardContent>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant="outline" className="w-full">
                     <AlertTriangle className="h-4 w-4 mr-2" />
-                    Show Warning
+                    Ver Advertencia
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
                     <AlertDialogTitle className="flex items-center gap-2">
                       <AlertTriangle className="h-5 w-5 text-yellow-600" />
-                      Unsaved Changes
+                      Cambios sin guardar
                     </AlertDialogTitle>
                     <AlertDialogDescription>
-                      You have unsaved changes. If you continue, you will lose all changes
-                      made in this document.
+                      Tienes cambios sin guardar. Si continúas, perderás todos los cambios
+                      realizados en este documento.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction>Continue without saving</AlertDialogAction>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogAction>Continuar sin guardar</AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
@@ -121,29 +121,29 @@ export function AlertDialogPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <LogOut className="h-5 w-5 text-primary" />
-                Logout
+                Cerrar Sesión
               </CardTitle>
-              <CardDescription>Logout confirmation</CardDescription>
+              <CardDescription>Confirmación de cierre de sesión</CardDescription>
             </CardHeader>
             <CardContent>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant="outline" className="w-full">
                     <LogOut className="h-4 w-4 mr-2" />
-                    Logout
+                    Cerrar Sesión
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Logout?</AlertDialogTitle>
+                    <AlertDialogTitle>¿Cerrar sesión?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      You will be logged out. You will need to log in again to
-                      access your account.
+                      Vas a cerrar tu sesión. Deberás iniciar sesión nuevamente para
+                      acceder a tu cuenta.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction>Logout</AlertDialogAction>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogAction>Cerrar Sesión</AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
@@ -155,32 +155,32 @@ export function AlertDialogPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Info className="h-5 w-5 text-blue-600" />
-                Information
+                Información
               </CardTitle>
-              <CardDescription>Informative alert dialog</CardDescription>
+              <CardDescription>Alert dialog informativo</CardDescription>
             </CardHeader>
             <CardContent>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant="outline" className="w-full">
                     <Info className="h-4 w-4 mr-2" />
-                    Show Information
+                    Ver Información
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
                     <AlertDialogTitle className="flex items-center gap-2">
                       <Info className="h-5 w-5 text-blue-600" />
-                      Update Available
+                      Actualización Disponible
                     </AlertDialogTitle>
                     <AlertDialogDescription>
-                      A new version is available with performance improvements and
-                      bug fixes. We recommend updating now.
+                      Hay una nueva versión disponible con mejoras de rendimiento y
+                      correcciones de bugs. Te recomendamos actualizar ahora.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Later</AlertDialogCancel>
-                    <AlertDialogAction>Update Now</AlertDialogAction>
+                    <AlertDialogCancel>Más tarde</AlertDialogCancel>
+                    <AlertDialogAction>Actualizar Ahora</AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
@@ -192,30 +192,30 @@ export function AlertDialogPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Trash2 className="h-5 w-5 text-red-600" />
-                Delete Item
+                Eliminar Item
               </CardTitle>
-              <CardDescription>Deletion confirmation</CardDescription>
+              <CardDescription>Confirmación de eliminación</CardDescription>
             </CardHeader>
             <CardContent>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant="destructive" className="w-full">
                     <Trash2 className="h-4 w-4 mr-2" />
-                    Delete Project
+                    Eliminar Proyecto
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Delete project "Website Redesign"?</AlertDialogTitle>
+                    <AlertDialogTitle>¿Eliminar proyecto "Website Redesign"?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This action cannot be undone. The project and all its files
-                      will be permanently deleted.
+                      Esta acción no se puede deshacer. El proyecto y todos sus archivos
+                      serán eliminados permanentemente.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>No, keep</AlertDialogCancel>
+                    <AlertDialogCancel>No, mantener</AlertDialogCancel>
                     <AlertDialogAction className="bg-red-600 hover:bg-red-700">
-                      Yes, delete
+                      Sí, eliminar
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
@@ -231,29 +231,29 @@ export function AlertDialogPage() {
       <div className="space-y-4">
         <div>
           <h2 className="text-2xl font-semibold mb-2">Best Practices</h2>
-          <p className="text-muted-foreground">Usage recommendations</p>
+          <p className="text-muted-foreground">Recomendaciones de uso</p>
         </div>
         <div className="grid md:grid-cols-2 gap-4">
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">✅ When to use</CardTitle>
+              <CardTitle className="text-base">✅ Cuándo usar</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-sm text-muted-foreground">
-              <p>• Destructive actions (delete, close without saving)</p>
-              <p>• Critical decisions that cannot be undone</p>
-              <p>• Important confirmations that require attention</p>
-              <p>• Warnings that the user must read before continuing</p>
+              <p>• Acciones destructivas (eliminar, cerrar sin guardar)</p>
+              <p>• Decisiones críticas que no se pueden deshacer</p>
+              <p>• Confirmaciones importantes que requieren atención</p>
+              <p>• Avisos que el usuario debe leer antes de continuar</p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">❌ When NOT to use</CardTitle>
+              <CardTitle className="text-base">❌ Cuándo NO usar</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-sm text-muted-foreground">
-              <p>• Non-critical informational messages (use Toast)</p>
-              <p>• Complex forms (use Dialog)</p>
-              <p>• Actions that can be easily undone</p>
-              <p>• Information that does not require confirmation</p>
+              <p>• Mensajes informativos no críticos (usa Toast)</p>
+              <p>• Formularios complejos (usa Dialog)</p>
+              <p>• Acciones que se pueden deshacer fácilmente</p>
+              <p>• Información que no requiere confirmación</p>
             </CardContent>
           </Card>
         </div>
@@ -264,16 +264,16 @@ export function AlertDialogPage() {
       {/* Accessibility Features */}
       <Card className="bg-primary/5 border-primary/20">
         <CardHeader>
-          <CardTitle>♿ Accessibility</CardTitle>
-          <CardDescription>Included accessibility features</CardDescription>
+          <CardTitle>♿ Accesibilidad</CardTitle>
+          <CardDescription>Características de accesibilidad incluidas</CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 text-sm">
-          <p>✓ <strong>Role="alertdialog"</strong> - Appropriate ARIA role</p>
-          <p>✓ <strong>Focus trap</strong> - Focus remains within the dialog</p>
-          <p>✓ <strong>Escape key</strong> - Closes the dialog when Escape is pressed</p>
-          <p>✓ <strong>aria-describedby</strong> - Accessible description</p>
-          <p>✓ <strong>Tab navigation</strong> - Keyboard navigation between actions</p>
-          <p>✓ <strong>Focus restoration</strong> - Restores focus to the trigger when closing</p>
+          <p>✓ <strong>Role="alertdialog"</strong> - ARIA role apropiado</p>
+          <p>✓ <strong>Focus trap</strong> - El foco se mantiene dentro del dialog</p>
+          <p>✓ <strong>Escape key</strong> - Cierra el dialog al presionar Escape</p>
+          <p>✓ <strong>aria-describedby</strong> - Descripción accesible</p>
+          <p>✓ <strong>Tab navigation</strong> - Navegación por teclado entre acciones</p>
+          <p>✓ <strong>Focus restoration</strong> - Restaura el foco al trigger al cerrar</p>
         </CardContent>
       </Card>
 
@@ -282,35 +282,35 @@ export function AlertDialogPage() {
       {/* Composition Info */}
       <Card className="bg-muted/50">
         <CardHeader>
-          <CardTitle>Composition</CardTitle>
-          <CardDescription>Shadcn/ui components used</CardDescription>
+          <CardTitle>Composición</CardTitle>
+          <CardDescription>Componentes shadcn/ui utilizados</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
             <p className="text-sm">
               <Badge variant="outline" className="mr-2">AlertDialog</Badge>
-              Main dialog container
+              Contenedor principal del dialog
             </p>
             <p className="text-sm">
               <Badge variant="outline" className="mr-2">AlertDialogTrigger</Badge>
-              Button that opens the dialog
+              Botón que abre el dialog
             </p>
             <p className="text-sm">
               <Badge variant="outline" className="mr-2">AlertDialogContent</Badge>
-              Modal content
+              Contenido del modal
             </p>
             <p className="text-sm">
               <Badge variant="outline" className="mr-2">AlertDialogHeader/Footer</Badge>
-              Sections of the dialog
+              Secciones del dialog
             </p>
             <p className="text-sm">
               <Badge variant="outline" className="mr-2">AlertDialogAction/Cancel</Badge>
-              Action buttons
+              Botones de acción
             </p>
             <Separator className="my-3" />
             <p className="text-xs text-muted-foreground">
-              Alert Dialog is built on Radix UI Alert Dialog with shadcn/ui styles.
-              Includes focus management, accessibility, and predefined animations.
+              Alert Dialog está construido sobre Radix UI Alert Dialog con estilos de shadcn/ui.
+              Incluye gestión de foco, accesibilidad y animaciones predefinidas.
             </p>
           </div>
         </CardContent>

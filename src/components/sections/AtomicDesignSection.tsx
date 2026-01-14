@@ -31,7 +31,7 @@ import { LoginPage } from "../atomic/pages/LoginPage";
 
 import { DollarSign, Download, Settings, HelpCircle } from "lucide-react";
 
-export function AtomicDesignSection() {
+export function AtomicDesignSection({ defaultTab = "overview" }: { defaultTab?: string }) {
   return (
     <div className="space-y-8">
       <div>
@@ -41,7 +41,7 @@ export function AtomicDesignSection() {
         </p>
       </div>
 
-      <Tabs defaultValue="overview" className="w-full">
+      <Tabs defaultValue={defaultTab} className="w-full">
         <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="atoms">Atoms</TabsTrigger>
@@ -84,7 +84,7 @@ export function AtomicDesignSection() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      Simple groups of atoms working together. SearchBar, FormField.
+                      Grupos simples de átomos que funcionan juntos. SearchBar, FormField.
                     </p>
                     <div className="mt-4">
                       <Badge variant="secondary">6 componentes</Badge>
@@ -114,7 +114,7 @@ export function AtomicDesignSection() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      Layouts that organize organisms. DashboardTemplate, ListTemplate.
+                      Layouts que organizan organismos. DashboardTemplate, ListTemplate.
                     </p>
                     <div className="mt-4">
                       <Badge variant="secondary">3 templates</Badge>
@@ -250,7 +250,7 @@ export function AtomicDesignSection() {
             <CardHeader>
               <CardTitle>Molecules - Combinaciones Simples</CardTitle>
               <CardDescription>
-                Groups of atoms that work together as a unit
+                Grupos de átomos que funcionan juntos como una unidad
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-8">
@@ -258,7 +258,7 @@ export function AtomicDesignSection() {
                 <h3 className="text-xl font-semibold">SearchBar</h3>
                 <p className="text-sm text-muted-foreground">Input + Button</p>
                 <div className="max-w-md">
-                  <SearchBar placeholder="Search invoices..." />
+                  <SearchBar placeholder="Buscar facturas..." />
                 </div>
               </div>
 
@@ -269,18 +269,18 @@ export function AtomicDesignSection() {
                 <p className="text-sm text-muted-foreground">Label + Input + Helper Text + Error State</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
                   <FormField
-                    label="Company Name"
+                    label="Nombre de Empresa"
                     id="company-name"
-                    placeholder="e.g. ABC Company Inc."
+                    placeholder="Ej: Empresa ABC S.A."
                     required
-                    helperText="Enter the legal company name"
+                    helperText="Ingresa el nombre legal de la empresa"
                   />
                   <FormField
-                    label="Tax ID"
+                    label="RUT"
                     id="rut"
                     placeholder="12.345.678-9"
                     required
-                    error="Invalid Tax ID"
+                    error="RUT inválido"
                   />
                 </div>
               </div>
@@ -341,7 +341,7 @@ export function AtomicDesignSection() {
             <CardHeader>
               <CardTitle>Organisms - Componentes Complejos</CardTitle>
               <CardDescription>
-                Complete sections formed by molecules and atoms
+                Secciones completas formadas por moléculas y átomos
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-8">
@@ -406,7 +406,7 @@ export function AtomicDesignSection() {
             <CardHeader>
               <CardTitle>Templates - Layouts Estructurales</CardTitle>
               <CardDescription>
-                Page skeletons that organize organisms without specific content
+                Esqueletos de páginas que organizan organismos sin contenido específico
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">

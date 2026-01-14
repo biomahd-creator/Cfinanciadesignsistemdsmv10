@@ -1,0 +1,470 @@
+import { useState } from "react";
+import { 
+  Upload,
+  Clock,
+  FileText,
+  CheckCircle2,
+  Download,
+  Search,
+  Filter,
+  ChevronDown,
+  X,
+  ArrowRight,
+  HelpCircle,
+  Building2
+} from "lucide-react";
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
+import { Card, CardContent } from "../../ui/card";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../ui/tabs";
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableHead, 
+  TableHeader, 
+  TableRow 
+} from "../../ui/table";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../ui/select";
+import { Badge } from "../../ui/badge";
+import { Checkbox } from "../../ui/checkbox";
+import { Progress } from "../../ui/progress";
+
+interface FactoringNewOperationProps {
+  onBack: () => void;
+  onStartOperation: () => void;
+}
+
+export function FactoringNewOperation({ onBack, onStartOperation }: FactoringNewOperationProps) {
+  const [selectedInvoices, setSelectedInvoices] = useState<string[]>([]);
+  const [activeTab, setActiveTab] = useState("elegibles");
+
+  // Mock data para facturas
+  const invoices = [
+    {
+      id: "SETP123456790",
+      valorFactura: "8.345.679.123",
+      valorAdelanto: "10.000.000.000",
+      ultimoEvento: "Aceptación expresa",
+      estado: "Endosable",
+      observaciones: "Agravamiento Riesgo: ...",
+      vigencia: { desde: "27 Nov", hasta: "27 Dic" },
+      diasVencimiento: 30,
+    },
+    {
+      id: "SETP123456790",
+      valorFactura: "8.345.679.123",
+      valorAdelanto: "10.000.000.000",
+      ultimoEvento: "Aceptación expresa",
+      estado: "Endosable",
+      observaciones: "Agravamiento Riesgo: ...",
+      vigencia: { desde: "27 Nov", hasta: "27 Dic" },
+      diasVencimiento: 30,
+    },
+    {
+      id: "SETP123456790",
+      valorFactura: "8.345.679.123",
+      valorAdelanto: "10.000.000.000",
+      ultimoEvento: "Aceptación expresa",
+      estado: "Endosable",
+      observaciones: "Agravamiento Riesgo: ...",
+      vigencia: { desde: "27 Nov", hasta: "27 Dic" },
+      diasVencimiento: 30,
+    },
+  ];
+
+  const toggleInvoiceSelection = (id: string) => {
+    setSelectedInvoices(prev => 
+      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-zinc-50 pb-32">
+      <div className="max-w-[1600px] mx-auto p-6 space-y-6">
+        
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-semibold text-secondary">
+            Factoring <span className="font-normal text-muted-foreground">Nueva Operación</span>
+          </h1>
+          <Button variant="ghost" size="icon" className="rounded-full">
+            <HelpCircle className="h-5 w-5 text-muted-foreground" />
+          </Button>
+        </div>
+
+        {/* Client Card */}
+        <Card className="border-zinc-200 shadow-sm">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
+                  <Building2 className="h-6 w-6 text-secondary" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-secondary">EVOGIRO Nutrición S.A.S.</h2>
+                  <p className="text-sm text-muted-foreground">NIT 900489234B</p>
+                </div>
+              </div>
+              <div className="w-12 h-12 rounded-full border-2 border-zinc-200 flex items-center justify-center">
+                <span className="text-2xl font-semibold text-secondary">1</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Wizard Steps */}
+        <Card className="border-zinc-200 shadow-sm">
+          <CardContent className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="flex gap-4">
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shrink-0">
+                    <span className="text-lg font-semibold text-secondary">1</span>
+                  </div>
+                  {/* Connector line - hidden on last item */}
+                  <div className="hidden md:block w-px h-full bg-zinc-200 mt-2" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-secondary mb-1">Selecciona tus facturas</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Elige tus facturas que quieres anticipar. Puedes seleccionar múltiples facturas a la vez.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 rounded-full border-2 border-zinc-200 flex items-center justify-center shrink-0">
+                    <span className="text-lg font-semibold text-muted-foreground">2</span>
+                  </div>
+                  <div className="hidden md:block w-px h-full bg-zinc-200 mt-2" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-secondary mb-1">Revisa tu Operación</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Verifica que todos los datos sean correctos y confirma tu operación de factoring.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 rounded-full border-2 border-zinc-200 flex items-center justify-center shrink-0">
+                    <span className="text-lg font-semibold text-muted-foreground">3</span>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-secondary mb-1">Recibe tu Dinero</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Cuando tu operación sea aprobada, recibirás el dinero directamente en tu cuenta bancaria.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 flex justify-end">
+              <Button className="bg-primary text-secondary hover:bg-primary/90">
+                <Upload className="h-4 w-4 mr-2" />
+                Cargar Más Facturas
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Invoice Tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <Card 
+              className={`cursor-pointer transition-all ${activeTab === 'elegibles' ? 'border-primary shadow-md' : 'border-zinc-200 hover:border-zinc-300'}`}
+              onClick={() => setActiveTab('elegibles')}
+            >
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-semibold text-secondary">Facturas Elegibles</h3>
+                      <Badge className="bg-primary text-secondary">234</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground">Facturas disponibles para Operar</p>
+                  </div>
+                  <FileText className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex items-center gap-2">
+                  <p className="text-2xl font-bold text-secondary">$ 234.847.908</p>
+                  <Download className="h-4 w-4 text-muted-foreground" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card 
+              className={`cursor-pointer transition-all ${activeTab === 'pendientes' ? 'border-primary shadow-md' : 'border-zinc-200 hover:border-zinc-300'}`}
+              onClick={() => setActiveTab('pendientes')}
+            >
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-semibold text-secondary">Facturas Pendientes</h3>
+                      <Badge variant="secondary" className="bg-zinc-100 text-zinc-600">234</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground">Vencidas / Otros Eventos</p>
+                  </div>
+                  <Clock className="h-5 w-5 text-muted-foreground" />
+                </div>
+                <div className="flex items-center gap-2">
+                  <p className="text-2xl font-bold text-muted-foreground">$ 87.948.009</p>
+                  <Clock className="h-4 w-4 text-muted-foreground" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card 
+              className={`cursor-pointer transition-all ${activeTab === 'no-elegibles' ? 'border-primary shadow-md' : 'border-zinc-200 hover:border-zinc-300'}`}
+              onClick={() => setActiveTab('no-elegibles')}
+            >
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-semibold text-secondary">Facturas No Elegibles</h3>
+                      <Badge variant="secondary" className="bg-zinc-100 text-zinc-600">234</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground">Vencidas / Otros Eventos</p>
+                  </div>
+                  <X className="h-5 w-5 text-muted-foreground" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card 
+              className={`cursor-pointer transition-all ${activeTab === 'descartadas' ? 'border-primary shadow-md' : 'border-zinc-200 hover:border-zinc-300'}`}
+              onClick={() => setActiveTab('descartadas')}
+            >
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-semibold text-secondary">Facturas Descartadas</h3>
+                      <Badge variant="secondary" className="bg-zinc-100 text-zinc-600">234</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground">Manuales de Usuario</p>
+                  </div>
+                  <FileText className="h-5 w-5 text-muted-foreground" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <TabsContent value={activeTab} className="mt-0">
+            {/* Clientes/Pagadores Section */}
+            <Card className="border-zinc-200 shadow-sm mb-6">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="font-semibold text-secondary">Clientes/Pagadores</h3>
+                </div>
+                <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 mb-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-semibold text-secondary">Industria Nacional de Plásticos</h4>
+                      <p className="text-sm text-muted-foreground">4/34 seleccionadas</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm text-muted-foreground mb-1">Seleccionado: $ 165.748.000</p>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-muted-foreground">75 % del Cupo</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Quota Progress Bar */}
+                <div className="bg-zinc-50 border border-zinc-200 rounded-lg p-4">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-3">
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Cupo Disponible</p>
+                      <p className="text-lg font-bold text-secondary">$ 215.365.241</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Monto Elegible</p>
+                      <p className="text-lg font-bold text-secondary">$ 201.365.241</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Tasa N.M.V.</p>
+                      <p className="text-lg font-bold text-secondary">2.63 %</p>
+                    </div>
+                    <div className="flex items-end">
+                      <Select defaultValue="insuficiente">
+                        <SelectTrigger className="w-full">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="insuficiente">Cupo Insuficiente</SelectItem>
+                          <SelectItem value="suficiente">Cupo Suficiente</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  <Progress value={75} className="h-2" />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Search and Filters */}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+              <div className="flex items-center gap-3 w-full md:w-auto">
+                <div className="relative flex-1 md:w-80">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input placeholder="Buscar por valor, fecha..." className="pl-9" />
+                </div>
+                <Select defaultValue="estado">
+                  <SelectTrigger className="w-32">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="estado">Estado</SelectItem>
+                    <SelectItem value="endosable">Endosable</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm" className="text-xs">
+                  <CheckCircle2 className="h-4 w-4 mr-2" />
+                  Seleccionar Todas Elegibles
+                </Button>
+                <Button variant="outline" size="sm" className="text-xs">
+                  <X className="h-4 w-4 mr-2" />
+                  Deseleccionar Todas
+                </Button>
+                <Button variant="outline" size="sm" className="text-xs">
+                  <X className="h-4 w-4 mr-2" />
+                  Descartar
+                </Button>
+              </div>
+            </div>
+
+            {/* Invoices Table */}
+            <Card className="border-zinc-200 shadow-sm">
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader className="bg-zinc-50">
+                    <TableRow>
+                      <TableHead className="w-[50px]">
+                        <Checkbox />
+                      </TableHead>
+                      <TableHead className="font-semibold text-secondary">Numeración</TableHead>
+                      <TableHead className="font-semibold text-secondary text-right">Valor Factura</TableHead>
+                      <TableHead className="font-semibold text-secondary text-right">Valor Adelanto</TableHead>
+                      <TableHead className="font-semibold text-secondary">Último Evento</TableHead>
+                      <TableHead className="font-semibold text-secondary">Estado</TableHead>
+                      <TableHead className="font-semibold text-secondary">Observaciones</TableHead>
+                      <TableHead className="font-semibold text-secondary">Vigencia</TableHead>
+                      <TableHead className="font-semibold text-secondary text-center">Días al Vencimiento</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {invoices.map((invoice, index) => (
+                      <TableRow key={index} className="hover:bg-zinc-50">
+                        <TableCell>
+                          <Checkbox 
+                            checked={selectedInvoices.includes(invoice.id + index)}
+                            onCheckedChange={() => toggleInvoiceSelection(invoice.id + index)}
+                          />
+                        </TableCell>
+                        <TableCell className="font-medium text-secondary">{invoice.id}</TableCell>
+                        <TableCell className="text-right">$ {invoice.valorFactura}</TableCell>
+                        <TableCell className="text-right">$ {invoice.valorAdelanto}</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                            {invoice.ultimoEvento}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge className="bg-green-100 text-green-700">
+                            {invoice.estado}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-muted-foreground text-sm max-w-[200px] truncate">
+                          {invoice.observaciones}
+                          <button className="text-blue-600 hover:underline ml-1">más</button>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-1 text-sm">
+                            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                              {invoice.vigencia.desde}
+                            </Badge>
+                            <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                            <Badge variant="outline" className="bg-zinc-50 text-zinc-700 border-zinc-200">
+                              {invoice.vigencia.hasta}
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-center font-semibold">{invoice.diasVencimiento}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </Card>
+          </TabsContent>
+        </Tabs>
+
+        {/* Floating Summary Footer */}
+        <div className="fixed bottom-0 left-0 right-0 bg-secondary border-t border-zinc-700 shadow-2xl z-50">
+          <div className="max-w-[1600px] mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-8 text-white">
+                <div>
+                  <p className="text-xs text-zinc-400 mb-1">Facturas Elegidas</p>
+                  <p className="text-2xl font-bold">37</p>
+                </div>
+                <div className="w-px h-12 bg-zinc-600" />
+                <div>
+                  <p className="text-xs text-zinc-400 mb-1">Pagadores</p>
+                  <p className="text-2xl font-bold">4</p>
+                </div>
+                <div className="w-px h-12 bg-zinc-600" />
+                <div>
+                  <p className="text-xs text-zinc-400 mb-1">Monto Total</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-2xl font-bold">$ 72.266.214</p>
+                    <ArrowRight className="h-5 w-5 text-primary" />
+                  </div>
+                </div>
+                <div className="w-px h-12 bg-zinc-600" />
+                <div>
+                  <p className="text-xs text-zinc-400 mb-1">Adelanto Estimado</p>
+                  <p className="text-2xl font-bold">$ 70.265.214</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <Button 
+                  variant="outline" 
+                  className="bg-white text-secondary border-white hover:bg-zinc-100"
+                >
+                  <X className="h-4 w-4 mr-2" />
+                  Desactivar todas
+                </Button>
+                <Button 
+                  className="bg-primary text-secondary hover:bg-primary/90 px-8"
+                  onClick={onStartOperation}
+                >
+                  <CheckCircle2 className="h-4 w-4 mr-2" />
+                  Iniciar Operación
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

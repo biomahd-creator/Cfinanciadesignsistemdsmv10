@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { Button } from "../ui/button";
 import { DataTableAdvanced } from "../patterns/DataTableAdvanced";
+import { StatsDashboard } from "../patterns/StatsDashboard";
 import { ApprovalTimeline } from "../patterns/ApprovalTimeline";
 import { UploadZone } from "../patterns/UploadZone";
 import { MultiStepWizard } from "../patterns/MultiStepWizard";
@@ -20,25 +20,15 @@ export function ComposedPatternsSection() {
       </div>
 
       <div className="space-y-12">
-        {/* Stats Dashboard - MOVED TO KPI SHOWCASE */}
+        {/* Stats Dashboard */}
         <div className="space-y-4">
           <div>
             <h3 className="text-2xl font-semibold mb-1">KPIs Dashboard</h3>
             <p className="text-sm text-muted-foreground">
-              Este patrón se ha movido a su propia página dedicada.
+              Card + Badge + Progress + Separator + Icons
             </p>
           </div>
-          <Card className="p-6 flex flex-col items-center justify-center text-center space-y-4">
-            <div className="p-4 rounded-full bg-primary/10">
-               <span className="text-2xl">📊</span>
-            </div>
-            <div>
-              <h4 className="font-semibold">Ver KPI Showcase</h4>
-              <p className="text-sm text-muted-foreground max-w-md mx-auto">
-                La documentación completa de KPIs, tarjetas interactivas y dashboards se encuentra en la nueva sección de KPI Showcase.
-              </p>
-            </div>
-          </Card>
+          <StatsDashboard />
         </div>
 
         <Separator />
@@ -89,10 +79,30 @@ export function ComposedPatternsSection() {
                   Utiliza el panel lateral para aplicar filtros múltiples
                 </p>
               </div>
-              <div className="flex gap-2">
-                <AdvancedFilterPanel />
-                <NotificationCenter />
+              <AdvancedFilterPanel />
+            </div>
+          </Card>
+        </div>
+
+        <Separator />
+
+        {/* Notification Center */}
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-2xl font-semibold mb-1">Centro de Notificaciones</h3>
+            <p className="text-sm text-muted-foreground">
+              Popover + ScrollArea + Badge + Separator + Button
+            </p>
+          </div>
+          <Card className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="font-medium mb-1">Gestión de Alertas</h4>
+                <p className="text-sm text-muted-foreground">
+                  Centro de notificaciones con indicador de mensajes no leídos
+                </p>
               </div>
+              <NotificationCenter />
             </div>
           </Card>
         </div>
@@ -151,14 +161,14 @@ export function ComposedPatternsSection() {
               <div>
                 <h4 className="font-medium mb-3">Patrones Implementados</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>✓ KPIs Dashboard - Financial metrics</li>
-                  <li>✓ Quick Action Toolbar - Quick actions</li>
-                  <li>✓ Data Table Avanzada - Invoice management</li>
-                  <li>✓ Panel de Filtros - Advanced search</li>
-                  <li>✓ Timeline de Aprobación - Visual workflow</li>
-                  <li>✓ Upload Zone - Document upload</li>
-                  <li>✓ Multi-Step Wizard - Guided processes</li>
-                  <li>✓ Notification Center - Alert center</li>
+                  <li>✓ KPIs Dashboard - Métricas financieras</li>
+                  <li>✓ Quick Action Toolbar - Acciones rápidas</li>
+                  <li>✓ Data Table Avanzada - Gestión de facturas</li>
+                  <li>✓ Panel de Filtros - Búsqueda avanzada</li>
+                  <li>✓ Timeline de Aprobación - Workflow visual</li>
+                  <li>✓ Upload Zone - Carga de documentos</li>
+                  <li>✓ Multi-Step Wizard - Procesos guiados</li>
+                  <li>✓ Notification Center - Centro de alertas</li>
                 </ul>
               </div>
               <div>

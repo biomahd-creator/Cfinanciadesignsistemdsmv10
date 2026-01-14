@@ -187,7 +187,7 @@ export function ExportDataPage() {
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-4xl font-semibold">Export to CSV/Excel</h1>
+          <h1 className="text-2xl font-medium">Export to CSV/Excel</h1>
           <Badge variant="default">📊 Data</Badge>
           <Badge variant="secondary">NEW</Badge>
         </div>
@@ -480,7 +480,7 @@ quickExportCSV(data, "mi-archivo", [
       {/* Features */}
       <Card>
         <CardHeader>
-          <CardTitle>Main Features</CardTitle>
+          <CardTitle>Características Principales</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-2 gap-4">

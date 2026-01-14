@@ -1,8 +1,9 @@
-import { ComponentShowcase } from "../ui/component-showcase";
-import { DataTable } from "../advanced/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal, CheckCircle, XCircle, Clock, AlertCircle } from "lucide-react";
+import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import { Card } from "../ui/card";
+import { Checkbox } from "../ui/checkbox";
+import { Separator } from "../ui/separator";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,9 +12,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Checkbox } from "../ui/checkbox";
-import { Badge } from "../ui/badge";
-import { toast } from "sonner";
+import { DataTable } from "../advanced/DataTable";
+import { MoreHorizontal, ArrowUpDown, CheckCircle, Clock, AlertCircle, XCircle, Circle } from "lucide-react";
+import { ProgressBar } from "../business/ProgressBar";
+import { toast } from "sonner@2.0.3";
 
 // Sample Data Type
 type Invoice = {
@@ -72,7 +74,7 @@ export const columns: ColumnDef<Invoice>[] = [
         pending: { color: "text-yellow-500 bg-yellow-500/10", icon: Clock, label: "Pending" },
         processing: { color: "text-blue-500 bg-blue-500/10", icon: AlertCircle, label: "Processing" },
         failed: { color: "text-red-500 bg-red-500/10", icon: XCircle, label: "Failed" },
-      }[status] || { color: "text-gray-500", icon: AlertCircle, label: status };
+      }[status] || { color: "text-gray-500", icon: Circle, label: status };
 
       const Icon = config.icon;
 
@@ -122,14 +124,21 @@ export const columns: ColumnDef<Invoice>[] = [
       header: "Risk Score",
       cell: ({ row }) => {
           const score = row.getValue("riskScore") as number;
+          let variant: "danger" | "warning" | "success" = "success";
           let colorClass = "text-green-500";
-          if (score < 500) colorClass = "text-red-500";
-          else if (score < 700) colorClass = "text-yellow-500";
+          
+          if (score < 500) {
+            variant = "danger";
+            colorClass = "text-red-500";
+          } else if (score < 700) {
+            variant = "warning";
+            colorClass = "text-yellow-500";
+          }
           
           return (
               <div className="flex items-center gap-2">
-                  <div className="h-2 bg-secondary/20 rounded-full overflow-hidden w-24">
-                      <div className={`h-full ${score < 500 ? "bg-red-500" : score < 700 ? "bg-yellow-500" : "bg-green-500"}`} style={{ width: `${score/10}%` }}></div>
+                  <div className="w-24">
+                    <ProgressBar value={score/10} variant={variant} size="sm" />
                   </div>
                   <span className={`text-xs font-medium ${colorClass}`}>{score}</span>
               </div>
@@ -176,83 +185,51 @@ export const columns: ColumnDef<Invoice>[] = [
 
 export function DataTablePage() {
   return (
-    <ComponentShowcase
-      title="Data Table"
-      description="Powerful table component with sorting, filtering, pagination, and selection. Built on top of TanStack Table."
-      category="Advanced"
-      
-      // Main Preview
-      preview={
-        <DataTable 
-          columns={columns} 
-          data={data} 
-          searchKey="client" 
-          searchPlaceholder="Filter by client..." 
-        />
-      }
-      
-      // Main Code
-      code={`import { DataTable } from "@/components/advanced/DataTable"
-import { columns } from "./columns"
+    <div className="space-y-8 max-w-6xl">
+      <div>
+        <div className="flex items-center gap-3 mb-2">
+          <h2 className="text-2xl font-medium">Advanced Data Table</h2>
+          <Badge>Advanced</Badge>
+          <Badge variant="outline" className="border-green-500 text-green-500">New</Badge>
+          <Badge variant="outline" className="border-primary/50 text-primary">📱 Responsive</Badge>
+        </div>
+        <p className="text-muted-foreground">
+          Powerful table component with sorting, filtering, pagination, and selection. Built on top of TanStack Table. Fully responsive with horizontal scroll on mobile.
+        </p>
+      </div>
 
-export function DataTableDemo() {
-  return (
-    <DataTable 
-      columns={columns} 
-      data={data} 
-      searchKey="email" 
-    />
-  )
-}`}
+      <Separator />
+
+      <div className="space-y-4">
+        <DataTable columns={columns} data={data} searchKey="client" searchPlaceholder="Filter by client..." />
+      </div>
       
-      // Usage
-      usage="The Data Table component is a wrapper around TanStack Table that provides common functionality out of the box."
-      usageCode={`import { DataTable } from "@/components/advanced/DataTable"`}
-      
-      // Props Documentation
-      props={[
-        {
-          name: "columns",
-          type: "ColumnDef<TData, TValue>[]",
-          description: "Column definitions for the table",
-        },
-        {
-          name: "data",
-          type: "TData[]",
-          description: "Array of data to display",
-        },
-        {
-          name: "searchKey",
-          type: "string",
-          description: "Key to filter by",
-        },
-        {
-          name: "searchPlaceholder",
-          type: "string",
-          default: '"Search..."',
-          description: "Placeholder for the search input",
-        }
-      ]}
-      
-      // Examples
-      examples={[
-        {
-          title: "Simple Table",
-          description: "A basic table with just columns and data",
-          preview: (
-            <DataTable 
-              columns={columns.slice(1, 5)} 
-              data={data.slice(0, 5)} 
-              searchKey="client"
-            />
-          ),
-          code: `<DataTable 
-  columns={columns} 
-  data={data} 
-  searchKey="client"
-/>`
-        }
-      ]}
-    />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+          <div className="p-4 border rounded-lg bg-card">
+              <h3 className="font-semibold mb-2">Sorting</h3>
+              <p className="text-sm text-muted-foreground">Click on the "Client" header to sort alphabetically. Default support for multi-column sorting.</p>
+          </div>
+          <div className="p-4 border rounded-lg bg-card">
+              <h3 className="font-semibold mb-2">Filtering</h3>
+              <p className="text-sm text-muted-foreground">Use the input field to filter rows by client name instantly. Customizable filter logic.</p>
+          </div>
+          <div className="p-4 border rounded-lg bg-card">
+              <h3 className="font-semibold mb-2">Pagination</h3>
+              <p className="text-sm text-muted-foreground">Built-in pagination controls with page size selector (5, 10, 20...).</p>
+          </div>
+          <div className="p-4 border rounded-lg bg-card">
+              <h3 className="font-semibold mb-2">Row Selection</h3>
+              <p className="text-sm text-muted-foreground">Select individual rows or all rows across the current page using the checkboxes.</p>
+          </div>
+          <div className="p-4 border rounded-lg bg-card">
+              <h3 className="font-semibold mb-2">Column Visibility</h3>
+              <p className="text-sm text-muted-foreground">Use the "View" dropdown to toggle column visibility dynamically.</p>
+          </div>
+           <div className="p-4 border rounded-lg bg-card">
+              <h3 className="font-semibold mb-2">Custom Cells</h3>
+              <p className="text-sm text-muted-foreground">Support for complex cell renderers like Badges, Progress Bars (Risk Score), and Actions menus.</p>
+          </div>
+      </div>
+    </div>
   );
 }

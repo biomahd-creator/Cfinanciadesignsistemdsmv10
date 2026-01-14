@@ -23,6 +23,7 @@ import {
 } from "../../ui/accordion";
 import { Progress } from "../../ui/progress";
 import { ScrollArea } from "../../ui/scroll-area";
+import { StatusKPICard } from "../../business/StatusKPICard";
 import {
   Upload,
   TrendingUp,
@@ -538,6 +539,10 @@ export function FactoringSelectionPage() {
   // Design/Figma capture mode
   const [designMode, setDesignMode] = useState(false);
   
+  // KPI Filter State
+  const [activeKpiFilter, setActiveKpiFilter] = useState<"negotiation" | "approved" | "disbursed" | "finalized" | null>(null);
+  const [hoveredKpi, setHoveredKpi] = useState<string | null>(null);
+  
   // Toggle design mode - expand all and select some invoices for demo
   const toggleDesignMode = () => {
     if (!designMode) {
@@ -681,6 +686,17 @@ export function FactoringSelectionPage() {
         if (aVal > bVal) return sorting.direction === "asc" ? 1 : -1;
         return 0;
       });
+    }
+
+    // Apply KPI filter
+    if (activeKpiFilter === "negotiation") {
+      invoices = invoices.filter(inv => inv.status === "pending");
+    } else if (activeKpiFilter === "approved") {
+      invoices = invoices.filter(inv => inv.status === "eligible");
+    } else if (activeKpiFilter === "disbursed" || activeKpiFilter === "finalized") {
+      // Mock filters for demo purposes since we don't have these statuses in mock data
+      // For "disbursed" and "finalized", we show empty list or could show discarded as proxy
+      invoices = []; 
     }
 
     return invoices;
@@ -840,115 +856,111 @@ export function FactoringSelectionPage() {
 
         {/* KPIs */}
         <div className="space-y-4">
-          {/* Primary Business KPIs */}
-          <div className="grid md:grid-cols-4 gap-4">
-            <Card className="border-2 border-primary bg-primary/5">
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-sm text-primary">💰 Liquidez Total Disponible</CardTitle>
-                  <TrendingUp className="h-4 w-4 text-primary" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-semibold text-primary">
-                  {formatCurrency(kpis.totalAvailableLimit)}
-                </div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Cupo combinado de {debtors.length} pagadores
-                </p>
-              </CardContent>
-            </Card>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {/* KPI: En Negociación */}
+            <div 
+              className="relative group cursor-pointer"
+              onMouseEnter={() => setHoveredKpi("negotiation")}
+              onMouseLeave={() => setHoveredKpi(null)}
+              onClick={() => setActiveKpiFilter(activeKpiFilter === "negotiation" ? null : "negotiation")}
+            >
+              <StatusKPICard
+                title="En Negociación"
+                subtitle="Pendientes de confirmación"
+                amount={formatCurrency(kpis.pending.amount)}
+                count={kpis.pending.count}
+                variant="negotiation"
+                hoverStyle="full"
+                state={activeKpiFilter === "negotiation" ? "active" : (hoveredKpi === "negotiation" ? "hover" : "normal")}
+                onViewClick={() => setActiveKpiFilter(activeKpiFilter === "negotiation" ? null : "negotiation")}
+              />
+            </div>
 
-            <Card className="border-2 border-primary/50">
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-sm text-primary">✨ Facturas Elegibles</CardTitle>
-                  <CheckCircle2 className="h-4 w-4 text-primary" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-semibold">{formatCurrency(kpis.eligible.amount)}</div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {kpis.eligible.count} facturas • Tasa prom. {kpis.averageRate.toFixed(1)}%
-                </p>
-              </CardContent>
-            </Card>
+            {/* KPI: Aprobadas */}
+            <div 
+              className="relative group cursor-pointer"
+              onMouseEnter={() => setHoveredKpi("approved")}
+              onMouseLeave={() => setHoveredKpi(null)}
+              onClick={() => setActiveKpiFilter(activeKpiFilter === "approved" ? null : "approved")}
+            >
+              <StatusKPICard
+                title="Aprobadas"
+                subtitle="Listas para desembolso"
+                amount={formatCurrency(kpis.eligible.amount)}
+                count={kpis.eligible.count}
+                variant="negotiation"
+                hoverStyle="full"
+                state={activeKpiFilter === "approved" ? "active" : (hoveredKpi === "approved" ? "hover" : "normal")}
+                onViewClick={() => setActiveKpiFilter(activeKpiFilter === "approved" ? null : "approved")}
+              />
+            </div>
 
-            <Card>
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-sm text-muted-foreground">🔄 En Revisión</CardTitle>
-                  <AlertCircle className="h-4 w-4 text-muted-foreground" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-semibold">{formatCurrency(kpis.pending.amount)}</div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {kpis.pending.count} facturas pendientes de validación
-                </p>
-              </CardContent>
-            </Card>
+            {/* KPI: Desembolsadas */}
+            <div 
+              className="relative group cursor-pointer"
+              onMouseEnter={() => setHoveredKpi("disbursed")}
+              onMouseLeave={() => setHoveredKpi(null)}
+              onClick={() => setActiveKpiFilter(activeKpiFilter === "disbursed" ? null : "disbursed")}
+            >
+              <StatusKPICard
+                title="Desembolsadas"
+                subtitle="En tránsito a tu cuenta"
+                amount="$ 890,500"
+                count={45}
+                variant="disbursed"
+                hoverStyle="full"
+                state={activeKpiFilter === "disbursed" ? "active" : (hoveredKpi === "disbursed" ? "hover" : "normal")}
+                onViewClick={() => setActiveKpiFilter(activeKpiFilter === "disbursed" ? null : "disbursed")}
+              />
+            </div>
 
-            <Card>
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-sm text-muted-foreground">📊 Inventario Total</CardTitle>
-                  <Info className="h-4 w-4 text-muted-foreground" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-semibold">{kpis.total}</div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  facturas en sistema
-                </p>
-              </CardContent>
-            </Card>
+            {/* KPI: Finalizadas */}
+            <div 
+              className="relative group cursor-pointer"
+              onMouseEnter={() => setHoveredKpi("finalized")}
+              onMouseLeave={() => setHoveredKpi(null)}
+              onClick={() => setActiveKpiFilter(activeKpiFilter === "finalized" ? null : "finalized")}
+            >
+              <StatusKPICard
+                title="Finalizadas"
+                subtitle="Pagadas por el deudor"
+                amount="$ 2,150,000"
+                count={128}
+                variant="disbursed"
+                hoverStyle="full"
+                state={activeKpiFilter === "finalized" ? "active" : (hoveredKpi === "finalized" ? "hover" : "normal")}
+                onViewClick={() => setActiveKpiFilter(activeKpiFilter === "finalized" ? null : "finalized")}
+              />
+            </div>
           </div>
 
-          {/* Secondary Status KPIs */}
-          <div className="grid md:grid-cols-2 gap-4">
-            <Card className="border-destructive/30">
-              <CardContent className="pt-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-destructive/10 rounded-lg">
-                      <XCircle className="h-5 w-5 text-destructive" />
-                    </div>
-                    <div>
-                      <div className="text-sm text-muted-foreground">No Elegibles</div>
-                      <div className="text-xl font-semibold">{kpis.notEligible.count} facturas</div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-xl font-semibold">{formatCurrency(kpis.notEligible.amount)}</div>
-                    <div className="text-xs text-muted-foreground">monto bloqueado</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-muted">
-              <CardContent className="pt-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-muted rounded-lg">
-                      <FileX className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                    <div>
-                      <div className="text-sm text-muted-foreground">Descartadas</div>
-                      <div className="text-xl font-semibold">{kpis.discarded.count} facturas</div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-xl font-semibold text-muted-foreground">
-                      {formatCurrency(kpis.discarded.amount)}
-                    </div>
-                    <div className="text-xs text-muted-foreground">excluido manualmente</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          {activeKpiFilter && (
+            <div className="flex items-center gap-2 mb-4 animate-in fade-in slide-in-from-top-2">
+              <Badge variant="outline" className="text-sm py-1 px-3 gap-2">
+                Filtro Activo: 
+                <span className="font-semibold text-primary">
+                  {activeKpiFilter === "negotiation" && "En Negociación (Pendientes)"}
+                  {activeKpiFilter === "approved" && "Aprobadas (Elegibles)"}
+                  {activeKpiFilter === "disbursed" && "Desembolsadas"}
+                  {activeKpiFilter === "finalized" && "Finalizadas"}
+                </span>
+                <button 
+                  onClick={() => setActiveKpiFilter(null)}
+                  className="ml-2 hover:bg-muted rounded-full p-0.5"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </Badge>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => setActiveKpiFilter(null)}
+                className="text-xs text-muted-foreground hover:text-foreground h-7"
+              >
+                Limpiar filtro
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -985,7 +997,7 @@ export function FactoringSelectionPage() {
                 className="border rounded-lg overflow-hidden"
               >
                 <AccordionTrigger className="px-6 hover:no-underline hover:bg-muted/50">
-                  <div className="flex items-center justify-between w-full pr-4">
+                  <div className="bg-white border border-[#e5e5e5] border-solid rounded-[8px] size-full flex items-center justify-between p-4">
                     <div className="flex items-center gap-4">
                       <div className="text-left">
                         <div className="flex items-center gap-2 mb-1">
@@ -1006,12 +1018,6 @@ export function FactoringSelectionPage() {
                             <>
                               <span>•</span>
                               <span>{pendingCount} pendientes</span>
-                            </>
-                          )}
-                          {notEligibleCount > 0 && (
-                            <>
-                              <span>•</span>
-                              <span className="text-destructive">{notEligibleCount} no elegibles</span>
                             </>
                           )}
                           {discardedCount > 0 && (

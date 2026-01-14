@@ -29,7 +29,7 @@ export function ListPageTemplate({
         {/* Page Header */}
         <div className="flex items-start justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-semibold mb-2">{title}</h1>
+            <h1 className="text-2xl font-medium mb-2">{title}</h1>
             {description && (
               <p className="text-muted-foreground">{description}</p>
             )}

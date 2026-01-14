@@ -24,54 +24,54 @@ const notifications = [
     id: 1,
     type: "success",
     category: "approval",
-    title: "Invoice Approved",
-    message: "Invoice INV-001 has been approved by María González",
-    timestamp: "5 minutes ago",
+    title: "Factura Aprobada",
+    message: "La factura INV-001 ha sido aprobada por María González",
+    timestamp: "Hace 5 minutos",
     read: false,
   },
   {
     id: 2,
     type: "warning",
     category: "pending",
-    title: "Pending Review",
-    message: "3 invoices require your urgent review",
-    timestamp: "15 minutes ago",
+    title: "Revisión Pendiente",
+    message: "3 facturas requieren tu revisión urgente",
+    timestamp: "Hace 15 minutos",
     read: false,
   },
   {
     id: 3,
     type: "error",
     category: "rejection",
-    title: "Invoice Rejected",
-    message: "Invoice INV-045 was rejected due to incomplete documentation",
-    timestamp: "1 hour ago",
+    title: "Factura Rechazada",
+    message: "La factura INV-045 fue rechazada por documentación incompleta",
+    timestamp: "Hace 1 hora",
     read: false,
   },
   {
     id: 4,
     type: "info",
     category: "system",
-    title: "System Update",
-    message: "New version available with performance improvements",
-    timestamp: "2 hours ago",
+    title: "Actualización del Sistema",
+    message: "Nueva versión disponible con mejoras de rendimiento",
+    timestamp: "Hace 2 horas",
     read: true,
   },
   {
     id: 5,
     type: "success",
     category: "payment",
-    title: "Payment Received",
-    message: "Payment of $2,500,000 confirmed for INV-023",
-    timestamp: "3 hours ago",
+    title: "Pago Recibido",
+    message: "Pago de $2,500,000 confirmado para INV-023",
+    timestamp: "Hace 3 horas",
     read: true,
   },
   {
     id: 6,
     type: "warning",
     category: "deadline",
-    title: "Due Soon",
-    message: "5 invoices are due in the next 24 hours",
-    timestamp: "4 hours ago",
+    title: "Vencimiento Próximo",
+    message: "5 facturas vencen en las próximas 24 horas",
+    timestamp: "Hace 4 horas",
     read: true,
   },
 ];
@@ -182,9 +182,9 @@ export function NotificationCenter() {
       <PopoverContent className="w-[400px] p-0" align="end">
         <div className="flex items-center justify-between p-4 border-b">
           <div>
-            <h3 className="font-semibold">Notifications</h3>
+            <h3 className="font-semibold">Notificaciones</h3>
             <p className="text-xs text-muted-foreground">
-              You have {unreadCount} unread notifications
+              Tienes {unreadCount} notificaciones sin leer
             </p>
           </div>
           {unreadCount > 0 && (
@@ -193,7 +193,7 @@ export function NotificationCenter() {
               size="sm"
               onClick={handleMarkAllAsRead}
             >
-              Mark all
+              Marcar todas
             </Button>
           )}
         </div>
@@ -201,13 +201,13 @@ export function NotificationCenter() {
         <Tabs defaultValue="all" className="w-full">
           <TabsList className="w-full grid grid-cols-3 rounded-none border-b">
             <TabsTrigger value="all" className="rounded-none">
-              All
+              Todas
               <Badge variant="secondary" className="ml-2 h-5 px-1.5 text-xs">
                 {notificationList.length}
               </Badge>
             </TabsTrigger>
             <TabsTrigger value="unread" className="rounded-none">
-              Unread
+              Sin leer
               {unreadCount > 0 && (
                 <Badge variant="default" className="ml-2 h-5 px-1.5 text-xs">
                   {unreadCount}
@@ -215,7 +215,7 @@ export function NotificationCenter() {
               )}
             </TabsTrigger>
             <TabsTrigger value="read" className="rounded-none">
-              Read
+              Leídas
             </TabsTrigger>
           </TabsList>
 
@@ -225,7 +225,7 @@ export function NotificationCenter() {
                 {notificationList.length === 0 ? (
                   <div className="text-center py-8 text-muted-foreground">
                     <Bell className="h-12 w-12 mx-auto mb-2 opacity-20" />
-                    <p className="text-sm">No notifications</p>
+                    <p className="text-sm">No hay notificaciones</p>
                   </div>
                 ) : (
                   notificationList.map((notification) => (
@@ -243,7 +243,7 @@ export function NotificationCenter() {
                 {unreadNotifications.length === 0 ? (
                   <div className="text-center py-8 text-muted-foreground">
                     <CheckCircle className="h-12 w-12 mx-auto mb-2 opacity-20" />
-                    <p className="text-sm">No unread notifications</p>
+                    <p className="text-sm">No hay notificaciones sin leer</p>
                   </div>
                 ) : (
                   unreadNotifications.map((notification) => (
@@ -261,7 +261,7 @@ export function NotificationCenter() {
                 {readNotifications.length === 0 ? (
                   <div className="text-center py-8 text-muted-foreground">
                     <Info className="h-12 w-12 mx-auto mb-2 opacity-20" />
-                    <p className="text-sm">No read notifications</p>
+                    <p className="text-sm">No hay notificaciones leídas</p>
                   </div>
                 ) : (
                   readNotifications.map((notification) => (
@@ -280,7 +280,7 @@ export function NotificationCenter() {
 
         <div className="p-2">
           <Button variant="ghost" className="w-full text-sm">
-            View all notifications
+            Ver todas las notificaciones
           </Button>
         </div>
       </PopoverContent>

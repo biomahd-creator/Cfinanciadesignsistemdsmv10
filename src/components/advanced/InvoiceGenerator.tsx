@@ -200,7 +200,7 @@ export function InvoiceGenerator({
           <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
             body { 
-              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+              font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
               padding: 40px;
               color: #1C2D3A;
             }

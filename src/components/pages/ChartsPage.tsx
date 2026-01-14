@@ -1,77 +1,58 @@
-import { ComponentShowcase } from "../ui/component-showcase";
+import { Badge } from "../ui/badge";
+import { Separator } from "../ui/separator";
 import { ChartShowcase } from "../advanced/ChartShowcase";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 export function ChartsPage() {
   return (
-    <ComponentShowcase
-      title="Charts"
-      description="Beautiful charts built using Recharts and Tailwind CSS."
-      category="Advanced"
-      
-      // Main Preview
-      preview={
-        <div className="w-full">
-          <ChartShowcase />
+    <div className="space-y-8 max-w-6xl">
+      <div>
+        <div className="flex items-center gap-3 mb-2">
+          <h2 className="text-2xl font-medium">Charts</h2>
+          <Badge>Advanced</Badge>
         </div>
-      }
-      
-      // Main Code
-      code={`import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
+        <p className="text-muted-foreground">
+          Beautiful charts built using Recharts and Tailwind CSS.
+        </p>
+      </div>
 
-const data = [
-  {
-    name: "Jan",
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  // ...
-]
+      <Separator />
 
-export function ChartDemo() {
-  return (
-    <ResponsiveContainer width="100%" height={350}>
-      <BarChart data={data}>
-        <XAxis
-          dataKey="name"
-          stroke="#888888"
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-        />
-        <YAxis
-          stroke="#888888"
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-          tickFormatter={(value) => \`$\${value}\`}
-        />
-        <Bar dataKey="total" fill="#adfa1d" radius={[4, 4, 0, 0]} />
-      </BarChart>
-    </ResponsiveContainer>
-  )
-}`}
-      
-      // Usage
-      usage="We use Recharts for charts. Components are composable and can be styled with Tailwind CSS."
-      usageCode={`import { BarChart, LineChart, PieChart } from "recharts"`}
-      
-      // Props Documentation
-      props={[
-        {
-          name: "data",
-          type: "any[]",
-          description: "The data array to render",
-        }
-      ]}
-      
-      // Examples
-      examples={[
-        {
-          title: "Chart Showcase",
-          description: "A comprehensive showcase of different chart types",
-          preview: <ChartShowcase />,
-          code: `<ChartShowcase />`
-        }
-      ]}
-    />
+      <ChartShowcase />
+
+      <Card className="bg-muted/50">
+        <CardHeader>
+          <CardTitle className="text-lg">Available Chart Types</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <h4 className="font-medium">✓ Line Chart</h4>
+              <p className="text-sm text-muted-foreground">
+                Perfect for temporal trends and metric evolution
+              </p>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-medium">✓ Bar Chart</h4>
+              <p className="text-sm text-muted-foreground">
+                Ideal for comparisons between categories
+              </p>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-medium">✓ Pie Chart</h4>
+              <p className="text-sm text-muted-foreground">
+                Shows distributions and percentages
+              </p>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-medium">✓ Area Chart</h4>
+              <p className="text-sm text-muted-foreground">
+                Visualizes volume and accumulated trends
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

@@ -8,7 +8,7 @@ export function KanbanPage() {
     <div className="space-y-8 h-[calc(100vh-100px)] flex flex-col">
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <h2 className="text-4xl font-semibold">Kanban Board</h2>
+          <h2 className="text-2xl font-medium">Kanban Board</h2>
           <Badge>Advanced</Badge>
         </div>
         <p className="text-muted-foreground">

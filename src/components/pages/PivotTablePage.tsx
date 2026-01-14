@@ -77,7 +77,7 @@ export function PivotTablePage() {
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-4xl font-semibold">Pivot Table</h1>
+          <h1 className="text-2xl font-medium">Pivot Table</h1>
           <Badge variant="default">📱 Responsive</Badge>
           <Badge variant="secondary">NEW</Badge>
         </div>
@@ -206,7 +206,7 @@ export function PivotTablePage() {
       {/* Features */}
       <Card>
         <CardHeader>
-          <CardTitle>Main Features</CardTitle>
+          <CardTitle>Características Principales</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-2 gap-4">

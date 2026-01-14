@@ -509,7 +509,7 @@ export function OnboardingWizard() {
                 {/* RUT */}
                 <Card className="p-4">
                   <div className="flex items-center justify-between mb-2">
-                    <Label htmlFor="rutArchivo" className="font-semibold">
+                    <Label htmlFor="rutArchivo" className="font-medium">
                       RUT (Registro Único Tributario) *
                     </Label>
                     {formData.rutArchivo && (
@@ -587,7 +587,7 @@ export function OnboardingWizard() {
                 {/* Cédula Representante */}
                 <Card className="p-4">
                   <div className="flex items-center justify-between mb-2">
-                    <Label htmlFor="cedulaRepresentante" className="font-semibold">
+                    <Label htmlFor="cedulaRepresentante" className="font-medium">
                       Cédula del Representante Legal *
                     </Label>
                     {formData.cedulaRepresentante && (
@@ -680,7 +680,7 @@ export function OnboardingWizard() {
                     onCheckedChange={(checked) => updateField("aceptaDatos", checked)}
                   />
                   <div className="flex-1">
-                    <Label htmlFor="aceptaDatos" className="cursor-pointer font-semibold">
+                    <Label htmlFor="aceptaDatos" className="cursor-pointer font-medium">
                       Autorizo el Tratamiento de Datos Personales *
                     </Label>
                     <p className="text-sm text-muted-foreground mt-1">

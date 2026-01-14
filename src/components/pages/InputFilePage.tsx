@@ -22,8 +22,8 @@ export function InputFilePage() {
           </Badge>
         </div>
         <p className="text-muted-foreground">
-          File upload component with drag & drop, preview of selected files,
-          and support for multiple files.
+          Componente para carga de archivos con drag & drop, preview de archivos seleccionados
+          y soporte para múltiples archivos.
         </p>
       </div>
 
@@ -32,12 +32,12 @@ export function InputFilePage() {
         <CardHeader>
           <CardTitle>Preview</CardTitle>
           <CardDescription>
-            File input with all features
+            Input de archivo con todas las características
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-2">
-            <label className="text-foreground font-medium">Single file</label>
+            <label className="text-foreground font-medium">Archivo único</label>
             <InputFile
               onFilesChange={setFiles1}
               maxFiles={1}
@@ -50,30 +50,30 @@ export function InputFilePage() {
       {/* Variantes */}
       <Card>
         <CardHeader>
-          <CardTitle>Variants</CardTitle>
+          <CardTitle>Variantes</CardTitle>
           <CardDescription>
-            Different component configurations
+            Diferentes configuraciones del componente
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Múltiples archivos */}
           <div className="space-y-2">
-            <label className="text-foreground font-medium">Multiple files</label>
+            <label className="text-foreground font-medium">Múltiples archivos</label>
             <p className="text-muted-foreground text-sm">
-              Allows selecting multiple files with a defined maximum.
+              Permite seleccionar múltiples archivos con un máximo definido.
             </p>
             <InputFile
               onFilesChange={setFiles2}
               maxFiles={5}
-              placeholder="Select up to 5 files"
+              placeholder="Selecciona hasta 5 archivos"
             />
           </div>
 
           {/* Sin preview */}
           <div className="space-y-2">
-            <label className="text-foreground font-medium">Without preview</label>
+            <label className="text-foreground font-medium">Sin preview</label>
             <p className="text-muted-foreground text-sm">
-              File input without showing the list of selected files.
+              Input de archivo sin mostrar la lista de archivos seleccionados.
             </p>
             <InputFile
               onFilesChange={setFiles3}
@@ -83,25 +83,25 @@ export function InputFilePage() {
 
           {/* Con tipo específico */}
           <div className="space-y-2">
-            <label className="text-foreground font-medium">PDFs only</label>
+            <label className="text-foreground font-medium">Solo PDFs</label>
             <p className="text-muted-foreground text-sm">
-              Input restricted to specific file types.
+              Input restringido a tipos de archivo específicos.
             </p>
             <InputFile
               accept=".pdf,application/pdf"
-              placeholder="Select PDF files"
+              placeholder="Selecciona archivos PDF"
             />
           </div>
 
           {/* Disabled */}
           <div className="space-y-2">
-            <label className="text-foreground font-medium">Disabled</label>
+            <label className="text-foreground font-medium">Deshabilitado</label>
             <p className="text-muted-foreground text-sm">
-              Disabled state of the component.
+              Estado deshabilitado del componente.
             </p>
             <InputFile
               disabled
-              placeholder="Disabled input"
+              placeholder="Input deshabilitado"
             />
           </div>
         </CardContent>
@@ -110,8 +110,8 @@ export function InputFilePage() {
       {/* Uso */}
       <Card>
         <CardHeader>
-          <CardTitle>Basic Usage</CardTitle>
-          <CardDescription>Component implementation</CardDescription>
+          <CardTitle>Uso Básico</CardTitle>
+          <CardDescription>Implementación del componente</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="bg-muted/50 rounded-md p-4">
@@ -123,7 +123,7 @@ export function MyForm() {
   const [files, setFiles] = useState<File[]>([]);
 
   const handleSubmit = () => {
-    console.log("Selected files:", files);
+    console.log("Archivos seleccionados:", files);
   };
 
   return (
@@ -132,10 +132,10 @@ export function MyForm() {
         onFilesChange={setFiles}
         maxFiles={3}
         accept="image/*,.pdf"
-        placeholder="Select images or PDFs"
+        placeholder="Selecciona imágenes o PDFs"
       />
       <button onClick={handleSubmit}>
-        Upload files
+        Subir archivos
       </button>
     </div>
   );
@@ -148,8 +148,8 @@ export function MyForm() {
       {/* Props */}
       <Card>
         <CardHeader>
-          <CardTitle>Properties</CardTitle>
-          <CardDescription>Component API</CardDescription>
+          <CardTitle>Propiedades</CardTitle>
+          <CardDescription>API del componente</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
@@ -157,9 +157,9 @@ export function MyForm() {
               <thead>
                 <tr className="border-b">
                   <th className="text-left p-2">Prop</th>
-                  <th className="text-left p-2">Type</th>
+                  <th className="text-left p-2">Tipo</th>
                   <th className="text-left p-2">Default</th>
-                  <th className="text-left p-2">Description</th>
+                  <th className="text-left p-2">Descripción</th>
                 </tr>
               </thead>
               <tbody className="text-muted-foreground text-sm">
@@ -167,37 +167,37 @@ export function MyForm() {
                   <td className="p-2 font-mono">onFilesChange</td>
                   <td className="p-2">(files: File[]) =&gt; void</td>
                   <td className="p-2">-</td>
-                  <td className="p-2">Callback when files change</td>
+                  <td className="p-2">Callback cuando cambian los archivos</td>
                 </tr>
                 <tr className="border-b">
                   <td className="p-2 font-mono">maxFiles</td>
                   <td className="p-2">number</td>
                   <td className="p-2">1</td>
-                  <td className="p-2">Maximum number of allowed files</td>
+                  <td className="p-2">Número máximo de archivos permitidos</td>
                 </tr>
                 <tr className="border-b">
                   <td className="p-2 font-mono">showPreview</td>
                   <td className="p-2">boolean</td>
                   <td className="p-2">true</td>
-                  <td className="p-2">Show list of selected files</td>
+                  <td className="p-2">Mostrar lista de archivos seleccionados</td>
                 </tr>
                 <tr className="border-b">
                   <td className="p-2 font-mono">accept</td>
                   <td className="p-2">string</td>
                   <td className="p-2">-</td>
-                  <td className="p-2">Allowed file types (e.g., .pdf, image/*)</td>
+                  <td className="p-2">Tipos de archivo permitidos (ej: .pdf, image/*)</td>
                 </tr>
                 <tr className="border-b">
                   <td className="p-2 font-mono">disabled</td>
                   <td className="p-2">boolean</td>
                   <td className="p-2">false</td>
-                  <td className="p-2">Disable the input</td>
+                  <td className="p-2">Deshabilita el input</td>
                 </tr>
                 <tr className="border-b">
                   <td className="p-2 font-mono">className</td>
                   <td className="p-2">string</td>
                   <td className="p-2">-</td>
-                  <td className="p-2">Additional CSS classes</td>
+                  <td className="p-2">Clases CSS adicionales</td>
                 </tr>
               </tbody>
             </table>
@@ -208,38 +208,38 @@ export function MyForm() {
       {/* Características */}
       <Card>
         <CardHeader>
-          <CardTitle>Features</CardTitle>
-          <CardDescription>Included functionalities</CardDescription>
+          <CardTitle>Características</CardTitle>
+          <CardDescription>Funcionalidades incluidas</CardDescription>
         </CardHeader>
         <CardContent>
           <ul className="text-muted-foreground space-y-2 text-sm">
             <li className="flex items-start gap-2">
               <span className="text-primary mt-1">✓</span>
-              <span>Drag & drop of files</span>
+              <span>Drag & drop de archivos</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary mt-1">✓</span>
-              <span>Click to open file selector</span>
+              <span>Click para abrir selector de archivos</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary mt-1">✓</span>
-              <span>Preview with file name and size</span>
+              <span>Preview con nombre y tamaño de archivos</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary mt-1">✓</span>
-              <span>Button to remove individual files</span>
+              <span>Botón para eliminar archivos individuales</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary mt-1">✓</span>
-              <span>Support for multiple files</span>
+              <span>Soporte para archivos múltiples</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary mt-1">✓</span>
-              <span>File type restriction with accept</span>
+              <span>Restricción de tipos de archivo con accept</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary mt-1">✓</span>
-              <span>Fully accessible with keyboard navigation</span>
+              <span>Totalmente accesible con navegación por teclado</span>
             </li>
           </ul>
         </CardContent>

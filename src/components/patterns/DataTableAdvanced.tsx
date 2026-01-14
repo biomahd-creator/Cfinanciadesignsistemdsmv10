@@ -79,11 +79,11 @@ const mockInvoices = [
 ];
 
 const statusConfig = {
-  approved: { label: "Approved", variant: "default" as const },
-  pending: { label: "Pending", variant: "secondary" as const },
-  review: { label: "In Review", variant: "outline" as const },
-  rejected: { label: "Rejected", variant: "destructive" as const },
-  paid: { label: "Paid", variant: "default" as const },
+  approved: { label: "Aprobada", variant: "default" as const },
+  pending: { label: "Pendiente", variant: "secondary" as const },
+  review: { label: "En Revisión", variant: "outline" as const },
+  rejected: { label: "Rechazada", variant: "destructive" as const },
+  paid: { label: "Pagada", variant: "default" as const },
 };
 
 export function DataTableAdvanced() {
@@ -106,7 +106,7 @@ export function DataTableAdvanced() {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search by client or invoice number..."
+            placeholder="Buscar por cliente o número de factura..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10"
@@ -114,15 +114,15 @@ export function DataTableAdvanced() {
         </div>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
           <SelectTrigger className="w-full sm:w-[180px]">
-            <SelectValue placeholder="Status" />
+            <SelectValue placeholder="Estado" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All statuses</SelectItem>
-            <SelectItem value="pending">Pending</SelectItem>
-            <SelectItem value="review">In Review</SelectItem>
-            <SelectItem value="approved">Approved</SelectItem>
-            <SelectItem value="rejected">Rejected</SelectItem>
-            <SelectItem value="paid">Paid</SelectItem>
+            <SelectItem value="all">Todos los estados</SelectItem>
+            <SelectItem value="pending">Pendiente</SelectItem>
+            <SelectItem value="review">En Revisión</SelectItem>
+            <SelectItem value="approved">Aprobada</SelectItem>
+            <SelectItem value="rejected">Rechazada</SelectItem>
+            <SelectItem value="paid">Pagada</SelectItem>
           </SelectContent>
         </Select>
         <Button variant="outline" size="icon">
@@ -138,13 +138,13 @@ export function DataTableAdvanced() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Invoice #</TableHead>
-              <TableHead>Client</TableHead>
-              <TableHead>Amount</TableHead>
-              <TableHead>Issue Date</TableHead>
-              <TableHead>Due Date</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+              <TableHead>N° Factura</TableHead>
+              <TableHead>Cliente</TableHead>
+              <TableHead>Monto</TableHead>
+              <TableHead>Fecha Emisión</TableHead>
+              <TableHead>Vencimiento</TableHead>
+              <TableHead>Estado</TableHead>
+              <TableHead className="text-right">Acciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -170,14 +170,14 @@ export function DataTableAdvanced() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuLabel>Acciones</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>View details</DropdownMenuItem>
-                      <DropdownMenuItem>Download PDF</DropdownMenuItem>
-                      <DropdownMenuItem>Approve</DropdownMenuItem>
+                      <DropdownMenuItem>Ver detalles</DropdownMenuItem>
+                      <DropdownMenuItem>Descargar PDF</DropdownMenuItem>
+                      <DropdownMenuItem>Aprobar</DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem className="text-destructive">
-                        Reject
+                        Rechazar
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -191,7 +191,7 @@ export function DataTableAdvanced() {
       {/* Pagination */}
       <div className="flex items-center justify-between">
         <p className="text-sm text-muted-foreground">
-          Showing {filteredInvoices.length} of {mockInvoices.length} invoices
+          Mostrando {filteredInvoices.length} de {mockInvoices.length} facturas
         </p>
         <Pagination>
           <PaginationContent>

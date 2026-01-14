@@ -2,7 +2,34 @@ SYSTEM GUIDELINES – FIGMA MAKE
 React + Tailwind + shadcn/ui (SIN Next.js)
 
 ========================================
-ÚLTIMA ACTUALIZACIÓN: DICIEMBRE 2024
+ÚLTIMA ACTUALIZACIÓN: ENERO 2025
+========================================
+
+🔒 SISTEMA BLINDADO - ÚNICA FUENTE DE VERDAD
+========================================
+
+⚠️ DOCUMENTOS CRÍTICOS OBLIGATORIOS:
+
+1. /DESIGN_TOKENS_ENFORCEMENT.md  → REGLAS ESTRICTAS (NO NEGOCIABLES)
+2. /guidelines/Guidelines.md (ESTE ARCHIVO) → Sistema de diseño completo
+3. /MIGRATION_REPORT.md           → Histórico de migración
+4. /VALIDATION_CHECKLIST.md       → Checklist obligatorio
+
+ESTOS DOCUMENTOS SON LA ÚNICA FUENTE DE VERDAD.
+Cualquier desviación debe ser aprobada explícitamente.
+
+🚫 PROHIBICIONES ABSOLUTAS:
+- ❌ Colores hardcoded: #DEFB49, #1C2D3A (usar tokens CSS)
+- ❌ Estilos inline de color
+- ❌ Modificar tokens sin aprobación
+- ❌ Usar tipografías distintas a Satoshi
+- ❌ Crear colores fuera del sistema
+
+✅ OBLIGATORIO ANTES DE CODIFICAR:
+- Leer DESIGN_TOKENS_ENFORCEMENT.md
+- Completar VALIDATION_CHECKLIST.md
+- Validar contraste WCAG AA (mínimo 4.5:1)
+
 ========================================
 
 STACK OBLIGATORIO
@@ -40,7 +67,7 @@ COLORES (TOKENS)
 ========================================
 
 PRIMARY & SECONDARY
-- Primary: #DEFB49 (Amarillo característico)
+- Primary: #84cc16 (Verde lima para WCAG AA)
 - Secondary: #1C2D3A (Azul oscuro)
 - No usar negro puro (#000000)
 - Usar primary para CTA y estados activos
@@ -72,7 +99,7 @@ MODO OSCURO (Dark Mode) - WCAG COMPLIANT
 CONTRASTE WCAG 2.1 NIVEL AA
 - Texto principal sobre background: 14.9:1 (AAA)
 - Texto secundario sobre background: 7.2:1 (AA)
-- Primary (#DEFB49) sobre secondary: 9.8:1 (AAA)
+- Primary (#84cc16) sobre secondary: Cumple WCAG AA
 - Sin uso de negro puro para reducir fatiga visual
 - Paleta Slate (Tailwind) para tonos profesionales
 
@@ -305,7 +332,7 @@ ARIA LABELS Y ROLES
 CONTRASTE DE COLORES
 - Texto principal: 14.9:1 (supera AAA)
 - Texto secundario: 7.2:1 (supera AA)
-- Primary sobre secondary: 9.8:1 (supera AAA)
+- Primary sobre secondary: Cumple WCAG AA
 - Todos los elementos cumplen WCAG 2.1 Nivel AA mínimo
 
 NAVEGACIÓN POR TECLADO
@@ -313,26 +340,19 @@ NAVEGACIÓN POR TECLADO
 - Enter/Space para activar elementos
 - Escape para cerrar modales
 - Flechas para navegación en menús
-- Focus visible con ring de primary color (#DEFB49)
+- Focus visible con ring de primary color (#84cc16)
 
 ========================================
-SPECIAL PAGES (3 páginas de análisis)
+SPECIAL PAGES (2 páginas de análisis)
 ========================================
 
-1. HERO UI COMPARISON (ComparisonSection.tsx)
-   Comparación exhaustiva: shadcn/ui vs Hero UI vs Hero UI Pro
-   - Feature matrix
-   - Price comparison
-   - Component count
-   - Ventajas y limitaciones
-
-2. OFFICIAL VERIFICATION (ShadcnOfficialComparison.tsx)
+1. OFFICIAL VERIFICATION (ShadcnOfficialComparison.tsx)
    Verificación contra catálogo oficial de shadcn/ui
    - 43/48 componentes implementados (90%)
    - Componentes faltantes identificados
    - Roadmap de implementación
 
-3. WCAG ACCESSIBILITY (AccessibilityPage.tsx)
+2. WCAG ACCESSIBILITY (AccessibilityPage.tsx)
    Página de verificación de accesibilidad completa
    - Cumplimiento WCAG 2.1 Nivel AA: 98%
    - Tests de contraste
@@ -459,7 +479,7 @@ SISTEMA DE NAVEGACIÓN COMPLETO
 - Badges "NEW" para componentes recientes
 - Contadores de componentes por categoría
 - Logo de Financio integrado
-- B��squeda y filtrado (Command)
+- Bsqueda y filtrado (Command)
 
 FLUJO DE NAVEGACIÓN
 1. Usuario hace clic en enlace del sidebar
@@ -503,9 +523,8 @@ CATEGORÍAS DEL SIDEBAR
    - Charts, Color Picker, Rating, Kanban, Date Range Advanced
 
 PÁGINAS ESPECIALES (Sección "ANÁLISIS")
-- Hero UI Comparison
-- Official Verification (NEW)
-- WCAG Accessibility (NEW)
+- Official Verification
+- WCAG Accessibility
 
 NAVEGACIÓN POR TECLADO
 - Tab/Shift+Tab entre elementos
@@ -944,7 +963,7 @@ PROTECCIONES EN NUESTRO DISEÑO
    - Independientes de los componentes
 
 4. COLORES CORPORATIVOS
-   - #DEFB49 (Primary) y #1C2D3A (Secondary)
+   - #84cc16 (Primary Verde Lima) y #1C2D3A (Secondary Azul Oscuro)
    - Definidos como CSS variables
    - Aplicados vía tokens, no hardcoded
 

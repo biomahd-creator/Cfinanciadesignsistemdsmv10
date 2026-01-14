@@ -11,7 +11,7 @@ export function ApprovalFlowPage() {
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <h2 className="text-4xl font-semibold">Approval Flow Wizard</h2>
+          <h2 className="text-2xl font-medium">Approval Flow Wizard</h2>
           <Badge variant="default" className="bg-purple-500 hover:bg-purple-600">
             <Workflow className="h-3 w-3 mr-1" />
             Multi-Step Pattern

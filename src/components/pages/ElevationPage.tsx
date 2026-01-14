@@ -7,7 +7,7 @@ export function ElevationPage() {
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="space-y-2">
-        <h1 className="text-4xl font-semibold tracking-tight">Elevation & Shadows</h1>
+        <h1 className="text-2xl font-medium tracking-tight">Elevation & Shadows</h1>
         <p className="text-lg text-muted-foreground max-w-2xl">
           System elevation styles designed for depth and hierarchy, adapted for light and dark modes.
         </p>
@@ -109,7 +109,7 @@ export function ElevationPage() {
         <div className="space-y-2">
           <h2 className="text-2xl font-semibold">Color Tinting</h2>
           <p className="text-muted-foreground">
-            In light mode, shadows use a subtle <span className="text-primary font-bold">#1C2D3A</span> tint instead of pure black.
+            In light mode, shadows use a subtle <span className="text-secondary font-bold">#1C2D3A</span> tint instead of pure black.
           </p>
         </div>
         

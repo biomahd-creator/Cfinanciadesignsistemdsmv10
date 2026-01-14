@@ -143,7 +143,8 @@ export function TreeTable({
         className="hover:bg-muted/50 cursor-pointer transition-colors"
         onClick={() => onRowClick?.(node)}
       >
-        <TableCell className="font-medium" style={{ paddingLeft: `${12 + paddingLeft}px` }}>
+        {/* Dynamic padding based on tree depth */}
+        <TableCell className={`font-medium pl-[${12 + paddingLeft}px]`}>
           <div className="flex items-center gap-2">
             {hasChildren ? (
               <Button
@@ -267,10 +268,10 @@ export function TreeTable({
 
         rows.push(
           <TableRow key={`${node.id}-load-more`} className="bg-muted/30">
+            {/* Dynamic padding for load-more button */}
             <TableCell 
               colSpan={6} 
-              className="py-3"
-              style={{ paddingLeft: `${loadMorePaddingLeft}px` }}
+              className={`py-3 pl-[${loadMorePaddingLeft}px]`}
             >
               <div className="flex items-center gap-3">
                 <Button

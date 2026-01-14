@@ -8,47 +8,47 @@ const timelineEvents = [
   {
     id: 1,
     user: "Juan Pérez",
-    role: "Financial Analyst",
-    action: "Invoice created",
-    timestamp: "Jan 15, 2024, 10:30 AM",
+    role: "Analista Financiero",
+    action: "Factura creada",
+    timestamp: "15 Ene 2024, 10:30 AM",
     status: "completed",
-    comment: "Invoice entered into the system for review",
+    comment: "Factura ingresada al sistema para revisión",
   },
   {
     id: 2,
     user: "María González",
     role: "Supervisor",
-    action: "Documentation verified",
-    timestamp: "Jan 15, 2024, 02:15 PM",
+    action: "Documentación verificada",
+    timestamp: "15 Ene 2024, 02:15 PM",
     status: "completed",
-    comment: "All documents are complete and valid",
+    comment: "Todos los documentos están completos y válidos",
   },
   {
     id: 3,
     user: "Carlos Rodríguez",
-    role: "Risk Analyst",
-    action: "Credit analysis",
-    timestamp: "Jan 16, 2024, 09:45 AM",
+    role: "Analista de Riesgo",
+    action: "Análisis crediticio",
+    timestamp: "16 Ene 2024, 09:45 AM",
     status: "completed",
-    comment: "Credit score approved: 850/1000",
+    comment: "Score crediticio aprobado: 850/1000",
   },
   {
     id: 4,
     user: "Ana Martínez",
-    role: "Commercial Manager",
-    action: "Approval pending",
-    timestamp: "Jan 16, 2024, 11:20 AM",
+    role: "Gerente Comercial",
+    action: "Aprobación pendiente",
+    timestamp: "16 Ene 2024, 11:20 AM",
     status: "pending",
-    comment: "Final review before approval",
+    comment: "Revisión final antes de aprobación",
   },
   {
     id: 5,
-    user: "System",
-    role: "Automated",
-    action: "Disbursement scheduled",
-    timestamp: "Pending",
+    user: "Sistema",
+    role: "Automatizado",
+    action: "Desembolso programado",
+    timestamp: "Pendiente",
     status: "waiting",
-    comment: "Will execute after final approval",
+    comment: "Se ejecutará tras aprobación final",
   },
 ];
 
@@ -83,7 +83,7 @@ export function ApprovalTimeline() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Approval Timeline - INV-001</CardTitle>
+        <CardTitle>Timeline de Aprobación - INV-001</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="relative space-y-6">
@@ -111,10 +111,10 @@ export function ApprovalTimeline() {
                         <p className="font-medium">{event.action}</p>
                         <Badge variant={config.badge} className="text-xs">
                           {event.status === "completed"
-                            ? "Completed"
+                            ? "Completado"
                             : event.status === "pending"
-                            ? "Pending"
-                            : "Waiting"}
+                            ? "Pendiente"
+                            : "En espera"}
                         </Badge>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">

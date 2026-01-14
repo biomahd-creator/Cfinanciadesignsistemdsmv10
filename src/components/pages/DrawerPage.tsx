@@ -10,7 +10,7 @@ export function DrawerPage() {
     <div className="space-y-8">
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-4xl font-semibold">Drawer</h1>
+          <h1 className="text-2xl font-medium">Drawer</h1>
           <Badge>Feedback</Badge>
         </div>
         <p className="text-muted-foreground">
@@ -22,12 +22,12 @@ export function DrawerPage() {
 
       <div className="space-y-4">
         <div>
-          <h2 className="text-2xl font-semibold mb-2">Basic Drawer</h2>
-          <p className="text-muted-foreground">Panel from the bottom</p>
+          <h2 className="text-2xl font-semibold mb-2">Drawer Básico</h2>
+          <p className="text-muted-foreground">Panel desde la parte inferior</p>
         </div>
         <Card>
           <CardHeader>
-            <CardTitle>Drawer from bottom</CardTitle>
+            <CardTitle>Drawer desde abajo</CardTitle>
             <CardDescription>Comportamiento nativo de mobile</CardDescription>
           </CardHeader>
           <CardContent>
@@ -75,8 +75,8 @@ export function DrawerPage() {
 
       <div className="space-y-4">
         <div>
-          <h2 className="text-2xl font-semibold mb-2">Usage Examples</h2>
-          <p className="text-muted-foreground">Different drawer contexts</p>
+          <h2 className="text-2xl font-semibold mb-2">Ejemplos de Uso</h2>
+          <p className="text-muted-foreground">Diferentes contextos del drawer</p>
         </div>
         <div className="grid md:grid-cols-2 gap-6">
           <Card>
@@ -190,7 +190,7 @@ export function DrawerPage() {
       <div className="grid md:grid-cols-2 gap-4">
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">✅ When to use</CardTitle>
+            <CardTitle className="text-base">✅ Cuándo usar</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-muted-foreground">
             <p>• Interfaces mobile-first</p>
@@ -216,7 +216,7 @@ export function DrawerPage() {
 
       <Card className="bg-primary/5 border-primary/20">
         <CardHeader>
-          <CardTitle>♿ Accessibility</CardTitle>
+          <CardTitle>♿ Accesibilidad</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2 text-sm">
           <p>✓ <strong>Dialog role</strong> - ARIA role apropiado</p>
@@ -230,8 +230,8 @@ export function DrawerPage() {
 
       <Card className="bg-muted/50">
         <CardHeader>
-          <CardTitle>Composition</CardTitle>
-          <CardDescription>shadcn/ui components used</CardDescription>
+          <CardTitle>Composición</CardTitle>
+          <CardDescription>Componentes shadcn/ui utilizados</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
@@ -242,7 +242,7 @@ export function DrawerPage() {
             <Separator className="my-3" />
             <p className="text-xs text-muted-foreground">
               El Drawer es ideal para mobile-first experiences. Incluye gestos de deslizamiento,
-              smooth animations and complete accessibility.
+              animaciones suaves y accesibilidad completa.
             </p>
           </div>
         </CardContent>
