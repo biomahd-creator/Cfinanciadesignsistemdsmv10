@@ -102,9 +102,9 @@ export function LoginScreen({
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 flex items-center justify-between px-16 py-12">
+      <main className="flex-1 grid grid-cols-12 gap-8 px-8 py-12">
         {/* Left Side - Branding */}
-        <div className="flex-1 flex flex-col items-start justify-center text-white">
+        <div className="col-start-2 col-span-5 flex flex-col items-start justify-center text-white">
           <div className="space-y-2">
             <h1 className="text-5xl font-bold tracking-wider">
               CESION<span className="font-light">BNK</span>
@@ -114,8 +114,8 @@ export function LoginScreen({
         </div>
 
         {/* Right Side - Login Card */}
-        <div className="w-full max-w-md">
-          <Card className="shadow-2xl border-0">
+        <div className="col-start-7 col-span-5 flex items-center">
+          <Card className="shadow-2xl border-0 w-full">
             <CardHeader className="space-y-2 pb-6">
               <CardTitle className="text-2xl font-semibold text-[#1a1a1a]">
                 Inicio de Sesión

@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 
 export function ChangelogPage() {
-  const currentVersion = "5.1.2";
+  const currentVersion = "5.2.0";
   const lastUpdated = "January 14, 2026";
   const totalComponents = 205;
   const wcagCompliance = "98%";
@@ -96,6 +96,93 @@ export function ChangelogPage() {
 
         {/* Releases Tab */}
         <TabsContent value="releases" className="space-y-6 mt-6">
+          {/* Version 5.2.0 */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <CardTitle className="text-foreground">Version 5.2.0</CardTitle>
+                    <Badge variant="secondary">Minor</Badge>
+                    <Badge variant="outline">Latest</Badge>
+                  </div>
+                  <CardDescription className="flex items-center gap-2">
+                    <Calendar className="h-3 w-3" />
+                    January 14, 2026
+                  </CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Rocket className="h-4 w-4 text-primary" />
+                  <h4 className="text-sm font-semibold text-foreground">Added</h4>
+                </div>
+                <ul className="space-y-1 ml-6">
+                  <li className="text-sm text-muted-foreground">
+                    • <strong>UX Writing Guidelines</strong>: Created comprehensive UX Writing documentation for Spanish (LATAM)
+                  </li>
+                  <li className="text-sm text-muted-foreground">
+                    • /UXwriting.md with complete tone of voice guidelines
+                  </li>
+                  <li className="text-sm text-muted-foreground">
+                    • User-centric language rules (tuteo, voz activa)
+                  </li>
+                  <li className="text-sm text-muted-foreground">
+                    • Label, placeholder, button, and error message standards
+                  </li>
+                  <li className="text-sm text-muted-foreground">
+                    • Empty states and microcopy best practices
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Wrench className="h-4 w-4 text-primary" />
+                  <h4 className="text-sm font-semibold text-foreground">Maintenance</h4>
+                </div>
+                <ul className="space-y-1 ml-6">
+                  <li className="text-sm text-muted-foreground">
+                    • <strong>Documentation Cleanup</strong>: Removed 20 redundant documentation files
+                  </li>
+                  <li className="text-sm text-muted-foreground">
+                    • Eliminated 8 duplicate audit reports
+                  </li>
+                  <li className="text-sm text-muted-foreground">
+                    • Removed 4 completed refactoring reports
+                  </li>
+                  <li className="text-sm text-muted-foreground">
+                    • Cleaned up 4 migration completion reports
+                  </li>
+                  <li className="text-sm text-muted-foreground">
+                    • Result: ~40% reduction in documentation files
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <TrendingUp className="h-4 w-4 text-primary" />
+                  <h4 className="text-sm font-semibold text-foreground">Impact</h4>
+                </div>
+                <ul className="space-y-1 ml-6">
+                  <li className="text-sm text-muted-foreground">
+                    • Cleaner project structure
+                  </li>
+                  <li className="text-sm text-muted-foreground">
+                    • Single source of truth for UX Writing
+                  </li>
+                  <li className="text-sm text-muted-foreground">
+                    • Eliminated documentation redundancy
+                  </li>
+                  <li className="text-sm text-muted-foreground">
+                    • Improved developer experience
+                  </li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Version 5.1.2 */}
           <Card>
             <CardHeader>
@@ -104,7 +191,6 @@ export function ChangelogPage() {
                   <div className="flex items-center gap-2 mb-2">
                     <CardTitle className="text-foreground">Version 5.1.2</CardTitle>
                     <Badge>Patch</Badge>
-                    <Badge variant="outline">Latest</Badge>
                   </div>
                   <CardDescription className="flex items-center gap-2">
                     <Calendar className="h-3 w-3" />
@@ -625,7 +711,7 @@ export function ChangelogPage() {
                   </div>
                   <div className="p-4 border rounded-lg bg-muted/20">
                     <p className="text-xs text-muted-foreground mb-1">Minor Releases</p>
-                    <p className="text-2xl font-semibold text-foreground">5</p>
+                    <p className="text-2xl font-semibold text-foreground">6</p>
                   </div>
                   <div className="p-4 border rounded-lg bg-muted/20">
                     <p className="text-xs text-muted-foreground mb-1">Patch Releases</p>
@@ -633,7 +719,7 @@ export function ChangelogPage() {
                   </div>
                   <div className="p-4 border rounded-lg bg-muted/20">
                     <p className="text-xs text-muted-foreground mb-1">Total Versions</p>
-                    <p className="text-2xl font-semibold text-foreground">12</p>
+                    <p className="text-2xl font-semibold text-foreground">13</p>
                   </div>
                 </div>
 
@@ -643,6 +729,7 @@ export function ChangelogPage() {
                   <h3 className="text-sm font-semibold text-foreground mb-3">Component Count Evolution</h3>
                   <div className="space-y-2">
                     {[
+                      { version: "5.2.0", total: 205, date: "Jan 14, 2026" },
                       { version: "5.1.2", total: 205, date: "Jan 14, 2026" },
                       { version: "5.1.0", total: 205, date: "Jan 13, 2026" },
                       { version: "5.0.0", total: 205, date: "Jan 13, 2026" },

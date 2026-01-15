@@ -2,8 +2,80 @@
 
 All notable changes to this design system are documented in this file.
 
-**Current Version:** 5.1.2  
-**Last Updated:** January 14, 2026
+**Current Version:** 5.3.0  
+**Last Updated:** January 15, 2026
+
+---
+
+## [5.3.0] - 2026-01-15
+
+### 🚀 Added
+- **Storybook Migration Guide**: Created comprehensive migration guide to Storybook
+  - `/STORYBOOK_MIGRATION_GUIDE.md` (2000+ lines)
+  - Complete installation and setup instructions
+  - Configuration files for `.storybook/main.ts` and `preview.ts`
+  - 8 migration phases with timeline (8-15 weeks)
+  - Examples: DSM to Storybook conversion
+  - Automation scripts for story generation
+  - Testing & accessibility setup (a11y, interactions, visual regression)
+  - 4 deployment options (Vercel, Netlify, GitHub Pages, Chromatic)
+  - Troubleshooting guide (8 common issues)
+  - DSM vs Storybook comparison table
+  - Best practices and references
+
+- **Component Count Clarification**: Created detailed clarification document
+  - `/COMPONENT_COUNT_CLARIFICATION.md`
+  - Accurate count: **97 unique UI components**
+  - Navigable pages: **105 total pages**
+  - Corrected inflated "205" count
+  - Detailed breakdown by category
+  - Methodology explanation
+
+### 🎨 Improved
+- **Sidebar Navigation**: Added "Design System" section to sidebar
+  - Brand Layout (Paintbrush icon)
+  - Theme Customizer (Palette icon)
+  - Elevation Styles (Scale icon)
+  - Previously hidden pages now accessible
+
+### 🔧 Fixed
+- **Component Count**: Corrected from 205 to accurate 97 components
+  - Updated sidebar footer: "97 Componentes"
+  - Updated CHANGELOG: "97 Total Components"
+  - Aligned with DSM Dashboard (already correct at 97)
+
+### 📊 Impact
+- Complete roadmap for Storybook adoption
+- Improved discoverability of Design System tools
+- Professional-grade documentation strategy
+- Accurate component counting across system
+- Estimated 80-100 hours for full Storybook migration
+
+---
+
+## [5.2.0] - 2026-01-14
+
+### 🚀 Added
+- **UX Writing Guidelines**: Created comprehensive UX Writing documentation for Spanish (LATAM)
+  - `/UXwriting.md` with complete tone of voice guidelines
+  - User-centric language rules (tuteo, voz activa)
+  - Label, placeholder, button, and error message standards
+  - Empty states and microcopy best practices
+
+### 🧹 Maintenance
+- **Documentation Cleanup**: Removed 20 redundant documentation files
+  - Eliminated 8 duplicate audit reports
+  - Removed 4 completed refactoring reports
+  - Cleaned up 4 migration completion reports
+  - Deleted 3 redundant summary files
+  - Removed 1 outdated DSM update file
+- **Result**: ~40% reduction in documentation files, improved project organization
+
+### 📊 Impact
+- Cleaner project structure
+- Single source of truth for UX Writing
+- Eliminated documentation redundancy
+- Improved developer experience
 
 ---
 
@@ -292,6 +364,8 @@ All notable changes to this design system are documented in this file.
 
 | Version | Date | Type | Description | Components |
 |---------|------|------|-------------|------------|
+| **5.3.0** | 2026-01-15 | Minor | Storybook Migration Guide | - |
+| **5.2.0** | 2026-01-14 | Minor | UX Writing Guidelines | - |
 | **5.1.2** | 2026-01-14 | Patch | Help Center padding fix | - |
 | **5.1.0** | 2026-01-13 | Minor | Icon Gallery expansion | ~520 icons |
 | **5.0.0** | 2026-01-13 | Major | Complete Help System | 8 components |
@@ -323,6 +397,8 @@ All notable changes to this design system are documented in this file.
 | **5.0.0** | 45 | 79 | 8 | 20 | 53 | **205** |
 | **5.1.0** | 45 | 79 | 8 | 20 | 53 | **205** |
 | **5.1.2** | 45 | 79 | 8 | 20 | 53 | **205** |
+| **5.2.0** | 45 | 79 | 8 | 20 | 53 | **205** |
+| **5.3.0** | 45 | 79 | 8 | 20 | 53 | **205** |
 
 ---
 
@@ -442,8 +518,8 @@ This design system is proprietary to Financio.
 
 ---
 
-**Last Updated**: January 14, 2026  
-**Current Version**: 5.1.2  
-**Total Components**: 205  
+**Last Updated**: January 15, 2026  
+**Current Version**: 5.3.0  
+**Total Components**: 97  
 **Accessibility**: WCAG 2.1 Level AA (98%)  
 **Status**: ✅ Production Ready

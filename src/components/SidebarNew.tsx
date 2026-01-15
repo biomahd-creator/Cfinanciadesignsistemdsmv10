@@ -545,6 +545,33 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
         </SidebarGroup>
 
         <SidebarGroup>
+          <SidebarGroupLabel className="text-sidebar-foreground/90">Design System</SidebarGroupLabel>
+          <SidebarMenu>
+            {designSystemPages.map((page) => (
+              <SidebarMenuItem key={page.id}>
+                <SidebarMenuButton 
+                  isActive={activePage === page.id}
+                  onClick={() => onPageChange(page.id)}
+                  tooltip={page.label}
+                >
+                  {page.id === "brand-layout" && <Paintbrush />}
+                  {page.id === "theme-customizer" && <Palette />}
+                  {page.id === "elevation" && <Scale />}
+                  <span className="flex flex-1 items-center gap-2 overflow-hidden text-sidebar-foreground group-data-[active=true]/menu-button:text-sidebar-primary-foreground group-data-[active=true]/menu-button:font-medium">
+                    <span className="truncate">{page.label}</span>
+                    {page.new && (
+                      <Badge variant="default" className="shrink-0 h-4 px-1 text-xs border-none font-medium">
+                        NEW
+                      </Badge>
+                    )}
+                  </span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
+
+        <SidebarGroup>
           <SidebarGroupLabel className="text-sidebar-foreground/90">Verificación</SidebarGroupLabel>
           <SidebarMenu>
             {specialPages.map((page) => (
@@ -571,7 +598,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
          <div className="p-4 bg-sidebar-accent/10 rounded-lg m-2 group-data-[collapsible=icon]:hidden">
             <div className="flex items-center gap-2 text-sidebar-foreground/90 text-xs">
               <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-              <span>125+ Componentes</span>
+              <span>97 Componentes</span>
             </div>
          </div>
          

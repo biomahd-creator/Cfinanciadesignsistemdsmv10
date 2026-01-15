@@ -880,6 +880,10 @@
     grid-column: span 2 / span 2;
   }
 
+  .col-span-5 {
+    grid-column: span 5 / span 5;
+  }
+
   .col-span-6 {
     grid-column: span 6 / span 6;
   }
@@ -890,6 +894,10 @@
 
   .col-start-2 {
     grid-column-start: 2;
+  }
+
+  .col-start-7 {
+    grid-column-start: 7;
   }
 
   .row-span-2 {
