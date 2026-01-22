@@ -1,306 +1,179 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { Separator } from "../ui/separator";
-import { Badge } from "../ui/badge";
+import { ComponentShowcase } from "../ui/component-showcase";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form@7.55.0";
+import { z } from "zod";
 import { Button } from "../ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { Checkbox } from "../ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { toast } from "sonner@2.0.3";
+
+const formSchema = z.object({
+  username: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+});
 
 export function FormPage() {
+  // 1. Define your form.
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+    },
+  });
+
+  // 2. Define a submit handler.
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    toast.success("You submitted the following values:", {
+        description: JSON.stringify(values, null, 2),
+    });
+    console.log(values);
+  }
+
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div>
-        <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-2xl font-medium">Form</h1>
-          <Badge variant="secondary">Pattern</Badge>
-        </div>
-        <p className="text-muted-foreground">
-          Composición de componentes de formulario con labels y validación
-        </p>
-      </div>
+    <ComponentShowcase
+      title="Form"
+      description="Building forms with React Hook Form and Zod."
+      category="Forms"
+      preview={
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-2/3">
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder="shadcn" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    This is your public display name.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit">Submit</Button>
+          </form>
+        </Form>
+      }
+      code={`"use client"
 
-      <Separator />
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
-      {/* Complete Form Example */}
-      <div className="space-y-4">
-        <div>
-          <h2 className="text-2xl font-semibold mb-2">Formulario Completo</h2>
-          <p className="text-muted-foreground">Ejemplo de formulario con todos los tipos de campos</p>
-        </div>
-        <Card>
-          <CardHeader>
-            <CardTitle>Crear Cuenta</CardTitle>
-            <CardDescription>Completa el formulario para registrarte</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form className="space-y-6">
-              {/* Text Inputs */}
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">Nombre *</Label>
-                  <Input id="firstName" placeholder="John" required />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">Apellido *</Label>
-                  <Input id="lastName" placeholder="Doe" required />
-                </div>
-              </div>
+import { Button } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { toast } from "@/components/ui/use-toast"
 
-              <div className="space-y-2">
-                <Label htmlFor="email">Email *</Label>
-                <Input id="email" type="email" placeholder="john@example.com" required />
-                <p className="text-xs text-muted-foreground">Nunca compartiremos tu email</p>
-              </div>
+const FormSchema = z.object({
+  username: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+})
 
-              <div className="space-y-2">
-                <Label htmlFor="password">Contraseña *</Label>
-                <Input id="password" type="password" placeholder="••••••••" required />
-                <p className="text-xs text-muted-foreground">Mínimo 8 caracteres</p>
-              </div>
+export function InputForm() {
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      username: "",
+    },
+  })
 
-              {/* Select */}
-              <div className="space-y-2">
-                <Label htmlFor="country">País</Label>
-                <Select>
-                  <SelectTrigger id="country">
-                    <SelectValue placeholder="Selecciona tu país" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="ar">Argentina</SelectItem>
-                    <SelectItem value="mx">México</SelectItem>
-                    <SelectItem value="es">España</SelectItem>
-                    <SelectItem value="us">Estados Unidos</SelectItem>
-                    <SelectItem value="br">Brasil</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    })
+  }
 
-              {/* Radio Group */}
-              <div className="space-y-3">
-                <Label>Tipo de cuenta</Label>
-                <RadioGroup defaultValue="personal">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="personal" id="personal" />
-                    <Label htmlFor="personal" className="font-normal">Personal</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="business" id="business" />
-                    <Label htmlFor="business" className="font-normal">Empresarial</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="enterprise" id="enterprise" />
-                    <Label htmlFor="enterprise" className="font-normal">Enterprise</Label>
-                  </div>
-                </RadioGroup>
-              </div>
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+  )
+}`}
+      usage={`import { useForm } from "react-hook-form"
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
 
-              {/* Textarea */}
-              <div className="space-y-2">
-                <Label htmlFor="bio">Biografía</Label>
-                <Textarea
-                  id="bio"
-                  placeholder="Cuéntanos sobre ti..."
-                  className="min-h-[100px]"
-                />
-                <p className="text-xs text-muted-foreground">Máximo 500 caracteres</p>
-              </div>
+// ... inside component
+const form = useForm({ ... })
 
-              {/* Checkboxes */}
-              <div className="space-y-3">
-                <Label>Preferencias</Label>
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox id="newsletter" />
-                    <Label htmlFor="newsletter" className="font-normal">
-                      Recibir newsletter semanal
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox id="notifications" defaultChecked />
-                    <Label htmlFor="notifications" className="font-normal">
-                      Notificaciones por email
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox id="marketing" />
-                    <Label htmlFor="marketing" className="font-normal">
-                      Comunicaciones de marketing
-                    </Label>
-                  </div>
-                </div>
-              </div>
-
-              {/* Terms and Conditions */}
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms" required />
-                <Label htmlFor="terms" className="font-normal">
-                  Acepto los términos y condiciones *
-                </Label>
-              </div>
-
-              <Separator />
-
-              {/* Submit Buttons */}
-              <div className="flex gap-3">
-                <Button type="submit" className="flex-1">
-                  Crear Cuenta
-                </Button>
-                <Button type="button" variant="outline" className="flex-1">
-                  Cancelar
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Separator />
-
-      {/* Form Layouts */}
-      <div className="space-y-4">
-        <div>
-          <h2 className="text-2xl font-semibold mb-2">Layouts de Formulario</h2>
-          <p className="text-muted-foreground">Diferentes organizaciones visuales</p>
-        </div>
-        <div className="grid md:grid-cols-2 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Login Form</CardTitle>
-              <CardDescription>Layout vertical simple</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="loginEmail">Email</Label>
-                  <Input id="loginEmail" type="email" placeholder="tu@email.com" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="loginPassword">Contraseña</Label>
-                  <Input id="loginPassword" type="password" placeholder="••••••••" />
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="remember" />
-                  <Label htmlFor="remember" className="font-normal text-sm">
-                    Recordarme
-                  </Label>
-                </div>
-                <Button type="submit" className="w-full">
-                  Iniciar Sesión
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Contact Form</CardTitle>
-              <CardDescription>Formulario de contacto</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="contactName">Nombre</Label>
-                  <Input id="contactName" placeholder="Tu nombre" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="contactEmail">Email</Label>
-                  <Input id="contactEmail" type="email" placeholder="tu@email.com" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="message">Mensaje</Label>
-                  <Textarea id="message" placeholder="Tu mensaje..." className="min-h-[80px]" />
-                </div>
-                <Button type="submit" className="w-full">
-                  Enviar Mensaje
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-
-      <Separator />
-
-      {/* Form States */}
-      <div className="space-y-4">
-        <div>
-          <h2 className="text-2xl font-semibold mb-2">Estados del Formulario</h2>
-          <p className="text-muted-foreground">Diferentes estados de campos</p>
-        </div>
-        <Card>
-          <CardContent className="pt-6 space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="normal">Normal</Label>
-              <Input id="normal" placeholder="Campo normal" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="disabled">Disabled</Label>
-              <Input id="disabled" placeholder="Campo deshabilitado" disabled />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="error">Con Error</Label>
-              <Input id="error" placeholder="Campo con error" className="border-red-500" />
-              <p className="text-xs text-red-500">Este campo es requerido</p>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="success">Validado</Label>
-              <Input id="success" placeholder="Campo validado" className="border-green-500" />
-              <p className="text-xs text-green-600">✓ Email válido</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Separator />
-
-      {/* Composition Info */}
-      <Card className="bg-muted/50">
-        <CardHeader>
-          <CardTitle>Composición</CardTitle>
-          <CardDescription>Componentes shadcn/ui utilizados</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2">
-            <p className="text-sm">
-              <Badge variant="outline" className="mr-2">Input</Badge>
-              Campos de texto y email
-            </p>
-            <p className="text-sm">
-              <Badge variant="outline" className="mr-2">Textarea</Badge>
-              Campos de texto multilínea
-            </p>
-            <p className="text-sm">
-              <Badge variant="outline" className="mr-2">Select</Badge>
-              Listas desplegables
-            </p>
-            <p className="text-sm">
-              <Badge variant="outline" className="mr-2">Checkbox</Badge>
-              Casillas de verificación
-            </p>
-            <p className="text-sm">
-              <Badge variant="outline" className="mr-2">Radio Group</Badge>
-              Opciones mutuamente excluyentes
-            </p>
-            <p className="text-sm">
-              <Badge variant="outline" className="mr-2">Label</Badge>
-              Etiquetas accesibles
-            </p>
-            <p className="text-sm">
-              <Badge variant="outline" className="mr-2">Button</Badge>
-              Acciones del formulario
-            </p>
-            <Separator className="my-3" />
-            <p className="text-xs text-muted-foreground">
-              Los formularios son composiciones de múltiples componentes shadcn/ui que trabajan
-              juntos para crear experiencias de entrada de datos completas y accesibles.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+return (
+  <Form {...form}>
+    <form onSubmit={form.handleSubmit(onSubmit)}>
+      <FormField
+         control={form.control}
+         name="fieldname"
+         render={({ field }) => (
+           <FormItem>
+             <FormLabel>Label</FormLabel>
+             <FormControl>
+               <Input {...field} />
+             </FormControl>
+             <FormMessage />
+           </FormItem>
+         )}
+      />
+    </form>
+  </Form>
+)`}
+      props={[
+        {
+          name: "Form",
+          type: "Component",
+          default: "-",
+          description: "Root provider component (FormProvider)",
+        },
+        {
+          name: "FormField",
+          type: "Component",
+          default: "-",
+          description: "Wrapper for controlled inputs (Controller)",
+        }
+      ]}
+      examples={[]}
+    />
   );
 }

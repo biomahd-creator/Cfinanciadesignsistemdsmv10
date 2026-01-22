@@ -128,7 +128,7 @@ export function StepIndicator({
   // Horizontal orientation (default)
   if (orientation === "horizontal") {
     return (
-      <div className={cn("space-y-6", className)}>
+      <div className={cn("space-y-4 md:space-y-6", className)}>
         {showProgress && (
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
@@ -141,22 +141,22 @@ export function StepIndicator({
           </div>
         )}
 
-        <div className="flex items-start justify-between">
+        <div className="flex items-center justify-between gap-1 md:gap-2">
           {steps.map((step, index) => {
             const isActive = index === currentStep;
             const isCompleted = index < currentStep;
             const canClick = clickable && index <= currentStep;
 
             return (
-              <div key={step.id} className="flex items-center flex-1">
-                <div className="flex flex-col items-center gap-2 flex-1">
+              <div key={step.id} className="flex items-center flex-1 min-w-0">
+                <div className="flex flex-col gap-1.5 md:gap-2 flex-1 items-center min-w-0">
                   <button
                     onClick={() => handleStepClick(index)}
                     disabled={!canClick}
                     className={cn(
-                      "flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all",
+                      "flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full border-2 transition-all flex-shrink-0",
                       isCompleted && "border-primary bg-primary text-primary-foreground",
-                      isActive && "border-primary bg-background text-primary ring-4 ring-primary/20",
+                      isActive && "border-primary bg-background text-primary ring-2 md:ring-4 ring-primary/20",
                       !isActive && !isCompleted && "border-muted bg-background text-muted-foreground",
                       canClick && "cursor-pointer hover:scale-110",
                       !canClick && "cursor-not-allowed"
@@ -164,27 +164,29 @@ export function StepIndicator({
                   >
                     {step.icon ? (
                       isCompleted ? (
-                        <CheckCircle className="h-5 w-5" />
+                        <CheckCircle className="h-4 w-4 md:h-5 md:w-5" />
                       ) : (
-                        step.icon
+                        <div className="flex items-center justify-center [&>svg]:h-4 [&>svg]:w-4 md:[&>svg]:h-5 md:[&>svg]:w-5">
+                          {step.icon}
+                        </div>
                       )
                     ) : (
-                      <span className="font-semibold">{index + 1}</span>
+                      <span className="font-semibold text-xs md:text-sm">{index + 1}</span>
                     )}
                   </button>
 
                   {showLabels && (
-                    <div className="text-center">
+                    <div className="text-center w-full min-w-0 px-0.5">
                       <p
                         className={cn(
-                          "text-sm font-medium",
+                          "text-xs md:text-sm font-medium truncate md:whitespace-normal",
                           (isActive || isCompleted) ? "text-foreground" : "text-muted-foreground"
                         )}
                       >
                         {step.title}
                       </p>
                       {step.description && (
-                        <p className="text-xs text-muted-foreground mt-0.5">
+                        <p className="text-xs text-muted-foreground mt-0.5 hidden">
                           {step.description}
                         </p>
                       )}
@@ -193,12 +195,14 @@ export function StepIndicator({
                 </div>
 
                 {index < steps.length - 1 && (
-                  <Minus
-                    className={cn(
-                      "h-5 w-full mx-2 transition-colors",
-                      index < currentStep ? "text-primary" : "text-muted"
-                    )}
-                  />
+                  <div className="flex items-center justify-center flex-shrink-0 w-4 md:w-8 mx-0.5 md:mx-2">
+                    <Minus
+                      className={cn(
+                        "h-3 md:h-5 w-full transition-colors",
+                        index < currentStep ? "text-primary" : "text-muted"
+                      )}
+                    />
+                  </div>
                 )}
               </div>
             );

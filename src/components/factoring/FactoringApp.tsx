@@ -131,8 +131,8 @@ export function FactoringApp({ onExit }: FactoringLayoutProps) {
       case "vinculacion":
         // PROCESO DE VINCULACIÓN DEL USUARIO
         return (
-          <div className="space-y-6 p-8">
-             <div className="flex items-center gap-4">
+          <div className="space-y-8 p-8">
+             <div className="flex items-center gap-6">
                 <Button variant="ghost" onClick={() => setCurrentView("home")}>← Volver</Button>
                 <h2 className="text-2xl font-bold text-secondary">Proceso de Vinculación</h2>
              </div>

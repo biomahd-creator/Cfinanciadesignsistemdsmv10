@@ -272,6 +272,7 @@ Antes de crear un nuevo Business Component:
 import { ColorSwatch } from "../business/ColorSwatch";
 import { GridSystemPreview } from "../business/GridSystemPreview";
 import { SpacingPreview } from "../business/SpacingPreview";
+import { StatusKPICard } from "../business/StatusKPICard";
 ```
 
 ### 2. Usar en renderizado:
@@ -327,6 +328,11 @@ export function BrandLayoutPage() {
 ---
 
 ## 📋 HISTORIAL DE CAMBIOS
+
+### 2025-01-16
+- ✅ Removido HorizontalStepper duplicado - usar StepIndicator del DSM oficial
+- ✅ Actualizado StepperShowcase para usar componente oficial del DSM
+- ✅ Total componentes Business: 4 (ColorSwatch, GridSystemPreview, SpacingPreview, StatusKPICard)
 
 ### 2025-01-12
 - ✅ Creados componentes modulares: ColorSwatch, GridSystemPreview, SpacingPreview

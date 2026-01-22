@@ -11,11 +11,15 @@ import {
   Settings,
   Layers,
   Beaker,
-  LayoutGrid
+  LayoutGrid,
+  GitBranch
 } from "lucide-react";
 import { LoginScreen } from "./LoginScreen";
 import { ModulesScreen } from "./ModulesScreen";
 import { OperacionesCreadasScreen } from "./OperacionesCreadasScreen";
+import { StepperShowcase } from "./StepperShowcase";
+import { FactoringNewOperationScreen } from "./FactoringNewOperationScreen";
+import { OperationCardShowcase } from "./OperationCardShowcase";
 
 /**
  * ⚠️ PLAYGROUND MODULE - Development & Testing Area
@@ -41,7 +45,7 @@ interface PlaygroundIndexProps {
   onBack: () => void;
 }
 
-type PlaygroundScreen = "index" | "login" | "register" | "dashboard" | "settings" | "modules" | "operaciones";
+type PlaygroundScreen = "index" | "login" | "register" | "dashboard" | "settings" | "modules" | "operaciones" | "stepper" | "newOperation" | "operationCard";
 
 export function PlaygroundIndex({ onBack }: PlaygroundIndexProps) {
   const [currentScreen, setCurrentScreen] = useState<PlaygroundScreen>("index");
@@ -137,6 +141,15 @@ export function PlaygroundIndex({ onBack }: PlaygroundIndexProps) {
             onBack={() => setCurrentScreen("index")}
           />
         );
+
+      case "stepper":
+        return <StepperShowcase />;
+
+      case "newOperation":
+        return <FactoringNewOperationScreen />;
+
+      case "operationCard":
+        return <OperationCardShowcase />;
 
       default:
         return (
@@ -360,6 +373,84 @@ export function PlaygroundIndex({ onBack }: PlaygroundIndexProps) {
                           className="w-full bg-[#84cc16] hover:bg-[#65a30d] text-white"
                         >
                           Ver Pantalla
+                        </Button>
+                      </CardContent>
+                    </Card>
+
+                    {/* Stepper Screen */}
+                    <Card className="hover:shadow-lg transition-shadow cursor-pointer border-slate-200">
+                      <CardHeader>
+                        <div className="flex items-start justify-between mb-2">
+                          <div className="p-2 rounded-lg bg-[#84cc16]/10">
+                            <GitBranch className="h-5 w-5 text-[#84cc16]" />
+                          </div>
+                          <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
+                            Completo
+                          </Badge>
+                        </div>
+                        <CardTitle className="text-lg">Step Indicator Showcase</CardTitle>
+                        <CardDescription>
+                          Componente oficial del DSM para procesos multi-paso.
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <Button
+                          onClick={() => setCurrentScreen("stepper")}
+                          className="w-full bg-[#84cc16] hover:bg-[#65a30d] text-white"
+                        >
+                          Ver Pantalla
+                        </Button>
+                      </CardContent>
+                    </Card>
+
+                    {/* New Operation Screen */}
+                    <Card className="hover:shadow-lg transition-shadow cursor-pointer border-slate-200">
+                      <CardHeader>
+                        <div className="flex items-start justify-between mb-2">
+                          <div className="p-2 rounded-lg bg-[#84cc16]/10">
+                            <FileText className="h-5 w-5 text-[#84cc16]" />
+                          </div>
+                          <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
+                            Completo
+                          </Badge>
+                        </div>
+                        <CardTitle className="text-lg">New Operation Screen</CardTitle>
+                        <CardDescription>
+                          Pantalla para crear nuevas operaciones de factoring.
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <Button
+                          onClick={() => setCurrentScreen("newOperation")}
+                          className="w-full bg-[#84cc16] hover:bg-[#65a30d] text-white"
+                        >
+                          Ver Pantalla
+                        </Button>
+                      </CardContent>
+                    </Card>
+
+                    {/* Operation Card Showcase */}
+                    <Card className="hover:shadow-lg transition-shadow cursor-pointer border-slate-200">
+                      <CardHeader>
+                        <div className="flex items-start justify-between mb-2">
+                          <div className="p-2 rounded-lg bg-[#84cc16]/10">
+                            <LayoutGrid className="h-5 w-5 text-[#84cc16]" />
+                          </div>
+                          <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
+                            Nuevo
+                          </Badge>
+                        </div>
+                        <CardTitle className="text-lg">Operation Detail Card</CardTitle>
+                        <CardDescription>
+                          Componente visual para detalles de operación con gráficos.
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <Button
+                          onClick={() => setCurrentScreen("operationCard")}
+                          className="w-full bg-[#84cc16] hover:bg-[#65a30d] text-white"
+                        >
+                          Ver Componente
                         </Button>
                       </CardContent>
                     </Card>

@@ -11,11 +11,8 @@ export { ChangelogPage } from "./ChangelogPage";
 
 // Actions
 export { ButtonPage } from "./ButtonPage";
-export { ButtonPageNew } from "./ButtonPageNew";
 export { TogglePage } from "./TogglePage";
-export { TogglePageNew } from "./TogglePageNew";
 export { ToggleGroupPage } from "./ToggleGroupPage";
-export { ToggleGroupPageNew } from "./ToggleGroupPageNew";
 
 // Forms
 export { InputPage } from "./InputPage";

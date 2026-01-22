@@ -12,11 +12,8 @@ import {
   HomePage,
   DSMDashboardPage,
   ButtonPage,
-  ButtonPageNew,
   TogglePage,
-  TogglePageNew,
   ToggleGroupPage,
-  ToggleGroupPageNew,
   AccessibilityPage,
   BrandLayoutPage,
   ThemeCustomizerPage,
@@ -33,43 +30,28 @@ import {
   NavigationMenuPage,
   ContextMenuPage,
   InputPage,
-  InputPageNew,
   InputFilePage,
   TextareaPage,
-  TextareaPageNew,
   TextareaAutoresizePage,
   SelectPage,
-  SelectPageNew,
   CheckboxPage,
-  CheckboxPageNew,
   RadioGroupPage,
-  RadioGroupPageNew,
   SwitchPage,
-  SwitchPageNew,
   SliderPage,
-  SliderPageNew,
   CalendarPage,
-  CalendarPageNew,
   LabelPage,
-  LabelPageNew,
   CardPage,
-  CardPageNew,
   BadgePage,
-  BadgePageNew,
   TablePage,
-  TablePageNew,
   AvatarPage,
   SeparatorPage,
   TabsPage,
-  TabsPageNew,
   BreadcrumbPage,
   CommandPage,
   DropdownMenuPage,
   PaginationPage,
   AlertPage,
-  AlertPageNew,
   DialogPage,
-  DialogPageNew,
   TooltipPage,
   ProgressPage,
   SkeletonPage,
@@ -104,10 +86,6 @@ import {
   CFDashboardPage,
   AdminPortalPage,
   GridShowcasePage,
-  DatePickerPageNew,
-  ComboboxPageNew,
-  FormPageNew,
-  InputOTPPageNew,
   StatusKPIsPage,
   SidebarShowcasePage,
   MultiStepWizardPage,
@@ -150,73 +128,73 @@ export function PageRenderer({ pageId }: PageRendererProps) {
       
     // ===== ACTIONS =====
     case "button":
-      return <ButtonPageNew />;
+      return <ButtonPage />;
     case "button-new":
-      return <ButtonPageNew />;
+      return <ButtonPage />;
     case "toggle":
-      return <TogglePageNew />;
+      return <TogglePage />;
     case "toggle-group":
-      return <ToggleGroupPageNew />;
+      return <ToggleGroupPage />;
 
     // ===== FORMS =====
     case "input":
       return <InputPage />;
     case "input-new":
-      return <InputPageNew />;
+      return <InputPage />;
     case "input-file":
       return <InputFilePage />;
     case "textarea":
       return <TextareaPage />;
     case "textarea-new":
-      return <TextareaPageNew />;
+      return <TextareaPage />;
     case "textarea-autoresize":
       return <TextareaAutoresizePage />;
     case "select":
       return <SelectPage />;
     case "select-new":
-      return <SelectPageNew />;
+      return <SelectPage />;
     case "checkbox":
       return <CheckboxPage />;
     case "checkbox-new":
-      return <CheckboxPageNew />;
+      return <CheckboxPage />;
     case "radio-group":
-      return <RadioGroupPageNew />;
+      return <RadioGroupPage />;
     case "switch":
-      return <SwitchPageNew />;
+      return <SwitchPage />;
     case "slider":
-      return <SliderPageNew />;
+      return <SliderPage />;
     case "calendar":
       return <CalendarPage />;
     case "calendar-new":
-      return <CalendarPageNew />;
+      return <CalendarPage />;
     case "label":
-      return <LabelPageNew />;
+      return <LabelPage />;
     case "date-picker":
       return <DatePickerPage />;
     case "date-picker-new":
-      return <DatePickerPageNew />;
+      return <DatePickerPage />;
     case "date-range-picker":
       return <DateRangePickerPage />;
     case "combobox":
       return <ComboboxPage />;
     case "combobox-new":
-      return <ComboboxPageNew />;
+      return <ComboboxPage />;
     case "multi-select":
       return <MultiSelectPage />;
     case "form":
       return <FormPage />;
     case "form-new":
-      return <FormPageNew />;
+      return <FormPage />;
     case "input-otp":
       return <InputOTPPage />;
     case "input-otp-new":
-      return <InputOTPPageNew />;
+      return <InputOTPPage />;
 
     // ===== NAVIGATION =====
     case "tabs":
       return <TabsPage />;
     case "tabs-new":
-      return <TabsPageNew />;
+      return <TabsPage />;
     case "breadcrumb":
       return <BreadcrumbPage />;
     case "command":
@@ -236,15 +214,15 @@ export function PageRenderer({ pageId }: PageRendererProps) {
     case "card":
       return <CardPage />;
     case "card-new":
-      return <CardPageNew />;
+      return <CardPage />;
     case "badge":
       return <BadgePage />;
     case "badge-new":
-      return <BadgePageNew />;
+      return <BadgePage />;
     case "table":
       return <TablePage />;
     case "table-new":
-      return <TablePageNew />;
+      return <TablePage />;
     case "avatar":
       return <AvatarPage />;
     case "separator":
@@ -256,11 +234,11 @@ export function PageRenderer({ pageId }: PageRendererProps) {
     case "alert":
       return <AlertPage />;
     case "alert-new":
-      return <AlertPageNew />;
+      return <AlertPage />;
     case "dialog":
       return <DialogPage />;
     case "dialog-new":
-      return <DialogPageNew />;
+      return <DialogPage />;
     case "tooltip":
       return <TooltipPage />;
     case "progress":

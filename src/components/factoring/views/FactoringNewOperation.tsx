@@ -417,7 +417,7 @@ export function FactoringNewOperation({ onBack, onStartOperation }: FactoringNew
         </Tabs>
 
         {/* Floating Summary Footer */}
-        <div className="fixed bottom-0 left-0 right-0 bg-secondary border-t border-zinc-700 shadow-2xl z-50">
+        <div className="fixed bottom-8 left-8 right-8 bg-secondary border border-zinc-700 shadow-2xl z-50 rounded-2xl">
           <div className="max-w-[1600px] mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-8 text-white">
@@ -448,7 +448,7 @@ export function FactoringNewOperation({ onBack, onStartOperation }: FactoringNew
               <div className="flex items-center gap-3">
                 <Button 
                   variant="outline" 
-                  className="bg-white text-secondary border-white hover:bg-zinc-100"
+                  className="text-white border-white/20 hover:bg-white/10 hover:text-white bg-transparent"
                 >
                   <X className="h-4 w-4 mr-2" />
                   Desactivar todas
