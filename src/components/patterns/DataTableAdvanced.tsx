@@ -7,14 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Input } from "../ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,15 +17,8 @@ import {
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "../ui/pagination";
-import { MoreHorizontal, Search, Filter, Download } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
+import { MasterDataGrid } from "./MasterDataGrid";
 
 const mockInvoices = [
   {
@@ -78,17 +63,19 @@ const mockInvoices = [
   },
 ];
 
-const statusConfig = {
-  approved: { label: "Aprobada", variant: "default" as const },
-  pending: { label: "Pendiente", variant: "secondary" as const },
-  review: { label: "En Revisión", variant: "outline" as const },
-  rejected: { label: "Rechazada", variant: "destructive" as const },
-  paid: { label: "Pagada", variant: "default" as const },
+const statusConfig: Record<string, { label: string; variant: "default" | "secondary" | "outline" | "destructive" }> = {
+  approved: { label: "Aprobada", variant: "default" },
+  pending: { label: "Pendiente", variant: "secondary" },
+  review: { label: "En Revisión", variant: "outline" },
+  rejected: { label: "Rechazada", variant: "destructive" },
+  paid: { label: "Pagada", variant: "default" },
 };
 
 export function DataTableAdvanced() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const filteredInvoices = mockInvoices.filter((invoice) => {
     const matchesSearch =
@@ -99,122 +86,95 @@ export function DataTableAdvanced() {
     return matchesSearch && matchesStatus;
   });
 
+  const totalPages = Math.ceil(filteredInvoices.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedInvoices = filteredInvoices.slice(startIndex, startIndex + itemsPerPage);
+
   return (
-    <div className="space-y-4">
-      {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Buscar por cliente o número de factura..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
-          />
+    <MasterDataGrid
+      title="Facturas Recientes"
+      description="Gestión de facturas y estados de pago"
+      searchQuery={searchQuery}
+      onSearchChange={setSearchQuery}
+      searchPlaceholder="Buscar por cliente o número..."
+      
+      filterOptions={[
+        {
+          label: "Estado",
+          value: statusFilter,
+          options: [
+            { label: "Todos los estados", value: "all" },
+            { label: "Pendiente", value: "pending" },
+            { label: "En Revisión", value: "review" },
+            { label: "Aprobada", value: "approved" },
+            { label: "Rechazada", value: "rejected" },
+            { label: "Pagada", value: "paid" },
+          ]
+        }
+      ]}
+      onFilterChange={(_, val) => setStatusFilter(val)}
+      onResetFilters={() => setStatusFilter("all")}
+      
+      currentPage={currentPage}
+      totalPages={totalPages}
+      onPageChange={setCurrentPage}
+      totalItems={filteredInvoices.length}
+      itemsPerPage={itemsPerPage}
+      startIndex={startIndex}
+    >
+        <div className="border-t">
+            <Table>
+            <TableHeader>
+                <TableRow>
+                <TableHead>N° Factura</TableHead>
+                <TableHead>Cliente</TableHead>
+                <TableHead>Monto</TableHead>
+                <TableHead>Fecha Emisión</TableHead>
+                <TableHead>Vencimiento</TableHead>
+                <TableHead>Estado</TableHead>
+                <TableHead className="text-right">Acciones</TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                {paginatedInvoices.map((invoice) => (
+                <TableRow key={invoice.id}>
+                    <TableCell className="font-medium">{invoice.id}</TableCell>
+                    <TableCell>{invoice.client}</TableCell>
+                    <TableCell>
+                    ${invoice.amount.toLocaleString("es-CL")}
+                    </TableCell>
+                    <TableCell>{invoice.date}</TableCell>
+                    <TableCell>{invoice.dueDate}</TableCell>
+                    <TableCell>
+                    <Badge variant={statusConfig[invoice.status].variant}>
+                        {statusConfig[invoice.status].label}
+                    </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                            <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>Ver detalles</DropdownMenuItem>
+                        <DropdownMenuItem>Descargar PDF</DropdownMenuItem>
+                        <DropdownMenuItem>Aprobar</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="text-destructive">
+                            Rechazar
+                        </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    </TableCell>
+                </TableRow>
+                ))}
+            </TableBody>
+            </Table>
         </div>
-        <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-full sm:w-[180px]">
-            <SelectValue placeholder="Estado" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Todos los estados</SelectItem>
-            <SelectItem value="pending">Pendiente</SelectItem>
-            <SelectItem value="review">En Revisión</SelectItem>
-            <SelectItem value="approved">Aprobada</SelectItem>
-            <SelectItem value="rejected">Rechazada</SelectItem>
-            <SelectItem value="paid">Pagada</SelectItem>
-          </SelectContent>
-        </Select>
-        <Button variant="outline" size="icon">
-          <Filter className="h-4 w-4" />
-        </Button>
-        <Button variant="outline" size="icon">
-          <Download className="h-4 w-4" />
-        </Button>
-      </div>
-
-      {/* Table */}
-      <div className="border rounded-lg">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>N° Factura</TableHead>
-              <TableHead>Cliente</TableHead>
-              <TableHead>Monto</TableHead>
-              <TableHead>Fecha Emisión</TableHead>
-              <TableHead>Vencimiento</TableHead>
-              <TableHead>Estado</TableHead>
-              <TableHead className="text-right">Acciones</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {filteredInvoices.map((invoice) => (
-              <TableRow key={invoice.id}>
-                <TableCell className="font-medium">{invoice.id}</TableCell>
-                <TableCell>{invoice.client}</TableCell>
-                <TableCell>
-                  ${invoice.amount.toLocaleString("es-CL")}
-                </TableCell>
-                <TableCell>{invoice.date}</TableCell>
-                <TableCell>{invoice.dueDate}</TableCell>
-                <TableCell>
-                  <Badge variant={statusConfig[invoice.status].variant}>
-                    {statusConfig[invoice.status].label}
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem>Ver detalles</DropdownMenuItem>
-                      <DropdownMenuItem>Descargar PDF</DropdownMenuItem>
-                      <DropdownMenuItem>Aprobar</DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem className="text-destructive">
-                        Rechazar
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-
-      {/* Pagination */}
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">
-          Mostrando {filteredInvoices.length} de {mockInvoices.length} facturas
-        </p>
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href="#" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#" isActive>
-                1
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">2</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">3</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      </div>
-    </div>
+    </MasterDataGrid>
   );
 }

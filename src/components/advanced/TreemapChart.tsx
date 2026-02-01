@@ -117,8 +117,9 @@ export function TreemapChart({
   colors = DEFAULT_COLORS
 }: TreemapChartProps) {
   const content = (
-    <ResponsiveContainer width="100%" height={height}>
-      <Treemap
+    <div className="w-full min-w-0" style={{ height }}>
+      <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+        <Treemap
         data={data}
         dataKey="size"
         stroke="#fff"
@@ -143,6 +144,7 @@ export function TreemapChart({
         />
       </Treemap>
     </ResponsiveContainer>
+    </div>
   );
 
   if (title || description) {

@@ -112,7 +112,7 @@ const CustomTooltip = ({ active, payload }: any) => {
       <div className="bg-card border border-border rounded-lg p-3 shadow-lg elevation-2">
         <p className="font-semibold mb-1">{payload[0].payload.month || payload[0].payload.category || payload[0].name}</p>
         {payload.map((entry: any, index: number) => (
-          <p key={index} className="text-sm" style={{ color: entry.color }}>
+          <p key={index} className="text-sm text-foreground">
             {entry.name}: {entry.value.toLocaleString()}
           </p>
         ))}
@@ -162,47 +162,49 @@ export function ChartShowcase() {
               </div>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={350}>
-                <LineChart data={lineData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke={border} />
-                  <XAxis 
-                    dataKey="month" 
-                    tick={{ fill: muted }}
-                  />
-                  <YAxis 
-                    tick={{ fill: muted }}
-                  />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="aprobadas"
-                    stroke={primary}
-                    strokeWidth={3}
-                    name="Aprobadas"
-                    dot={{ fill: primary, r: 4 }}
-                    activeDot={{ r: 6 }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="rechazadas"
-                    stroke={destructive}
-                    strokeWidth={3}
-                    name="Rechazadas"
-                    dot={{ fill: destructive, r: 4 }}
-                    activeDot={{ r: 6 }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="pendientes"
-                    stroke={warning}
-                    strokeWidth={3}
-                    name="Pendientes"
-                    dot={{ fill: warning, r: 4 }}
-                    activeDot={{ r: 6 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+              <div className="w-full h-[350px] min-w-0" style={{ minHeight: '350px' }}>
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
+                  <LineChart data={lineData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke={border} />
+                    <XAxis 
+                      dataKey="month" 
+                      tick={{ fill: muted }}
+                    />
+                    <YAxis 
+                      tick={{ fill: muted }}
+                    />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Legend />
+                    <Line
+                      type="monotone"
+                      dataKey="aprobadas"
+                      stroke={primary}
+                      strokeWidth={3}
+                      name="Aprobadas"
+                      dot={{ fill: primary, r: 4 }}
+                      activeDot={{ r: 6 }}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="rechazadas"
+                      stroke={destructive}
+                      strokeWidth={3}
+                      name="Rechazadas"
+                      dot={{ fill: destructive, r: 4 }}
+                      activeDot={{ r: 6 }}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="pendientes"
+                      stroke={warning}
+                      strokeWidth={3}
+                      name="Pendientes"
+                      dot={{ fill: warning, r: 4 }}
+                      activeDot={{ r: 6 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
             </CardContent>
           </Card>
 
@@ -214,21 +216,23 @@ export function ChartShowcase() {
                 <CardDescription>type="monotone"</CardDescription>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={250}>
-                  <LineChart data={lineData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke={border} />
-                    <XAxis dataKey="month" tick={{ fill: muted }} />
-                    <YAxis tick={{ fill: muted }} />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Line
-                      type="monotone"
-                      dataKey="aprobadas"
-                      stroke={primary}
-                      strokeWidth={2}
-                      dot={false}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
+                <div className="w-full h-[250px] min-w-0" style={{ minHeight: '250px' }}>
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
+                    <LineChart data={lineData}>
+                      <CartesianGrid strokeDasharray="3 3" stroke={border} />
+                      <XAxis dataKey="month" tick={{ fill: muted }} />
+                      <YAxis tick={{ fill: muted }} />
+                      <Tooltip content={<CustomTooltip />} />
+                      <Line
+                        type="monotone"
+                        dataKey="aprobadas"
+                        stroke={primary}
+                        strokeWidth={2}
+                        dot={false}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
               </CardContent>
             </Card>
 
@@ -238,21 +242,23 @@ export function ChartShowcase() {
                 <CardDescription>type="linear"</CardDescription>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={250}>
-                  <LineChart data={lineData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke={border} />
-                    <XAxis dataKey="month" tick={{ fill: muted }} />
-                    <YAxis tick={{ fill: muted }} />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Line
-                      type="linear"
-                      dataKey="aprobadas"
-                      stroke={chart2}
-                      strokeWidth={2}
-                      dot={{ fill: chart2, r: 5 }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
+                <div className="w-full h-[250px] min-w-0" style={{ minHeight: '250px' }}>
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
+                    <LineChart data={lineData}>
+                      <CartesianGrid strokeDasharray="3 3" stroke={border} />
+                      <XAxis dataKey="month" tick={{ fill: muted }} />
+                      <YAxis tick={{ fill: muted }} />
+                      <Tooltip content={<CustomTooltip />} />
+                      <Line
+                        type="linear"
+                        dataKey="aprobadas"
+                        stroke={chart2}
+                        strokeWidth={2}
+                        dot={{ fill: chart2, r: 5 }}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -274,27 +280,29 @@ export function ChartShowcase() {
               </div>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={350}>
-                <RechartsBarChart data={barData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke={border} />
-                  <XAxis 
-                    dataKey="category" 
-                    tick={{ fill: muted }}
-                  />
-                  <YAxis 
-                    tick={{ fill: muted }}
-                  />
-                  <Tooltip 
-                    content={<CustomTooltip />}
-                    formatter={(value: number) => `$${(value / 1000000).toFixed(1)}M`}
-                  />
-                  <Bar 
-                    dataKey="monto" 
-                    fill={primary} 
-                    radius={[8, 8, 0, 0]}
-                  />
-                </RechartsBarChart>
-              </ResponsiveContainer>
+              <div className="w-full h-[350px] min-w-0">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                  <RechartsBarChart data={barData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke={border} />
+                    <XAxis 
+                      dataKey="category" 
+                      tick={{ fill: muted }}
+                    />
+                    <YAxis 
+                      tick={{ fill: muted }}
+                    />
+                    <Tooltip 
+                      content={<CustomTooltip />}
+                      formatter={(value: number) => `$${(value / 1000000).toFixed(1)}M`}
+                    />
+                    <Bar 
+                      dataKey="monto" 
+                      fill={primary} 
+                      radius={[8, 8, 0, 0]}
+                    />
+                  </RechartsBarChart>
+                </ResponsiveContainer>
+              </div>
             </CardContent>
           </Card>
 
@@ -306,20 +314,22 @@ export function ChartShowcase() {
                 <CardDescription>Operaciones por región</CardDescription>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <RechartsBarChart data={horizontalBarData} layout="vertical">
-                    <CartesianGrid strokeDasharray="3 3" stroke={border} />
-                    <XAxis type="number" tick={{ fill: muted }} />
-                    <YAxis 
-                      type="category" 
-                      dataKey="region" 
-                      width={100}
-                      tick={{ fill: muted }}
-                    />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Bar dataKey="value" fill={success} radius={[0, 8, 8, 0]} />
-                  </RechartsBarChart>
-                </ResponsiveContainer>
+                <div className="w-full h-[300px] min-w-0">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                    <RechartsBarChart data={horizontalBarData} layout="vertical">
+                      <CartesianGrid strokeDasharray="3 3" stroke={border} />
+                      <XAxis type="number" tick={{ fill: muted }} />
+                      <YAxis 
+                        type="category" 
+                        dataKey="region" 
+                        width={100}
+                        tick={{ fill: muted }}
+                      />
+                      <Tooltip content={<CustomTooltip />} />
+                      <Bar dataKey="value" fill={success} radius={[0, 8, 8, 0]} />
+                    </RechartsBarChart>
+                  </ResponsiveContainer>
+                </div>
               </CardContent>
             </Card>
 
@@ -329,18 +339,20 @@ export function ChartShowcase() {
                 <CardDescription>Por tamaño de empresa</CardDescription>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <RechartsBarChart data={stackedBarData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke={border} />
-                    <XAxis dataKey="month" tick={{ fill: muted }} />
-                    <YAxis tick={{ fill: muted }} />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Legend />
-                    <Bar dataKey="pequeña" stackId="a" fill={chart2} radius={[0, 0, 0, 0]} />
-                    <Bar dataKey="mediana" stackId="a" fill={primary} radius={[0, 0, 0, 0]} />
-                    <Bar dataKey="grande" stackId="a" fill={success} radius={[8, 8, 0, 0]} />
-                  </RechartsBarChart>
-                </ResponsiveContainer>
+                <div className="w-full h-[300px] min-w-0">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                    <RechartsBarChart data={stackedBarData}>
+                      <CartesianGrid strokeDasharray="3 3" stroke={border} />
+                      <XAxis dataKey="month" tick={{ fill: muted }} />
+                      <YAxis tick={{ fill: muted }} />
+                      <Tooltip content={<CustomTooltip />} />
+                      <Legend />
+                      <Bar dataKey="pequeña" stackId="a" fill={chart2} radius={[0, 0, 0, 0]} />
+                      <Bar dataKey="mediana" stackId="a" fill={primary} radius={[0, 0, 0, 0]} />
+                      <Bar dataKey="grande" stackId="a" fill={success} radius={[8, 8, 0, 0]} />
+                    </RechartsBarChart>
+                  </ResponsiveContainer>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -362,27 +374,29 @@ export function ChartShowcase() {
               </div>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={350}>
-                <PieChart>
-                  <Pie
-                    data={pieData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) =>
-                      `${name}: ${(percent * 100).toFixed(0)}%`
-                    }
-                    outerRadius={120}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {pieData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip content={<CustomTooltip />} />
-                </PieChart>
-              </ResponsiveContainer>
+              <div className="w-full h-[350px] min-w-0">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                  <PieChart>
+                    <Pie
+                      data={pieData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={({ name, percent }) =>
+                        `${name}: ${(percent * 100).toFixed(0)}%`
+                      }
+                      outerRadius={120}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
+                      {pieData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip content={<CustomTooltip />} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
             </CardContent>
           </Card>
 
@@ -398,29 +412,31 @@ export function ChartShowcase() {
               </div>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={350}>
-                <PieChart>
-                  <Pie
-                    data={donutData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={true}
-                    label={({ name, value }) =>
-                      `${name}: $${(value / 1000).toFixed(0)}K`
-                    }
-                    innerRadius={70}
-                    outerRadius={120}
-                    fill="#8884d8"
-                    dataKey="value"
-                    paddingAngle={2}
-                  >
-                    {donutData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip content={<CustomTooltip />} />
-                </PieChart>
-              </ResponsiveContainer>
+              <div className="w-full h-[350px] min-w-0">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                  <PieChart>
+                    <Pie
+                      data={donutData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={true}
+                      label={({ name, value }) =>
+                        `${name}: $${(value / 1000).toFixed(0)}K`
+                      }
+                      innerRadius={70}
+                      outerRadius={120}
+                      fill="#8884d8"
+                      dataKey="value"
+                      paddingAngle={2}
+                    >
+                      {donutData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip content={<CustomTooltip />} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -441,47 +457,49 @@ export function ChartShowcase() {
               </div>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={350}>
-                <AreaChart data={areaData}>
-                  <defs>
-                    <linearGradient id="colorCartera" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={primary} stopOpacity={0.8}/>
-                      <stop offset="95%" stopColor={primary} stopOpacity={0.1}/>
-                    </linearGradient>
-                    <linearGradient id="colorProyectado" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={chart2} stopOpacity={0.6}/>
-                      <stop offset="95%" stopColor={chart2} stopOpacity={0.05}/>
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke={border} />
-                  <XAxis dataKey="date" tick={{ fill: muted }} />
-                  <YAxis tick={{ fill: muted }} />
-                  <Tooltip 
-                    content={<CustomTooltip />}
-                    formatter={(value: number) => `$${(value / 1000000).toFixed(1)}M`}
-                  />
-                  <Legend />
-                  <Area
-                    type="monotone"
-                    dataKey="cartera"
-                    stroke={primary}
-                    strokeWidth={2}
-                    fillOpacity={1}
-                    fill="url(#colorCartera)"
-                    name="Cartera Real"
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="proyectado"
-                    stroke={chart2}
-                    strokeWidth={2}
-                    strokeDasharray="5 5"
-                    fillOpacity={1}
-                    fill="url(#colorProyectado)"
-                    name="Proyectado"
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
+              <div className="w-full h-[350px] min-w-0">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                  <AreaChart data={areaData}>
+                    <defs>
+                      <linearGradient id="colorCartera" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor={primary} stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor={primary} stopOpacity={0.1}/>
+                      </linearGradient>
+                      <linearGradient id="colorProyectado" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor={chart2} stopOpacity={0.6}/>
+                        <stop offset="95%" stopColor={chart2} stopOpacity={0.05}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke={border} />
+                    <XAxis dataKey="date" tick={{ fill: muted }} />
+                    <YAxis tick={{ fill: muted }} />
+                    <Tooltip 
+                      content={<CustomTooltip />}
+                      formatter={(value: number) => `$${(value / 1000000).toFixed(1)}M`}
+                    />
+                    <Legend />
+                    <Area
+                      type="monotone"
+                      dataKey="cartera"
+                      stroke={primary}
+                      strokeWidth={2}
+                      fillOpacity={1}
+                      fill="url(#colorCartera)"
+                      name="Cartera Real"
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="proyectado"
+                      stroke={chart2}
+                      strokeWidth={2}
+                      strokeDasharray="5 5"
+                      fillOpacity={1}
+                      fill="url(#colorProyectado)"
+                      name="Proyectado"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
             </CardContent>
           </Card>
 
@@ -497,29 +515,31 @@ export function ChartShowcase() {
               </div>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={350}>
-                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
-                  <PolarGrid stroke={border} />
-                  <PolarAngleAxis 
-                    dataKey="subject" 
-                    tick={{ fill: muted }}
-                  />
-                  <PolarRadiusAxis 
-                    angle={90} 
-                    domain={[0, 100]}
-                    tick={{ fill: muted }}
-                  />
-                  <Radar
-                    name="Indicador"
-                    dataKey="A"
-                    stroke={primary}
-                    fill={primary}
-                    fillOpacity={0.4}
-                    strokeWidth={2}
-                  />
-                  <Tooltip content={<CustomTooltip />} />
-                </RadarChart>
-              </ResponsiveContainer>
+              <div className="w-full h-[350px] min-w-0">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                  <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
+                    <PolarGrid stroke={border} />
+                    <PolarAngleAxis 
+                      dataKey="subject" 
+                      tick={{ fill: muted }}
+                    />
+                    <PolarRadiusAxis 
+                      angle={90} 
+                      domain={[0, 100]}
+                      tick={{ fill: muted }}
+                    />
+                    <Radar
+                      name="Indicador"
+                      dataKey="A"
+                      stroke={primary}
+                      fill={primary}
+                      fillOpacity={0.4}
+                      strokeWidth={2}
+                    />
+                    <Tooltip content={<CustomTooltip />} />
+                  </RadarChart>
+                </ResponsiveContainer>
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -538,41 +558,43 @@ export function ChartShowcase() {
             </div>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={400}>
-              <ComposedChart data={mixedData}>
-                <CartesianGrid strokeDasharray="3 3" stroke={border} />
-                <XAxis dataKey="month" tick={{ fill: muted }} />
-                <YAxis 
-                  yAxisId="left"
-                  tick={{ fill: muted }}
-                  label={{ value: 'Operaciones', angle: -90, position: 'insideLeft' }}
-                />
-                <YAxis 
-                  yAxisId="right"
-                  orientation="right"
-                  tick={{ fill: muted }}
-                  label={{ value: 'Monto (USD)', angle: 90, position: 'insideRight' }}
-                />
-                <Tooltip content={<CustomTooltip />} />
-                <Legend />
-                <Bar 
-                  yAxisId="left"
-                  dataKey="operaciones" 
-                  fill={primary} 
-                  radius={[8, 8, 0, 0]}
-                  name="N° Operaciones"
-                />
-                <Line
-                  yAxisId="right"
-                  type="monotone"
-                  dataKey="monto"
-                  stroke={chart2}
-                  strokeWidth={3}
-                  dot={{ fill: chart2, r: 5 }}
-                  name="Monto Total"
-                />
-              </ComposedChart>
-            </ResponsiveContainer>
+            <div className="w-full h-[400px] min-w-0">
+              <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                <ComposedChart data={mixedData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke={border} />
+                  <XAxis dataKey="month" tick={{ fill: muted }} />
+                  <YAxis 
+                    yAxisId="left"
+                    tick={{ fill: muted }}
+                    label={{ value: 'Operaciones', angle: -90, position: 'insideLeft' }}
+                  />
+                  <YAxis 
+                    yAxisId="right"
+                    orientation="right"
+                    tick={{ fill: muted }}
+                    label={{ value: 'Monto (USD)', angle: 90, position: 'insideRight' }}
+                  />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Legend />
+                  <Bar 
+                    yAxisId="left"
+                    dataKey="operaciones" 
+                    fill={primary} 
+                    radius={[8, 8, 0, 0]}
+                    name="N° Operaciones"
+                  />
+                  <Line
+                    yAxisId="right"
+                    type="monotone"
+                    dataKey="monto"
+                    stroke={chart2}
+                    strokeWidth={3}
+                    dot={{ fill: chart2, r: 5 }}
+                    name="Monto Total"
+                  />
+                </ComposedChart>
+              </ResponsiveContainer>
+            </div>
           </CardContent>
         </Card>
       </TabsContent>
@@ -591,21 +613,23 @@ export function ChartShowcase() {
                 </div>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={200}>
-                  <LineChart data={lineData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke={border} />
-                    <XAxis dataKey="month" tick={{ fill: muted, fontSize: 10 }} />
-                    <YAxis tick={{ fill: muted, fontSize: 10 }} />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Line
-                      type="monotone"
-                      dataKey="aprobadas"
-                      stroke={primary}
-                      strokeWidth={2}
-                      dot={false}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
+                <div className="w-full h-[200px] min-w-0">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                    <LineChart data={lineData}>
+                      <CartesianGrid strokeDasharray="3 3" stroke={border} />
+                      <XAxis dataKey="month" tick={{ fill: muted, fontSize: 10 }} />
+                      <YAxis tick={{ fill: muted, fontSize: 10 }} />
+                      <Tooltip content={<CustomTooltip />} />
+                      <Line
+                        type="monotone"
+                        dataKey="aprobadas"
+                        stroke={primary}
+                        strokeWidth={2}
+                        dot={false}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
               </CardContent>
             </Card>
 
@@ -618,15 +642,17 @@ export function ChartShowcase() {
                 </div>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <RechartsBarChart data={barData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke={border} />
-                    <XAxis dataKey="category" tick={{ fill: muted }} />
-                    <YAxis tick={{ fill: muted }} />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Bar dataKey="count" fill={chart2} radius={[8, 8, 0, 0]} />
-                  </RechartsBarChart>
-                </ResponsiveContainer>
+                <div className="w-full h-[300px] min-w-0">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                    <RechartsBarChart data={barData}>
+                      <CartesianGrid strokeDasharray="3 3" stroke={border} />
+                      <XAxis dataKey="category" tick={{ fill: muted }} />
+                      <YAxis tick={{ fill: muted }} />
+                      <Tooltip content={<CustomTooltip />} />
+                      <Bar dataKey="count" fill={chart2} radius={[8, 8, 0, 0]} />
+                    </RechartsBarChart>
+                  </ResponsiveContainer>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -640,28 +666,30 @@ export function ChartShowcase() {
               </div>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={500}>
-                <AreaChart data={areaData}>
-                  <defs>
-                    <linearGradient id="largeGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={primary} stopOpacity={0.8}/>
-                      <stop offset="95%" stopColor={primary} stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke={border} />
-                  <XAxis dataKey="date" tick={{ fill: muted }} />
-                  <YAxis tick={{ fill: muted }} />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Area
-                    type="monotone"
-                    dataKey="cartera"
-                    stroke={primary}
-                    strokeWidth={3}
-                    fillOpacity={1}
-                    fill="url(#largeGradient)"
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
+              <div className="w-full h-[500px] min-w-0">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                  <AreaChart data={areaData}>
+                    <defs>
+                      <linearGradient id="largeGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor={primary} stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor={primary} stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke={border} />
+                    <XAxis dataKey="date" tick={{ fill: muted }} />
+                    <YAxis tick={{ fill: muted }} />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Area
+                      type="monotone"
+                      dataKey="cartera"
+                      stroke={primary}
+                      strokeWidth={3}
+                      fillOpacity={1}
+                      fill="url(#largeGradient)"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -694,33 +722,35 @@ export function ChartShowcase() {
               </div>
             </CardHeader>
             <CardContent className="pb-4">
-              <ResponsiveContainer width="100%" height={150}>
-                <LineChart data={lineData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke={border} opacity={0.3} />
-                  <XAxis 
-                    dataKey="month" 
-                    tick={{ fill: muted, fontSize: 10 }}
-                    tickLine={false}
-                  />
-                  <YAxis 
-                    tick={{ fill: muted, fontSize: 10 }}
-                    tickLine={false}
-                    width={30}
-                  />
-                  <Tooltip 
-                    content={<CustomTooltip />}
-                    cursor={{ stroke: primary, strokeWidth: 1 }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="aprobadas"
-                    stroke={primary}
-                    strokeWidth={2.5}
-                    dot={false}
-                    activeDot={{ r: 4, fill: primary }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+              <div className="w-full h-[150px] min-w-0">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                  <LineChart data={lineData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke={border} opacity={0.3} />
+                    <XAxis 
+                      dataKey="month" 
+                      tick={{ fill: muted, fontSize: 10 }}
+                      tickLine={false}
+                    />
+                    <YAxis 
+                      tick={{ fill: muted, fontSize: 10 }}
+                      tickLine={false}
+                      width={30}
+                    />
+                    <Tooltip 
+                      content={<CustomTooltip />}
+                      cursor={{ stroke: primary, strokeWidth: 1 }}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="aprobadas"
+                      stroke={primary}
+                      strokeWidth={2.5}
+                      dot={false}
+                      activeDot={{ r: 4, fill: primary }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
               <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
                 <span>Ene - Jun 2024</span>
                 <span className="font-medium text-foreground">+25% vs mes anterior</span>
@@ -737,38 +767,40 @@ export function ChartShowcase() {
               </div>
             </CardHeader>
             <CardContent className="pb-4">
-              <ResponsiveContainer width="100%" height={180}>
-                <RechartsBarChart 
-                  data={barData.slice(0, 5)} 
-                  layout="vertical"
-                  margin={{ top: 0, right: 10, left: 0, bottom: 0 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" stroke={border} opacity={0.3} horizontal={false} />
-                  <XAxis 
-                    type="number" 
-                    tick={{ fill: muted, fontSize: 10 }}
-                    tickLine={false}
-                    tickFormatter={(value) => `${value}`}
-                  />
-                  <YAxis 
-                    type="category" 
-                    dataKey="category" 
-                    tick={{ fill: muted, fontSize: 10 }}
-                    tickLine={false}
-                    width={80}
-                  />
-                  <Tooltip 
-                    content={<CustomTooltip />}
-                    cursor={{ fill: border, opacity: 0.2 }}
-                  />
-                  <Bar 
-                    dataKey="count" 
-                    fill={chart2} 
-                    radius={[0, 4, 4, 0]}
-                    maxBarSize={20}
-                  />
-                </RechartsBarChart>
-              </ResponsiveContainer>
+              <div className="w-full h-[180px] min-w-0">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                  <RechartsBarChart 
+                    data={barData.slice(0, 5)} 
+                    layout="vertical"
+                    margin={{ top: 0, right: 10, left: 0, bottom: 0 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke={border} opacity={0.3} horizontal={false} />
+                    <XAxis 
+                      type="number" 
+                      tick={{ fill: muted, fontSize: 10 }}
+                      tickLine={false}
+                      tickFormatter={(value) => `${value}`}
+                    />
+                    <YAxis 
+                      type="category" 
+                      dataKey="category" 
+                      tick={{ fill: muted, fontSize: 10 }}
+                      tickLine={false}
+                      width={80}
+                    />
+                    <Tooltip 
+                      content={<CustomTooltip />}
+                      cursor={{ fill: border, opacity: 0.2 }}
+                    />
+                    <Bar 
+                      dataKey="count" 
+                      fill={chart2} 
+                      radius={[0, 4, 4, 0]}
+                      maxBarSize={20}
+                    />
+                  </RechartsBarChart>
+                </ResponsiveContainer>
+              </div>
             </CardContent>
           </Card>
 
@@ -780,28 +812,30 @@ export function ChartShowcase() {
                 <CardTitle className="text-sm">Estados</CardTitle>
               </CardHeader>
               <CardContent className="pb-3">
-                <ResponsiveContainer width="100%" height={140}>
-                  <PieChart>
-                    <Pie
-                      data={pieData}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={30}
-                      outerRadius={50}
-                      fill="#8884d8"
-                      dataKey="value"
-                      label={false}
-                    >
-                      {pieData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                    <Tooltip 
-                      content={<CustomTooltip />}
-                      position={{ x: 0, y: 0 }}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
+                <div className="w-full h-[140px] min-w-0">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                    <PieChart>
+                      <Pie
+                        data={pieData}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={30}
+                        outerRadius={50}
+                        fill="#8884d8"
+                        dataKey="value"
+                        label={false}
+                      >
+                        {pieData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <Tooltip 
+                        content={<CustomTooltip />}
+                        position={{ x: 0, y: 0 }}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
                 <div className="space-y-1 mt-2">
                   {pieData.slice(0, 2).map((item, i) => (
                     <ChartLegendItem
@@ -823,38 +857,40 @@ export function ChartShowcase() {
                 <CardTitle className="text-sm">Tendencia</CardTitle>
               </CardHeader>
               <CardContent className="pb-3">
-                <ResponsiveContainer width="100%" height={140}>
-                  <AreaChart 
-                    data={lineData} 
-                    margin={{ top: 5, right: 0, left: -20, bottom: 0 }}
-                  >
-                    <defs>
-                      <linearGradient id="mobileGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor={success} stopOpacity={0.6}/>
-                        <stop offset="95%" stopColor={success} stopOpacity={0}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke={border} opacity={0.2} />
-                    <XAxis 
-                      dataKey="month" 
-                      tick={{ fill: muted, fontSize: 9 }}
-                      tickLine={false}
-                    />
-                    <YAxis hide />
-                    <Tooltip 
-                      content={<CustomTooltip />}
-                      cursor={{ stroke: success, strokeWidth: 1 }}
-                    />
-                    <Area
-                      type="monotone"
-                      dataKey="aprobadas"
-                      stroke={success}
-                      strokeWidth={2}
-                      fillOpacity={1}
-                      fill="url(#mobileGradient)"
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
+                <div className="w-full h-[140px] min-w-0">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                    <AreaChart 
+                      data={lineData} 
+                      margin={{ top: 5, right: 0, left: -20, bottom: 0 }}
+                    >
+                      <defs>
+                        <linearGradient id="mobileGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor={success} stopOpacity={0.6}/>
+                          <stop offset="95%" stopColor={success} stopOpacity={0}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" stroke={border} opacity={0.2} />
+                      <XAxis 
+                        dataKey="month" 
+                        tick={{ fill: muted, fontSize: 9 }}
+                        tickLine={false}
+                      />
+                      <YAxis hide />
+                      <Tooltip 
+                        content={<CustomTooltip />}
+                        cursor={{ stroke: success, strokeWidth: 1 }}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="aprobadas"
+                        stroke={success}
+                        strokeWidth={2}
+                        fillOpacity={1}
+                        fill="url(#mobileGradient)"
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
                 <div className="mt-2 text-xs text-center">
                   <span className="text-muted-foreground">Promedio: </span>
                   <span className="font-medium text-foreground">58.5</span>
@@ -873,28 +909,30 @@ export function ChartShowcase() {
                 </div>
                 <Badge variant="default" className="text-xs">+12%</Badge>
               </div>
-              <ResponsiveContainer width="100%" height={60}>
-                <AreaChart 
-                  data={lineData} 
-                  margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
-                >
-                  <defs>
-                    <linearGradient id="sparkGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={primary} stopOpacity={0.4}/>
-                      <stop offset="95%" stopColor={primary} stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <Area
-                    type="monotone"
-                    dataKey="aprobadas"
-                    stroke={primary}
-                    strokeWidth={1.5}
-                    fillOpacity={1}
-                    fill="url(#sparkGradient)"
-                    isAnimationActive={false}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
+              <div className="w-full h-[60px] min-w-0">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                  <AreaChart 
+                    data={lineData} 
+                    margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+                  >
+                    <defs>
+                      <linearGradient id="sparkGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor={primary} stopOpacity={0.4}/>
+                        <stop offset="95%" stopColor={primary} stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <Area
+                      type="monotone"
+                      dataKey="aprobadas"
+                      stroke={primary}
+                      strokeWidth={1.5}
+                      fillOpacity={1}
+                      fill="url(#sparkGradient)"
+                      isAnimationActive={false}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
             </CardContent>
           </Card>
 
@@ -907,28 +945,30 @@ export function ChartShowcase() {
               </div>
             </CardHeader>
             <CardContent className="pb-4">
-              <ResponsiveContainer width="100%" height={200}>
-                <RechartsBarChart 
-                  data={stackedBarData} 
-                  margin={{ top: 5, right: 5, left: -20, bottom: 0 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" stroke={border} opacity={0.3} />
-                  <XAxis 
-                    dataKey="month" 
-                    tick={{ fill: muted, fontSize: 10 }}
-                    tickLine={false}
-                  />
-                  <YAxis 
-                    tick={{ fill: muted, fontSize: 10 }}
-                    tickLine={false}
-                    width={30}
-                  />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Bar dataKey="pequeña" stackId="a" fill={chart2} radius={[0, 0, 0, 0]} maxBarSize={40} />
-                  <Bar dataKey="mediana" stackId="a" fill={primary} radius={[0, 0, 0, 0]} maxBarSize={40} />
-                  <Bar dataKey="grande" stackId="a" fill={success} radius={[4, 4, 0, 0]} maxBarSize={40} />
-                </RechartsBarChart>
-              </ResponsiveContainer>
+              <div className="w-full h-[200px] min-w-0">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                  <RechartsBarChart 
+                    data={stackedBarData} 
+                    margin={{ top: 5, right: 5, left: -20, bottom: 0 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke={border} opacity={0.3} />
+                    <XAxis 
+                      dataKey="month" 
+                      tick={{ fill: muted, fontSize: 10 }}
+                      tickLine={false}
+                    />
+                    <YAxis 
+                      tick={{ fill: muted, fontSize: 10 }}
+                      tickLine={false}
+                      width={30}
+                    />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Bar dataKey="pequeña" stackId="a" fill={chart2} radius={[0, 0, 0, 0]} maxBarSize={40} />
+                    <Bar dataKey="mediana" stackId="a" fill={primary} radius={[0, 0, 0, 0]} maxBarSize={40} />
+                    <Bar dataKey="grande" stackId="a" fill={success} radius={[4, 4, 0, 0]} maxBarSize={40} />
+                  </RechartsBarChart>
+                </ResponsiveContainer>
+              </div>
               {/* Manual legend for better mobile UX */}
               <div className="flex items-center justify-center gap-4 mt-3 flex-wrap">
                 <ChartLegendItem color="chart2" label="Pequeña" />

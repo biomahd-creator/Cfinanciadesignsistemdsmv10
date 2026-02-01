@@ -78,8 +78,8 @@ export function GaugeChart({
   const status = getStatus();
 
   const content = (
-    <div className="relative flex flex-col items-center justify-center">
-      <ResponsiveContainer width={size} height={size * 0.6}>
+    <div className="relative flex flex-col items-center justify-center min-w-0">
+      <ResponsiveContainer width={size} height={size * 0.6} minWidth={0} minHeight={0}>
         <PieChart>
           <Pie
             data={data}

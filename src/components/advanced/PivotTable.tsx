@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import {
   Select,
@@ -25,6 +24,7 @@ import {
 } from "../ui/dialog";
 import { Card } from "../ui/card";
 import { ArrowUpDown, Eye, TrendingUp, TrendingDown } from "lucide-react";
+import { MasterDataGrid } from "../patterns/MasterDataGrid";
 
 export interface PivotDataRow {
   [key: string]: string | number;
@@ -42,6 +42,7 @@ interface PivotTableProps {
   initialConfig?: PivotConfig;
   availableFields?: string[];
   onConfigChange?: (config: PivotConfig) => void;
+  title?: string;
 }
 
 type AggregatedData = {
@@ -59,6 +60,7 @@ export function PivotTable({
   initialConfig,
   availableFields,
   onConfigChange,
+  title
 }: PivotTableProps) {
   const defaultFields = availableFields || Object.keys(data[0] || {});
 
@@ -317,9 +319,15 @@ export function PivotTable({
         </div>
       </Card>
 
-      {/* Pivot Table */}
-      <div className="rounded-md border overflow-hidden">
-        <div className="overflow-x-auto">
+      {/* Pivot Table wrapped in MasterDataGrid */}
+      <MasterDataGrid
+        title={title}
+        showExport={false}
+        showRefresh={false}
+        showViewOptions={false}
+        totalItems={0} // Hide pagination
+      >
+        <div className="overflow-x-auto border-t">
           <div className="inline-block min-w-full align-middle">
             <Table>
               <TableHeader>
@@ -431,7 +439,7 @@ export function PivotTable({
             </Table>
           </div>
         </div>
-      </div>
+      </MasterDataGrid>
 
       {/* Mobile scroll indicator */}
       <div className="mt-2 text-xs text-muted-foreground text-center md:hidden">

@@ -56,9 +56,7 @@ export function ComposedPatternsSection() {
               Table + Input + Select + DropdownMenu + Badge + Pagination
             </p>
           </div>
-          <Card className="p-6">
-            <DataTableAdvanced />
-          </Card>
+          <DataTableAdvanced />
         </div>
 
         <Separator />

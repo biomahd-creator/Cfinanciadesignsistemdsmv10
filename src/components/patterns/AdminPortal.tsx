@@ -30,6 +30,7 @@ import {
   Activity,
   AlertTriangle
 } from "lucide-react";
+import { ReportsConsultation } from "./ReportsConsultation";
 
 /**
  * PORTAL ADMINISTRATIVO C-FINANCIA
@@ -60,6 +61,12 @@ interface Solicitud {
 export function AdminPortal() {
   const [filtroEstado, setFiltroEstado] = useState<string>("todos");
   const [busqueda, setBusqueda] = useState("");
+  const [showReports, setShowReports] = useState(false);
+
+  // Si estamos mostrando reportes, renderizar solo esa vista
+  if (showReports) {
+    return <ReportsConsultation onBack={() => setShowReports(false)} />;
+  }
 
   // Datos simulados - En producción vendrían de API
   const solicitudes: Solicitud[] = [
@@ -530,6 +537,16 @@ export function AdminPortal() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Consulta de Reportes */}
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() => setShowReports(true)}
+      >
+        <FileText className="h-4 w-4 mr-2" />
+        Consultar Reportes
+      </Button>
     </div>
   );
 }

@@ -111,7 +111,6 @@ export function DataDisplaySection() {
             <h3 className="text-xl font-semibold mb-4">Avatar</h3>
             <div className="flex gap-4">
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" alt="User" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <Avatar>

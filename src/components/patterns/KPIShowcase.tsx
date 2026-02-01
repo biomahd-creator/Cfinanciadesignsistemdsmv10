@@ -232,8 +232,9 @@ export function KPIShowcase() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={350}>
-            <LineChart data={monthlyRevenueData}>
+          <div className="w-full h-[350px] min-w-0" style={{ minHeight: '350px' }}>
+            <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
+              <LineChart data={monthlyRevenueData}>
               <CartesianGrid strokeDasharray="3 3" stroke={borderColor} opacity={0.3} />
               <XAxis 
                 dataKey="mes"
@@ -282,6 +283,7 @@ export function KPIShowcase() {
               />
             </LineChart>
           </ResponsiveContainer>
+          </div>
         </CardContent>
       </Card>
 
@@ -298,8 +300,9 @@ export function KPIShowcase() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={clientGrowthData}>
+            <div className="w-full h-[300px] min-w-0" style={{ minHeight: '300px' }}>
+              <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
+                <AreaChart data={clientGrowthData}>
                 <CartesianGrid strokeDasharray="3 3" stroke={borderColor} opacity={0.3} />
                 <XAxis 
                   dataKey="mes"
@@ -346,6 +349,7 @@ export function KPIShowcase() {
                 />
               </AreaChart>
             </ResponsiveContainer>
+            </div>
           </CardContent>
         </Card>
 
@@ -361,8 +365,9 @@ export function KPIShowcase() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <RadarChart data={performanceMetrics}>
+            <div className="w-full h-[300px] min-w-0" style={{ minHeight: '300px' }}>
+              <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
+                <RadarChart data={performanceMetrics}>
                 <PolarGrid stroke={borderColor} />
                 <PolarAngleAxis 
                   dataKey="categoria" 
@@ -391,6 +396,7 @@ export function KPIShowcase() {
                 />
               </RadarChart>
             </ResponsiveContainer>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -408,8 +414,9 @@ export function KPIShowcase() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={operationalData}>
+            <div className="w-full h-[300px] min-w-0">
+              <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                <BarChart data={operationalData}>
                 <CartesianGrid strokeDasharray="3 3" stroke={borderColor} opacity={0.3} />
                 <XAxis 
                   dataKey="dia"
@@ -450,6 +457,7 @@ export function KPIShowcase() {
                 />
               </BarChart>
             </ResponsiveContainer>
+            </div>
           </CardContent>
         </Card>
 
@@ -465,8 +473,9 @@ export function KPIShowcase() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={350}>
-              <ComposedChart data={operationalData}>
+            <div className="w-full h-[350px] min-w-0">
+              <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                <ComposedChart data={operationalData}>
                 <CartesianGrid strokeDasharray="3 3" stroke={borderColor} opacity={0.3} />
                 <XAxis 
                   dataKey="dia"
@@ -518,6 +527,7 @@ export function KPIShowcase() {
                 />
               </ComposedChart>
             </ResponsiveContainer>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -592,8 +602,9 @@ export function KPIShowcase() {
                   <p className="text-sm text-muted-foreground">Revenue</p>
                   <p className="text-2xl font-bold">$845.2K</p>
                 </div>
-                <ResponsiveContainer width="100%" height={40}>
-                  <AreaChart data={monthlyRevenueData.slice(-6)}>
+                <div className="w-full h-[40px] min-w-0">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                    <AreaChart data={monthlyRevenueData.slice(-6)}>
                     <Area
                       type="monotone"
                       dataKey="ingresos"
@@ -604,6 +615,7 @@ export function KPIShowcase() {
                     />
                   </AreaChart>
                 </ResponsiveContainer>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -625,8 +637,9 @@ export function KPIShowcase() {
                   <p className="text-sm text-muted-foreground">Active Users</p>
                   <p className="text-2xl font-bold">2,543</p>
                 </div>
-                <ResponsiveContainer width="100%" height={40}>
-                  <LineChart data={clientGrowthData}>
+                <div className="w-full h-[40px] min-w-0">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                    <LineChart data={clientGrowthData}>
                     <Line
                       type="monotone"
                       dataKey="activos"
@@ -636,6 +649,7 @@ export function KPIShowcase() {
                     />
                   </LineChart>
                 </ResponsiveContainer>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -657,8 +671,9 @@ export function KPIShowcase() {
                   <p className="text-sm text-muted-foreground">Orders</p>
                   <p className="text-2xl font-bold">1,248</p>
                 </div>
-                <ResponsiveContainer width="100%" height={40}>
-                  <BarChart data={operationalData}>
+                <div className="w-full h-[40px] min-w-0">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                    <BarChart data={operationalData}>
                     <Bar
                       dataKey="operaciones"
                       fill={chart3Color}
@@ -666,6 +681,7 @@ export function KPIShowcase() {
                     />
                   </BarChart>
                 </ResponsiveContainer>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -687,8 +703,9 @@ export function KPIShowcase() {
                   <p className="text-sm text-muted-foreground">Conversion</p>
                   <p className="text-2xl font-bold">3.24%</p>
                 </div>
-                <ResponsiveContainer width="100%" height={40}>
-                  <LineChart data={monthlyRevenueData.slice(-6)}>
+                <div className="w-full h-[40px] min-w-0">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                    <LineChart data={monthlyRevenueData.slice(-6)}>
                     <Line
                       type="monotone"
                       dataKey="meta"
@@ -699,6 +716,7 @@ export function KPIShowcase() {
                     />
                   </LineChart>
                 </ResponsiveContainer>
+                </div>
               </div>
             </CardContent>
           </Card>

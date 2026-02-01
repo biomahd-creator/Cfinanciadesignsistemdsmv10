@@ -74,8 +74,8 @@ export function Sparkline({
               <span className="text-xs text-muted-foreground">{changeLabel}</span>
             </div>
           )}
-          <div className="pt-2">
-            <ResponsiveContainer width="100%" height={height}>
+          <div style={{ width: '100%', height, minWidth: 0 }}>
+            <ResponsiveContainer width="100%" height="100%" minWidth={0}>
               <LineChart data={data}>
                 <Line
                   type="monotone"
@@ -93,16 +93,18 @@ export function Sparkline({
   }
 
   return (
-    <ResponsiveContainer width="100%" height={height}>
-      <LineChart data={data}>
-        <Line
-          type="monotone"
-          dataKey="value"
-          stroke={color}
-          strokeWidth={2}
-          dot={false}
-        />
-      </LineChart>
-    </ResponsiveContainer>
+    <div style={{ width: '100%', height, minWidth: 0 }}>
+      <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+        <LineChart data={data}>
+          <Line
+            type="monotone"
+            dataKey="value"
+            stroke={color}
+            strokeWidth={2}
+            dot={false}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
   );
 }

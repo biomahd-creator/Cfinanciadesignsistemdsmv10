@@ -13,7 +13,7 @@ Para facilitar la lectura por IAs y humanos, la documentación se ha dividido en
 
 ### 2. [TOKENS.md](./TOKENS.md)
 **Diseño Visual**. Definiciones de estilos, colores, tipografía y accesibilidad.
-- Colores: Primary (Lime), Secondary (Dark Blue).
+- Colores: Primary (Green), Secondary (Dark Blue).
 - Tipografía: Satoshi.
 - Modo Claro / Oscuro.
 
@@ -33,11 +33,14 @@ Para facilitar la lectura por IAs y humanos, la documentación se ha dividido en
 - Plantillas de prompts.
 - Checklists de validación.
 
-### 6. [UXWRITING.md](./UXWRITING.md)
-**Contenido**. Guías de UX Writing para español (LATAM).
-- Tono de voz: tuteo, cercano, profesional.
-- Labels, placeholders, botones.
-- Mensajes de error, éxito y estados vacíos.
+### 6. [ANIMATIONS.md](./ANIMATIONS.md)
+**Sistema de Animaciones**. Configuración global de transiciones, loading states, hover effects y skeleton loaders.
+- Configuración centralizada de duraciones y easings.
+- Providers globales (Loading, Transition).
+- Hooks personalizados (useLoadingState, usePageTransition).
+- Componentes de animación (PageTransition, LoadingOverlay, Skeleton variants).
+- CSS utilities para hover effects consistentes.
+- Accesibilidad: respeto a `prefers-reduced-motion`.
 
 ---
 
@@ -45,7 +48,7 @@ Para facilitar la lectura por IAs y humanos, la documentación se ha dividido en
 Para crear una nueva funcionalidad:
 1. Consulta **COMPONENTS.md** para ver qué piezas tienes.
 2. Revisa **TOKENS.md** para aplicar los estilos correctos.
-3. Revisa **UXWRITING.md** para textos en español consistentes.
+3. Usa **ANIMATIONS.md** para agregar transiciones y loading states.
 4. Usa las reglas de **PROMPT_GUIDE.md** para pedirle a la IA que ensamble la pantalla.
 
 ---

@@ -67,8 +67,8 @@ interface ThemeContextType {
 }
 
 const defaultConfig: ThemeConfig = {
-  primary: "#84CC16",
-  primaryForeground: "#1C2D3A",
+  primary: "#00c951",
+  primaryForeground: "#ffffff",
   secondary: "#1C2D3A",
   secondaryForeground: "#ffffff",
   chart1: "#FF6B6B",
@@ -80,13 +80,13 @@ const defaultConfig: ThemeConfig = {
   accent: "#f4f4f5",
   muted: "#f4f4f5",
   link: "#0E7490",
-  linkHover: "#84CC16",
+  linkHover: "#00c951",
   linkVisited: "#164E63",
   success: "#22C55E",
   warning: "#F59E0B",
   info: "#06B6D4",
-  focusRing: "#84CC16",
-  selection: "#84CC16",
+  focusRing: "#00c951",
+  selection: "#00c951",
   inputBackgroundLight: "#ffffff",
   inputBackgroundDark: "#334155",
   inputBorderLight: "#e4e4e7",
@@ -160,14 +160,23 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     
     if (saved) {
       const parsed = JSON.parse(saved);
-      // Migration logic: If user has the old yellow as primary, update to new green
-      if (parsed.primary === "#DEFB49") {
+      // Migration logic: If user has the old yellow or old green as primary, update to new green
+      if (parsed.primary === "#DEFB49" || parsed.primary === "#84CC16") {
         return {
           ...parsed,
-          primary: "#84CC16",
-          focusRing: "#84CC16",
-          selection: "#84CC16",
-          linkHover: "#84CC16"
+          primary: "#00c951",
+          primaryForeground: "#ffffff",
+          focusRing: "#00c951",
+          selection: "#00c951",
+          linkHover: "#00c951"
+        };
+      }
+      
+      // Ensure contrast is correct if user already has the correct green but wrong foreground
+      if (parsed.primary === "#00c951" && parsed.primaryForeground !== "#ffffff") {
+        return {
+          ...parsed,
+          primaryForeground: "#ffffff"
         };
       }
       return parsed;

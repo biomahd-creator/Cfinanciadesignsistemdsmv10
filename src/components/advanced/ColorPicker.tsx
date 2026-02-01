@@ -37,9 +37,9 @@ export function ColorPicker({ value = "#DEFB49", onChange }: ColorPickerProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="w-full justify-start gap-2">
+        <Button variant="outline" className="w-fit justify-start gap-2">
           <ColorBox color={color} />
-          <span className="flex-1 text-left">{color}</span>
+          <span className="text-left">{color}</span>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-64">
@@ -82,7 +82,7 @@ export function ColorPicker({ value = "#DEFB49", onChange }: ColorPickerProps) {
             <Label>Vista Previa</Label>
             <div
               className="h-20 rounded-lg border"
-              style={{ backgroundColor: `var(--color-preview, ${color})` }}
+              style={{ backgroundColor: color }}
             />
           </div>
         </div>

@@ -23,10 +23,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../ui/popover";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Checkbox } from "../ui/checkbox";
 import { 
-  Save, 
   X, 
   Edit2, 
   Calendar as CalendarIcon,
@@ -37,6 +36,7 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
+import { MasterDataGrid } from "./MasterDataGrid";
 
 // Types for invoice data
 interface Invoice {
@@ -211,17 +211,15 @@ export function EditableTable() {
         </Card>
       </div>
 
-      {/* Editable Table */}
-      <Card className="shadow-elevation-2">
-        <CardHeader>
-          <CardTitle>Facturas Pendientes de Factoring</CardTitle>
-          <CardDescription>
-            Click en cualquier celda para editar los valores. Los cambios se guardan en tiempo
-            real.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="rounded-md border">
+      {/* Editable Table replaced with MasterDataGrid */}
+      <MasterDataGrid
+        title="Facturas Pendientes de Factoring"
+        description="Click en cualquier celda para editar los valores. Los cambios se guardan en tiempo real."
+        showExport={false}
+        showRefresh={false}
+        showViewOptions={false}
+      >
+          <div className="border-t">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -496,8 +494,7 @@ export function EditableTable() {
               </TableBody>
             </Table>
           </div>
-        </CardContent>
-      </Card>
+      </MasterDataGrid>
 
       {/* Technical Details */}
       <Card>
@@ -508,7 +505,7 @@ export function EditableTable() {
           <div>
             <h3 className="mb-2">Componentes Utilizados</h3>
             <ul className="space-y-1 text-muted-foreground">
-              <li>• <strong>Table:</strong> Estructura base de la tabla</li>
+              <li>• <strong>MasterDataGrid:</strong> Contenedor estándar</li>
               <li>• <strong>Input:</strong> Edición de texto y números</li>
               <li>• <strong>Select:</strong> Selector de estados</li>
               <li>• <strong>Calendar + Popover:</strong> Selector de fechas</li>

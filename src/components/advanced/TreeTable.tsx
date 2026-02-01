@@ -31,6 +31,7 @@ import {
   ChevronsDown,
   Loader2,
 } from "lucide-react";
+import { MasterDataGrid } from "../patterns/MasterDataGrid";
 
 export interface TreeNode {
   id: string;
@@ -49,6 +50,8 @@ interface TreeTableProps {
   onRowClick?: (node: TreeNode) => void;
   itemsPerPage?: number; // Límite de items por nodo
   enableLazyLoad?: boolean; // Habilitar carga perezosa
+  title?: string;
+  description?: string;
 }
 
 const statusConfig = {
@@ -70,6 +73,8 @@ export function TreeTable({
   onRowClick,
   itemsPerPage = 10,
   enableLazyLoad = true,
+  title,
+  description
 }: TreeTableProps) {
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());
   const [selectedNodes, setSelectedNodes] = useState<Set<string>>(new Set());
@@ -333,41 +338,46 @@ export function TreeTable({
   };
 
   return (
-    <div className="w-full">
-      <div className="rounded-md border overflow-hidden">
-        <div className="overflow-x-auto">
-          <div className="inline-block min-w-full align-middle">
-            <Table>
-              <TableHeader>
+    <MasterDataGrid
+      title={title}
+      description={description}
+      totalItems={0} // Disable standard pagination
+      showExport={false}
+      showRefresh={false}
+      showViewOptions={false}
+    >
+      <div className="overflow-x-auto border-t">
+        <div className="inline-block min-w-full align-middle">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[40%]">Nombre</TableHead>
+                <TableHead className="w-[15%]">Tipo</TableHead>
+                <TableHead className="w-[15%]">Monto</TableHead>
+                <TableHead className="w-[15%]">Estado</TableHead>
+                <TableHead className="w-[10%]">Fecha</TableHead>
+                <TableHead className="w-[5%] text-right">Acciones</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.length > 0 ? (
+                renderAllRows()
+              ) : (
                 <TableRow>
-                  <TableHead className="w-[40%]">Nombre</TableHead>
-                  <TableHead className="w-[15%]">Tipo</TableHead>
-                  <TableHead className="w-[15%]">Monto</TableHead>
-                  <TableHead className="w-[15%]">Estado</TableHead>
-                  <TableHead className="w-[10%]">Fecha</TableHead>
-                  <TableHead className="w-[5%] text-right">Acciones</TableHead>
+                  <TableCell colSpan={6} className="h-24 text-center">
+                    No hay datos disponibles
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {data.length > 0 ? (
-                  renderAllRows()
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={6} className="h-24 text-center">
-                      No hay datos disponibles
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
+              )}
+            </TableBody>
+          </Table>
         </div>
       </div>
 
       {/* Mobile scroll indicator */}
-      <div className="mt-2 text-xs text-muted-foreground text-center md:hidden">
+      <div className="p-2 text-xs text-muted-foreground text-center md:hidden border-t bg-muted/20">
         📱 Desliza horizontalmente para ver más columnas
       </div>
-    </div>
+    </MasterDataGrid>
   );
 }

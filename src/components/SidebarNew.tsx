@@ -79,8 +79,14 @@ export type PageId =
   // Patterns
   | "invoice-generator" | "payment-form" | "editable-table" | "invoice-upload"
   | "stats-dashboard" | "quick-action" | "data-table-advanced" | "advanced-filter" | "approval-timeline" | "multi-step-wizard" | "multi-step-form" | "multi-step-form-vertical" | "multi-step-wizard-vertical"
-  // Atomic
-  | "atomic-atoms" | "atomic-molecules" | "atomic-organisms" | "atomic-templates" | "atomic-pages"
+  // Widgets
+  | "widgets-library"
+  | "widget-stat-card"
+  | "widget-search-bar"
+  | "widget-filter-bar"
+  | "widget-navigation"
+  | "widget-timeline"
+  
   // Advanced
   | "charts" | "color-picker" | "rating" | "kanban" | "date-range-advanced" | "file-uploader" | "rich-text-editor" | "timeline" | "data-table" | "tree-table" | "pivot-table" | "export-data"
   // Business Components (High Priority)
@@ -90,11 +96,19 @@ export type PageId =
   // Advanced Forms (Medium Priority)
   | "advanced-forms"
   // Special
-  | "official" | "accessibility" | "brand-layout" | "theme-customizer" | "elevation" | "grid-showcase" | "help-system-demo" | "animations" | "icon-gallery" | "changelog"
+  | "official" | "accessibility" | "brand-layout" | "theme-customizer" | "elevation" | "grid-showcase" | "help-system-demo" | "animations" | "animation-system" | "icon-gallery" | "changelog"
+  // New Patterns
+  | "activity-feed" | "user-profile" | "comment-thread" | "pricing-table" | "comparison-table" | "search-results" | "empty-state" | "loading-states" | "error-boundary" | "bottom-sheet" | "fab" | "split-button"
+  // New Business
+  | "liquidity-meter-component" | "risk-indicator" | "rate-display" | "invoice-card" | "payor-card" | "cash-flow-projection" | "collection-timeline" | "doc-verification"
+  // New Advanced
+  | "sankey-diagram" | "gantt-chart" | "org-chart" | "virtualized-list" | "infinite-scroll" | "masonry-grid" | "transfer-list"
+  // Business Components (Old)
+  | "audit-log" | "testimonials" | "contact-form" | "booking-calendar"
   // Pages (Real Pages)
-  | "factoring-selection" | "factoring-dashboard" | "operations-list" | "approval-flow" | "kpi-showcase" | "status-kpis"
+  | "factoring-selection" | "factoring-dashboard" | "operations-list" | "approval-flow" | "kpi-showcase"
   // C-Financia Platform
-  | "liquidity-calculator" | "onboarding" | "cf-dashboard" | "admin-portal" | "brief-dashboard";
+  | "liquidity-calculator" | "onboarding" | "cf-dashboard" | "admin-portal";
 
 interface SidebarProps extends React.ComponentProps<typeof Sidebar> {
   activePage: PageId;
@@ -223,7 +237,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
       id: "patterns",
       label: "Business Patterns",
       icon: Layers,
-      count: 13,
+      count: 21,
       items: [
         { id: "invoice-generator", label: "Invoice Generator", new: true },
         { id: "invoice-upload", label: "Carga de Facturas", new: true },
@@ -238,6 +252,18 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
         { id: "multi-step-form", label: "Multi-Step Form", new: true },
         { id: "multi-step-form-vertical", label: "Multi-Step Form Vertical", new: true },
         { id: "multi-step-wizard-vertical", label: "Multi-Step Wizard Vertical", new: true },
+        { id: "activity-feed", label: "Activity Feed", new: true },
+        { id: "comment-thread", label: "Comment Thread", new: true },
+        { id: "pricing-table", label: "Pricing Table", new: true },
+        { id: "comparison-table", label: "Comparison Table", new: true },
+        { id: "search-results", label: "Search Results", new: true },
+        { id: "user-profile", label: "User Profile", new: true },
+        { id: "empty-state", label: "Empty State", new: true },
+        { id: "loading-states", label: "Loading States", new: true },
+        { id: "error-boundary", label: "Error Boundary", new: true },
+        { id: "bottom-sheet", label: "Bottom Sheet", new: true },
+        { id: "fab", label: "Floating Action Button", new: true },
+        { id: "split-button", label: "Split Button", new: true },
       ],
     },
     {
@@ -252,12 +278,12 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
         { id: "operations-list", label: "Operations List", new: true },
         { id: "factoring-selection", label: "Invoice Selection", new: true },
         { id: "approval-flow", label: "Approval Flow", new: true },
-        { id: "status-kpis", label: "Status KPIs", new: true },
         { id: "kpi-showcase", label: "KPI Showcase", new: true },
         { id: "liquidity-calculator", label: "Calculadora Liquidez", new: true },
         { id: "onboarding", label: "Onboarding", new: true },
       ],
     },
+    /*
     {
       id: "atomic",
       label: "Atomic Design",
@@ -269,6 +295,21 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
         { id: "atomic-organisms", label: "Organisms" },
         { id: "atomic-templates", label: "Templates" },
         { id: "atomic-pages", label: "Pages" },
+      ],
+    },
+    */
+    {
+      id: "widgets",
+      label: "UI Widgets",
+      icon: Box,
+      count: 6,
+      items: [
+        { id: "widgets-library", label: "All Widgets", new: true },
+        { id: "widget-stat-card", label: "Stat Card" },
+        { id: "widget-search-bar", label: "Search Bar" },
+        { id: "widget-filter-bar", label: "Filter Bar" },
+        { id: "widget-navigation", label: "Navigation Bar" },
+        { id: "widget-timeline", label: "Timeline Item" },
       ],
     },
     {
@@ -291,6 +332,13 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
         { id: "file-uploader", label: "File Uploader" },
         { id: "rich-text-editor", label: "Rich Text Editor" },
         { id: "timeline", label: "Timeline" },
+        { id: "sankey-diagram", label: "Sankey Diagram", new: true },
+        { id: "gantt-chart", label: "Gantt Chart", new: true },
+        { id: "org-chart", label: "Org Chart", new: true },
+        { id: "virtualized-list", label: "Virtualized List", new: true },
+        { id: "infinite-scroll", label: "Infinite Scroll", new: true },
+        { id: "masonry-grid", label: "Masonry Grid", new: true },
+        { id: "transfer-list", label: "Transfer List", new: true },
       ],
     },
     {
@@ -299,7 +347,20 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
       icon: Box,
       count: 1,
       items: [
-        { id: "business-components", label: "All Business Components", new: true },
+        // High Priority (Old)
+        { id: "audit-log", label: "Audit Log Viewer" },
+        { id: "testimonials", label: "Testimonials Carousel" },
+        { id: "contact-form", label: "Contact Form" },
+        { id: "booking-calendar", label: "Booking Calendar" },
+        // New
+        { id: "liquidity-meter-component", label: "Liquidity Meter", new: true },
+        { id: "risk-indicator", label: "Risk Indicator", new: true },
+        { id: "rate-display", label: "Rate Display", new: true },
+        { id: "invoice-card", label: "Invoice Card", new: true },
+        { id: "payor-card", label: "Payor Card", new: true },
+        { id: "cash-flow-projection", label: "Cash Flow Chart", new: true },
+        { id: "collection-timeline", label: "Collection Timeline", new: true },
+        { id: "doc-verification", label: "Doc Verification", new: true },
       ],
     },
   ];
@@ -312,6 +373,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
 
   const resourcePages: MenuItem[] = [
     { id: "animations", label: "Animations", new: true },
+    { id: "animation-system", label: "Animation System", new: true },
     { id: "icon-gallery", label: "Icon Gallery", new: true },
     { id: "help-system-demo", label: "Help System" },
   ];
@@ -529,6 +591,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
                 >
                   {page.id === "help-system-demo" && <Zap />}
                   {page.id === "animations" && <Clapperboard />}
+                  {page.id === "animation-system" && <Box />}
                   {page.id === "icon-gallery" && <ImageIcon />}
                   <span className="flex flex-1 items-center gap-2 overflow-hidden text-sidebar-foreground group-data-[active=true]/menu-button:text-sidebar-primary-foreground group-data-[active=true]/menu-button:font-medium">
                     <span className="truncate">{page.label}</span>
@@ -598,7 +661,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
          <div className="p-4 bg-sidebar-accent/10 rounded-lg m-2 group-data-[collapsible=icon]:hidden">
             <div className="flex items-center gap-2 text-sidebar-foreground/90 text-xs">
               <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-              <span>97 Componentes</span>
+              <span>95 Componentes</span>
             </div>
          </div>
          

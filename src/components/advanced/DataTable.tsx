@@ -11,20 +11,15 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal, Settings, SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 
 import { Button } from "../ui/button";
-import { Checkbox } from "../ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Input } from "../ui/input";
 import {
   Table,
   TableBody,
@@ -33,13 +28,16 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+
+import { MasterDataGrid } from "../patterns/MasterDataGrid";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   searchKey?: string;
   searchPlaceholder?: string;
+  title?: string;
+  description?: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -47,6 +45,8 @@ export function DataTable<TData, TValue>({
   data,
   searchKey,
   searchPlaceholder = "Filter...",
+  title,
+  description
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -76,24 +76,22 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="w-full space-y-4">
-      <div className="flex items-center justify-between gap-4">
-        {searchKey && (
-          <div className="flex items-center flex-1 max-w-sm">
-            <Input
-              placeholder={searchPlaceholder}
-              value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
-              onChange={(event) =>
-                table.getColumn(searchKey)?.setFilterValue(event.target.value)
-              }
-              className="max-w-sm"
-            />
-          </div>
-        )}
+    <MasterDataGrid
+      title={title}
+      description={description}
+      searchQuery={(table.getColumn(searchKey ?? "")?.getFilterValue() as string) ?? ""}
+      onSearchChange={(value) =>
+        searchKey && table.getColumn(searchKey)?.setFilterValue(value)
+      }
+      searchPlaceholder={searchPlaceholder}
+      
+      // We disable default view options button to use our custom dropdown
+      showViewOptions={false}
+      toolbarActions={
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              <SlidersHorizontal className="mr-2 h-4 w-4" />
+            <Button variant="outline" size="sm" className="h-9">
+              <SlidersHorizontal className="mr-2 h-3.5 w-3.5" />
               View
             </Button>
           </DropdownMenuTrigger>
@@ -117,8 +115,20 @@ export function DataTable<TData, TValue>({
               })}
           </DropdownMenuContent>
         </DropdownMenu>
-      </div>
-      <div className="rounded-md border bg-card">
+      }
+
+      // Pagination
+      currentPage={table.getState().pagination.pageIndex + 1}
+      totalPages={table.getPageCount()}
+      onPageChange={(page) => table.setPageIndex(page - 1)}
+      totalItems={table.getFilteredRowModel().rows.length}
+      itemsPerPage={table.getState().pagination.pageSize}
+      startIndex={table.getState().pagination.pageIndex * table.getState().pagination.pageSize}
+      
+      pageSizeOptions={[5, 10, 20, 30, 40, 50]}
+      onPageSizeChange={(size) => table.setPageSize(size)}
+    >
+      <div className="w-full">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -168,54 +178,6 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-between space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="flex items-center space-x-2">
-            <div className="flex items-center space-x-2">
-              <p className="text-sm font-medium">Rows per page</p>
-              <Select
-                value={`${table.getState().pagination.pageSize}`}
-                onValueChange={(value) => {
-                  table.setPageSize(Number(value));
-                }}
-              >
-                <SelectTrigger className="h-8 w-[70px]">
-                  <SelectValue placeholder={table.getState().pagination.pageSize} />
-                </SelectTrigger>
-                <SelectContent side="top">
-                  {[5, 10, 20, 30, 40, 50].map((pageSize) => (
-                    <SelectItem key={pageSize} value={`${pageSize}`}>
-                      {pageSize}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-            Page {table.getState().pagination.pageIndex + 1} of{" "}
-            {table.getPageCount()}
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
-      </div>
-    </div>
+    </MasterDataGrid>
   );
 }
