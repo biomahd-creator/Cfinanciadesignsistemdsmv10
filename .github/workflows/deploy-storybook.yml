@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Build Storybook
-        run: npm run build-storybook
+        run: npm run build-storybook -- --base-path /Cfinanciadesignsistemdsmv10
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
