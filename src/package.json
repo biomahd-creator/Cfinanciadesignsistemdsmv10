@@ -1,6 +1,6 @@
 {
   "name": "@biomahd-creator/financio-design-system",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Sistema de Diseño y Componentes UI extraídos de Figma Make",
   "private": false,
   "main": "./dist-lib/figma-make-ds.umd.js",
