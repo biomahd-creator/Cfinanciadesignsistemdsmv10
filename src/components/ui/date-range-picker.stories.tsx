@@ -1,19 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { DatePickerWithRange } from './date-range-picker';
+import { DateRangePicker } from './date-range-picker';
 
-const meta: Meta<typeof DatePickerWithRange> = {
+const meta: Meta<typeof DateRangePicker> = {
   title: 'UI/DateRangePicker',
-  component: DatePickerWithRange,
+  component: DateRangePicker,
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof DatePickerWithRange>;
+type Story = StoryObj<typeof DateRangePicker>;
 
 export const Default: Story = {
   render: () => (
     <div className="p-10">
-      <DatePickerWithRange className="w-[300px]" />
+      <DateRangePicker className="w-[300px]" />
     </div>
   ),
 };
