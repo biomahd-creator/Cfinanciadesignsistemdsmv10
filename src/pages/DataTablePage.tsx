@@ -14,7 +14,7 @@ import {
 } from "../components/ui/dropdown-menu";
 import { DataTable } from "../components/advanced/DataTable";
 import { MoreHorizontal, ArrowUpDown, CheckCircle, Clock, AlertCircle, XCircle, Circle } from "lucide-react";
-import { ProgressBar } from "../components/widgets/ProgressBar";
+import { Progress } from "../components/ui/progress";
 import { toast } from "sonner@2.0.3";
 
 // Sample Data Type
@@ -138,7 +138,15 @@ export const columns: ColumnDef<Invoice>[] = [
           return (
               <div className="flex items-center gap-2">
                   <div className="w-24">
-                    <ProgressBar value={score/10} variant={variant} size="sm" />
+                    <Progress 
+                      value={score/10} 
+                      className="h-2" 
+                      indicatorClassName={
+                        score < 500 ? "bg-red-500" :
+                        score < 700 ? "bg-yellow-500" :
+                        "bg-green-500"
+                      }
+                    />
                   </div>
                   <span className={`text-xs font-medium ${colorClass}`}>{score}</span>
               </div>

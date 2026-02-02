@@ -42,42 +42,45 @@ interface FactoringLayoutProps {
 }
 
 type UserRole = "admin" | "client" | null;
-type View = "welcome" | "radian-dashboard" | "vinculacion" | "playground" | "c-financia" | "c-financia-cliente";
+  type View = "welcome" | "radian-dashboard" | "client-dashboard" | "vinculacion" | "playground" | "c-financia" | "c-financia-cliente";
 
-export function FactoringApp({ onExit }: FactoringLayoutProps) {
-  const [userRole, setUserRole] = useState<UserRole>("admin");
-  const [currentView, setCurrentView] = useState<View>("welcome"); // Default to Welcome screen with Sidebar
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [selectedOperationId, setSelectedOperationId] = useState<string | null>(null);
-
-  const handleRoleSelect = (role: "admin" | "client") => {
-    setUserRole(role);
-    setCurrentView("welcome");
-  };
-
-  const handleLogout = () => {
-    setUserRole(null);
-  };
-
-  const renderView = () => {
-    switch (currentView) {
-      case "welcome":
-        return (
-          <div className="flex flex-col items-center justify-center h-full text-muted-foreground p-8">
-            <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4">
-              <LayoutDashboard className="h-8 w-8 text-muted-foreground" />
+  export function FactoringApp({ onExit }: FactoringLayoutProps) {
+    const [userRole, setUserRole] = useState<UserRole>("admin");
+    const [currentView, setCurrentView] = useState<View>("radian-dashboard"); // Default to Dashboard instead of Welcome
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [selectedOperationId, setSelectedOperationId] = useState<string | null>(null);
+  
+    const handleRoleSelect = (role: "admin" | "client") => {
+      setUserRole(role);
+      setCurrentView(role === "admin" ? "radian-dashboard" : "client-dashboard");
+    };
+  
+    const handleLogout = () => {
+      setUserRole(null);
+    };
+  
+    const renderView = () => {
+      switch (currentView) {
+        case "welcome":
+          return (
+            <div className="flex flex-col items-center justify-center h-full text-muted-foreground p-8">
+              <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4">
+                <LayoutDashboard className="h-8 w-8 text-muted-foreground" />
+              </div>
+              <h2 className="text-2xl font-semibold text-foreground">Bienvenido a Financio</h2>
+              <p className="mt-2 text-center max-w-md">
+                Seleccione una opción del menú lateral para comenzar.
+              </p>
             </div>
-            <h2 className="text-2xl font-semibold text-foreground">Bienvenido a Financio</h2>
-            <p className="mt-2 text-center max-w-md">
-              Seleccione una opción del menú lateral para comenzar.
-            </p>
-          </div>
-        );
-
-      case "radian-dashboard":
-        return <RadianAdminDashboard />;
-
-      case "vinculacion":
+          );
+  
+        case "radian-dashboard":
+          return <RadianAdminDashboard />;
+        
+        case "client-dashboard":
+          return <ClientDashboard />;
+  
+        case "vinculacion":
         return (
           <div className="space-y-8 p-8">
              <div className="flex items-center gap-6">
@@ -139,6 +142,15 @@ export function FactoringApp({ onExit }: FactoringLayoutProps) {
         <nav className="flex-1 p-4 space-y-2 overflow-y-auto py-6">
           <div className="text-xs font-medium text-slate-400 uppercase mb-2 px-2">Módulos</div>
           
+          <Button
+            variant="ghost"
+            onClick={() => setCurrentView(userRole === "admin" ? "radian-dashboard" : "client-dashboard")}
+            className={`w-full justify-start gap-3 ${["radian-dashboard", "client-dashboard"].includes(currentView) ? "bg-primary text-primary-foreground font-bold" : "text-slate-300 hover:text-white hover:bg-white/10"}`}
+          >
+            <LayoutDashboard className="h-4 w-4" />
+            Dashboard
+          </Button>
+
           {/* Sidebar items */}
           {userRole === "admin" && (
             <>

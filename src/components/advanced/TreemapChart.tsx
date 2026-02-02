@@ -118,7 +118,7 @@ export function TreemapChart({
 }: TreemapChartProps) {
   const content = (
     <div className="w-full min-w-0" style={{ height }}>
-      <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+      <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
         <Treemap
         data={data}
         dataKey="size"

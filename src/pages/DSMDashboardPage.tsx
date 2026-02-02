@@ -21,7 +21,8 @@ import {
   Database,
   Activity,
   Users,
-  Grid3x3
+  Grid3x3,
+  Package
 } from "lucide-react";
 import { ScrollArea } from "../components/ui/scroll-area";
 import { Logo } from "../components/Logo";
@@ -166,6 +167,7 @@ export function DSMDashboardPage() {
         { name: "Cupo Validator", status: "completed", hasNew: false },
         { name: "Approval Flow Wizard", status: "completed", hasNew: false },
         { name: "Onboarding Wizard", status: "completed", hasNew: false },
+        { name: "Factoring Selection Page", status: "completed", hasNew: true },
       ]
     },
     {
@@ -199,7 +201,7 @@ export function DSMDashboardPage() {
   ];
 
   const realPages = [
-    "Multi Step Wizard", "Invoice Generator", "Factoring Dashboard", "Operations List", 
+    "Factoring New Operation", "Multi Step Wizard", "Invoice Generator", "Factoring Dashboard", "Operations List", 
     "Approval Flow", "Liquidity Calculator", "Onboarding", "Admin Portal", "Status KPIs"
   ];
 
@@ -226,15 +228,15 @@ export function DSMDashboardPage() {
           <div className="flex items-center gap-4 mb-4">
             <Logo size="lg" variant="light" />
             <Badge variant="default" className="text-xs px-3 py-1">
-              v2.0.0
+              v2.1.0
             </Badge>
             <Badge className="text-xs px-3 py-1 bg-green-500 hover:bg-green-600 gap-1">
               <CheckCircle2 className="h-3 w-3" />
               Registry Complete
             </Badge>
             <Badge className="text-xs px-3 py-1 bg-blue-500 hover:bg-blue-600 gap-1">
-              <Grid3x3 className="h-3 w-3" />
-              {totalComponents} Components
+              <Package className="h-3 w-3" />
+              @biomahd-creator/financio-design-system
             </Badge>
           </div>
           <h1 className="mb-4">
@@ -242,7 +244,7 @@ export function DSMDashboardPage() {
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mb-6 font-light">
             Inventario técnico completo del Design System. Gestión centralizada de <strong>{totalComponents} componentes</strong> distribuidos 
-            en <strong>{totalCategories} categorías</strong>, con <strong>{newComponents} componentes nuevos</strong> agregados recientemente.
+            en <strong>{totalCategories} categorías</strong>. Actualizado para usar la librería NPM <strong>@biomahd-creator/financio-design-system</strong>.
           </p>
           <div className="flex flex-wrap gap-3">
             <Badge variant="outline" className="gap-2">

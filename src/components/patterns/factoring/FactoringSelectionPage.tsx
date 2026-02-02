@@ -24,6 +24,7 @@ import {
 import { Progress } from "../../ui/progress";
 import { ScrollArea } from "../../ui/scroll-area";
 import { StatusKPICard } from "../../widgets/StatusKPICard";
+import { KpiCardGroup } from "../KpiCard";
 import {
   Upload,
   TrendingUp,
@@ -231,6 +232,7 @@ const mockDebtors: Debtor[] = [
         issueDate: "2024-01-05",
         dueDate: "2024-02-05",
         status: "eligible",
+        debtorId: "D004",
         debtorId: "D004",
       },
       {
@@ -819,7 +821,7 @@ export function FactoringSelectionPage() {
   };
 
   return (
-    <div className="min-h-screen pb-32">
+    <>
       {/* Header */}
       <div className="space-y-6 mb-8">
         <div className="flex items-start justify-between">
@@ -829,138 +831,132 @@ export function FactoringSelectionPage() {
               Selecciona las facturas a financiar y maximiza tu liquidez disponible
             </p>
           </div>
-          <div className="flex gap-2">
-            <Button 
-              onClick={toggleDesignMode} 
-              variant={designMode ? "default" : "outline"}
-              className="gap-2"
-            >
-              {designMode ? (
-                <>
-                  <CheckCircle2 className="h-4 w-4" />
-                  Modo Captura Activo
-                </>
-              ) : (
-                <>
-                  <Info className="h-4 w-4" />
-                  Modo Captura Figma
-                </>
-              )}
-            </Button>
-            <Button onClick={() => setShowUploadDialog(true)} className="gap-2">
-              <Upload className="h-4 w-4" />
-              Cargar Facturas
-            </Button>
-          </div>
+
         </div>
 
         {/* KPIs */}
         <div className="space-y-4">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {/* KPI: En Negociación */}
-            <div 
-              className="relative group cursor-pointer"
-              onMouseEnter={() => setHoveredKpi("negotiation")}
-              onMouseLeave={() => setHoveredKpi(null)}
-              onClick={() => setActiveKpiFilter(activeKpiFilter === "negotiation" ? null : "negotiation")}
-            >
-              <StatusKPICard
-                title="En Negociación"
-                subtitle="Pendientes de confirmación"
-                amount={formatCurrency(kpis.pending.amount)}
-                count={kpis.pending.count}
-                variant="negotiation"
-                hoverStyle="full"
-                state={activeKpiFilter === "negotiation" ? "active" : (hoveredKpi === "negotiation" ? "hover" : "normal")}
-                onViewClick={() => setActiveKpiFilter(activeKpiFilter === "negotiation" ? null : "negotiation")}
-              />
-            </div>
-
-            {/* KPI: Aprobadas */}
-            <div 
-              className="relative group cursor-pointer"
-              onMouseEnter={() => setHoveredKpi("approved")}
-              onMouseLeave={() => setHoveredKpi(null)}
-              onClick={() => setActiveKpiFilter(activeKpiFilter === "approved" ? null : "approved")}
-            >
-              <StatusKPICard
-                title="Aprobadas"
-                subtitle="Listas para desembolso"
-                amount={formatCurrency(kpis.eligible.amount)}
-                count={kpis.eligible.count}
-                variant="negotiation"
-                hoverStyle="full"
-                state={activeKpiFilter === "approved" ? "active" : (hoveredKpi === "approved" ? "hover" : "normal")}
-                onViewClick={() => setActiveKpiFilter(activeKpiFilter === "approved" ? null : "approved")}
-              />
-            </div>
-
-            {/* KPI: Desembolsadas */}
-            <div 
-              className="relative group cursor-pointer"
-              onMouseEnter={() => setHoveredKpi("disbursed")}
-              onMouseLeave={() => setHoveredKpi(null)}
-              onClick={() => setActiveKpiFilter(activeKpiFilter === "disbursed" ? null : "disbursed")}
-            >
-              <StatusKPICard
-                title="Desembolsadas"
-                subtitle="En tránsito a tu cuenta"
-                amount="$ 890,500"
-                count={45}
-                variant="disbursed"
-                hoverStyle="full"
-                state={activeKpiFilter === "disbursed" ? "active" : (hoveredKpi === "disbursed" ? "hover" : "normal")}
-                onViewClick={() => setActiveKpiFilter(activeKpiFilter === "disbursed" ? null : "disbursed")}
-              />
-            </div>
-
-            {/* KPI: Finalizadas */}
-            <div 
-              className="relative group cursor-pointer"
-              onMouseEnter={() => setHoveredKpi("finalized")}
-              onMouseLeave={() => setHoveredKpi(null)}
-              onClick={() => setActiveKpiFilter(activeKpiFilter === "finalized" ? null : "finalized")}
-            >
-              <StatusKPICard
-                title="Finalizadas"
-                subtitle="Pagadas por el deudor"
-                amount="$ 2,150,000"
-                count={128}
-                variant="disbursed"
-                hoverStyle="full"
-                state={activeKpiFilter === "finalized" ? "active" : (hoveredKpi === "finalized" ? "hover" : "normal")}
-                onViewClick={() => setActiveKpiFilter(activeKpiFilter === "finalized" ? null : "finalized")}
-              />
-            </div>
-          </div>
+          <KpiCardGroup
+            cards={[
+              {
+                id: "negotiation",
+                label: "En Negociación",
+                description: "Pendientes de confirmación",
+                value: formatCurrency(kpis.pending.amount),
+                count: kpis.pending.count,
+                variant: "orange",
+                onAction: () => setActiveKpiFilter(activeKpiFilter === "negotiation" ? null : "negotiation"),
+              },
+              {
+                id: "approved",
+                label: "Aprobadas",
+                description: "Listas para desembolso",
+                value: formatCurrency(kpis.eligible.amount),
+                count: kpis.eligible.count,
+                variant: "lime",
+                onAction: () => setActiveKpiFilter(activeKpiFilter === "approved" ? null : "approved"),
+              },
+              {
+                id: "disbursed",
+                label: "Desembolsadas",
+                description: "En tránsito a tu cuenta",
+                value: "$ 890,500",
+                count: 45,
+                variant: "blue",
+                onAction: () => setActiveKpiFilter(activeKpiFilter === "disbursed" ? null : "disbursed"),
+              },
+              {
+                id: "finalized",
+                label: "Finalizadas",
+                description: "Pagadas por el deudor",
+                value: "$ 2,150,000",
+                count: 128,
+                variant: "yellow",
+                onAction: () => setActiveKpiFilter(activeKpiFilter === "finalized" ? null : "finalized"),
+              },
+            ]}
+            activeId={activeKpiFilter}
+          />
 
           {activeKpiFilter && (
-            <div className="flex items-center gap-2 mb-4 animate-in fade-in slide-in-from-top-2">
-              <Badge variant="outline" className="text-sm py-1 px-3 gap-2">
-                Filtro Activo: 
-                <span className="font-semibold text-primary">
-                  {activeKpiFilter === "negotiation" && "En Negociación (Pendientes)"}
-                  {activeKpiFilter === "approved" && "Aprobadas (Elegibles)"}
-                  {activeKpiFilter === "disbursed" && "Desembolsadas"}
-                  {activeKpiFilter === "finalized" && "Finalizadas"}
-                </span>
-                <button 
-                  onClick={() => setActiveKpiFilter(null)}
-                  className="ml-2 hover:bg-muted rounded-full p-0.5"
-                >
-                  <X className="h-3 w-3" />
-                </button>
-              </Badge>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={() => setActiveKpiFilter(null)}
-                className="text-xs text-muted-foreground hover:text-foreground h-7"
-              >
-                Limpiar filtro
-              </Button>
+            <div className="mb-4 animate-in fade-in slide-in-from-top-2">
+              <h3 className="text-lg font-semibold">
+                {activeKpiFilter === "negotiation" && "Facturas en Negociación"}
+                {activeKpiFilter === "approved" && "Facturas Aprobadas"}
+                {activeKpiFilter === "disbursed" && "Facturas Desembolsadas"}
+                {activeKpiFilter === "finalized" && "Facturas Finalizadas"}
+              </h3>
             </div>
           )}
+
+          {/* Controls Bar */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-2">
+            <div className="relative w-full md:w-72">
+               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+               <Input 
+                 placeholder="Buscar por pagador, factura..." 
+                 className="pl-9 bg-white"
+               />
+            </div>
+            
+            <div className="flex items-center gap-2 w-full md:w-auto">
+               <Button 
+                 variant="outline" 
+                 className="bg-white"
+                 onClick={() => {
+                    const newSelection = new Set(selectedInvoices);
+                    debtors.forEach(d => {
+                        const eligibleInvoices = d.invoices.filter(i => i.status === 'eligible');
+                        const sortedInvoices = [...eligibleInvoices].sort((a, b) => b.amount - a.amount);
+                        let currentUsage = eligibleInvoices.reduce((acc, i) => newSelection.has(i.id) ? acc + i.amount : acc, 0);
+                        
+                        sortedInvoices.forEach(i => {
+                            if (!newSelection.has(i.id) && currentUsage + i.amount <= d.availableLimit) {
+                                newSelection.add(i.id);
+                                currentUsage += i.amount;
+                            }
+                        });
+                    });
+                    setSelectedInvoices(newSelection);
+                 }}
+               >
+                 <Sparkles className="mr-2 h-4 w-4 text-primary" />
+                 Selección Inteligente
+               </Button>
+               <Button 
+                 variant="outline" 
+                 className="bg-white"
+                 onClick={() => {
+                    const newSelection = new Set(selectedInvoices);
+                    debtors.forEach(d => {
+                        d.invoices.forEach(i => {
+                            if (i.status === 'eligible') newSelection.add(i.id);
+                        });
+                    });
+                    setSelectedInvoices(newSelection);
+                 }}
+               >
+                 <CheckCircle2 className="mr-2 h-4 w-4 text-primary" />
+                 Seleccionar Todas Elegibles
+               </Button>
+
+               {selectedInvoices.size > 0 && (
+                 <Button 
+                   variant="outline" 
+                   className="bg-white text-destructive hover:bg-destructive/10 hover:border-destructive/30"
+                   onClick={() => setSelectedInvoices(new Set())}
+                 >
+                   <X className="mr-2 h-4 w-4" />
+                   Deseleccionar Todas
+                 </Button>
+               )}
+               
+               <Button variant="outline" className="bg-white">
+                 <ArrowDown className="mr-2 h-4 w-4" />
+                 Descargar Reporte
+               </Button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -986,9 +982,6 @@ export function FactoringSelectionPage() {
             
             // Invoice counts by status
             const totalInvoices = debtor.invoices.length;
-            const pendingCount = debtor.invoices.filter((i) => i.status === "pending").length;
-            const notEligibleCount = debtor.invoices.filter((i) => i.status === "not-eligible").length;
-            const discardedCount = debtor.invoices.filter((i) => i.status === "discarded").length;
 
             return (
               <AccordionItem
@@ -997,62 +990,50 @@ export function FactoringSelectionPage() {
                 className="border rounded-lg overflow-hidden"
               >
                 <AccordionTrigger className="px-6 hover:no-underline hover:bg-muted/50">
-                  <div className="bg-white border border-[#e5e5e5] border-solid rounded-[8px] size-full flex items-center justify-between p-4">
-                    <div className="flex items-center gap-4">
-                      <div className="text-left">
-                        <div className="flex items-center gap-2 mb-1">
-                          <div className="font-semibold">{debtor.name}</div>
-                          <Badge variant="secondary" className="text-xs">
-                            {totalInvoices} {totalInvoices === 1 ? "factura" : "facturas"}
-                          </Badge>
-                        </div>
-                        <div className="text-xs text-muted-foreground flex items-center gap-2">
-                          <span>RUT: {debtor.rut}</span>
-                          {eligibleInvoices.length > 0 && (
-                            <>
-                              <span>•</span>
-                              <span className="text-primary">{eligibleInvoices.length} elegibles</span>
-                            </>
-                          )}
-                          {pendingCount > 0 && (
-                            <>
-                              <span>•</span>
-                              <span>{pendingCount} pendientes</span>
-                            </>
-                          )}
-                          {discardedCount > 0 && (
-                            <>
-                              <span>•</span>
-                              <span className="text-muted-foreground">{discardedCount} descartadas</span>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                      {selectedCount > 0 && (
-                        <Badge variant="default" className="gap-1">
-                          <CheckCircle2 className="h-3 w-3" />
-                          {selectedCount} seleccionadas
-                        </Badge>
-                      )}
+                  <div className="flex items-center justify-between w-full">
+                    {/* Left: Name and Badge */}
+                    <div className="flex flex-col items-start gap-1">
+                      <div className="font-semibold">{debtor.name}</div>
+                      <Badge className="bg-green-100 text-green-700 hover:bg-green-100 font-normal border-none text-xs rounded px-2">
+                        {selectedCount}/{totalInvoices} seleccionadas
+                      </Badge>
                     </div>
 
-                    <div className="flex items-center gap-6">
-                      <div className="text-right">
-                        <div className="text-xs text-muted-foreground">Cupo Disponible</div>
-                        <div className="font-semibold">{formatCurrency(debtor.availableLimit)}</div>
+                    {/* Right: Metrics */}
+                    <div className="flex items-center gap-8">
+                      {/* Cupo Disponible */}
+                      <div className="text-right flex flex-col items-end">
+                        <div className="text-xs text-muted-foreground mb-1">Cupo Disponible</div>
+                        <div className="font-semibold text-foreground mb-1">
+                          {formatCurrency(debtor.availableLimit)}
+                        </div>
+                        <Progress 
+                          value={Math.min(limitProgress, 100)} 
+                          className="h-1.5 w-24 bg-gray-200" 
+                          indicatorClassName={isLimitReached ? "bg-destructive" : "bg-green-500"}
+                        />
                       </div>
 
+                      {/* Monto Elegible */}
                       <div className="text-right">
-                        <div className="text-xs text-muted-foreground">Tasa</div>
-                        <div className="font-semibold text-primary">{debtor.rate}%</div>
+                        <div className="text-xs text-muted-foreground mb-1">Monto Elegible</div>
+                        <div className="font-semibold text-green-600">
+                          {formatCurrency(eligibleTotal)}
+                        </div>
                       </div>
 
+                      {/* Tasa */}
                       <div className="text-right">
-                        <div className="text-xs text-muted-foreground">Monto Elegible</div>
-                        <div className="font-semibold">{formatCurrency(eligibleTotal)}</div>
+                        <div className="text-xs text-muted-foreground mb-1">Tasa N.M.V.</div>
+                        <div className="font-semibold text-green-600">{debtor.rate} %</div>
                       </div>
 
-                      <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />
+                      <Badge 
+                        variant={isLimitReached ? "destructive" : "secondary"} 
+                        className={`ml-2 shrink-0 ${!isLimitReached ? "bg-green-100 text-green-700 hover:bg-green-100" : ""}`}
+                      >
+                        {isLimitReached ? "Cupo Lleno" : "Disponible"}
+                      </Badge>
                     </div>
                   </div>
                 </AccordionTrigger>
@@ -1083,22 +1064,60 @@ export function FactoringSelectionPage() {
                   <div className="mb-4 space-y-3">
                     <div className="flex gap-2 flex-wrap">
                       <Button
-                        onClick={() => initializeSmartSelection(debtor)}
+                        onClick={() => {
+                            // Si estamos en un filtro KPI específico, la selección inteligente selecciona dentro de ese grupo
+                            const filteredInvoices = getFilteredAndSortedInvoices(debtor);
+                            
+                            // Ordenar por monto (mayor a menor) para optimizar cupo
+                            const sortedInvoices = [...filteredInvoices].sort((a, b) => b.amount - a.amount);
+                            
+                            let accumulated = selectedTotal; 
+                            // Ojo: selectedTotal cuenta TODO lo seleccionado del deudor. 
+                            // Si queremos mantener lo ya seleccionado y agregar más, partimos de ahí.
+                            // Si la lógica es "seleccionar inteligentemente DESDE CERO para este grupo", 
+                            // deberíamos limpiar primero, pero lo usual es agregar hasta llenar cupo.
+                            
+                            const newSelection = new Set(selectedInvoices);
+                            
+                            for (const invoice of sortedInvoices) {
+                                // Solo considerar si no está seleccionada y cabe en el cupo
+                                if (!newSelection.has(invoice.id) && invoice.status === 'eligible') {
+                                     if (accumulated + invoice.amount <= debtor.availableLimit) {
+                                        newSelection.add(invoice.id);
+                                        accumulated += invoice.amount;
+                                     }
+                                }
+                            }
+                            setSelectedInvoices(newSelection);
+                        }}
                         variant="outline"
                         size="sm"
                         className="gap-2"
+                        // Habilitar selección inteligente siempre que no sean vistas de solo lectura (desembolsadas/finalizadas)
+                        // "approved" y "negotiation" (si permitimos seleccionar pendientes para futuro) son editables en teoría,
+                        // pero la lógica de negocio dice que solo se financian (seleccionan) las elegibles.
+                        // Asumimos que la selección solo aplica a facturas elegibles (approved/standard list).
+                        disabled={activeKpiFilter === "disbursed" || activeKpiFilter === "finalized"}
                       >
                         <Sparkles className="h-4 w-4" />
                         Selección Inteligente
                       </Button>
                       <Button
-                        onClick={() => selectAllEligibleForDebtor(debtor)}
+                        onClick={() => {
+                            const filteredInvoices = getFilteredAndSortedInvoices(debtor);
+                            const newSelection = new Set(selectedInvoices);
+                            filteredInvoices.forEach((inv) => {
+                                if (inv.status === "eligible") newSelection.add(inv.id);
+                            });
+                            setSelectedInvoices(newSelection);
+                        }}
                         variant="outline"
                         size="sm"
                         className="gap-2"
+                        disabled={activeKpiFilter === "disbursed" || activeKpiFilter === "finalized"}
                       >
                         <CheckCircle2 className="h-4 w-4" />
-                        Seleccionar Todas Elegibles
+                        Seleccionar Todas
                       </Button>
                       {selectedCount > 0 && (
                         <Button
@@ -1170,8 +1189,24 @@ export function FactoringSelectionPage() {
                   <ScrollArea className="h-[400px] border rounded-lg">
                     <div className="p-4 space-y-2">
                       {(() => {
-                        const filteredInvoices = getFilteredAndSortedInvoices(debtor);
-                        const eligibleCount = filteredInvoices.filter((i) => i.status === "eligible").length;
+                        let filteredInvoices = getFilteredAndSortedInvoices(debtor);
+                        const isMockView = activeKpiFilter === "disbursed" || activeKpiFilter === "finalized";
+                        
+                        // Generar datos mock para vistas sin datos reales
+                        if (isMockView && filteredInvoices.length === 0) {
+                            const seed = debtor.id.charCodeAt(debtor.id.length - 1);
+                            const count = (seed % 3) + 2;
+                            filteredInvoices = Array.from({ length: count }).map((_, i) => ({
+                                id: `MOCK-${activeKpiFilter}-${debtor.id}-${i}`,
+                                invoiceNumber: `F-${activeKpiFilter === 'disbursed' ? '2023' : '2022'}-${1000 + i * seed}`,
+                                amount: (i + 1) * 350000 + (seed * 50000),
+                                issueDate: activeKpiFilter === 'disbursed' ? "2024-01-15" : "2023-11-10",
+                                dueDate: activeKpiFilter === 'disbursed' ? "2024-02-15" : "2023-12-10",
+                                status: "eligible", 
+                                debtorId: debtor.id
+                            }));
+                        }
+
                         const selectedFilteredCount = filteredInvoices.filter((i) => selectedInvoices.has(i.id)).length;
 
                         if (debtor.invoices.length === 0) {
@@ -1196,9 +1231,6 @@ export function FactoringSelectionPage() {
                             <div className="sticky top-0 bg-background z-10 pb-2 mb-2 border-b">
                               <div className="text-sm text-muted-foreground">
                                 Mostrando <strong>{filteredInvoices.length}</strong> facturas
-                                {filteredInvoices.length !== debtor.invoices.length && (
-                                  <> de <strong>{debtor.invoices.length}</strong> totales</>
-                                )}
                                 {selectedFilteredCount > 0 && (
                                   <> • <strong className="text-primary">{selectedFilteredCount} seleccionadas</strong></>
                                 )}
@@ -1218,7 +1250,7 @@ export function FactoringSelectionPage() {
                               className={`flex items-center gap-4 p-3 border rounded-lg ${
                                 isSelected
                                   ? "bg-primary/5 border-primary"
-                                  : isDisabled
+                                  : isDisabled && !isMockView
                                   ? "bg-muted/50 opacity-60"
                                   : wouldExceedLimit
                                   ? "border-destructive/50"
@@ -1228,8 +1260,9 @@ export function FactoringSelectionPage() {
                               <Checkbox
                                 id={invoice.id}
                                 checked={isSelected}
-                                disabled={isDisabled}
+                                disabled={isDisabled || isMockView}
                                 onCheckedChange={() => toggleInvoice(invoice, debtor)}
+                                className={isMockView ? "opacity-50" : ""}
                               />
 
                               <div className="flex-1 grid grid-cols-4 gap-4">
@@ -1259,8 +1292,19 @@ export function FactoringSelectionPage() {
                                 </div>
 
                                 <div className="flex items-center justify-end gap-2">
-                                  {getStatusBadge(invoice.status)}
-                                  {invoice.status === "eligible" && (
+                                  {activeKpiFilter === "disbursed" ? (
+                                    <Badge variant="secondary" className="bg-blue-100 text-blue-700 hover:bg-blue-100 gap-1 border-blue-200">
+                                        <TrendingUp className="h-3 w-3" /> Desembolsada
+                                    </Badge>
+                                  ) : activeKpiFilter === "finalized" ? (
+                                    <Badge variant="secondary" className="bg-slate-100 text-slate-700 hover:bg-slate-100 gap-1 border-slate-200">
+                                        <CheckCircle2 className="h-3 w-3" /> Finalizada
+                                    </Badge>
+                                  ) : (
+                                    getStatusBadge(invoice.status)
+                                  )}
+                                  
+                                  {invoice.status === "eligible" && !isMockView && (
                                     <Button
                                       onClick={() => discardInvoice(invoice.id)}
                                       variant="ghost"
@@ -1274,7 +1318,7 @@ export function FactoringSelectionPage() {
                                 </div>
                               </div>
 
-                              {wouldExceedLimit && !isDisabled && (
+                              {wouldExceedLimit && !isDisabled && !isMockView && (
                                 <AlertCircle className="h-4 w-4 text-destructive" />
                               )}
                             </div>
@@ -1296,147 +1340,69 @@ export function FactoringSelectionPage() {
       <AnimatePresence>
         {globalTotals.count > 0 && (
           <motion.div
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 100, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed bottom-0 left-0 right-0 bg-background border-t-4 border-primary z-50 [box-shadow:0_-8px_32px_rgba(222,251,73,0.15),0_-4px_16px_rgba(0,0,0,0.1)]"
+            initial={{ y: 50, opacity: 0, scale: 0.95 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: 50, opacity: 0, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="fixed bottom-6 right-6 z-50"
           >
-            {/* Animated glow effect */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 pointer-events-none"
-              animate={{
-                opacity: [0.3, 0.6, 0.3],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
+            <Card className="w-[380px] shadow-2xl border-primary/20 backdrop-blur-sm bg-background/95 supports-[backdrop-filter]:bg-background/80 overflow-hidden">
+               <div className="p-5 space-y-5">
+                  <div className="flex items-center justify-between">
+                     <div className="flex items-center gap-2">
+                        <Badge variant="outline" className="border-primary/50 text-primary bg-primary/5">
+                           <CheckCircle2 className="h-3 w-3 mr-1.5" />
+                           {globalTotals.count} {globalTotals.count === 1 ? "factura" : "facturas"}
+                        </Badge>
+                     </div>
+                     <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={deselectAllGlobal}
+                        className="h-8 text-xs text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                     >
+                        Limpiar selección
+                     </Button>
+                  </div>
 
-            <div className="relative max-w-7xl mx-auto px-6 py-5">
-              <div className="flex items-center justify-between gap-6">
-                {/* Badge indicator */}
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.2, type: "spring" }}
-                  className="absolute -top-3 left-6"
-                >
-                  <Badge className="bg-primary text-primary-foreground shadow-lg gap-1 px-3 py-1">
-                    <motion.div
-                      animate={{ scale: [1, 1.2, 1] }}
-                      transition={{ duration: 1, repeat: Infinity }}
-                    >
-                      <CheckCircle2 className="h-3 w-3" />
-                    </motion.div>
-                    {globalTotals.count} {globalTotals.count === 1 ? "factura seleccionada" : "facturas seleccionadas"}
-                  </Badge>
-                </motion.div>
-
-                {/* Totals */}
-                <div className="flex items-center gap-8 pt-2">
-                  <motion.div
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.1 }}
-                  >
-                    <div className="text-xs text-muted-foreground">Monto Total Nominal</div>
-                    <motion.div
-                      key={globalTotals.totalNominal}
-                      initial={{ scale: 1.2, color: "rgb(222, 251, 73)" }}
-                      animate={{ scale: 1, color: "inherit" }}
-                      transition={{ duration: 0.3 }}
-                      className="text-xl font-semibold"
-                    >
-                      {formatCurrency(globalTotals.totalNominal)}
-                    </motion.div>
-                  </motion.div>
-
-                  <Separator orientation="vertical" className="h-12" />
-
-                  <motion.div
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.15 }}
-                    className="relative"
-                  >
-                    <div className="text-xs text-primary flex items-center gap-1">
-                      💰 Adelanto Neto Estimado
-                      <motion.div
-                        animate={{ scale: [1, 1.3, 1] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                      >
-                        <Sparkles className="h-3 w-3 text-primary" />
-                      </motion.div>
-                    </div>
-                    <motion.div
-                      key={globalTotals.netAdvance}
-                      initial={{ scale: 1.3, y: -5 }}
-                      animate={{ scale: 1, y: 0 }}
-                      transition={{ type: "spring", stiffness: 200 }}
-                      className="text-2xl font-semibold text-primary"
-                    >
-                      {formatCurrency(globalTotals.netAdvance)}
-                    </motion.div>
-                    <div className="text-xs text-muted-foreground">
-                      (Después de descuentos por tasa)
-                    </div>
-                  </motion.div>
-                </div>
-
-                {/* Actions */}
-                <motion.div
-                  initial={{ x: 20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="flex items-center gap-4"
-                >
-                  <Button
-                    onClick={deselectAllGlobal}
-                    variant="outline"
-                    size="lg"
-                    className="gap-2"
-                  >
-                    <X className="h-5 w-5" />
-                    Deseleccionar Todas
-                  </Button>
+                  <div className="space-y-1">
+                     <div className="flex justify-between items-center text-sm text-muted-foreground">
+                        <span>Monto Nominal</span>
+                        <span>{formatCurrency(globalTotals.totalNominal)}</span>
+                     </div>
+                     <div className="flex justify-between items-end pt-2 border-t border-border/50">
+                        <div className="text-sm font-medium text-primary flex flex-col">
+                           <span>A Recibir (Aprox)</span>
+                           <span className="text-[10px] text-muted-foreground font-normal">Luego de descuentos</span>
+                        </div>
+                        <motion.div 
+                           key={globalTotals.netAdvance}
+                           className="text-2xl font-bold text-primary tracking-tight"
+                        >
+                           {formatCurrency(globalTotals.netAdvance)}
+                        </motion.div>
+                     </div>
+                  </div>
 
                   {globalTotals.remaining > 0 && (
-                    <motion.div
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ delay: 0.3, type: "spring" }}
-                    >
-                      <Alert className="py-2 px-4 bg-primary/10 border-primary">
-                        <TrendingUp className="h-4 w-4 text-primary" />
-                        <AlertDescription className="text-xs ml-2">
-                          <strong className="text-primary">
-                            ¡Estás a {formatCurrency(globalTotals.remaining)} de alcanzar tu
-                            liquidez máxima!
-                          </strong>
-                        </AlertDescription>
-                      </Alert>
-                    </motion.div>
+                     <div className="bg-primary/5 border border-primary/20 rounded-md p-2 flex items-start gap-2">
+                        <TrendingUp className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                        <p className="text-xs text-muted-foreground">
+                           Estás a <span className="font-semibold text-primary">{formatCurrency(globalTotals.remaining)}</span> de tu cupo máximo.
+                        </p>
+                     </div>
                   )}
 
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                  <Button 
+                     onClick={() => setShowConfirmDialog(true)}
+                     className="w-full shadow-lg shadow-primary/20" 
+                     size="lg"
                   >
-                    <Button
-                      onClick={() => setShowConfirmDialog(true)}
-                      size="lg"
-                      className="gap-2 shadow-lg"
-                    >
-                      <CheckCircle2 className="h-5 w-5" />
-                      Confirmar Operación
-                    </Button>
-                  </motion.div>
-                </motion.div>
-              </div>
-            </div>
+                     Confirmar Operación
+                     <ChevronRight className="h-4 w-4 ml-1" />
+                  </Button>
+               </div>
+            </Card>
           </motion.div>
         )}
       </AnimatePresence>
@@ -1590,6 +1556,6 @@ export function FactoringSelectionPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+    </>
   );
 }

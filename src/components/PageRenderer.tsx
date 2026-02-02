@@ -125,7 +125,7 @@ import {
   AuditLogViewerPage,
   TestimonialsCarouselPage,
   ContactFormPage,
-  BookingCalendarPage,
+  NotificationCenterPage,
   ActivityFeedPage,
   UserProfilePage,
   CommentThreadPage,
@@ -142,13 +142,13 @@ import {
   ElevationPage
 } from "../pages"; // 🚀 MIGRACIÓN COMPLETADA: Imports ahora apuntan a /pages/
 
-// import { PaymentForm } from "./patterns/PaymentForm";
+import { PaymentForm } from "./patterns/PaymentForm";
 import { EditableTable } from "./patterns/EditableTable";
 
 // Import section components for grouped patterns/atomic
 import { ComposedPatternsSection } from "./sections/ComposedPatternsSection";
 // import { AtomicDesignSection } from "./sections/AtomicDesignSection";
-import { ShadcnOfficialComparison } from "./sections/ShadcnOfficialComparison";
+// import { ShadcnOfficialComparison } from "./sections/ShadcnOfficialComparison";
 // AdvancedComponentsSection is no longer used for routing
 // import { AdvancedComponentsSection } from "./sections/AdvancedComponentsSection";
 
@@ -414,8 +414,8 @@ export function PageRenderer({ pageId }: PageRendererProps) {
       return <AdminPortalPage />;
 
     // ===== SPECIAL PAGES =====
-    case "official":
-      return <ShadcnOfficialComparison />;
+    // case "official":
+    //   return <ShadcnOfficialComparison />;
     case "accessibility":
       return <AccessibilityPage />;
     case "brand-layout":
@@ -486,8 +486,8 @@ export function PageRenderer({ pageId }: PageRendererProps) {
       return <TestimonialsCarouselPage />;
     case "contact-form":
       return <ContactFormPage />;
-    case "booking-calendar":
-      return <BookingCalendarPage />;
+    case "notification-center":
+      return <NotificationCenterPage />;
 
     // ===== NEW ADVANCED =====
     case "sankey-diagram":

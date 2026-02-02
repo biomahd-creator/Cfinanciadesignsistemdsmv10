@@ -41,14 +41,18 @@ export function VirtualizedList<T>({
       <div style={{ height: totalHeight, position: "relative", width: "100%" }}>
         {visibleItems.map((item, index) => {
           const actualIndex = startIndex + index;
-          return renderItem(item, actualIndex, {
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: itemHeight,
-            transform: `translateY(${offsetY + index * itemHeight}px)`,
-          });
+          return (
+            <React.Fragment key={actualIndex}>
+              {renderItem(item, actualIndex, {
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                height: itemHeight,
+                transform: `translateY(${offsetY + index * itemHeight}px)`,
+              })}
+            </React.Fragment>
+          );
         })}
       </div>
     </div>

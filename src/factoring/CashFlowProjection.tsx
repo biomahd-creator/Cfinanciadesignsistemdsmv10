@@ -92,12 +92,12 @@ export function CashFlowProjection({
             >
               <defs>
                 <linearGradient id="colorActual" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="hsl(var(--success))" stopOpacity={0.8}/>
-                  <stop offset="95%" stopColor="hsl(var(--success))" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="var(--primary)" stopOpacity={0}/>
                 </linearGradient>
                 <linearGradient id="colorProjected" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="hsl(var(--info))" stopOpacity={0.8}/>
-                  <stop offset="95%" stopColor="hsl(var(--info))" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="var(--secondary)" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="var(--secondary)" stopOpacity={0}/>
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" vertical={false} className="stroke-border" />
@@ -117,19 +117,19 @@ export function CashFlowProjection({
               <Tooltip 
                 formatter={(value: number) => formatCurrency(value)}
                 contentStyle={{ 
-                  backgroundColor: 'hsl(var(--popover))', 
+                  backgroundColor: 'var(--popover)', 
                   borderRadius: 'var(--radius)',
-                  border: '1px solid hsl(var(--border))',
+                  border: '1px solid var(--border)',
                   boxShadow: 'var(--shadow-elevation-2)'
                 }}
-                labelStyle={{ color: 'hsl(var(--popover-foreground))' }}
+                labelStyle={{ color: 'var(--popover-foreground)' }}
               />
               <Legend verticalAlign="top" height={36}/>
               <Area
                 type="monotone"
                 dataKey="projected"
                 name="Proyectado"
-                stroke="hsl(var(--info))"
+                stroke="var(--secondary)"
                 fillOpacity={1}
                 fill="url(#colorProjected)"
                 strokeWidth={2}
@@ -138,7 +138,7 @@ export function CashFlowProjection({
                 type="monotone"
                 dataKey="actual"
                 name="Real"
-                stroke="hsl(var(--success))"
+                stroke="var(--primary)"
                 fillOpacity={1}
                 fill="url(#colorActual)"
                 strokeWidth={2}

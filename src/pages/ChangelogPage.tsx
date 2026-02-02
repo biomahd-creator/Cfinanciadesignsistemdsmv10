@@ -18,9 +18,9 @@ import {
 } from "lucide-react";
 
 export function ChangelogPage() {
-  const currentVersion = "5.2.1";
-  const lastUpdated = "January 30, 2026";
-  const totalComponents = 95;
+  const currentVersion = "6.0.0";
+  const lastUpdated = "February 2, 2026";
+  const totalComponents = 98;
   const wcagCompliance = "98%";
 
   return (
@@ -96,6 +96,58 @@ export function ChangelogPage() {
 
         {/* Releases Tab */}
         <TabsContent value="releases" className="space-y-6 mt-6">
+          {/* Version 6.0.0 */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <CardTitle className="text-foreground">Version 6.0.0</CardTitle>
+                    <Badge variant="destructive">Major</Badge>
+                    <Badge variant="outline">Latest</Badge>
+                  </div>
+                  <CardDescription className="flex items-center gap-2">
+                    <Calendar className="h-3 w-3" />
+                    February 2, 2026
+                  </CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Rocket className="h-4 w-4 text-primary" />
+                  <h4 className="text-sm font-semibold text-foreground">Migration & Refactor</h4>
+                </div>
+                <ul className="space-y-1 ml-6">
+                  <li className="text-sm text-muted-foreground">
+                    • <strong>NPM Migration</strong>: Began migration to <code>@biomahd-creator/financio-design-system</code>.
+                  </li>
+                  <li className="text-sm text-muted-foreground">
+                    • <strong>C-Financia Client Flow</strong>: Implemented Endosatario, Negociación, and Bancaria sections using standardized components.
+                  </li>
+                  <li className="text-sm text-muted-foreground">
+                    • <strong>New Components</strong>: Added <code>ChartLegendItem</code>, <code>ColorBox</code>, and <code>ColorPresetButton</code> to business library.
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Wrench className="h-4 w-4 text-primary" />
+                  <h4 className="text-sm font-semibold text-foreground">Fixed & Improved</h4>
+                </div>
+                <ul className="space-y-1 ml-6">
+                  <li className="text-sm text-muted-foreground">
+                    • Fixed runtime errors in <code>ChartShowcase.tsx</code> caused by missing dependencies.
+                  </li>
+                  <li className="text-sm text-muted-foreground">
+                    • Removed static component counter from Sidebar for cleaner UI.
+                  </li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Version 5.2.1 */}
           <Card>
             <CardHeader>
@@ -104,7 +156,6 @@ export function ChangelogPage() {
                   <div className="flex items-center gap-2 mb-2">
                     <CardTitle className="text-foreground">Version 5.2.1</CardTitle>
                     <Badge>Patch</Badge>
-                    <Badge variant="outline">Latest</Badge>
                   </div>
                   <CardDescription className="flex items-center gap-2">
                     <Calendar className="h-3 w-3" />

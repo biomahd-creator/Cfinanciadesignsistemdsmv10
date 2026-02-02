@@ -280,8 +280,8 @@ export function ChartShowcase() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="w-full h-[350px] min-w-0">
-                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+              <div className="w-full h-[350px] min-w-0" style={{ minHeight: '350px' }}>
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                   <RechartsBarChart data={barData}>
                     <CartesianGrid strokeDasharray="3 3" stroke={border} />
                     <XAxis 
@@ -314,8 +314,8 @@ export function ChartShowcase() {
                 <CardDescription>Operaciones por región</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="w-full h-[300px] min-w-0">
-                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                <div className="w-full h-[300px] min-w-0" style={{ minHeight: '300px' }}>
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                     <RechartsBarChart data={horizontalBarData} layout="vertical">
                       <CartesianGrid strokeDasharray="3 3" stroke={border} />
                       <XAxis type="number" tick={{ fill: muted }} />
@@ -339,8 +339,8 @@ export function ChartShowcase() {
                 <CardDescription>Por tamaño de empresa</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="w-full h-[300px] min-w-0">
-                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                <div className="w-full h-[300px] min-w-0" style={{ minHeight: '300px' }}>
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                     <RechartsBarChart data={stackedBarData}>
                       <CartesianGrid strokeDasharray="3 3" stroke={border} />
                       <XAxis dataKey="month" tick={{ fill: muted }} />
@@ -374,8 +374,8 @@ export function ChartShowcase() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="w-full h-[350px] min-w-0">
-                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+              <div className="w-full h-[350px] min-w-0" style={{ minHeight: '350px' }}>
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                   <PieChart>
                     <Pie
                       data={pieData}
@@ -412,8 +412,8 @@ export function ChartShowcase() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="w-full h-[350px] min-w-0">
-                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+              <div className="w-full h-[350px] min-w-0" style={{ minHeight: '350px' }}>
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                   <PieChart>
                     <Pie
                       data={donutData}
@@ -457,8 +457,8 @@ export function ChartShowcase() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="w-full h-[350px] min-w-0">
-                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+              <div className="w-full h-[350px] min-w-0" style={{ minHeight: '350px' }}>
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                   <AreaChart data={areaData}>
                     <defs>
                       <linearGradient id="colorCartera" x1="0" y1="0" x2="0" y2="1">
@@ -515,8 +515,8 @@ export function ChartShowcase() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="w-full h-[350px] min-w-0">
-                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+              <div className="w-full h-[350px] min-w-0" style={{ minHeight: '350px' }}>
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                   <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
                     <PolarGrid stroke={border} />
                     <PolarAngleAxis 
@@ -558,8 +558,8 @@ export function ChartShowcase() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="w-full h-[400px] min-w-0">
-              <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+            <div className="w-full h-[400px] min-w-0" style={{ minHeight: '400px' }}>
+              <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                 <ComposedChart data={mixedData}>
                   <CartesianGrid strokeDasharray="3 3" stroke={border} />
                   <XAxis dataKey="month" tick={{ fill: muted }} />
@@ -613,8 +613,8 @@ export function ChartShowcase() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="w-full h-[200px] min-w-0">
-                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                <div className="w-full h-[200px] min-w-0" style={{ minHeight: '200px' }}>
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                     <LineChart data={lineData}>
                       <CartesianGrid strokeDasharray="3 3" stroke={border} />
                       <XAxis dataKey="month" tick={{ fill: muted, fontSize: 10 }} />
@@ -642,8 +642,8 @@ export function ChartShowcase() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="w-full h-[300px] min-w-0">
-                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                <div className="w-full h-[300px] min-w-0" style={{ minHeight: '300px' }}>
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                     <RechartsBarChart data={barData}>
                       <CartesianGrid strokeDasharray="3 3" stroke={border} />
                       <XAxis dataKey="category" tick={{ fill: muted }} />
@@ -666,8 +666,8 @@ export function ChartShowcase() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="w-full h-[500px] min-w-0">
-                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+              <div className="w-full h-[500px] min-w-0" style={{ minHeight: '500px' }}>
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                   <AreaChart data={areaData}>
                     <defs>
                       <linearGradient id="largeGradient" x1="0" y1="0" x2="0" y2="1">
@@ -723,7 +723,7 @@ export function ChartShowcase() {
             </CardHeader>
             <CardContent className="pb-4">
               <div className="w-full h-[150px] min-w-0">
-                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                   <LineChart data={lineData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke={border} opacity={0.3} />
                     <XAxis 
@@ -768,7 +768,7 @@ export function ChartShowcase() {
             </CardHeader>
             <CardContent className="pb-4">
               <div className="w-full h-[180px] min-w-0">
-                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                   <RechartsBarChart 
                     data={barData.slice(0, 5)} 
                     layout="vertical"
@@ -813,7 +813,7 @@ export function ChartShowcase() {
               </CardHeader>
               <CardContent className="pb-3">
                 <div className="w-full h-[140px] min-w-0">
-                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                     <PieChart>
                       <Pie
                         data={pieData}
@@ -858,7 +858,7 @@ export function ChartShowcase() {
               </CardHeader>
               <CardContent className="pb-3">
                 <div className="w-full h-[140px] min-w-0">
-                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                     <AreaChart 
                       data={lineData} 
                       margin={{ top: 5, right: 0, left: -20, bottom: 0 }}
@@ -910,7 +910,7 @@ export function ChartShowcase() {
                 <Badge variant="default" className="text-xs">+12%</Badge>
               </div>
               <div className="w-full h-[60px] min-w-0">
-                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                   <AreaChart 
                     data={lineData} 
                     margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
@@ -946,7 +946,7 @@ export function ChartShowcase() {
             </CardHeader>
             <CardContent className="pb-4">
               <div className="w-full h-[200px] min-w-0">
-                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                   <RechartsBarChart 
                     data={stackedBarData} 
                     margin={{ top: 5, right: 5, left: -20, bottom: 0 }}
@@ -971,9 +971,9 @@ export function ChartShowcase() {
               </div>
               {/* Manual legend for better mobile UX */}
               <div className="flex items-center justify-center gap-4 mt-3 flex-wrap">
-                <ChartLegendItem color="chart2" label="Pequeña" />
-                <ChartLegendItem color="primary" label="Mediana" />
-                <ChartLegendItem color="success" label="Grande" />
+                <ChartLegendItem color={chart2} label="Pequeña" />
+                <ChartLegendItem color={primary} label="Mediana" />
+                <ChartLegendItem color={success} label="Grande" />
               </div>
             </CardContent>
           </Card>

@@ -807,26 +807,7 @@ export function OperationsList({ onNewOperation }: OperationsListProps = {}) {
 
   return (
     <div className="space-y-6">
-      {/* Breadcrumb */}
-      <FadeInView>
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/" className="flex items-center gap-1">
-                <Home className="h-4 w-4" />
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/factoring">Factoring</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-            <BreadcrumbPage>Operaciones</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-      </FadeInView>
+
 
       {/* Título de Sección */}
       <FadeInView delay={0.1}>

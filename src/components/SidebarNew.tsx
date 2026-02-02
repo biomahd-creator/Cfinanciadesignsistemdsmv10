@@ -96,7 +96,7 @@ export type PageId =
   // Advanced Forms (Medium Priority)
   | "advanced-forms"
   // Special
-  | "official" | "accessibility" | "brand-layout" | "theme-customizer" | "elevation" | "grid-showcase" | "help-system-demo" | "animations" | "animation-system" | "icon-gallery" | "changelog"
+  | "accessibility" | "brand-layout" | "theme-customizer" | "elevation" | "grid-showcase" | "help-system-demo" | "animations" | "animation-system" | "icon-gallery" | "changelog"
   // New Patterns
   | "activity-feed" | "user-profile" | "comment-thread" | "pricing-table" | "comparison-table" | "search-results" | "empty-state" | "loading-states" | "error-boundary" | "bottom-sheet" | "fab" | "split-button"
   // New Business
@@ -104,7 +104,7 @@ export type PageId =
   // New Advanced
   | "sankey-diagram" | "gantt-chart" | "org-chart" | "virtualized-list" | "infinite-scroll" | "masonry-grid" | "transfer-list"
   // Business Components (Old)
-  | "audit-log" | "testimonials" | "contact-form" | "booking-calendar"
+  | "audit-log" | "testimonials" | "contact-form" | "notification-center"
   // Pages (Real Pages)
   | "factoring-selection" | "factoring-dashboard" | "operations-list" | "approval-flow" | "kpi-showcase"
   // C-Financia Platform
@@ -118,7 +118,6 @@ interface SidebarProps extends React.ComponentProps<typeof Sidebar> {
 interface MenuItem {
   id: PageId;
   label: string;
-  new?: boolean;
 }
 
 interface MenuSection {
@@ -239,31 +238,32 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
       icon: Layers,
       count: 21,
       items: [
-        { id: "invoice-generator", label: "Invoice Generator", new: true },
-        { id: "invoice-upload", label: "Carga de Facturas", new: true },
-        { id: "payment-form", label: "Payment Form", new: true },
-        { id: "editable-table", label: "Editable Table", new: true },
+        { id: "invoice-generator", label: "Invoice Generator" },
+        { id: "invoice-upload", label: "Carga de Facturas" },
+        { id: "payment-form", label: "Payment Form" },
+        { id: "editable-table", label: "Editable Table" },
         { id: "stats-dashboard", label: "Stats Dashboard" },
         { id: "quick-action", label: "Quick Action Toolbar" },
-        { id: "data-table-advanced", label: "Data Table Advanced", new: true },
-        { id: "advanced-filter", label: "Advanced Filter Panel", new: true },
+        { id: "data-table-advanced", label: "Data Table Advanced" },
+        { id: "advanced-filter", label: "Advanced Filter Panel" },
         { id: "approval-timeline", label: "Approval Timeline" },
         { id: "multi-step-wizard", label: "Multi-Step Wizard" },
-        { id: "multi-step-form", label: "Multi-Step Form", new: true },
-        { id: "multi-step-form-vertical", label: "Multi-Step Form Vertical", new: true },
-        { id: "multi-step-wizard-vertical", label: "Multi-Step Wizard Vertical", new: true },
-        { id: "activity-feed", label: "Activity Feed", new: true },
-        { id: "comment-thread", label: "Comment Thread", new: true },
-        { id: "pricing-table", label: "Pricing Table", new: true },
-        { id: "comparison-table", label: "Comparison Table", new: true },
-        { id: "search-results", label: "Search Results", new: true },
-        { id: "user-profile", label: "User Profile", new: true },
-        { id: "empty-state", label: "Empty State", new: true },
-        { id: "loading-states", label: "Loading States", new: true },
-        { id: "error-boundary", label: "Error Boundary", new: true },
-        { id: "bottom-sheet", label: "Bottom Sheet", new: true },
-        { id: "fab", label: "Floating Action Button", new: true },
-        { id: "split-button", label: "Split Button", new: true },
+        { id: "multi-step-form", label: "Multi-Step Form" },
+        { id: "multi-step-form-vertical", label: "Multi-Step Form Vertical" },
+        { id: "multi-step-wizard-vertical", label: "Multi-Step Wizard Vertical" },
+        { id: "activity-feed", label: "Activity Feed" },
+        { id: "comment-thread", label: "Comment Thread" },
+        { id: "pricing-table", label: "Pricing Table" },
+        { id: "comparison-table", label: "Comparison Table" },
+        { id: "search-results", label: "Search Results" },
+        { id: "user-profile", label: "User Profile" },
+        { id: "empty-state", label: "Empty State" },
+        { id: "loading-states", label: "Loading States" },
+        { id: "error-boundary", label: "Error Boundary" },
+        { id: "bottom-sheet", label: "Bottom Sheet" },
+        { id: "notification-center", label: "Notification Center" },
+        { id: "fab", label: "Floating Action Button" },
+        { id: "split-button", label: "Split Button" },
       ],
     },
     {
@@ -272,15 +272,15 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
       icon: Briefcase,
       count: 10,
       items: [
-        { id: "cf-dashboard", label: "Dashboard Principal", new: true },
-        { id: "admin-portal", label: "Portal Administrativo", new: true },
-        { id: "factoring-dashboard", label: "Factoring Dashboard", new: true },
-        { id: "operations-list", label: "Operations List", new: true },
-        { id: "factoring-selection", label: "Invoice Selection", new: true },
-        { id: "approval-flow", label: "Approval Flow", new: true },
-        { id: "kpi-showcase", label: "KPI Showcase", new: true },
-        { id: "liquidity-calculator", label: "Calculadora Liquidez", new: true },
-        { id: "onboarding", label: "Onboarding", new: true },
+        { id: "cf-dashboard", label: "Dashboard Principal" },
+        { id: "admin-portal", label: "Portal Administrativo" },
+        { id: "factoring-dashboard", label: "Factoring Dashboard" },
+        { id: "operations-list", label: "Operations List" },
+        { id: "factoring-selection", label: "Invoice Selection" },
+        { id: "approval-flow", label: "Approval Flow" },
+        { id: "kpi-showcase", label: "KPI Showcase" },
+        { id: "liquidity-calculator", label: "Calculadora Liquidez" },
+        { id: "onboarding", label: "Onboarding" },
       ],
     },
     /*
@@ -298,20 +298,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
       ],
     },
     */
-    {
-      id: "widgets",
-      label: "UI Widgets",
-      icon: Box,
-      count: 6,
-      items: [
-        { id: "widgets-library", label: "All Widgets", new: true },
-        { id: "widget-stat-card", label: "Stat Card" },
-        { id: "widget-search-bar", label: "Search Bar" },
-        { id: "widget-filter-bar", label: "Filter Bar" },
-        { id: "widget-navigation", label: "Navigation Bar" },
-        { id: "widget-timeline", label: "Timeline Item" },
-      ],
-    },
+
     {
       id: "advanced",
       label: "Advanced",
@@ -319,8 +306,8 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
       count: 14,
       items: [
         { id: "charts", label: "Charts" },
-        { id: "data-visualization", label: "Data Visualization", new: true },
-        { id: "advanced-forms", label: "Advanced Forms", new: true },
+        { id: "data-visualization", label: "Data Visualization" },
+        { id: "advanced-forms", label: "Advanced Forms" },
         { id: "data-table", label: "Data Table" },
         { id: "tree-table", label: "Tree Table" },
         { id: "pivot-table", label: "Pivot Table" },
@@ -332,13 +319,13 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
         { id: "file-uploader", label: "File Uploader" },
         { id: "rich-text-editor", label: "Rich Text Editor" },
         { id: "timeline", label: "Timeline" },
-        { id: "sankey-diagram", label: "Sankey Diagram", new: true },
-        { id: "gantt-chart", label: "Gantt Chart", new: true },
-        { id: "org-chart", label: "Org Chart", new: true },
-        { id: "virtualized-list", label: "Virtualized List", new: true },
-        { id: "infinite-scroll", label: "Infinite Scroll", new: true },
-        { id: "masonry-grid", label: "Masonry Grid", new: true },
-        { id: "transfer-list", label: "Transfer List", new: true },
+        { id: "sankey-diagram", label: "Sankey Diagram" },
+        { id: "gantt-chart", label: "Gantt Chart" },
+        { id: "org-chart", label: "Org Chart" },
+        { id: "virtualized-list", label: "Virtualized List" },
+        { id: "infinite-scroll", label: "Infinite Scroll" },
+        { id: "masonry-grid", label: "Masonry Grid" },
+        { id: "transfer-list", label: "Transfer List" },
       ],
     },
     {
@@ -351,16 +338,15 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
         { id: "audit-log", label: "Audit Log Viewer" },
         { id: "testimonials", label: "Testimonials Carousel" },
         { id: "contact-form", label: "Contact Form" },
-        { id: "booking-calendar", label: "Booking Calendar" },
         // New
-        { id: "liquidity-meter-component", label: "Liquidity Meter", new: true },
-        { id: "risk-indicator", label: "Risk Indicator", new: true },
-        { id: "rate-display", label: "Rate Display", new: true },
-        { id: "invoice-card", label: "Invoice Card", new: true },
-        { id: "payor-card", label: "Payor Card", new: true },
-        { id: "cash-flow-projection", label: "Cash Flow Chart", new: true },
-        { id: "collection-timeline", label: "Collection Timeline", new: true },
-        { id: "doc-verification", label: "Doc Verification", new: true },
+        { id: "liquidity-meter-component", label: "Liquidity Meter" },
+        { id: "risk-indicator", label: "Risk Indicator" },
+        { id: "rate-display", label: "Rate Display" },
+        { id: "invoice-card", label: "Invoice Card" },
+        { id: "payor-card", label: "Payor Card" },
+        { id: "cash-flow-projection", label: "Cash Flow Chart" },
+        { id: "collection-timeline", label: "Collection Timeline" },
+        { id: "doc-verification", label: "Doc Verification" },
       ],
     },
   ];
@@ -372,14 +358,13 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
   ];
 
   const resourcePages: MenuItem[] = [
-    { id: "animations", label: "Animations", new: true },
-    { id: "animation-system", label: "Animation System", new: true },
-    { id: "icon-gallery", label: "Icon Gallery", new: true },
+    { id: "animations", label: "Animations" },
+    { id: "animation-system", label: "Animation System" },
+    { id: "icon-gallery", label: "Icon Gallery" },
     { id: "help-system-demo", label: "Help System" },
   ];
 
   const specialPages: MenuItem[] = [
-    { id: "official", label: "Official Verification" },
     { id: "accessibility", label: "WCAG Accessibility" },
     { id: "changelog", label: "Changelog" },
   ];
@@ -443,7 +428,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
           </SidebarMenu>
 
           {/* Search Input */}
-          <div className="px-2 pb-2">
+          <div className="px-2 pb-2 group-data-[collapsible=icon]:hidden">
             <div className="relative group/search">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-sidebar-foreground/50 transition-colors group-focus-within/search:text-primary" />
               <input
@@ -490,11 +475,6 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
                         <span className="text-sidebar-foreground truncate w-full">{item.label}</span>
                         <span className="text-xs text-sidebar-foreground/50 uppercase">{item.section}</span>
                       </div>
-                      {item.new && (
-                        <Badge variant="default" className="ml-auto h-4 px-1 text-xs border-none bg-primary text-primary-foreground font-medium">
-                          NEW
-                        </Badge>
-                      )}
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))
@@ -558,15 +538,10 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
                             asChild 
                             isActive={activePage === item.id}
                             onClick={() => onPageChange(item.id)}
-                            className="cursor-pointer"
+                            className="cursor-pointer data-[active=true]:bg-primary data-[active=true]:text-primary-foreground"
                           >
-                            <span className="flex flex-1 items-center gap-2 overflow-hidden text-sidebar-foreground">
+                            <span className="flex flex-1 items-center gap-2 overflow-hidden">
                               <span className="truncate">{item.label}</span>
-                              {item.new && (
-                                <Badge variant="default" className="shrink-0 h-4 px-1 text-xs border-none font-medium">
-                                  NEW
-                                </Badge>
-                              )}
                             </span>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
@@ -595,11 +570,6 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
                   {page.id === "icon-gallery" && <ImageIcon />}
                   <span className="flex flex-1 items-center gap-2 overflow-hidden text-sidebar-foreground group-data-[active=true]/menu-button:text-sidebar-primary-foreground group-data-[active=true]/menu-button:font-medium">
                     <span className="truncate">{page.label}</span>
-                    {page.new && (
-                      <Badge variant="default" className="shrink-0 h-4 px-1 text-xs border-none font-medium">
-                        NEW
-                      </Badge>
-                    )}
                   </span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -622,11 +592,6 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
                   {page.id === "elevation" && <Scale />}
                   <span className="flex flex-1 items-center gap-2 overflow-hidden text-sidebar-foreground group-data-[active=true]/menu-button:text-sidebar-primary-foreground group-data-[active=true]/menu-button:font-medium">
                     <span className="truncate">{page.label}</span>
-                    {page.new && (
-                      <Badge variant="default" className="shrink-0 h-4 px-1 text-xs border-none font-medium">
-                        NEW
-                      </Badge>
-                    )}
                   </span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -644,7 +609,6 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
                   onClick={() => onPageChange(page.id)}
                   tooltip={page.label}
                 >
-                  {page.id === "official" && <CheckCircle />}
                   {page.id === "accessibility" && <Accessibility />}
                   {page.id === "changelog" && <BookOpen />}
                   <span className="text-sidebar-foreground group-data-[active=true]/menu-button:text-sidebar-primary-foreground group-data-[active=true]/menu-button:font-medium">{page.label}</span>
@@ -658,12 +622,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
       </SidebarContent>
 
       <SidebarFooter>
-         <div className="p-4 bg-sidebar-accent/10 rounded-lg m-2 group-data-[collapsible=icon]:hidden">
-            <div className="flex items-center gap-2 text-sidebar-foreground/90 text-xs">
-              <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-              <span>95 Componentes</span>
-            </div>
-         </div>
+
          
          <SidebarMenu>
             <SidebarMenuItem>

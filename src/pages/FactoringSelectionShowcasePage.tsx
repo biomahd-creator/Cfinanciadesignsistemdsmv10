@@ -33,18 +33,8 @@ export function FactoringSelectionShowcasePage() {
 
       {/* DEMO PRINCIPAL - Primer lugar */}
       <div className="rounded-xl border bg-background shadow-sm overflow-hidden">
-        <div className="p-1 bg-muted/30 border-b flex items-center justify-between px-4 py-2">
-            <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-                <Layers className="h-3 w-3" />
-                Vista Previa Interactiva
-            </div>
-            <div className="flex gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-red-400/20 border border-red-400/50"></div>
-                <div className="w-2.5 h-2.5 rounded-full bg-amber-400/20 border border-amber-400/50"></div>
-                <div className="w-2.5 h-2.5 rounded-full bg-green-400/20 border border-green-400/50"></div>
-            </div>
-        </div>
-        <div className="p-0">
+        {/* Browser header removed */}
+        <div className="p-6">
             <FactoringSelectionPage />
         </div>
       </div>

@@ -23,7 +23,16 @@ import {
   Filter,
   ChevronLeft,
   ChevronRight,
+  Calendar,
+  Landmark,
 } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../components/ui/select";
 import imgEllipse348 from "figma:asset/97fb249d8224347851df11e33a2650a2e731b545.png";
 import svgPaths from "../../imports/svg-xhnwietn29";
 import { LoadInvoicesModal } from "./LoadInvoicesModal";
@@ -283,6 +292,188 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
               </Button>
             </LoadInvoicesModal>
           </div>
+        </div>
+
+        {/* Formulario de Negociación */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            {/* Información Endosatario */}
+            <Card className="shadow-sm">
+                <CardHeader className="pb-3">
+                    <h3 className="font-semibold text-base">Información Endosatario</h3>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    <div className="flex items-center space-x-2">
+                        <Checkbox id="endosar" />
+                        <label htmlFor="endosar" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                            Endosar a un Tercero
+                        </label>
+                    </div>
+                    
+                    <div className="space-y-2">
+                        <label className="text-sm text-muted-foreground">Razón social</label>
+                        <Input className="bg-slate-50/50" />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="text-sm text-muted-foreground">Tipo Documento</label>
+                            <Select>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Seleccionar" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="nit">NIT</SelectItem>
+                                    <SelectItem value="cc">CC</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm text-muted-foreground">Número Documento</label>
+                            <Input className="bg-slate-50/50" />
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
+
+            {/* Información de Negociación */}
+            <Card className="shadow-sm">
+                 <CardHeader className="pb-3">
+                    <h3 className="font-semibold text-base">Información de Negociación</h3>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                         <div className="space-y-2">
+                            <label className="text-sm text-muted-foreground">Operación</label>
+                            <div className="flex rounded-md border p-1 bg-slate-50">
+                                <Button size="sm" variant="ghost" className="w-1/2 h-7 bg-green-500 text-white hover:bg-green-600 hover:text-white rounded text-xs">Factoring</Button>
+                                <Button size="sm" variant="ghost" className="w-1/2 h-7 text-muted-foreground hover:bg-slate-200 rounded text-xs">Confirming</Button>
+                            </div>
+                        </div>
+                         <div className="space-y-2">
+                            <label className="text-sm text-muted-foreground">Tipo</label>
+                            <Select>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Seleccionar" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="con-recurso">Con Recurso</SelectItem>
+                                    <SelectItem value="sin-recurso">Sin Recurso</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+
+                     <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="text-sm text-green-600">Porcentaje Financiamiento</label>
+                            <div className="relative">
+                                <Input placeholder="Value" className="pr-8" />
+                                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">%</span>
+                            </div>
+                        </div>
+                        <div className="space-y-2">
+                             <label className="text-sm text-muted-foreground">Tasa Efectiva Anual</label>
+                             <div className="relative">
+                                <Input placeholder="Value" className="pr-8" />
+                                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-sm text-muted-foreground">Entrega del Título</label>
+                        <div className="flex rounded-md border p-1 bg-slate-50">
+                             <Button size="sm" variant="ghost" className="w-1/2 h-7 bg-green-500 text-white hover:bg-green-600 hover:text-white rounded text-xs">Con Responsabilidad</Button>
+                             <Button size="sm" variant="ghost" className="w-1/2 h-7 text-muted-foreground hover:bg-slate-200 rounded text-xs">Sin Responsabilidad</Button>
+                        </div>
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-sm text-muted-foreground">Fecha de Pago</label>
+                        <div className="relative">
+                            <Input type="date" className="pl-10" defaultValue="2025-01-01" />
+                            <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
+
+            {/* Información Bancaria */}
+            <Card className="shadow-sm">
+                <CardHeader className="pb-3 flex flex-row items-center justify-between space-y-0">
+                    <h3 className="font-semibold text-base">Información Bancaria</h3>
+                     <Button variant="ghost" size="sm" className="h-8 text-xs text-muted-foreground">
+                        <Landmark className="mr-2 h-3 w-3" />
+                        Agregar Cuenta
+                    </Button>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                     <div className="space-y-2">
+                        <label className="text-sm text-muted-foreground">Titular Cuenta</label>
+                        <Input className="bg-slate-50/50" />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="text-sm text-muted-foreground">Tipo Documento</label>
+                             <Select>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Selecciona" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="nit">NIT</SelectItem>
+                                    <SelectItem value="cc">CC</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm text-muted-foreground">Número Documento</label>
+                            <Input className="bg-slate-50/50" />
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="text-sm text-muted-foreground">Banco</label>
+                             <Select>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Selecciona" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="bancolombia">Bancolombia</SelectItem>
+                                    <SelectItem value="davivienda">Davivienda</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                         <div className="space-y-2">
+                            <label className="text-sm text-muted-foreground">Tipo de Cuenta</label>
+                             <Select>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Selecciona" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="ahorros">Ahorros</SelectItem>
+                                    <SelectItem value="corriente">Corriente</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+
+                     <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="text-sm text-muted-foreground">Número de Cuenta</label>
+                            <Input className="bg-slate-50/50" />
+                        </div>
+                         <div className="space-y-2">
+                            <label className="text-sm text-muted-foreground">Operación Asegurada?</label>
+                            <div className="flex rounded-md border p-1 bg-slate-50">
+                                <Button size="sm" variant="ghost" className="w-1/2 h-7 bg-green-500 text-white hover:bg-green-600 hover:text-white rounded text-xs">Si</Button>
+                                <Button size="sm" variant="ghost" className="w-1/2 h-7 text-muted-foreground hover:bg-slate-200 rounded text-xs">No</Button>
+                            </div>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
 
         {/* Stats Cards Grid - Sistema de Tabs usando DSM KpiCard */}
