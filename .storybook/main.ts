@@ -19,6 +19,10 @@ const config: StorybookConfig = {
   core: {
     builder: '@storybook/builder-vite',
   },
+    viteFinal: async (config) => {
+    config.base = '/Cfinanciadesignsistemdsmv10/';
+    return config;
+  },
 };
 
 export default config;
