@@ -16,8 +16,7 @@ export function AvatarPage() {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <Avatar>
-            <AvatarImage src="https://github.com/vercel.png" alt="@vercel" />
-            <AvatarFallback>VC</AvatarFallback>
+            <AvatarFallback>CB</AvatarFallback>
           </Avatar>
           <Avatar>
             <AvatarFallback>AB</AvatarFallback>

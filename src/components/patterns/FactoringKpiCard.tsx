@@ -42,7 +42,7 @@ export function FactoringKpiCard({
   /* ── Resolved colours per state ── */
   const showColor = isActive || (isHovered && hasColor);
 
-  const borderColor = showColor ? accentColor : GRAY;
+  const borderColor = showColor ? accentColor : "#22c55e";
   const badgeColor = showColor ? accentColor : GRAY;
 
   /* Label uses accent color when active, otherwise theme-aware text */

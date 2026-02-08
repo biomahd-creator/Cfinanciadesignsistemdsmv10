@@ -24,6 +24,20 @@ Para facilitar la lectura por IAs y humanos, la documentación se ha dividido en
 
 ---
 
+## INFRAESTRUCTURA PERMITIDA
+
+Este proyecto está habilitado **exclusivamente** para las siguientes plataformas:
+
+| Plataforma | Uso | Workflow |
+|---|---|---|
+| **GitHub** | Repositorio, CI/CD (GitHub Actions), GitHub Pages | `validate.yml`, `storybook.yml` |
+| **Storybook** | Documentación de componentes, testing visual, deploy a GitHub Pages | `storybook.yml` |
+| **npm** | Publicación del paquete `@biomahd-creator/financio-design-system` | `publish.yml` |
+
+**No se permite** integración con: Chromatic, Vercel, Netlify, Firebase, AWS, Docker, Heroku, CircleCI, Travis, Jenkins, Sentry, Datadog, ni ningún otro servicio externo.
+
+---
+
 ## USO RÁPIDO
 Para crear una nueva funcionalidad:
 1. Consulta **COMPONENTS.md** para ver qué piezas tienes.
