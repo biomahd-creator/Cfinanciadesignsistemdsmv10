@@ -1,7 +1,6 @@
-import { useTheme } from "../components/ThemeProvider";
 import { Palette, Download, Upload, RotateCcw, Check, Copy, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import { Progress } from "../components/ui/progress";
 import { toast } from "sonner@2.0.3";
 import { getUIColors } from "../lib/theme-utils";
@@ -14,8 +13,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
 import { Separator } from "../components/ui/separator";
 import { Slider } from "../components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
-import { MasterDataGrid } from "../components/patterns/MasterDataGrid";
+import { MasterDataGrid } from "../components/advanced/MasterDataGrid";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../components/ui/table";
+import { SafeChartContainer } from "../components/ui/safe-chart-container";
+import { useTheme } from "../components/ThemeProvider";
 
 export function ThemeCustomizerPage() {
   const { config, updateConfig, resetToDefaults, exportConfig, importConfig, applyPreset } = useTheme();
@@ -214,7 +215,7 @@ export function ThemeCustomizerPage() {
           </Card>
 
           <Tabs defaultValue="brand" className="w-full">
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList className="grid w-full grid-cols-5 max-w-xl">
               <TabsTrigger value="brand">Brand</TabsTrigger>
               <TabsTrigger value="ui">UI Elements</TabsTrigger>
               <TabsTrigger value="inputs">Inputs</TabsTrigger>
@@ -722,8 +723,7 @@ export function ThemeCustomizerPage() {
 
                   {/* Previews */}
                   <div className="space-y-8">
-                    <div className="h-[200px] w-full min-w-0" style={{ minHeight: '200px' }}>
-                      <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
+                    <SafeChartContainer width="100%" height="200px" minHeight="200px">
                         <BarChart data={chartData}>
                           <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
                           <XAxis dataKey="name" fontSize={12} tickLine={false} axisLine={false} />
@@ -734,11 +734,9 @@ export function ThemeCustomizerPage() {
                           <Bar dataKey="value" fill={config.chart1} radius={[4, 4, 0, 0]} />
                           <Bar dataKey="revenue" fill={config.chart2} radius={[4, 4, 0, 0]} />
                         </BarChart>
-                      </ResponsiveContainer>
-                    </div>
+                      </SafeChartContainer>
 
-                    <div className="h-[200px] w-full min-w-0" style={{ minHeight: '200px' }}>
-                      <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
+                    <SafeChartContainer width="100%" height="200px" minHeight="200px">
                         <PieChart>
                           <Pie
                             data={pieData}
@@ -758,8 +756,7 @@ export function ThemeCustomizerPage() {
                           </Pie>
                           <Tooltip />
                         </PieChart>
-                      </ResponsiveContainer>
-                    </div>
+                      </SafeChartContainer>
                   </div>
                 </div>
               </Card>

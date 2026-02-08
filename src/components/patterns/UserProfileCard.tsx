@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "../../lib/utils";
+import { cn } from "../ui/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
@@ -34,7 +34,7 @@ interface UserProfileCardProps {
 export function UserProfileCard({ user, className, onEdit, onMessage }: UserProfileCardProps) {
   const statusColors = {
     active: "bg-green-500",
-    inactive: "bg-gray-500",
+    inactive: "bg-muted-foreground",
     pending: "bg-yellow-500",
   };
 

@@ -32,24 +32,6 @@ export function TextareaDemo() {
   );
 }`}
       
-      // Usage
-      usage="Importa el componente Textarea desde @/components/ui/textarea. Ideal para formularios que requieren entrada de texto multilínea como comentarios, descripciones, mensajes, o cualquier contenido que supere una sola línea."
-      usageCode={`import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-
-function ContactForm() {
-  return (
-    <div className="space-y-2">
-      <Label htmlFor="message">Message</Label>
-      <Textarea 
-        id="message"
-        placeholder="Enter your message..."
-        rows={5}
-      />
-    </div>
-  );
-}`}
-      
       // Props Documentation
       props={[
         {

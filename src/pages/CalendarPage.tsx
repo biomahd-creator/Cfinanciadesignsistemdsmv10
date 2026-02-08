@@ -39,15 +39,6 @@ export function CalendarDemo() {
     />
   )
 }`}
-      usage={`import { Calendar } from "@/components/ui/calendar"
-
-// ... inside component
-<Calendar
-  mode="single"
-  selected={date}
-  onSelect={setDate}
-  className="rounded-md border"
-/>`}
       props={[
         {
           name: "mode",

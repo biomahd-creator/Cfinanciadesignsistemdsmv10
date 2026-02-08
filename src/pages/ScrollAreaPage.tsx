@@ -47,12 +47,6 @@ export function ScrollAreaDemo() {
   )
 }`}
       
-      // Usage
-      usage="Usa ScrollArea para contenedores con contenido que excede su altura o anchura."
-      usageCode={`<ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
-  {/* Content */}
-</ScrollArea>`}
-      
       // Props Documentation
       props={[
         {

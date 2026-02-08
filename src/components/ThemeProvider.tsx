@@ -191,67 +191,94 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     localStorage.setItem("theme-config", JSON.stringify(config));
-    applyThemeToDOM(config);
+    applyThemeToDOM(config, theme);
   }, [config]);
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
-    applyThemeToDOM(config);
     
-    // Apply dark class to document root
+    // Apply dark class to document root FIRST so CSS .dark {} is active
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
+    
+    // Then apply inline properties (dark-mode-aware)
+    applyThemeToDOM(config, theme);
   }, [theme, config]);
 
-  const applyThemeToDOM = (theme: ThemeConfig) => {
+  /**
+   * applyThemeToDOM — Sets CSS custom properties on <html>.
+   *
+   * CRITICAL: root.style.setProperty() creates INLINE STYLES on <html>,
+   * which have the highest CSS specificity and override EVERYTHING —
+   * including .dark {} rules in the stylesheet.
+   *
+   * Therefore, properties that change between light/dark mode must be
+   * REMOVED from inline styles in dark mode so the CSS .dark {} values
+   * take effect via normal cascade.
+   *
+   * Mode-independent properties (--primary, --radius, font weights, etc.)
+   * are safe to always set inline because they're the same in both modes.
+   */
+  const applyThemeToDOM = (themeConfig: ThemeConfig, currentTheme: "light" | "dark") => {
     const root = document.documentElement;
-    root.style.setProperty("--primary", theme.primary);
-    root.style.setProperty("--primary-foreground", theme.primaryForeground);
-    root.style.setProperty("--secondary", theme.secondary);
-    root.style.setProperty("--secondary-foreground", theme.secondaryForeground);
-    root.style.setProperty("--destructive", theme.destructive);
-    root.style.setProperty("--accent", theme.accent);
-    root.style.setProperty("--muted", theme.muted);
-    root.style.setProperty("--radius", theme.radius);
-    root.style.setProperty("--font-size", theme.fontSize);
-    root.style.setProperty("--font-weight-light", theme.fontWeightLight);
-    root.style.setProperty("--font-weight-normal", theme.fontWeightNormal);
-    root.style.setProperty("--font-weight-medium", theme.fontWeightMedium);
-    root.style.setProperty("--font-weight-semibold", theme.fontWeightSemibold);
-    root.style.setProperty("--font-weight-bold", theme.fontWeightBold);
-    
-    // Chart colors
-    root.style.setProperty("--chart-1", theme.chart1);
-    root.style.setProperty("--chart-2", theme.chart2);
-    root.style.setProperty("--chart-3", theme.chart3);
-    root.style.setProperty("--chart-4", theme.chart4);
-    root.style.setProperty("--chart-5", theme.chart5);
-    
-    // Link colors
-    root.style.setProperty("--link", theme.link);
-    root.style.setProperty("--link-hover", theme.linkHover);
-    root.style.setProperty("--link-visited", theme.linkVisited);
-    
-    // Additional UI elements
-    root.style.setProperty("--success", theme.success);
-    root.style.setProperty("--warning", theme.warning);
-    root.style.setProperty("--info", theme.info);
-    
-    // Focus/Selection
-    root.style.setProperty("--focus-ring", theme.focusRing);
-    root.style.setProperty("--selection", theme.selection);
-    
-    // Input background colors
-    root.style.setProperty("--input-background-light", theme.inputBackgroundLight);
-    root.style.setProperty("--input-background-dark", theme.inputBackgroundDark);
-    
-    // Input border colors and width
-    root.style.setProperty("--input-border-light", theme.inputBorderLight);
-    root.style.setProperty("--input-border-dark", theme.inputBorderDark);
-    root.style.setProperty("--input-border-width", theme.inputBorderWidth);
+
+    // ── Mode-independent: safe to always set inline ──
+    root.style.setProperty("--primary", themeConfig.primary);
+    root.style.setProperty("--primary-foreground", themeConfig.primaryForeground);
+    root.style.setProperty("--radius", themeConfig.radius);
+    root.style.setProperty("--font-size", themeConfig.fontSize);
+    root.style.setProperty("--font-weight-light", themeConfig.fontWeightLight);
+    root.style.setProperty("--font-weight-normal", themeConfig.fontWeightNormal);
+    root.style.setProperty("--font-weight-medium", themeConfig.fontWeightMedium);
+    root.style.setProperty("--font-weight-semibold", themeConfig.fontWeightSemibold);
+    root.style.setProperty("--font-weight-bold", themeConfig.fontWeightBold);
+    root.style.setProperty("--ring", themeConfig.focusRing);
+
+    // Input SOURCE variables (CSS uses these with var() to derive actual values)
+    root.style.setProperty("--input-background-light", themeConfig.inputBackgroundLight);
+    root.style.setProperty("--input-background-dark", themeConfig.inputBackgroundDark);
+    root.style.setProperty("--input-border-light", themeConfig.inputBorderLight);
+    root.style.setProperty("--input-border-dark", themeConfig.inputBorderDark);
+    root.style.setProperty("--input-border-width", themeConfig.inputBorderWidth);
+
+    // ── Mode-dependent: set in light, REMOVE in dark ──
+    // These properties have different values in .dark {} (globals.css).
+    // Inline styles would override .dark {}, breaking dark mode.
+    const modeDependentProps = [
+      ["--secondary", themeConfig.secondary],
+      ["--secondary-foreground", themeConfig.secondaryForeground],
+      ["--destructive", themeConfig.destructive],
+      ["--accent", themeConfig.accent],
+      ["--muted", themeConfig.muted],
+      ["--chart-1", themeConfig.chart1],
+      ["--chart-2", themeConfig.chart2],
+      ["--chart-3", themeConfig.chart3],
+      ["--chart-4", themeConfig.chart4],
+      ["--chart-5", themeConfig.chart5],
+      ["--success", themeConfig.success],
+      ["--warning", themeConfig.warning],
+      ["--info", themeConfig.info],
+      ["--link", themeConfig.link],
+      ["--link-hover", themeConfig.linkHover],
+      ["--link-visited", themeConfig.linkVisited],
+      ["--focus-ring", themeConfig.focusRing],
+      ["--selection", themeConfig.selection],
+    ] as const;
+
+    if (currentTheme === "light") {
+      // Light mode: set inline (overrides :root CSS defaults for customization)
+      for (const [prop, value] of modeDependentProps) {
+        root.style.setProperty(prop, value);
+      }
+    } else {
+      // Dark mode: REMOVE inline so CSS .dark {} takes effect
+      for (const [prop] of modeDependentProps) {
+        root.style.removeProperty(prop);
+      }
+    }
   };
 
   const updateConfig = (updates: Partial<ThemeConfig>) => {

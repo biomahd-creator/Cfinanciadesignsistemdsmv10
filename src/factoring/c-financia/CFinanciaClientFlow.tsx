@@ -7,24 +7,23 @@ import { Input } from "../../components/ui/input";
 import { Checkbox } from "../../components/ui/checkbox";
 import { Progress } from "../../components/ui/progress";
 import { Avatar, AvatarImage, AvatarFallback } from "../../components/ui/avatar";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../../components/ui/table";
+import { ToggleButtonGroup } from "../../components/ui/toggle-button-group";
 import {
   Search,
   ChevronDown,
   ChevronUp,
-  ArrowRight,
   Filter,
-  ChevronLeft,
-  ChevronRight,
   Calendar,
   Landmark,
+  Check,
+  Home,
+  Wand2,
+  ListChecks,
+  XSquare,
+  Trash2,
+  FileCheck2,
+  Clock,
+  FileX,
 } from "lucide-react";
 import {
   Select,
@@ -36,7 +35,17 @@ import {
 import imgEllipse348 from "figma:asset/97fb249d8224347851df11e33a2650a2e731b545.png";
 import svgPaths from "../../imports/svg-xhnwietn29";
 import { LoadInvoicesModal } from "./LoadInvoicesModal";
-import { KpiCardGroup } from "../../components/patterns/KpiCard";
+import { FactoringKpiCardGroup } from "../../components/patterns/FactoringKpiCardGroup";
+import { FactoringInvoiceTable } from "../../components/patterns/factoring/FactoringInvoiceTable";
+import type { FactoringInvoice } from "../../components/patterns/factoring/FactoringInvoiceTable";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  BreadcrumbPage,
+} from "../../components/ui/breadcrumb";
 
 // Tipos para los datos
 interface Invoice {
@@ -143,10 +152,41 @@ interface CFinanciaClientFlowProps {
 
 export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
   const [activeTab, setActiveTab] = useState<"elegibles" | "pendientes" | "no-elegibles" | "descartadas">("elegibles");
+  const [operationType, setOperationType] = useState<"factoring" | "confirming">("factoring");
+  const [responsibilityType, setResponsibilityType] = useState<"con" | "sin">("con");
   const [expandedClients, setExpandedClients] = useState<string[]>(["client-1"]);
   const [selectedInvoices, setSelectedInvoices] = useState<string[]>([]);
   const [clientPages, setClientPages] = useState<Record<string, number>>({});
   const [clientSearch, setClientSearch] = useState<Record<string, string>>({});
+  const [globalSearch, setGlobalSearch] = useState("");
+  const [isInsured, setIsInsured] = useState(true);
+
+  const handleGlobalSelectAll = () => {
+    const allIds: string[] = [];
+    mockClientsData.forEach(client => {
+      client.invoices.forEach(inv => allIds.push(inv.id));
+    });
+    setSelectedInvoices(prev => {
+      const combined = new Set([...prev, ...allIds]);
+      return Array.from(combined);
+    });
+  };
+
+  const handleGlobalSelectAllEligible = () => {
+    const allIds: string[] = [];
+    mockClientsData.forEach(client => {
+       const elegibles = client.invoices.filter(i => i.category === 'elegibles');
+       elegibles.forEach(inv => allIds.push(inv.id));
+    });
+    setSelectedInvoices(prev => {
+      const combined = new Set([...prev, ...allIds]);
+      return Array.from(combined);
+    });
+  };
+
+  const handleGlobalDeselectAll = () => {
+    setSelectedInvoices([]);
+  };
 
   // Calcular totales para KPI Cards basado en los datos reales
   const kpiStats = useMemo(() => {
@@ -212,12 +252,33 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-muted/50">
       {/* Navbar C-Financia con variant full para mostrar avatar y opciones */}
       <CFinanciaNavbar onLogout={handleLogout} variant="full" />
       
       {/* Main Content */}
-      <div className="min-h-screen bg-slate-50 p-8 pb-32 pt-[120px]">
+      <div className="min-h-screen bg-muted/50 p-8 pb-32 pt-[90px]">
+        <div className="mb-6">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/" className="flex items-center gap-2">
+                  <Home className="h-4 w-4" />
+                  Inicio
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/factoring">Factoring</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Nueva Operación</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+
         {/* Header Section */}
         <div className="mb-6">
           <h1 className="text-2xl font-semibold tracking-tight">
@@ -229,7 +290,7 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
         </div>
 
         {/* Stepper horizontal / Client Card */}
-        <div className="relative mb-8 rounded-lg bg-white p-6 shadow-lg">
+        <div className="relative mb-8 rounded-lg bg-card p-6 shadow-lg">
           <div className="flex items-center justify-between">
             {/* Avatar y Company Info */}
             <div className="flex items-center gap-4">
@@ -245,7 +306,7 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
 
             {/* Step 1 */}
             <div className="flex items-start gap-3">
-              <Badge variant="secondary" className="h-10 w-10 shrink-0 rounded-full text-base flex items-center justify-center">
+              <Badge variant="secondary" className="h-10 w-10 shrink-0 rounded-full text-base flex items-center justify-center bg-muted text-muted-foreground hover:bg-accent">
                 1
               </Badge>
               <div className="flex flex-col items-start gap-2">
@@ -258,7 +319,7 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
 
             {/* Step 2 */}
             <div className="flex items-start gap-3">
-              <Badge variant="secondary" className="h-10 w-10 shrink-0 rounded-full text-base flex items-center justify-center">
+              <Badge variant="secondary" className="h-10 w-10 shrink-0 rounded-full text-base flex items-center justify-center bg-muted text-muted-foreground hover:bg-accent">
                 2
               </Badge>
               <div className="flex flex-col items-start gap-2">
@@ -271,7 +332,7 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
 
             {/* Step 3 */}
             <div className="flex items-start gap-3">
-              <Badge variant="secondary" className="h-10 w-10 shrink-0 rounded-full text-base flex items-center justify-center">
+              <Badge variant="secondary" className="h-10 w-10 shrink-0 rounded-full text-base flex items-center justify-center bg-muted text-muted-foreground hover:bg-accent">
                 3
               </Badge>
               <div className="flex flex-col items-start gap-2">
@@ -311,7 +372,7 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
                     
                     <div className="space-y-2">
                         <label className="text-sm text-muted-foreground">Razón social</label>
-                        <Input className="bg-slate-50/50" />
+                        <Input className="bg-muted/50" />
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
@@ -329,7 +390,7 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
                         </div>
                         <div className="space-y-2">
                             <label className="text-sm text-muted-foreground">Número Documento</label>
-                            <Input className="bg-slate-50/50" />
+                            <Input className="bg-muted/50" />
                         </div>
                     </div>
                 </CardContent>
@@ -344,10 +405,15 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
                     <div className="grid grid-cols-2 gap-4">
                          <div className="space-y-2">
                             <label className="text-sm text-muted-foreground">Operación</label>
-                            <div className="flex rounded-md border p-1 bg-slate-50">
-                                <Button size="sm" variant="ghost" className="w-1/2 h-7 bg-green-500 text-white hover:bg-green-600 hover:text-white rounded text-xs">Factoring</Button>
-                                <Button size="sm" variant="ghost" className="w-1/2 h-7 text-muted-foreground hover:bg-slate-200 rounded text-xs">Confirming</Button>
-                            </div>
+                            <ToggleButtonGroup
+                              options={[
+                                { value: "factoring", label: "Factoring" },
+                                { value: "confirming", label: "Confirming" }
+                              ]}
+                              value={operationType}
+                              onChange={setOperationType}
+                              variant="primary"
+                            />
                         </div>
                          <div className="space-y-2">
                             <label className="text-sm text-muted-foreground">Tipo</label>
@@ -382,10 +448,15 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
 
                     <div className="space-y-2">
                         <label className="text-sm text-muted-foreground">Entrega del Título</label>
-                        <div className="flex rounded-md border p-1 bg-slate-50">
-                             <Button size="sm" variant="ghost" className="w-1/2 h-7 bg-green-500 text-white hover:bg-green-600 hover:text-white rounded text-xs">Con Responsabilidad</Button>
-                             <Button size="sm" variant="ghost" className="w-1/2 h-7 text-muted-foreground hover:bg-slate-200 rounded text-xs">Sin Responsabilidad</Button>
-                        </div>
+                        <ToggleButtonGroup
+                          options={[
+                            { value: "con", label: "Con Responsabilidad" },
+                            { value: "sin", label: "Sin Responsabilidad" }
+                          ]}
+                          value={responsibilityType}
+                          onChange={setResponsibilityType}
+                          variant="primary"
+                        />
                     </div>
 
                     <div className="space-y-2">
@@ -410,7 +481,7 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
                 <CardContent className="space-y-4">
                      <div className="space-y-2">
                         <label className="text-sm text-muted-foreground">Titular Cuenta</label>
-                        <Input className="bg-slate-50/50" />
+                        <Input className="bg-muted/50" />
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
@@ -428,7 +499,7 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
                         </div>
                         <div className="space-y-2">
                             <label className="text-sm text-muted-foreground">Número Documento</label>
-                            <Input className="bg-slate-50/50" />
+                            <Input className="bg-muted/50" />
                         </div>
                     </div>
 
@@ -462,13 +533,27 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
                      <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <label className="text-sm text-muted-foreground">Número de Cuenta</label>
-                            <Input className="bg-slate-50/50" />
+                            <Input className="bg-muted/50" />
                         </div>
                          <div className="space-y-2">
                             <label className="text-sm text-muted-foreground">Operación Asegurada?</label>
-                            <div className="flex rounded-md border p-1 bg-slate-50">
-                                <Button size="sm" variant="ghost" className="w-1/2 h-7 bg-green-500 text-white hover:bg-green-600 hover:text-white rounded text-xs">Si</Button>
-                                <Button size="sm" variant="ghost" className="w-1/2 h-7 text-muted-foreground hover:bg-slate-200 rounded text-xs">No</Button>
+                            <div className="flex rounded-md border p-1 bg-muted">
+                                <Button 
+                                    size="sm" 
+                                    variant="ghost" 
+                                    className={`w-1/2 h-7 rounded text-xs gap-2 ${isInsured ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground" : "text-muted-foreground hover:bg-muted"}`}
+                                    onClick={() => setIsInsured(true)}
+                                >
+                                  {isInsured && <Check className="h-3 w-3" />} Si
+                                </Button>
+                                <Button 
+                                    size="sm" 
+                                    variant="ghost" 
+                                    className={`w-1/2 h-7 rounded text-xs gap-2 ${!isInsured ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground" : "text-muted-foreground hover:bg-muted"}`}
+                                    onClick={() => setIsInsured(false)}
+                                >
+                                  {!isInsured && <Check className="h-3 w-3" />} No
+                                </Button>
                             </div>
                         </div>
                     </div>
@@ -478,7 +563,7 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
 
         {/* Stats Cards Grid - Sistema de Tabs usando DSM KpiCard */}
         <div className="mb-6">
-          <KpiCardGroup
+          <FactoringKpiCardGroup
             cards={[
               {
                 id: "elegibles",
@@ -488,6 +573,7 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
                 count: kpiStats.elegibles.count,
                 variant: "lime",
                 onAction: () => setActiveTab("elegibles"),
+                icon: <FileCheck2 />,
               },
               {
                 id: "pendientes",
@@ -497,6 +583,7 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
                 count: kpiStats.pendientes.count,
                 variant: "orange",
                 onAction: () => setActiveTab("pendientes"),
+                icon: <Clock />,
               },
               {
                 id: "no-elegibles",
@@ -506,6 +593,7 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
                 count: kpiStats["no-elegibles"].count,
                 variant: "blue",
                 onAction: () => setActiveTab("no-elegibles"),
+                icon: <FileX />,
               },
               {
                 id: "descartadas",
@@ -513,8 +601,9 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
                 description: "Marcadas como Descarte",
                 value: `$ ${kpiStats.descartadas.amount.toLocaleString("es-CO")}`,
                 count: kpiStats.descartadas.count,
-                variant: "yellow",
+                variant: "default",
                 onAction: () => setActiveTab("descartadas"),
+                icon: <Trash2 />,
               },
             ]}
             activeId={activeTab}
@@ -525,9 +614,44 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
         <div>
           <h3 className="mb-4 text-sm font-medium">{tabTitles[activeTab]}</h3>
 
+          <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-center justify-between">
+            <div className="relative w-full md:w-72 lg:w-80">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input 
+                placeholder="Buscar en todos los clientes..." 
+                className="pl-9 h-9 bg-card shadow-sm" 
+                value={globalSearch}
+                onChange={(e) => setGlobalSearch(e.target.value)}
+              />
+            </div>
+            
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
+               <Button variant="outline" size="sm" className="h-9 border-dashed px-3 text-muted-foreground bg-card shadow-sm hover:text-foreground">
+                 <Filter className="mr-2 h-3.5 w-3.5" />
+                 Estado
+               </Button>
+               <Button variant="outline" size="sm" className="h-9 bg-card shadow-sm" onClick={handleGlobalSelectAll}>
+                 <Wand2 className="mr-2 h-3.5 w-3.5" />
+                 Selección Automática
+               </Button>
+               <Button variant="outline" size="sm" className="h-9 bg-card shadow-sm" onClick={handleGlobalSelectAllEligible}>
+                 <ListChecks className="mr-2 h-3.5 w-3.5" />
+                 Seleccionar Todas Elegibles
+               </Button>
+               <Button variant="outline" size="sm" className="h-9 bg-card shadow-sm" onClick={handleGlobalDeselectAll}>
+                 <XSquare className="mr-2 h-3.5 w-3.5" />
+                 Deseleccionar Todas
+               </Button>
+               <Button variant="outline" size="sm" className="h-9 bg-card shadow-sm">
+                 <Trash2 className="mr-2 h-3.5 w-3.5" />
+                 Descartar
+               </Button>
+            </div>
+          </div>
+
           {mockClientsData.map((client) => {
             // Filtrar facturas para mostrar en la tabla según el tab activo
-            const searchQuery = (clientSearch[client.id] || "").toLowerCase();
+            const searchQuery = (clientSearch[client.id] || globalSearch || "").toLowerCase();
             const filteredInvoices = client.invoices.filter(inv => {
               if (inv.category !== activeTab) return false;
               if (!searchQuery) return true;
@@ -560,7 +684,7 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
                     <h4 className="font-medium">{client.name}</h4>
                     <div 
                       className={`inline-flex items-center gap-1.5 rounded-lg px-2 py-0.5 text-xs ${
-                        hasSelection ? "bg-green-200 text-green-700" : "bg-slate-100 text-slate-600"
+                        hasSelection ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground"
                       }`}
                     >
                       {clientSelectedInvoices.length}/{client.totalCount} seleccionadas
@@ -582,6 +706,9 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
                       <span className="text-muted-foreground">Tasa N.M.V. </span>
                       <span className="font-medium">{client.rate}</span>
                     </div>
+                    <Badge variant="success-soft-outline">
+                      Activo
+                    </Badge>
                     {expandedClients.includes(client.id) ? (
                       <ChevronUp className="h-5 w-5 text-muted-foreground" />
                     ) : (
@@ -597,7 +724,7 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
                       <div className="mb-2 flex items-center justify-between">
                         <div 
                           className={`inline-flex items-center gap-1.5 rounded-lg px-2 py-0.5 text-xs ${
-                            hasSelection ? "bg-green-200 text-green-700" : "bg-slate-100 text-slate-600"
+                            hasSelection ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground"
                           }`}
                         >
                           {clientSelectedInvoices.length}/{client.totalCount} seleccionadas
@@ -609,250 +736,22 @@ export function CFinanciaClientFlow({ onExit }: CFinanciaClientFlowProps) {
                       />
                     </div>
 
-                    <Card className="elevation-2 border-none shadow-md overflow-hidden bg-background mb-4">
-                      <CardHeader className="pb-3 px-4 pt-4">
-                        <div className="flex flex-col gap-3 md:flex-row md:items-center justify-between">
-                          <div className="relative w-full md:w-72 lg:w-80">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input 
-                              placeholder="Busca por valor, fecha..." 
-                              className="pl-9 h-9 bg-background/50" 
-                              value={clientSearch[client.id] || ""}
-                              onChange={(e) => {
-                                setClientSearch(prev => ({ ...prev, [client.id]: e.target.value }));
-                                setClientPages(prev => ({ ...prev, [client.id]: 1 }));
-                              }}
-                            />
-                          </div>
-                          
-                          <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
-                             <Button variant="outline" size="sm" className="h-9 border-dashed px-3 text-muted-foreground bg-background/50 hover:text-foreground">
-                               <Filter className="mr-2 h-3.5 w-3.5" />
-                               Estado
-                             </Button>
-                             <Button variant="outline" size="sm" className="h-9" onClick={() => selectAll(client.invoices)}>
-                               Selección Automática
-                             </Button>
-                             <Button variant="outline" size="sm" className="h-9" onClick={() => selectAll(client.invoices.filter(i => i.category === 'elegibles'))}>
-                               Seleccionar Todas Elegibles
-                             </Button>
-                             <Button variant="outline" size="sm" className="h-9" onClick={() => deselectAll(client.invoices)}>
-                               Deseleccionar Todas
-                             </Button>
-                             <Button variant="outline" size="sm" className="h-9">
-                               Descartar
-                             </Button>
-                          </div>
-                        </div>
-                      </CardHeader>
-
-                      <CardContent className="p-0">
-                        <Table>
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead className="w-12"></TableHead>
-                            <TableHead className="text-xs">Numeración</TableHead>
-                            <TableHead className="text-xs">Valor Factura</TableHead>
-                            
-                            {/* Columnas específicas según el tab activo */}
-                            {activeTab === "elegibles" && (
-                              <>
-                                <TableHead className="text-xs">Valor Adelanto</TableHead>
-                                <TableHead className="text-xs">Ultimo Evento</TableHead>
-                                <TableHead className="text-xs">Estado</TableHead>
-                                <TableHead className="text-xs">Observaciones</TableHead>
-                                <TableHead className="text-xs">Vigencia</TableHead>
-                                <TableHead className="text-xs">Días al Vencimiento</TableHead>
-                              </>
-                            )}
-                            
-                            {activeTab === "pendientes" && (
-                              <>
-                                <TableHead className="text-xs">Estado de Revisión</TableHead>
-                                <TableHead className="text-xs">Revisor Asignado</TableHead>
-                                <TableHead className="text-xs">Ultimo Evento</TableHead>
-                                <TableHead className="text-xs">Observaciones</TableHead>
-                                <TableHead className="text-xs">Días al Vencimiento</TableHead>
-                              </>
-                            )}
-                            
-                            {activeTab === "no-elegibles" && (
-                              <>
-                                <TableHead className="text-xs">Motivo de Rechazo</TableHead>
-                                <TableHead className="text-xs">Estado</TableHead>
-                                <TableHead className="text-xs">Observaciones</TableHead>
-                                <TableHead className="text-xs">Días al Vencimiento</TableHead>
-                              </>
-                            )}
-                            
-                            {activeTab === "descartadas" && (
-                              <>
-                                <TableHead className="text-xs">Motivo de Descarte</TableHead>
-                                <TableHead className="text-xs">Fecha de Descarte</TableHead>
-                                <TableHead className="text-xs">Descartado Por</TableHead>
-                                <TableHead className="text-xs">Observaciones</TableHead>
-                              </>
-                            )}
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {filteredInvoices.length === 0 ? (
-                             <TableRow>
-                               <TableCell colSpan={8} className="text-center text-muted-foreground h-24">
-                                 No hay facturas en esta categoría
-                               </TableCell>
-                             </TableRow>
-                          ) : (
-                            paginatedInvoices.map((invoice) => (
-                              <TableRow key={invoice.id}>
-                                <TableCell>
-                                  <Checkbox
-                                    checked={selectedInvoices.includes(invoice.id)}
-                                    onCheckedChange={() => toggleInvoice(invoice.id)}
-                                  />
-                                </TableCell>
-                                <TableCell className="text-sm font-medium text-foreground">{invoice.number}</TableCell>
-                                <TableCell className="text-sm text-foreground">{invoice.invoiceValue}</TableCell>
-                                
-                                {activeTab === "elegibles" && (
-                                  <>
-                                    <TableCell className="text-sm text-foreground">{invoice.advanceValue}</TableCell>
-                                    <TableCell>
-                                      <Badge variant="secondary" className="bg-info/20 text-foreground">
-                                        {invoice.lastEvent}
-                                      </Badge>
-                                    </TableCell>
-                                    <TableCell>
-                                      <Badge variant="secondary" className="bg-success/20 text-foreground">
-                                        {invoice.state}
-                                      </Badge>
-                                    </TableCell>
-                                    <TableCell className="text-sm text-foreground">
-                                      <span>{invoice.observations} </span>
-                                      <a href="#" className="text-info underline hover:text-info/80">
-                                        mas
-                                      </a>
-                                    </TableCell>
-                                    <TableCell>
-                                      <div className="flex flex-col gap-1.5">
-                                        <Progress value={invoice.progress} className="h-2" />
-                                        <div className="flex items-center justify-between text-xs text-foreground">
-                                          <span>{invoice.validFrom}</span>
-                                          <ArrowRight className="h-3 w-3" />
-                                          <span>{invoice.validTo}</span>
-                                        </div>
-                                      </div>
-                                    </TableCell>
-                                    <TableCell className="text-center text-sm text-foreground">
-                                      {invoice.daysToExpire}
-                                    </TableCell>
-                                  </>
-                                )}
-                                
-                                {activeTab === "pendientes" && (
-                                  <>
-                                    <TableCell>
-                                      <div className="inline-flex items-center gap-1.5 rounded-lg bg-orange-100 px-2 py-0.5 text-xs text-orange-700">
-                                        {invoice.reviewStatus}
-                                      </div>
-                                    </TableCell>
-                                    <TableCell className="text-sm">{invoice.reviewer}</TableCell>
-                                    <TableCell>
-                                      <div className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50/50 px-2 py-0.5 text-xs text-blue-700">
-                                        {invoice.lastEvent}
-                                      </div>
-                                    </TableCell>
-                                    <TableCell className="text-sm">
-                                      <span>{invoice.observations} </span>
-                                      <a href="#" className="text-blue-600 underline hover:text-blue-800">
-                                        mas
-                                      </a>
-                                    </TableCell>
-                                    <TableCell className="text-center text-sm">
-                                      {invoice.daysToExpire}
-                                    </TableCell>
-                                  </>
-                                )}
-                                
-                                {activeTab === "no-elegibles" && (
-                                  <>
-                                    <TableCell>
-                                      <div className="inline-flex items-center gap-1.5 rounded-lg bg-red-100 px-2 py-0.5 text-xs text-red-700">
-                                        {invoice.rejectionReason}
-                                      </div>
-                                    </TableCell>
-                                    <TableCell>
-                                      <div className="inline-flex items-center gap-1.5 rounded-lg bg-red-100 px-2 py-0.5 text-xs text-red-700">
-                                        No Elegible
-                                      </div>
-                                    </TableCell>
-                                    <TableCell className="text-sm">
-                                      <span>{invoice.observations} </span>
-                                      <a href="#" className="text-blue-600 underline hover:text-blue-800">
-                                        mas
-                                      </a>
-                                    </TableCell>
-                                    <TableCell className="text-center text-sm">
-                                      {invoice.daysToExpire}
-                                    </TableCell>
-                                  </>
-                                )}
-                                
-                                {activeTab === "descartadas" && (
-                                  <>
-                                    <TableCell>
-                                      <div className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-2 py-0.5 text-xs text-slate-700">
-                                        {invoice.discardReason}
-                                      </div>
-                                    </TableCell>
-                                    <TableCell className="text-sm">{invoice.discardDate}</TableCell>
-                                    <TableCell className="text-sm">{invoice.reviewer}</TableCell>
-                                    <TableCell className="text-sm">
-                                      <span>{invoice.observations} </span>
-                                      <a href="#" className="text-blue-600 underline hover:text-blue-800">
-                                        mas
-                                      </a>
-                                    </TableCell>
-                                  </>
-                                )}
-                              </TableRow>
-                            ))
-                          )}
-                        </TableBody>
-                      </Table>
-
-                      {filteredInvoices.length > 0 && (
-                        <div className="flex items-center justify-between p-4 border-t">
-                          <div className="text-sm text-muted-foreground">
-                            Mostrando {(currentPage - 1) * itemsPerPage + 1} a {Math.min(currentPage * itemsPerPage, filteredInvoices.length)} de {filteredInvoices.length} registros
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-                              disabled={currentPage === 1}
-                            >
-                              <ChevronLeft className="h-4 w-4 mr-1" />
-                              Anterior
-                            </Button>
-                            <div className="text-sm font-medium">
-                              Página {currentPage} de {totalPages}
-                            </div>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
-                              disabled={currentPage === totalPages}
-                            >
-                              Siguiente
-                              <ChevronRight className="h-4 w-4 ml-1" />
-                            </Button>
-                          </div>
-                        </div>
-                      )}
-                      </CardContent>
-                    </Card>
+                    {/* ── DSM Component: FactoringInvoiceTable ── */}
+                    <FactoringInvoiceTable
+                      invoices={client.invoices as FactoringInvoice[]}
+                      activeTab={activeTab}
+                      selectedInvoices={selectedInvoices}
+                      onToggleInvoice={toggleInvoice}
+                      onSelectAll={(ids) => selectAll(client.invoices)}
+                      onSelectAllEligible={(ids) => selectAll(client.invoices.filter(i => i.category === "elegibles"))}
+                      onDeselectAll={() => deselectAll(client.invoices)}
+                      onDiscard={() => {}}
+                      searchValue={clientSearch[client.id] || ""}
+                      onSearchChange={(val) => {
+                        setClientSearch(prev => ({ ...prev, [client.id]: val }));
+                      }}
+                      className="mb-4"
+                    />
                   </div>
                 )}
               </div>

@@ -54,20 +54,6 @@ export function LabelDemo() {
   );
 }`}
       
-      // Usage
-      usage="Importa el componente Label desde @/components/ui/label. Siempre usa el prop htmlFor vinculado al id del control de formulario para accesibilidad. Esto permite que al hacer clic en el label se active el control asociado."
-      usageCode={`import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-
-function FormField() {
-  return (
-    <div className="space-y-2">
-      <Label htmlFor="username">Username</Label>
-      <Input id="username" placeholder="Enter username" />
-    </div>
-  );
-}`}
-      
       // Props Documentation
       props={[
         {

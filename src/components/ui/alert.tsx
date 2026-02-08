@@ -8,9 +8,15 @@ const alertVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-card text-card-foreground",
+        default: "bg-card text-card-foreground *:data-[slot=alert-description]:text-muted-foreground",
         destructive:
-          "text-destructive bg-card [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90",
+          "border-red-300 bg-red-50 text-red-800 [&>svg]:text-red-600 *:data-[slot=alert-description]:text-red-700/90 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-400 dark:[&>svg]:text-red-400 dark:*:data-[slot=alert-description]:text-red-400/90",
+        success:
+          "border-green-300 bg-green-50 text-green-800 [&>svg]:text-green-600 *:data-[slot=alert-description]:text-green-700/90 dark:border-green-500/30 dark:bg-green-500/10 dark:text-green-400 dark:[&>svg]:text-green-400 dark:*:data-[slot=alert-description]:text-green-400/90",
+        warning:
+          "border-amber-300 bg-amber-50 text-amber-800 [&>svg]:text-amber-600 *:data-[slot=alert-description]:text-amber-700/90 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-400 dark:[&>svg]:text-amber-400 dark:*:data-[slot=alert-description]:text-amber-400/90",
+        info:
+          "border-blue-300 bg-blue-50 text-blue-800 [&>svg]:text-blue-600 *:data-[slot=alert-description]:text-blue-700/90 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-400 dark:[&>svg]:text-blue-400 dark:*:data-[slot=alert-description]:text-blue-400/90",
       },
     },
     defaultVariants: {
@@ -55,7 +61,7 @@ function AlertDescription({
     <div
       data-slot="alert-description"
       className={cn(
-        "text-muted-foreground col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed",
+        "col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed",
         className,
       )}
       {...props}

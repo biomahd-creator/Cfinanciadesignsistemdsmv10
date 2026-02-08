@@ -135,31 +135,6 @@ export function InputForm() {
   )
 }
 `}
-      usage={`import { useForm } from "react-hook-form"
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
-
-// ... inside component
-const form = useForm({ ... })
-
-return (
-  <Form {...form}>
-    <form onSubmit={form.handleSubmit(onSubmit)}>
-      <FormField
-         control={form.control}
-         name="fieldname"
-         render={({ field }) => (
-           <FormItem>
-             <FormLabel>Label</FormLabel>
-             <FormControl>
-               <Input {...field} />
-             </FormControl>
-             <FormMessage />
-           </FormItem>
-         )}
-      />
-    </form>
-  </Form>
-)`}
       props={[
         {
           name: "Form",

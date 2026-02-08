@@ -1,7 +1,7 @@
 import React from "react";
-import { Card } from "@/components/ui/card";
+import { Card } from "../../components/ui/card";
 import { PieChart, Pie, Cell } from "recharts";
-import { cn } from "@/components/ui/utils";
+import { cn } from "../../lib/utils";
 
 interface OperationDetailCardProps {
   totalFacturas: number;
@@ -28,7 +28,6 @@ export function OperationDetailCard({
   plazoDias = 120,
   tasaPlazo = 60,
 }: Partial<OperationDetailCardProps>) {
-  
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("es-MX", {
       style: "currency",
@@ -49,39 +48,39 @@ export function OperationDetailCard({
       
       {/* Chart Section - Left fixed width */}
       <div className="relative w-[100px] flex-shrink-0 flex items-center justify-center pl-2">
-        <div className="relative w-[73px] h-[73px]">
+        <div className="relative w-[73px] h-[73px] min-w-[73px] min-h-[73px]">
            {/* Chart with DSM colors */}
-            <PieChart width={73} height={73}>
-              <Pie
-                data={chartData}
-                cx="50%"
-                cy="50%"
-                innerRadius={26}
-                outerRadius={32}
-                startAngle={90}
-                endAngle={-270}
-                dataKey="value"
-                stroke="none"
-                cornerRadius={3}
-                paddingAngle={4}
-              >
-                {chartData.map((entry, index) => (
-                  <Cell 
-                    key={`cell-${index}`} 
-                    fill={entry.colorVar === "success" ? "hsl(var(--success))" : "hsl(var(--warning))"} 
-                  />
-                ))}
-              </Pie>
-               <Pie 
-                  data={[{value: 1}]} 
-                  cx="50%" cy="50%" 
-                  innerRadius={26} outerRadius={32} 
-                  startAngle={80} endAngle={60} 
-                  fill="hsl(var(--destructive))"
-                  stroke="none" 
-                  dataKey="value"
-                />
-            </PieChart>
+           <PieChart width={73} height={73}>
+               <Pie
+                 data={chartData}
+                 cx="50%"
+                 cy="50%"
+                 innerRadius={26}
+                 outerRadius={32}
+                 startAngle={90}
+                 endAngle={-270}
+                 dataKey="value"
+                 stroke="none"
+                 cornerRadius={3}
+                 paddingAngle={4}
+               >
+                 {chartData.map((entry, index) => (
+                   <Cell 
+                     key={`cell-${index}`} 
+                     fill={entry.colorVar === "success" ? "var(--success)" : "var(--warning)"} 
+                   />
+                 ))}
+               </Pie>
+                <Pie 
+                   data={[{value: 1}]} 
+                   cx="50%" cy="50%" 
+                   innerRadius={26} outerRadius={32} 
+                   startAngle={80} endAngle={60} 
+                   fill="var(--destructive)"
+                   stroke="none" 
+                   dataKey="value"
+                 />
+             </PieChart>
             
             {/* Days Text - Using DSM typography */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
@@ -98,7 +97,7 @@ export function OperationDetailCard({
         {/* Header */}
         <div className="mb-2">
            <span className="text-xs font-bold text-muted-foreground tracking-tight block">
-             Detalle de la Operación
+             Detalle de la Operacin
            </span>
         </div>
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent } from "../ui/card";
-import { cn } from "../../lib/utils";
+import { cn } from "../ui/utils";
 import { TrendingUp, CheckCircle, Clock, FileText } from "lucide-react";
 
 export interface StatusKPICardProps {

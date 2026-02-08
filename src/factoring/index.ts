@@ -19,7 +19,6 @@ export { FactoringTour } from "./FactoringTour";
 // COMPONENTES ESPECÍFICOS DE FACTORING
 // ============================================
 
-export { CashFlowProjection } from "./CashFlowProjection";
 export { CollectionTimeline } from "./CollectionTimeline";
 export type { TimelineEvent } from "./CollectionTimeline";
 
@@ -36,6 +35,18 @@ export type { PayorData } from "./PayorCard";
 
 export { RiskIndicator } from "./RiskIndicator";
 export type { RiskLevel } from "./RiskIndicator";
+
+// ============================================
+// COMPONENTES INTERNOS DE FACTORING
+// ============================================
+
+export { CFDashboard } from "./components/CFDashboard";
+export { ChartStyles } from "./components/ChartStyles";
+export { FactoringDashboard } from "./components/FactoringDashboard";
+export { LiquidityCalculator } from "./components/LiquidityCalculator";
+export { OperationDetailCard } from "./components/OperationDetailCard";
+export { OperationsList } from "./components/OperationsList";
+export { StatusBadge } from "./components/StatusBadge";
 
 // ============================================
 // NOTA: Subcarpetas (c-financia, modals, playground, views)

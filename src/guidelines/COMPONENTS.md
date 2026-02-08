@@ -46,6 +46,7 @@ Componentes base construidos sobre Radix UI y Tailwind CSS. Siguen los principio
 | `Pagination` | Navegación entre páginas de datos. |
 | `Popover` | Contenido flotante activado por click. |
 | `Progress` | Barra de progreso lineal. |
+| `ProgressWithRange` | Barra de progreso con etiquetas de rango inicio → fin (fechas, vigencias). |
 | `RadioGroup` | Selección única entre opciones. |
 | `Resizable` | Paneles redimensionables. |
 | `ScrollArea` | Contenedor con scroll personalizado. |
@@ -72,7 +73,6 @@ Componentes complejos de lógica específica o visualización avanzada.
 | Componente | Descripción |
 |---|---|
 | `ChartShowcase` | Galería de gráficos de ejemplo. |
-| `ColorPicker` | Selector de color avanzado. |
 | `Combobox` | Select con búsqueda (Autocomplete). |
 | `ConditionalForm` | Formularios con lógica condicional. |
 | `DataTable` | Tabla avanzada con filtros, ordenamiento y paginación (TanStack Table). |
@@ -81,19 +81,14 @@ Componentes complejos de lógica específica o visualización avanzada.
 | `FileUploader` | Zona de carga de archivos drag & drop. |
 | `FormBuilder` | Constructor visual de formularios. |
 | `FunnelChart` | Gráfico de embudo. |
-| `GanttChart` | Diagrama de Gantt para gestión de proyectos. |
 | `GaugeChart` | Gráfico de medidor/velocímetro. |
 | `Heatmap` | Mapa de calor. |
 | `InfiniteScroll` | Lista con carga infinita. |
 | `InvoiceGenerator` | Generador de facturas PDF/Vista. |
-| `KanbanBoard` | Tablero tipo Trello. |
 | `MasonryGrid` | Grid estilo Pinterest. |
 | `MultiColumnForm` | Layout de formulario en múltiples columnas. |
-| `OrgChart` | Organigrama jerárquico. |
-| `PivotTable` | Tabla dinámica para análisis de datos. |
 | `RatingComponent` | Input de calificación (estrellas). |
 | `RichTextEditor` | Editor de texto enriquecido (WYSIWYG). |
-| `SankeyDiagram` | Diagrama de flujo Sankey. |
 | `Sparkline` | Mini gráficos de línea. |
 | `StepIndicator` | Indicador de pasos para wizards. |
 | `Timeline` | Línea de tiempo vertical. |
@@ -113,7 +108,6 @@ Soluciones completas para flujos de negocio comunes.
 | `ApprovalFlowWizard` | Wizard para procesos de aprobación. |
 | `ApprovalTimeline` | Línea de tiempo de estados de aprobación. |
 | `CommentThread` | Sistema de comentarios anidados. |
-| `ComparisonTable` | Tabla de comparación de planes/features. |
 | `DataTableAdvanced` | Implementación específica de DataTable. |
 | `EditableTable` | Tabla con edición en línea (Excel-like). |
 | `KPIShowcase` | Grid de tarjetas de indicadores clave. |
@@ -122,8 +116,6 @@ Soluciones completas para flujos de negocio comunes.
 | `MultiStepWizard` | Asistente paso a paso genérico. |
 | `NotificationCenter` | Centro de notificaciones desplegable. |
 | `OnboardingWizard` | Flujo de bienvenida para usuarios. |
-| `PaymentForm` | Formulario de tarjeta de crédito/pago. |
-| `PricingTable` | Tabla de precios y planes. |
 | `QuickActionToolbar` | Barra de acciones rápidas contextuales. |
 | `SearchResults` | Página de resultados de búsqueda. |
 | `StatsDashboard` | Dashboard de estadísticas generales. |
@@ -152,7 +144,6 @@ Piezas de UI especializadas, a menudo compuestas de primitivos.
 | `StatCard` | Tarjeta simple de estadística. |
 | `StatsGrid` | Grid de StatCards. |
 | `StatusKPICard` | KPI con indicador de estado (semáforo). |
-| `TestimonialsCarousel` | Carrusel de testimonios de clientes. |
 | `TimelineItem` | Item individual para timelines. |
 
 ## Mantenimiento

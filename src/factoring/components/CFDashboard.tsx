@@ -1,8 +1,9 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Progress } from "../../components/ui/progress";
 import { Separator } from "../../components/ui/separator";
+import { SafeChartContainer } from "../../components/ui/safe-chart-container";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
 import {
   TrendingUp,
   DollarSign,
@@ -30,7 +31,6 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer,
   Area,
   AreaChart
 } from "recharts";
@@ -132,6 +132,9 @@ export function CFDashboard() {
           </Button>
         </div>
       </div>
+
+      {/* Banner de monto total */}
+      {/* Removed FactoringTotalBanner */}
 
       {/* KPIs principales */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -237,9 +240,8 @@ export function CFDashboard() {
             <CardDescription>Últimos 5 meses - Liquidez vs Comisiones</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="w-full h-[300px] min-w-0" style={{ minHeight: '300px' }}>
-              <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
-                <AreaChart data={liquidezMensual}>
+            <SafeChartContainer width="100%" height="300px">
+              <AreaChart data={liquidezMensual}>
                 <defs>
                   <linearGradient id="colorLiquidez" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#84cc16" stopOpacity={0.8}/>
@@ -256,8 +258,8 @@ export function CFDashboard() {
                 <Tooltip 
                   formatter={(value: number) => formatCOPFull(value)}
                   contentStyle={{ 
-                    backgroundColor: 'hsl(var(--card))',
-                    border: '1px solid hsl(var(--border))',
+                    backgroundColor: 'var(--card)',
+                    border: '1px solid var(--border)',
                     borderRadius: '8px'
                   }}
                 />
@@ -279,8 +281,7 @@ export function CFDashboard() {
                   fill="url(#colorComisiones)" 
                 />
               </AreaChart>
-            </ResponsiveContainer>
-            </div>
+             </SafeChartContainer>
           </CardContent>
         </Card>
 
@@ -295,9 +296,8 @@ export function CFDashboard() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-6">
-              <div className="w-[50%] h-[250px] min-w-0" style={{ minHeight: '250px' }}>
-                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
-                  <PieChart>
+              <SafeChartContainer width="100%" height="250px" className="w-[50%]">
+                <PieChart>
                   <Pie
                     data={pieDataEstados}
                     cx="50%"
@@ -313,14 +313,13 @@ export function CFDashboard() {
                   </Pie>
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: 'hsl(var(--card))',
-                      border: '1px solid hsl(var(--border))',
+                      backgroundColor: 'var(--card)',
+                      border: '1px solid var(--border)',
                       borderRadius: '8px'
                     }}
                   />
                 </PieChart>
-              </ResponsiveContainer>
-              </div>
+              </SafeChartContainer>
 
               <div className="flex-1 space-y-3">
                 {pieDataEstados.map((item, index) => (
@@ -332,7 +331,7 @@ export function CFDashboard() {
                       />
                       <span className="text-sm">{item.estado}</span>
                     </div>
-                    <Badge variant="outline">{item.cantidad}</Badge>
+                    <Badge variant="info-soft-outline">{item.cantidad}</Badge>
                   </div>
                 ))}
               </div>
@@ -367,7 +366,7 @@ export function CFDashboard() {
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <p className="font-semibold">{item.cliente}</p>
-                    <Badge variant="outline" className="text-xs">
+                    <Badge variant="info-soft-outline" className="text-xs">
                       {item.factura}
                     </Badge>
                   </div>
@@ -387,7 +386,7 @@ export function CFDashboard() {
                   </div>
 
                   {item.estado === 'urgente' && (
-                    <Badge variant="destructive" className="gap-1">
+                    <Badge variant="destructive-soft-outline" className="gap-1">
                       <AlertCircle className="h-3 w-3" />
                       Urgente
                     </Badge>
@@ -436,7 +435,7 @@ export function CFDashboard() {
                   <div>
                     <div className="flex items-center gap-2 mb-1">
                       <p className="font-semibold">{item.tipo}</p>
-                      <Badge variant="outline" className="text-xs">
+                      <Badge variant="info-soft-outline" className="text-xs">
                         {item.factura}
                       </Badge>
                     </div>
@@ -451,8 +450,7 @@ export function CFDashboard() {
                     {formatCOPFull(item.monto)}
                   </p>
                   <Badge 
-                    variant={item.estado === 'completado' ? 'default' : 'outline'}
-                    className={item.estado === 'completado' ? 'bg-green-500' : ''}
+                    variant={item.estado === 'completado' ? 'success-soft-outline' : 'warning-soft-outline'}
                   >
                     {item.estado === 'completado' ? 'Completado' : 'En Proceso'}
                   </Badge>

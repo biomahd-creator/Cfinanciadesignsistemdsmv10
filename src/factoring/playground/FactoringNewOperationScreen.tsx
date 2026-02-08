@@ -19,8 +19,12 @@ import {
   ChevronUp,
   ArrowRight,
   Upload,
+  FileCheck2,
+  Clock,
+  FileX,
+  Trash2,
 } from "lucide-react";
-import { KpiCardGroup } from "../../components/patterns/KpiCard";
+import { FactoringKpiCardGroup } from "../../components/patterns/FactoringKpiCardGroup";
 import imgEllipse348 from "figma:asset/97fb249d8224347851df11e33a2650a2e731b545.png";
 import svgPaths from "../../imports/svg-xhnwietn29";
 
@@ -124,7 +128,7 @@ export function FactoringNewOperationScreen() {
         </div>
 
         {/* Stepper horizontal */}
-        <div className="relative mb-8 rounded-lg bg-white p-6 shadow-lg">
+        <div className="relative mb-8 rounded-lg bg-card p-6 shadow-lg">
           <div className="flex items-center justify-between">
             {/* Avatar y Company Info */}
             <div className="flex items-center gap-4">
@@ -189,7 +193,7 @@ export function FactoringNewOperationScreen() {
 
         {/* Stats Cards Grid - Sistema de Tabs usando DSM KpiCard */}
         <div className="mb-6">
-          <KpiCardGroup
+          <FactoringKpiCardGroup
             cards={[
               {
                 id: "elegibles",
@@ -199,6 +203,7 @@ export function FactoringNewOperationScreen() {
                 count: 234,
                 variant: "lime",
                 onAction: () => setActiveTab("elegibles"),
+                icon: <FileCheck2 />,
               },
               {
                 id: "pendientes",
@@ -208,6 +213,7 @@ export function FactoringNewOperationScreen() {
                 count: 234,
                 variant: "orange",
                 onAction: () => setActiveTab("pendientes"),
+                icon: <Clock />,
               },
               {
                 id: "no-elegibles",
@@ -217,6 +223,7 @@ export function FactoringNewOperationScreen() {
                 count: 234,
                 variant: "blue",
                 onAction: () => setActiveTab("no-elegibles"),
+                icon: <FileX />,
               },
               {
                 id: "descartadas",
@@ -224,8 +231,9 @@ export function FactoringNewOperationScreen() {
                 description: "Marcadas como Descarte",
                 value: "$ 0",
                 count: 218,
-                variant: "yellow",
+                variant: "default",
                 onAction: () => setActiveTab("descartadas"),
+                icon: <Trash2 />,
               },
             ]}
             activeId={activeTab}
@@ -244,7 +252,7 @@ export function FactoringNewOperationScreen() {
             >
               <div className="flex items-center gap-3">
                 <h4>Industria Nacional de Plásticos</h4>
-                <div className="inline-flex items-center gap-1.5 rounded-lg bg-[#bbf7d0] px-2 py-0.5 text-xs text-[#15803d]">
+                <div className="inline-flex items-center gap-1.5 rounded-lg bg-green-200 dark:bg-green-900/40 px-2 py-0.5 text-xs text-green-700 dark:text-green-300">
                   4/34 seleccionadas
                 </div>
               </div>
@@ -274,7 +282,7 @@ export function FactoringNewOperationScreen() {
                 {/* Progress Bar */}
                 <div className="mb-6">
                   <div className="mb-2 flex items-center justify-between">
-                    <div className="inline-flex items-center gap-1.5 rounded-lg bg-[#bbf7d0] px-2 py-0.5 text-xs text-[#15803d]">
+                    <div className="inline-flex items-center gap-1.5 rounded-lg bg-green-200 dark:bg-green-900/40 px-2 py-0.5 text-xs text-green-700 dark:text-green-300">
                       4/34 seleccionadas
                     </div>
                   </div>
@@ -371,13 +379,8 @@ export function FactoringNewOperationScreen() {
                             <>
                               <TableCell className="text-sm">{invoice.advanceValue}</TableCell>
                               <TableCell>
-                                <div className="inline-flex items-center gap-1.5 rounded-lg bg-[rgba(191,222,255,0.7)] px-2 py-0.5 text-xs">
+                                <div className="inline-flex items-center gap-1.5 rounded-lg bg-blue-200/70 dark:bg-blue-900/40 px-2 py-0.5 text-xs">
                                   {invoice.lastEvent}
-                                </div>
-                              </TableCell>
-                              <TableCell>
-                                <div className="inline-flex items-center gap-1.5 rounded-lg bg-[rgba(185,251,210,0.7)] px-2 py-0.5 text-xs">
-                                  {invoice.state}
                                 </div>
                               </TableCell>
                               <TableCell className="text-sm">
@@ -385,16 +388,6 @@ export function FactoringNewOperationScreen() {
                                 <a href="#" className="text-blue-600 underline">
                                   mas
                                 </a>
-                              </TableCell>
-                              <TableCell>
-                                <div className="space-y-1.5">
-                                  <div className="flex items-center gap-1.5 text-xs">
-                                    <span>{invoice.validFrom}</span>
-                                    <ArrowRight className="h-3 w-3" />
-                                    <span>{invoice.validTo}</span>
-                                  </div>
-                                  <Progress value={invoice.progress} className="h-1.5" />
-                                </div>
                               </TableCell>
                               <TableCell className="text-center text-sm">
                                 {invoice.daysToExpire}
@@ -411,7 +404,7 @@ export function FactoringNewOperationScreen() {
                               </TableCell>
                               <TableCell className="text-sm">{invoice.reviewer}</TableCell>
                               <TableCell>
-                                <div className="inline-flex items-center gap-1.5 rounded-lg bg-[rgba(191,222,255,0.7)] px-2 py-0.5 text-xs">
+                                <div className="inline-flex items-center gap-1.5 rounded-lg bg-blue-200/70 dark:bg-blue-900/40 px-2 py-0.5 text-xs">
                                   {invoice.lastEvent}
                                 </div>
                               </TableCell>
@@ -454,7 +447,7 @@ export function FactoringNewOperationScreen() {
                           {activeTab === "descartadas" && (
                             <>
                               <TableCell>
-                                <div className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-2 py-0.5 text-xs text-slate-700">
+                                <div className="inline-flex items-center gap-1.5 rounded-lg bg-muted px-2 py-0.5 text-xs text-muted-foreground">
                                   {invoice.discardReason}
                                 </div>
                               </TableCell>
@@ -485,7 +478,7 @@ export function FactoringNewOperationScreen() {
             >
               <div className="flex items-center gap-3">
                 <h4>Industria Nacional de Plásticos</h4>
-                <div className="inline-flex items-center gap-1.5 rounded-lg bg-[rgba(185,251,210,0.7)] px-2 py-0.5 text-xs">
+                <div className="inline-flex items-center gap-1.5 rounded-lg bg-green-200/70 dark:bg-green-900/40 px-2 py-0.5 text-xs">
                   4/34 seleccionadas
                 </div>
               </div>
@@ -519,7 +512,7 @@ export function FactoringNewOperationScreen() {
             >
               <div className="flex items-center gap-3">
                 <h4>Industria Nacional de Plásticos</h4>
-                <div className="inline-flex items-center gap-1.5 rounded-lg bg-[rgba(185,251,210,0.7)] px-2 py-0.5 text-xs">
+                <div className="inline-flex items-center gap-1.5 rounded-lg bg-green-200/70 dark:bg-green-900/40 px-2 py-0.5 text-xs">
                   4/34 seleccionadas
                 </div>
               </div>

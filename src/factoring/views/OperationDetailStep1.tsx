@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ToggleButtonGroup } from "../../components/ui/toggle-button-group";
 import { 
   ArrowLeft, 
   Calendar as CalendarIcon, 
@@ -146,20 +147,15 @@ export function OperationDetailStep1({ onBack, onContinue }: OperationDetailStep
                 <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1.5">
                         <Label className="text-xs text-muted-foreground">Operación</Label>
-                        <div className="flex bg-muted p-1 rounded-md">
-                            <button 
-                                onClick={() => setOperationType("factoring")}
-                                className={`flex-1 text-xs font-medium py-1.5 rounded-sm transition-all ${operationType === 'factoring' ? 'bg-primary text-secondary shadow-sm' : 'text-muted-foreground hover:text-secondary'}`}
-                            >
-                                Factoring
-                            </button>
-                            <button 
-                                onClick={() => setOperationType("confirming")}
-                                className={`flex-1 text-xs font-medium py-1.5 rounded-sm transition-all ${operationType === 'confirming' ? 'bg-primary text-secondary shadow-sm' : 'text-muted-foreground hover:text-secondary'}`}
-                            >
-                                Confirming
-                            </button>
-                        </div>
+                        <ToggleButtonGroup
+                          options={[
+                            { value: "factoring", label: "Factoring" },
+                            { value: "confirming", label: "Confirming" }
+                          ]}
+                          value={operationType}
+                          onChange={setOperationType}
+                          className="bg-muted"
+                        />
                     </div>
                     <div className="space-y-1.5">
                         <Label className="text-xs text-muted-foreground">Tipo</Label>
@@ -194,20 +190,15 @@ export function OperationDetailStep1({ onBack, onContinue }: OperationDetailStep
 
                 <div className="space-y-1.5">
                     <Label className="text-xs text-muted-foreground">Entrega del Título</Label>
-                    <div className="flex bg-muted p-1 rounded-md">
-                        <button 
-                            onClick={() => setResponsibility("con")}
-                            className={`flex-1 text-xs font-medium py-1.5 rounded-sm transition-all ${responsibility === 'con' ? 'bg-primary text-secondary shadow-sm' : 'text-muted-foreground hover:text-secondary'}`}
-                        >
-                            <span className="mr-1">✓</span> Con Responsabilidad
-                        </button>
-                        <button 
-                            onClick={() => setResponsibility("sin")}
-                            className={`flex-1 text-xs font-medium py-1.5 rounded-sm transition-all ${responsibility === 'sin' ? 'bg-primary text-secondary shadow-sm' : 'text-muted-foreground hover:text-secondary'}`}
-                        >
-                            Sin Responsabilidad
-                        </button>
-                    </div>
+                    <ToggleButtonGroup
+                      options={[
+                        { value: "con", label: "Con Responsabilidad" },
+                        { value: "sin", label: "Sin Responsabilidad" }
+                      ]}
+                      value={responsibility}
+                      onChange={setResponsibility}
+                      className="bg-muted"
+                    />
                 </div>
                  <div className="space-y-1.5">
                     <Label className="text-xs text-muted-foreground">Fecha de Pago</Label>
@@ -286,20 +277,15 @@ export function OperationDetailStep1({ onBack, onContinue }: OperationDetailStep
                     </div>
                      <div className="space-y-1.5">
                         <Label className="text-xs text-muted-foreground">Operación Asegurada?</Label>
-                         <div className="flex bg-muted p-1 rounded-md">
-                            <button 
-                                onClick={() => setInsured("si")}
-                                className={`flex-1 text-xs font-medium py-1.5 rounded-sm transition-all ${insured === 'si' ? 'bg-primary text-secondary shadow-sm' : 'text-muted-foreground hover:text-secondary'}`}
-                            >
-                                <span className="mr-1">✓</span> Si
-                            </button>
-                            <button 
-                                onClick={() => setInsured("no")}
-                                className={`flex-1 text-xs font-medium py-1.5 rounded-sm transition-all ${insured === 'no' ? 'bg-primary text-secondary shadow-sm' : 'text-muted-foreground hover:text-secondary'}`}
-                            >
-                                No
-                            </button>
-                        </div>
+                        <ToggleButtonGroup
+                          options={[
+                            { value: "si", label: "Si" },
+                            { value: "no", label: "No" }
+                          ]}
+                          value={insured}
+                          onChange={setInsured}
+                          className="bg-muted"
+                        />
                     </div>
                 </div>
             </CardContent>
@@ -313,52 +299,52 @@ export function OperationDetailStep1({ onBack, onContinue }: OperationDetailStep
         <div className="flex flex-col xl:flex-row gap-6">
             
             {/* Global Config Bar */}
-            <div className="flex-1 bg-white p-4 rounded-xl border border-zinc-100 shadow-sm">
+            <div className="flex-1 bg-card p-4 rounded-xl border border-border shadow-sm">
                 <p className="text-xs font-medium text-foreground mb-3">Configuración Global</p>
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                      <div className="space-y-1">
-                        <Label className="text-xs text-zinc-500 uppercase">Razón social</Label>
+                        <Label className="text-xs text-muted-foreground uppercase">Razón social</Label>
                         <Input className="h-9 text-xs" placeholder="Buscar..." />
                     </div>
                     <div className="space-y-1">
-                        <Label className="text-xs text-zinc-500 uppercase">Fecha de Pago</Label>
+                        <Label className="text-xs text-muted-foreground uppercase">Fecha de Pago</Label>
                          <div className="relative">
                             <Input placeholder="2025-01-01" className="h-9 text-xs pl-8" />
-                            <CalendarIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-zinc-400" />
+                            <CalendarIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/60" />
                         </div>
                     </div>
                     <div className="space-y-1">
-                        <Label className="text-xs text-zinc-500 uppercase">Fecha de Pago</Label>
+                        <Label className="text-xs text-muted-foreground uppercase">Fecha de Pago</Label>
                          <div className="relative">
                             <Input placeholder="2025-01-01" className="h-9 text-xs pl-8" />
-                            <CalendarIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-zinc-400" />
+                            <CalendarIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/60" />
                         </div>
                     </div>
                     <div className="space-y-1">
-                        <Label className="text-xs text-zinc-500 uppercase">Porcentaje Financiamiento</Label>
+                        <Label className="text-xs text-muted-foreground uppercase">Porcentaje Financiamiento</Label>
                         <div className="relative">
                             <Input className="h-9 text-xs pr-6" defaultValue="2.5" />
-                            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-zinc-400">%</span>
+                            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-muted-foreground/60">%</span>
                         </div>
                     </div>
                     <div className="space-y-1">
-                        <Label className="text-xs text-zinc-500 uppercase">Tasa de Fondos</Label>
+                        <Label className="text-xs text-muted-foreground uppercase">Tasa de Fondos</Label>
                         <div className="relative">
                             <Input className="h-9 text-xs pr-6" defaultValue="2.5" />
-                            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-zinc-400">%</span>
+                            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-muted-foreground/60">%</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             {/* Summary Box */}
-            <div className="w-full xl:w-[400px] bg-white p-4 rounded-xl border border-zinc-100 shadow-sm flex flex-col justify-center gap-2">
+            <div className="w-full xl:w-[400px] bg-card p-4 rounded-xl border border-border shadow-sm flex flex-col justify-center gap-2">
                 <div className="flex justify-between items-center text-xs">
-                    <span className="text-zinc-600 font-medium">Facturas Agregadas</span>
+                    <span className="text-muted-foreground font-medium">Facturas Agregadas</span>
                     <span className="font-semibold text-foreground">127</span>
                 </div>
                 <div className="flex justify-between items-center text-xs">
-                    <span className="text-zinc-600 font-medium">Valor Total de las Facturas</span>
+                    <span className="text-muted-foreground font-medium">Valor Total de las Facturas</span>
                     <span className="font-semibold text-foreground">$ 696.626.000</span>
                 </div>
                 <Separator />
@@ -370,72 +356,72 @@ export function OperationDetailStep1({ onBack, onContinue }: OperationDetailStep
         </div>
 
         {/* Dense Data Table */}
-        <div className="rounded-xl border border-zinc-200 overflow-hidden shadow-sm bg-white">
+        <div className="rounded-xl border border-border overflow-hidden shadow-sm bg-card">
             <div className="overflow-x-auto">
                 <Table className="min-w-[1400px]">
-                    <TableHeader className="bg-zinc-50">
-                        <TableRow className="hover:bg-zinc-50">
-                            <TableHead className="w-[24px] bg-zinc-100">
+                    <TableHeader className="bg-muted">
+                        <TableRow className="hover:bg-muted">
+                            <TableHead className="w-[24px] bg-muted">
                                 <Checkbox />
                             </TableHead>
-                            <TableHead className="text-xs uppercase font-medium text-zinc-500 tracking-normal">Numeración</TableHead>
-                            <TableHead className="text-xs uppercase font-medium text-zinc-500 tracking-normal">Pagador</TableHead>
-                            <TableHead className="text-xs uppercase font-medium text-zinc-500 tracking-normal">Vencimiento</TableHead>
-                            <TableHead className="text-xs uppercase font-medium text-zinc-500 tracking-normal">Pago</TableHead>
-                            <TableHead className="text-xs uppercase font-medium text-zinc-500 text-center tracking-normal">Plazo</TableHead>
-                            <TableHead className="text-xs uppercase font-medium text-zinc-500 text-right tracking-normal">Valor Título</TableHead>
-                            <TableHead className="text-xs uppercase font-medium text-zinc-500 text-right tracking-normal">Monto Aceptado</TableHead>
-                            <TableHead className="text-xs uppercase font-medium text-zinc-500 w-[80px] text-center tracking-normal">% Financ</TableHead>
-                            <TableHead className="text-xs uppercase font-medium text-zinc-500 w-[80px] text-center tracking-normal">Tasa E.A.</TableHead>
-                            <TableHead className="text-xs uppercase font-medium text-zinc-500 w-[80px] text-center tracking-normal">Tasa NMV</TableHead>
-                            <TableHead className="text-xs uppercase font-medium text-zinc-500 text-right tracking-normal">Descuento Est.</TableHead>
-                            <TableHead className="text-xs uppercase font-medium text-zinc-500 text-right tracking-normal">Valor Desemb</TableHead>
+                            <TableHead className="text-xs uppercase font-medium text-muted-foreground tracking-normal">Numeración</TableHead>
+                            <TableHead className="text-xs uppercase font-medium text-muted-foreground tracking-normal">Pagador</TableHead>
+                            <TableHead className="text-xs uppercase font-medium text-muted-foreground tracking-normal">Vencimiento</TableHead>
+                            <TableHead className="text-xs uppercase font-medium text-muted-foreground tracking-normal">Pago</TableHead>
+                            <TableHead className="text-xs uppercase font-medium text-muted-foreground text-center tracking-normal">Plazo</TableHead>
+                            <TableHead className="text-xs uppercase font-medium text-muted-foreground text-right tracking-normal">Valor Título</TableHead>
+                            <TableHead className="text-xs uppercase font-medium text-muted-foreground text-right tracking-normal">Monto Aceptado</TableHead>
+                            <TableHead className="text-xs uppercase font-medium text-muted-foreground w-[80px] text-center tracking-normal">% Financ</TableHead>
+                            <TableHead className="text-xs uppercase font-medium text-muted-foreground w-[80px] text-center tracking-normal">Tasa E.A.</TableHead>
+                            <TableHead className="text-xs uppercase font-medium text-muted-foreground w-[80px] text-center tracking-normal">Tasa NMV</TableHead>
+                            <TableHead className="text-xs uppercase font-medium text-muted-foreground text-right tracking-normal">Descuento Est.</TableHead>
+                            <TableHead className="text-xs uppercase font-medium text-muted-foreground text-right tracking-normal">Valor Desemb</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {Array.from({length: 8}).map((_, i) => (
-                            <TableRow key={i} className="hover:bg-zinc-50/50">
+                            <TableRow key={i} className="hover:bg-muted/50">
                                 <TableCell className="text-center py-2">
                                     <Checkbox />
                                 </TableCell>
-                                <TableCell className="py-2 text-xs font-medium text-zinc-700">SETP12345679{i}</TableCell>
-                                <TableCell className="py-2 text-xs text-zinc-600">Aether Dynamics Inc.</TableCell>
+                                <TableCell className="py-2 text-xs font-medium text-foreground">SETP12345679{i}</TableCell>
+                                <TableCell className="py-2 text-xs text-muted-foreground">Aether Dynamics Inc.</TableCell>
                                 <TableCell className="py-2">
-                                    <div className="flex items-center gap-1 text-xs text-zinc-500 bg-zinc-50 px-2 py-1 rounded border border-zinc-100 w-fit">
+                                    <div className="flex items-center gap-1 text-xs text-muted-foreground bg-muted px-2 py-1 rounded border border-border w-fit">
                                         <CalendarIcon className="h-3 w-3" />
                                         2025 - 01 - 01
                                     </div>
                                 </TableCell>
                                 <TableCell className="py-2">
-                                     <div className="flex items-center gap-1 text-xs text-zinc-500 bg-zinc-50 px-2 py-1 rounded border border-zinc-100 w-fit">
+                                     <div className="flex items-center gap-1 text-xs text-muted-foreground bg-muted px-2 py-1 rounded border border-border w-fit">
                                         <CalendarIcon className="h-3 w-3" />
                                         2025 - 01 - 01
                                     </div>
                                 </TableCell>
-                                <TableCell className="py-2 text-center text-xs text-zinc-600">
+                                <TableCell className="py-2 text-center text-xs text-muted-foreground">
                                     {(i + 1) * 15}
                                 </TableCell>
-                                <TableCell className="py-2 text-right text-xs font-medium text-zinc-700">$ 8.345.679.123</TableCell>
-                                <TableCell className="py-2 text-right text-xs font-medium text-zinc-700">$ 10.000.000.000</TableCell>
+                                <TableCell className="py-2 text-right text-xs font-medium text-foreground">$ 8.345.679.123</TableCell>
+                                <TableCell className="py-2 text-right text-xs font-medium text-foreground">$ 10.000.000.000</TableCell>
                                 <TableCell className="py-2 px-1">
                                     <div className="relative">
                                         <Input className="h-7 text-xs text-center pr-4" defaultValue="90" />
-                                        <span className="absolute right-1 top-1/2 -translate-y-1/2 text-xs text-zinc-400">%</span>
+                                        <span className="absolute right-1 top-1/2 -translate-y-1/2 text-xs text-muted-foreground/60">%</span>
                                     </div>
                                 </TableCell>
                                 <TableCell className="py-2 px-1">
                                     <div className="relative">
                                         <Input className="h-7 text-xs text-center pr-4" defaultValue="40" />
-                                        <span className="absolute right-1 top-1/2 -translate-y-1/2 text-xs text-zinc-400">%</span>
+                                        <span className="absolute right-1 top-1/2 -translate-y-1/2 text-xs text-muted-foreground/60">%</span>
                                     </div>
                                 </TableCell>
                                 <TableCell className="py-2 px-1">
                                     <div className="relative">
                                         <Input className="h-7 text-xs text-center pr-4" defaultValue="2.1" />
-                                        <span className="absolute right-1 top-1/2 -translate-y-1/2 text-xs text-zinc-400">%</span>
+                                        <span className="absolute right-1 top-1/2 -translate-y-1/2 text-xs text-muted-foreground/60">%</span>
                                     </div>
                                 </TableCell>
-                                <TableCell className="py-2 text-right text-xs text-zinc-600">$ 10.000.000.000</TableCell>
+                                <TableCell className="py-2 text-right text-xs text-muted-foreground">$ 10.000.000.000</TableCell>
                                 <TableCell className="py-2 text-right text-xs text-foreground">$ 10.000.000.000</TableCell>
                             </TableRow>
                         ))}
@@ -444,17 +430,17 @@ export function OperationDetailStep1({ onBack, onContinue }: OperationDetailStep
             </div>
             
             {/* Pagination */}
-            <div className="flex items-center justify-center py-4 gap-2 border-t border-zinc-100">
-                <Button variant="ghost" size="sm" className="text-xs text-zinc-500 gap-1 h-8">
+            <div className="flex items-center justify-center py-4 gap-2 border-t border-border">
+                <Button variant="ghost" size="sm" className="text-xs text-muted-foreground gap-1 h-8">
                     <ChevronLeft className="h-3 w-3" /> Previous
                 </Button>
-                <Button variant="outline" size="sm" className="h-8 w-8 p-0 text-xs bg-zinc-900 text-white hover:bg-zinc-800 hover:text-white border-none">1</Button>
-                <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-xs text-zinc-500">2</Button>
-                <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-xs text-zinc-500">3</Button>
-                <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-xs text-zinc-500">4</Button>
-                <span className="text-xs text-zinc-400">...</span>
-                <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-xs text-zinc-500">10</Button>
-                <Button variant="ghost" size="sm" className="text-xs text-zinc-500 gap-1 h-8">
+                <Button variant="outline" size="sm" className="h-8 w-8 p-0 text-xs bg-foreground text-background hover:bg-foreground/90 hover:text-background border-none">1</Button>
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-xs text-muted-foreground">2</Button>
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-xs text-muted-foreground">3</Button>
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-xs text-muted-foreground">4</Button>
+                <span className="text-xs text-muted-foreground/60">...</span>
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-xs text-muted-foreground">10</Button>
+                <Button variant="ghost" size="sm" className="text-xs text-muted-foreground gap-1 h-8">
                     Next <ChevronRight className="h-3 w-3" />
                 </Button>
             </div>

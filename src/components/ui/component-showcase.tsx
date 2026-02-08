@@ -11,8 +11,6 @@ interface ComponentShowcaseProps {
   category?: string;
   preview: ReactNode;
   code: string;
-  usage?: string;
-  usageCode?: string;
   props?: Array<{
     name: string;
     type: string;
@@ -34,8 +32,6 @@ export function ComponentShowcase({
   category,
   preview,
   code,
-  usage,
-  usageCode,
   props,
   examples,
 }: ComponentShowcaseProps) {
@@ -81,20 +77,6 @@ export function ComponentShowcase({
           </Tabs>
         </CardContent>
       </Card>
-
-      {/* Usage */}
-      {(usage || usageCode) && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Usage</CardTitle>
-            <CardDescription>Cómo usar este componente en tu aplicación</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {usage && <p className="text-sm text-muted-foreground">{usage}</p>}
-            {usageCode && <CodeBlock code={usageCode} filename="example.tsx" />}
-          </CardContent>
-        </Card>
-      )}
 
       {/* Props API */}
       {props && props.length > 0 && (

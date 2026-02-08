@@ -1,12 +1,13 @@
+import React from "react";
 import { TrendingUp, FileText, Users, User, ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { cn } from "../../lib/utils";
+import { Button } from "../../components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "../../components/ui/dropdown-menu";
 import svgPaths from "../../imports/svg-r8l6shtkw1";
 
 function CFinanciaLogo() {

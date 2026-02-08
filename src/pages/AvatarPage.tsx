@@ -5,7 +5,7 @@ export function AvatarPage() {
   return (
     <ComponentShowcase
       title="Avatar"
-      description="An image element with a fallback for representing a user or entity."
+      description="An image element with a fallback for representing a user or entity. El AvatarFallback se muestra automáticamente cuando la imagen no carga."
       category="Data Display"
       
       // Main Preview
@@ -36,15 +36,6 @@ export function AvatarDemo() {
     </Avatar>
   )
 }`}
-      
-      // Usage
-      usage="Importa Avatar, AvatarImage y AvatarFallback. El AvatarFallback se muestra automáticamente cuando la imagen no carga."
-      usageCode={`import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-
-<Avatar>
-  <AvatarImage src="https://github.com/shadcn.png" />
-  <AvatarFallback>CN</AvatarFallback>
-</Avatar>`}
       
       // Props Documentation
       props={[

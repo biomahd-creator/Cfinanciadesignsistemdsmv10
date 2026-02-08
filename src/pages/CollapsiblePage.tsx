@@ -87,7 +87,6 @@ export function CollapsiblePage() {
         </Collapsible>
       }
       code={collapsibleCode}
-      usage="Use the Collapsible component to hide complex content or to create accordions."
       props={[
         { name: "open", type: "boolean", description: "The open state of the collapsible when it is initially rendered. Use when you do not need to control its open state." },
         { name: "onOpenChange", type: "(open: boolean) => void", description: "Event handler called when the open state of the collapsible changes." },

@@ -1,3 +1,4 @@
+import { cn } from "../../lib/utils";
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
@@ -171,7 +172,10 @@ export function LiquidityCalculator() {
                   value={montoFactura}
                   onChange={(e) => setMontoFactura(e.target.value)}
                   placeholder="10,000,000"
-                  className={`text-lg ${!esMontoValido && monto > 0 ? "border-destructive" : ""}`}
+                  className={cn(
+                    "text-lg",
+                    !esMontoValido && monto > 0 && "border-destructive"
+                  )}
                 />
                 {!esMontoValido && monto > 0 && (
                   <p className="text-xs text-destructive flex items-center gap-1">
@@ -425,13 +429,16 @@ export function LiquidityCalculator() {
                   return (
                     <tr 
                       key={diasEscenario}
-                      className={`border-b ${isActual ? 'bg-primary/10' : 'hover:bg-muted/50'} transition-colors`}
+                      className={cn(
+                        "border-b transition-colors",
+                        isActual ? 'bg-primary/10' : 'hover:bg-muted/50'
+                      )}
                     >
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-2">
                           <span className="font-medium">{diasEscenario} días</span>
                           {isActual && (
-                            <Badge variant="default" className="text-xs">Actual</Badge>
+                            <Badge variant="info-soft-outline" className="text-xs">Actual</Badge>
                           )}
                         </div>
                       </td>
@@ -445,7 +452,7 @@ export function LiquidityCalculator() {
                         {formatCOP(netoEscenario)}
                       </td>
                       <td className="text-right py-3 px-4">
-                        <Badge variant="outline">{ceaEscenario.toFixed(2)}%</Badge>
+                        <Badge variant="info-soft-outline">{ceaEscenario.toFixed(2)}%</Badge>
                       </td>
                     </tr>
                   );

@@ -32,7 +32,7 @@ export const EASING = {
 } as const;
 
 // ============================================
-// MOTION VARIANTS (Framer Motion)
+// MOTION VARIANTS (Motion)
 // ============================================
 
 /**

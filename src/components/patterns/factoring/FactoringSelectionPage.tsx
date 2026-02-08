@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useMemo, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
@@ -7,6 +7,8 @@ import { Checkbox } from "../../ui/checkbox";
 import { Separator } from "../../ui/separator";
 import { Alert, AlertDescription } from "../../ui/alert";
 import { Input } from "../../ui/input";
+import { Textarea } from "../../ui/textarea";
+import { Label } from "../../ui/label";
 import {
   Dialog,
   DialogContent,
@@ -24,7 +26,8 @@ import {
 import { Progress } from "../../ui/progress";
 import { ScrollArea } from "../../ui/scroll-area";
 import { StatusKPICard } from "../../widgets/StatusKPICard";
-import { KpiCardGroup } from "../KpiCard";
+import { FactoringKpiCardGroup } from "../FactoringKpiCardGroup";
+import { OperationSummary } from "./OperationSummary";
 import {
   Upload,
   TrendingUp,
@@ -41,6 +44,11 @@ import {
   ArrowUpDown,
   ArrowUp,
   ArrowDown,
+  Eye,
+  Mail,
+  Clock,
+  DollarSign,
+  FileCheck2,
 } from "lucide-react";
 
 // Types
@@ -61,6 +69,10 @@ interface Debtor {
   availableLimit: number;
   rate: number; // Tasa de descuento %
   invoices: Invoice[];
+}
+
+interface FactoringSelectionPageProps {
+  onOperationSummaryChange?: (isShowing: boolean) => void;
 }
 
 // Mock data
@@ -527,12 +539,20 @@ const mockDebtors: Debtor[] = [
   },
 ];
 
-export function FactoringSelectionPage() {
+export function FactoringSelectionPage({ onOperationSummaryChange }: FactoringSelectionPageProps = {}) {
   const [debtors, setDebtors] = useState<Debtor[]>(mockDebtors);
   const [selectedInvoices, setSelectedInvoices] = useState<Set<string>>(new Set());
   const [showUploadDialog, setShowUploadDialog] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [showNotificationDialog, setShowNotificationDialog] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false); // Estado de confirmación exitosa
+  const [showOperationSummary, setShowOperationSummary] = useState(false); // Estado para pantalla de resumen
   const [expandedDebtors, setExpandedDebtors] = useState<string[]>([]);
+  
+  // Notification dialog states
+  const [notificationEmail, setNotificationEmail] = useState("usuario@empresa.com");
+  const [additionalEmails, setAdditionalEmails] = useState("");
+  const [notifyClient, setNotifyClient] = useState(true);
   
   // Filters and sorting per debtor
   const [debtorFilters, setDebtorFilters] = useState<Record<string, string>>({});
@@ -544,6 +564,11 @@ export function FactoringSelectionPage() {
   // KPI Filter State
   const [activeKpiFilter, setActiveKpiFilter] = useState<"negotiation" | "approved" | "disbursed" | "finalized" | null>(null);
   const [hoveredKpi, setHoveredKpi] = useState<string | null>(null);
+  
+  // Notify parent when operation summary state changes
+  useEffect(() => {
+    onOperationSummaryChange?.(showOperationSummary);
+  }, [showOperationSummary, onOperationSummaryChange]);
   
   // Toggle design mode - expand all and select some invoices for demo
   const toggleDesignMode = () => {
@@ -804,10 +829,10 @@ export function FactoringSelectionPage() {
   // Get status badge
   const getStatusBadge = (status: Invoice["status"]) => {
     const config = {
-      eligible: { label: "Elegible", variant: "default" as const, icon: CheckCircle2 },
-      pending: { label: "Pendiente", variant: "secondary" as const, icon: AlertCircle },
-      "not-eligible": { label: "No Elegible", variant: "destructive" as const, icon: XCircle },
-      discarded: { label: "Descartada", variant: "outline" as const, icon: FileX },
+      eligible: { label: "Elegible", variant: "success-soft-outline" as const, icon: CheckCircle2 },
+      pending: { label: "Pendiente", variant: "warning-soft-outline" as const, icon: AlertCircle },
+      "not-eligible": { label: "No Elegible", variant: "destructive-soft-outline" as const, icon: XCircle },
+      discarded: { label: "Descartada", variant: "info-soft-outline" as const, icon: FileX },
     };
 
     const { label, variant, icon: Icon } = config[status];
@@ -822,21 +847,36 @@ export function FactoringSelectionPage() {
 
   return (
     <>
-      {/* Header */}
-      <div className="space-y-6 mb-8">
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-4xl font-semibold mb-2">Gestión de Facturas</h1>
-            <p className="text-muted-foreground">
-              Selecciona las facturas a financiar y maximiza tu liquidez disponible
-            </p>
-          </div>
+      {/* Mostrar Resumen de Operación si el estado está activo */}
+      {showOperationSummary ? (
+        <OperationSummary 
+          onBack={() => setShowOperationSummary(false)}
+          operationData={{
+            operationId: "OP-2025-156",
+            clientName: "Distribuidora XYZ S.A.",
+            clientRut: "76.123.456-7",
+            invoiceCount: globalTotals.count,
+            totalAmount: globalTotals.totalNominal,
+            netAdvance: globalTotals.netAdvance,
+            rate: 2.5,
+          }}
+        />
+      ) : (
+        <>
+          {/* Header */}
+          <div className="space-y-6 mb-8">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-muted-foreground">
+                  Selecciona las facturas a financiar y maximiza tu liquidez disponible
+                </p>
+              </div>
 
-        </div>
+            </div>
 
         {/* KPIs */}
         <div className="space-y-4">
-          <KpiCardGroup
+          <FactoringKpiCardGroup
             cards={[
               {
                 id: "negotiation",
@@ -846,6 +886,7 @@ export function FactoringSelectionPage() {
                 count: kpis.pending.count,
                 variant: "orange",
                 onAction: () => setActiveKpiFilter(activeKpiFilter === "negotiation" ? null : "negotiation"),
+                icon: <Clock />,
               },
               {
                 id: "approved",
@@ -855,6 +896,7 @@ export function FactoringSelectionPage() {
                 count: kpis.eligible.count,
                 variant: "lime",
                 onAction: () => setActiveKpiFilter(activeKpiFilter === "approved" ? null : "approved"),
+                icon: <CheckCircle2 />,
               },
               {
                 id: "disbursed",
@@ -864,6 +906,7 @@ export function FactoringSelectionPage() {
                 count: 45,
                 variant: "blue",
                 onAction: () => setActiveKpiFilter(activeKpiFilter === "disbursed" ? null : "disbursed"),
+                icon: <DollarSign />,
               },
               {
                 id: "finalized",
@@ -873,6 +916,7 @@ export function FactoringSelectionPage() {
                 count: 128,
                 variant: "yellow",
                 onAction: () => setActiveKpiFilter(activeKpiFilter === "finalized" ? null : "finalized"),
+                icon: <FileCheck2 />,
               },
             ]}
             activeId={activeKpiFilter}
@@ -880,12 +924,79 @@ export function FactoringSelectionPage() {
 
           {activeKpiFilter && (
             <div className="mb-4 animate-in fade-in slide-in-from-top-2">
-              <h3 className="text-lg font-semibold">
-                {activeKpiFilter === "negotiation" && "Facturas en Negociación"}
-                {activeKpiFilter === "approved" && "Facturas Aprobadas"}
-                {activeKpiFilter === "disbursed" && "Facturas Desembolsadas"}
-                {activeKpiFilter === "finalized" && "Facturas Finalizadas"}
-              </h3>
+              <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                    <h3 className="text-xl font-semibold tracking-tight">
+                        {activeKpiFilter === "negotiation" && "Facturas en Negociación"}
+                        {activeKpiFilter === "approved" && "Facturas Aprobadas"}
+                        {activeKpiFilter === "disbursed" && "Facturas Desembolsadas"}
+                        {activeKpiFilter === "finalized" && "Facturas Finalizadas"}
+                    </h3>
+                    <Badge variant="outline" className="font-normal text-muted-foreground">
+                        Simulación Global
+                    </Badge>
+                </div>
+
+                {/* Global Configuration Card */}
+                <div className="rounded-xl border bg-card text-card-foreground shadow-sm overflow-hidden">
+                    <div className="p-5 flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between">
+                        {/* Simulation Inputs */}
+                        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 w-full">
+                            <div className="space-y-2">
+                                <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Fecha Pago Est.</label>
+                                <Input type="date" className="h-9 bg-background/50 focus:bg-background transition-colors" />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">% Financiamiento</label>
+                                <div className="relative">
+                                    <Input type="number" className="h-9 bg-background/50 focus:bg-background pr-7 transition-colors" placeholder="100" defaultValue="100" />
+                                    <span className="absolute right-3 top-2.5 text-xs text-muted-foreground font-medium">%</span>
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Tasa Descuento</label>
+                                <div className="relative">
+                                    <Input type="number" className="h-9 bg-background/50 focus:bg-background pr-7 transition-colors" placeholder="1.5" defaultValue="1.5" />
+                                    <span className="absolute right-3 top-2.5 text-xs text-muted-foreground font-medium">%</span>
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Comisión Base</label>
+                                <div className="relative">
+                                    <Input type="number" className="h-9 bg-background/50 focus:bg-background pr-7 transition-colors" placeholder="0.5" defaultValue="0.5" />
+                                    <span className="absolute right-3 top-2.5 text-xs text-muted-foreground font-medium">%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Divider */}
+                        <div className="hidden lg:block w-px h-12 bg-border/60 mx-2"></div>
+
+                        {/* Live Summary Receipt */}
+                        <div className="flex items-center gap-6 min-w-max bg-muted/40 p-3 rounded-lg border border-border/40">
+                            <div className="space-y-1">
+                                <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">Facturas</p>
+                                <p className="text-lg font-semibold leading-none">{globalTotals.count}</p>
+                            </div>
+                            <div className="space-y-1">
+                                <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">Total Nominal</p>
+                                <p className="text-lg font-semibold leading-none">{formatCurrency(globalTotals.totalNominal)}</p>
+                            </div>
+                            <div className="pl-6 border-l border-border/40 space-y-1">
+                                <p className="text-[10px] uppercase tracking-wider text-primary font-bold">A Recibir (Est.)</p>
+                                <p className="text-xl font-bold text-primary leading-none tracking-tight">{formatCurrency(globalTotals.netAdvance)}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Optional Footer/Hint */}
+                    <div className="bg-muted/20 px-5 py-2 border-t border-border/40 flex items-center gap-2">
+                        <Info className="h-3.5 w-3.5 text-muted-foreground" />
+                        <p className="text-xs text-muted-foreground">
+                            Los valores modificados aquí se aplicarán a todas las facturas seleccionadas para calcular el desembolso estimado.
+                        </p>
+                    </div>
+                </div>
+              </div>
             </div>
           )}
 
@@ -895,14 +1006,14 @@ export function FactoringSelectionPage() {
                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                <Input 
                  placeholder="Buscar por pagador, factura..." 
-                 className="pl-9 bg-white"
+                 className="pl-9 bg-card"
                />
             </div>
             
             <div className="flex items-center gap-2 w-full md:w-auto">
                <Button 
                  variant="outline" 
-                 className="bg-white"
+                 className="bg-card"
                  onClick={() => {
                     const newSelection = new Set(selectedInvoices);
                     debtors.forEach(d => {
@@ -925,7 +1036,7 @@ export function FactoringSelectionPage() {
                </Button>
                <Button 
                  variant="outline" 
-                 className="bg-white"
+                 className="bg-card"
                  onClick={() => {
                     const newSelection = new Set(selectedInvoices);
                     debtors.forEach(d => {
@@ -943,7 +1054,7 @@ export function FactoringSelectionPage() {
                {selectedInvoices.size > 0 && (
                  <Button 
                    variant="outline" 
-                   className="bg-white text-destructive hover:bg-destructive/10 hover:border-destructive/30"
+                   className="bg-card text-destructive hover:bg-destructive/10 hover:border-destructive/30"
                    onClick={() => setSelectedInvoices(new Set())}
                  >
                    <X className="mr-2 h-4 w-4" />
@@ -951,7 +1062,7 @@ export function FactoringSelectionPage() {
                  </Button>
                )}
                
-               <Button variant="outline" className="bg-white">
+               <Button variant="outline" className="bg-card">
                  <ArrowDown className="mr-2 h-4 w-4" />
                  Descargar Reporte
                </Button>
@@ -1009,7 +1120,7 @@ export function FactoringSelectionPage() {
                         </div>
                         <Progress 
                           value={Math.min(limitProgress, 100)} 
-                          className="h-1.5 w-24 bg-gray-200" 
+                          className="h-1.5 w-24 bg-muted" 
                           indicatorClassName={isLimitReached ? "bg-destructive" : "bg-green-500"}
                         />
                       </div>
@@ -1062,7 +1173,60 @@ export function FactoringSelectionPage() {
 
                   {/* Quick Actions */}
                   <div className="mb-4 space-y-3">
-                    <div className="flex gap-2 flex-wrap">
+                    {/* Search and Sort */}
+                    <div className="flex gap-2 items-center w-full md:w-auto flex-1">
+                      <div className="relative flex-1 max-w-sm">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          placeholder="Buscar por número, ID o monto..."
+                          value={debtorFilters[debtor.id] || ""}
+                          onChange={(e) =>
+                            setDebtorFilters((prev) => ({
+                              ...prev,
+                              [debtor.id]: e.target.value,
+                            }))
+                          }
+                          className="pl-9"
+                        />
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => toggleSort(debtor.id, "amount")}
+                        className="gap-2 whitespace-nowrap"
+                      >
+                        {debtorSorting[debtor.id]?.field === "amount" ? (
+                          debtorSorting[debtor.id]?.direction === "asc" ? (
+                            <ArrowUp className="h-4 w-4" />
+                          ) : (
+                            <ArrowDown className="h-4 w-4" />
+                          )
+                        ) : (
+                          <ArrowUpDown className="h-4 w-4" />
+                        )}
+                        Monto
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => toggleSort(debtor.id, "dueDate")}
+                        className="gap-2 whitespace-nowrap"
+                      >
+                        {debtorSorting[debtor.id]?.field === "dueDate" ? (
+                          debtorSorting[debtor.id]?.direction === "asc" ? (
+                            <ArrowUp className="h-4 w-4" />
+                          ) : (
+                            <ArrowDown className="h-4 w-4" />
+                          )
+                        ) : (
+                          <ArrowUpDown className="h-4 w-4" />
+                        )}
+                        Vencimiento
+                      </Button>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex gap-2 flex-wrap justify-end shrink-0">
                       <Button
                         onClick={() => {
                             // Si estamos en un filtro KPI específico, la selección inteligente selecciona dentro de ese grupo
@@ -1130,58 +1294,6 @@ export function FactoringSelectionPage() {
                           Deseleccionar Todas
                         </Button>
                       )}
-                    </div>
-
-                    {/* Search and Sort */}
-                    <div className="flex gap-2 items-center">
-                      <div className="relative flex-1">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          placeholder="Buscar por número, ID o monto..."
-                          value={debtorFilters[debtor.id] || ""}
-                          onChange={(e) =>
-                            setDebtorFilters((prev) => ({
-                              ...prev,
-                              [debtor.id]: e.target.value,
-                            }))
-                          }
-                          className="pl-9"
-                        />
-                      </div>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => toggleSort(debtor.id, "amount")}
-                        className="gap-2 whitespace-nowrap"
-                      >
-                        {debtorSorting[debtor.id]?.field === "amount" ? (
-                          debtorSorting[debtor.id]?.direction === "asc" ? (
-                            <ArrowUp className="h-4 w-4" />
-                          ) : (
-                            <ArrowDown className="h-4 w-4" />
-                          )
-                        ) : (
-                          <ArrowUpDown className="h-4 w-4" />
-                        )}
-                        Monto
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => toggleSort(debtor.id, "dueDate")}
-                        className="gap-2 whitespace-nowrap"
-                      >
-                        {debtorSorting[debtor.id]?.field === "dueDate" ? (
-                          debtorSorting[debtor.id]?.direction === "asc" ? (
-                            <ArrowUp className="h-4 w-4" />
-                          ) : (
-                            <ArrowDown className="h-4 w-4" />
-                          )
-                        ) : (
-                          <ArrowUpDown className="h-4 w-4" />
-                        )}
-                        Vencimiento
-                      </Button>
                     </div>
                   </div>
 
@@ -1293,11 +1405,11 @@ export function FactoringSelectionPage() {
 
                                 <div className="flex items-center justify-end gap-2">
                                   {activeKpiFilter === "disbursed" ? (
-                                    <Badge variant="secondary" className="bg-blue-100 text-blue-700 hover:bg-blue-100 gap-1 border-blue-200">
+                                    <Badge variant="info-soft-outline" className="gap-1">
                                         <TrendingUp className="h-3 w-3" /> Desembolsada
                                     </Badge>
                                   ) : activeKpiFilter === "finalized" ? (
-                                    <Badge variant="secondary" className="bg-slate-100 text-slate-700 hover:bg-slate-100 gap-1 border-slate-200">
+                                    <Badge variant="success-soft-outline" className="gap-1">
                                         <CheckCircle2 className="h-3 w-3" /> Finalizada
                                     </Badge>
                                   ) : (
@@ -1354,6 +1466,10 @@ export function FactoringSelectionPage() {
                            <CheckCircle2 className="h-3 w-3 mr-1.5" />
                            {globalTotals.count} {globalTotals.count === 1 ? "factura" : "facturas"}
                         </Badge>
+                        <Badge variant="outline" className="border-primary/50 text-primary bg-primary/5">
+                           <Info className="h-3 w-3 mr-1.5" />
+                           {debtors.filter(d => d.invoices.some(i => selectedInvoices.has(i.id))).length} {debtors.filter(d => d.invoices.some(i => selectedInvoices.has(i.id))).length === 1 ? "pagador" : "pagadores"}
+                        </Badge>
                      </div>
                      <Button 
                         variant="ghost" 
@@ -1394,12 +1510,22 @@ export function FactoringSelectionPage() {
                   )}
 
                   <Button 
-                     onClick={() => setShowConfirmDialog(true)}
+                     onClick={() => setShowNotificationDialog(true)}
                      className="w-full shadow-lg shadow-primary/20" 
                      size="lg"
                   >
                      Confirmar Operación
                      <ChevronRight className="h-4 w-4 ml-1" />
+                  </Button>
+                  
+                  <Button 
+                     onClick={() => setShowConfirmDialog(true)}
+                     variant="outline"
+                     className="w-full" 
+                     size="lg"
+                  >
+                     <Eye className="h-4 w-4 mr-2" />
+                     Ver detalle
                   </Button>
                </div>
             </Card>
@@ -1439,6 +1565,181 @@ export function FactoringSelectionPage() {
             </Button>
             <Button onClick={() => setShowUploadDialog(false)}>Procesar Facturas</Button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Notification Dialog */}
+      <Dialog open={showNotificationDialog} onOpenChange={(open) => {
+        setShowNotificationDialog(open);
+        if (!open) setShowConfirmation(false); // Reset confirmation state when dialog closes
+      }}>
+        <DialogContent className="max-w-md">
+          {!showConfirmation ? (
+            <>
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2">
+                  <Mail className="h-5 w-5 text-primary" />
+                  Notificación de Operación
+                </DialogTitle>
+                <DialogDescription>
+                  Configura los correos electrónicos para notificar sobre esta operación
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="space-y-4">
+                {/* Email Principal */}
+                <div className="space-y-2">
+                  <Label htmlFor="mainEmail">Correo registrado</Label>
+                  <Input 
+                    id="mainEmail"
+                    type="email"
+                    value={notificationEmail}
+                    disabled
+                    className="bg-muted"
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Este es tu correo principal registrado
+                  </p>
+                </div>
+
+                {/* Additional Emails */}
+                <div className="space-y-2">
+                  <Label htmlFor="additionalEmails">Correos adicionales (opcional)</Label>
+                  <Textarea 
+                    id="additionalEmails"
+                    placeholder="ejemplo@empresa.com, otro@empresa.com"
+                    value={additionalEmails}
+                    onChange={(e) => setAdditionalEmails(e.target.value)}
+                    rows={3}
+                    className="resize-none"
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Separa múltiples correos con comas
+                  </p>
+                </div>
+
+                {/* Notify Client Toggle */}
+                <div className="flex items-center justify-between p-4 border rounded-lg bg-muted/30">
+                  <div className="space-y-0.5">
+                    <Label htmlFor="notifyClient" className="text-sm font-medium">
+                      Notificar al cliente
+                    </Label>
+                    <p className="text-xs text-muted-foreground">
+                      El cliente recibirá un email con los detalles
+                    </p>
+                  </div>
+                  <div className="flex rounded-md border p-1 bg-background">
+                    <Button 
+                      size="sm" 
+                      variant="ghost" 
+                      className={`h-8 px-3 text-xs ${notifyClient ? "bg-primary text-primary-foreground hover:bg-primary/90" : "text-muted-foreground hover:bg-muted"}`}
+                      onClick={() => setNotifyClient(true)}
+                    >
+                      {notifyClient && <CheckCircle2 className="h-3 w-3 mr-1" />}
+                      Sí
+                    </Button>
+                    <Button 
+                      size="sm" 
+                      variant="ghost" 
+                      className={`h-8 px-3 text-xs ${!notifyClient ? "bg-primary text-primary-foreground hover:bg-primary/90" : "text-muted-foreground hover:bg-muted"}`}
+                      onClick={() => setNotifyClient(false)}
+                    >
+                      {!notifyClient && <CheckCircle2 className="h-3 w-3 mr-1" />}
+                      No
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Summary Alert */}
+                <Alert>
+                  <Info className="h-4 w-4" />
+                  <AlertDescription className="text-xs">
+                    Se enviará una notificación a {notificationEmail}
+                    {additionalEmails && ` y a ${additionalEmails.split(',').length} correo(s) adicional(es)`}
+                    {notifyClient && ". El cliente también será notificado"}.
+                  </AlertDescription>
+                </Alert>
+              </div>
+
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setShowNotificationDialog(false)}>
+                  Cancelar
+                </Button>
+                <Button
+                  onClick={() => {
+                    // Mostrar confirmación
+                    setShowConfirmation(true);
+                    // Here: Submit to backend with notification preferences
+                    console.log("Operación confirmada con notificaciones", {
+                      invoices: Array.from(selectedInvoices),
+                      totals: globalTotals,
+                      notifications: {
+                        mainEmail: notificationEmail,
+                        additionalEmails: additionalEmails.split(',').map(e => e.trim()).filter(e => e),
+                        notifyClient,
+                      }
+                    });
+                  }}
+                >
+                  <Mail className="h-4 w-4 mr-2" />
+                  Confirmar y Enviar
+                </Button>
+              </DialogFooter>
+            </>
+          ) : (
+            <>
+              {/* Vista de confirmación exitosa */}
+              <div className="py-6">
+                <div className="flex flex-col items-center gap-4 text-center">
+                  <div className="rounded-full bg-green-100 dark:bg-green-950 p-3">
+                    <CheckCircle2 className="h-12 w-12 text-green-600 dark:text-green-400" />
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-semibold">¡Operación Enviada!</h3>
+                    <p className="text-sm text-muted-foreground max-w-sm">
+                      La operación ha sido enviada exitosamente. Se han notificado a los correos configurados.
+                    </p>
+                  </div>
+                  <div className="w-full pt-4 border-t">
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Facturas procesadas:</span>
+                        <span className="font-medium">{globalTotals.count}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Monto total:</span>
+                        <span className="font-medium">{formatCurrency(globalTotals.totalNominal)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <DialogFooter className="gap-2 sm:gap-0">
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    setShowConfirmation(false);
+                    setShowNotificationDialog(false);
+                  }}
+                  className="flex-1"
+                >
+                  Volver
+                </Button>
+                <Button 
+                  onClick={() => {
+                    setShowConfirmation(false);
+                    setShowNotificationDialog(false);
+                    setShowOperationSummary(true);
+                  }}
+                  className="flex-1"
+                >
+                  <Eye className="h-4 w-4 mr-2" />
+                  Ver Resumen
+                </Button>
+              </DialogFooter>
+            </>
+          )}
         </DialogContent>
       </Dialog>
 
@@ -1556,6 +1857,8 @@ export function FactoringSelectionPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+        </>
+      )}
     </>
   );
 }

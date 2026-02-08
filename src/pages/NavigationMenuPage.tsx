@@ -48,7 +48,7 @@ export function NavigationMenuPage() {
   return (
     <ComponentShowcase
       title="Navigation Menu"
-      description="A collection of links for navigating websites."
+      description="Colección de links para navegación de sitios web. Construye menús complejos con NavigationMenu, NavigationMenuList e items con contenido expandible."
       category="Navigation"
       
       // Main Preview
@@ -136,18 +136,17 @@ export function NavigationMenuDemo() {
   )
 }`}
       
-      // Usage
-      usage="Construye menús complejos con NavigationMenu."
-      usageCode={`<NavigationMenu>
-  <NavigationMenuList>
-    <NavigationMenuItem>
-      <NavigationMenuLink>Link</NavigationMenuLink>
-    </NavigationMenuItem>
-  </NavigationMenuList>
-</NavigationMenu>`}
-      
       // Props Documentation
-      props={[]}
+      props={[
+        { name: "children", type: "ReactNode", description: "NavigationMenuList y sus items.", required: true },
+        { name: "className", type: "string", description: "Clases adicionales para el contenedor raíz." },
+        { name: "viewport", type: "boolean", default: "true", description: "Muestra el viewport animado para el contenido desplegable." },
+        { name: "defaultValue", type: "string", description: "Valor del item activo por defecto." },
+        { name: "value", type: "string", description: "Valor controlado del item activo." },
+        { name: "onValueChange", type: "(value: string) => void", description: "Callback al cambiar el item activo." },
+        { name: "delayDuration", type: "number", default: "200", description: "Delay en ms antes de abrir un menú al hacer hover." },
+        { name: "dir", type: "\"ltr\" | \"rtl\"", description: "Dirección de lectura." },
+      ]}
       
       // Examples
       examples={[

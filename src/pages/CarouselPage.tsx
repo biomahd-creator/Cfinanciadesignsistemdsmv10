@@ -6,7 +6,7 @@ export function CarouselPage() {
   return (
     <ComponentShowcase
       title="Carousel"
-      description="A carousel component for cycling through elements."
+      description="A carousel component for cycling through elements. Usa Carousel como contenedor principal con CarouselContent, CarouselItem, CarouselPrevious y CarouselNext."
       category="Layout"
       
       // Main Preview
@@ -61,17 +61,6 @@ export function CarouselDemo() {
     </Carousel>
   )
 }`}
-      
-      // Usage
-      usage="Importa los componentes Carousel desde @/components/ui/carousel. Usa Carousel como contenedor principal."
-      usageCode={`<Carousel>
-  <CarouselContent>
-    <CarouselItem>...</CarouselItem>
-    <CarouselItem>...</CarouselItem>
-  </CarouselContent>
-  <CarouselPrevious />
-  <CarouselNext />
-</Carousel>`}
       
       // Props Documentation
       props={[

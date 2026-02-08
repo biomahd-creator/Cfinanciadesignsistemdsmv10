@@ -1,7 +1,8 @@
+import React from "react";
 import { CheckCircle, Circle, Minus } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import { Progress } from "../ui/progress";
-import { cn } from "../../lib/utils";
+import { cn } from "../ui/utils";
 
 /**
  * 🔒 ADVANCED COMPONENT - Step Indicator

@@ -55,15 +55,6 @@ export function DropdownMenuDemo() {
   )
 }`}
       
-      // Usage
-      usage="Importa los componentes DropdownMenu. Usa DropdownMenuTrigger para el botón y DropdownMenuContent para las opciones."
-      usageCode={`<DropdownMenu>
-  <DropdownMenuTrigger>Open</DropdownMenuTrigger>
-  <DropdownMenuContent>
-    <DropdownMenuItem>Item</DropdownMenuItem>
-  </DropdownMenuContent>
-</DropdownMenu>`}
-      
       // Props Documentation
       props={[
         {

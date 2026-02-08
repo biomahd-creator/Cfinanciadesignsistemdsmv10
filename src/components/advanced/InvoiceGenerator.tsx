@@ -625,7 +625,7 @@ export function InvoiceGenerator({
             <CardHeader className="bg-muted/50">
               <CardTitle>Vista Previa</CardTitle>
             </CardHeader>
-            <CardContent className="p-6 bg-white dark:bg-slate-900">
+            <CardContent className="p-6 bg-card">
               {/* Invoice Preview */}
               <div className="space-y-6 text-foreground">
                 {/* Header */}

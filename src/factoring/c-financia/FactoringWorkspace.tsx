@@ -33,12 +33,12 @@ export function FactoringWorkspace({ onLogout }: FactoringWorkspaceProps) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-background">
       {/* Navbar Completo */}
       <CFinanciaNavbar variant="full" onLogout={onLogout} />
       
       {/* Breadcrumbs */}
-      <div className="px-8 py-3 pt-[80px]">
+      <div className="px-8 py-3 pt-[90px]">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>

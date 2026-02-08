@@ -58,15 +58,6 @@ export function SheetDemo() {
   )
 }`}
       
-      // Usage
-      usage="Usa SheetTrigger para abrir el panel y SheetContent para el contenido. Configura el lado de apertura con la prop side."
-      usageCode={`<Sheet>
-  <SheetTrigger>Open</SheetTrigger>
-  <SheetContent side="right">
-    {/* Content */}
-  </SheetContent>
-</Sheet>`}
-      
       // Props Documentation
       props={[
         {

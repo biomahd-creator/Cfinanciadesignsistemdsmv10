@@ -12,7 +12,9 @@ import {
   ChevronRight,
   Download,
   Edit,
-  ArrowLeft
+  ArrowLeft,
+  FileCheck2,
+  Receipt,
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -45,8 +47,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "../../components/ui/tooltip";
-import { KpiCardGroup } from "../../components/patterns/KpiCard";
-import { MasterDataGrid } from "../../components/patterns/MasterDataGrid";
+import { FactoringKpiCardGroup } from "../../components/patterns/FactoringKpiCardGroup";
+import { MasterDataGrid } from "../../components/advanced/MasterDataGrid";
 
 interface RadianAdminDashboardProps {
   onBack?: () => void;
@@ -138,7 +140,7 @@ export function RadianAdminDashboard({ onBack }: RadianAdminDashboardProps) {
       <Tabs defaultValue="operaciones" value={activeTab} onValueChange={setActiveTab} className="w-full">
         
         {/* KPI Tabs Replacement */}
-        <KpiCardGroup
+        <FactoringKpiCardGroup
           className="mb-8"
           activeId={activeTab}
           cards={[
@@ -150,6 +152,7 @@ export function RadianAdminDashboard({ onBack }: RadianAdminDashboardProps) {
               count: 12,
               variant: "yellow",
               onAction: () => setActiveTab("operaciones"),
+              icon: <FileText />,
             },
             {
               id: "mandatos",
@@ -159,6 +162,7 @@ export function RadianAdminDashboard({ onBack }: RadianAdminDashboardProps) {
               count: 5,
               variant: "orange",
               onAction: () => setActiveTab("mandatos"),
+              icon: <FileCheck2 />,
             },
             {
               id: "titulos",
@@ -168,6 +172,7 @@ export function RadianAdminDashboard({ onBack }: RadianAdminDashboardProps) {
               count: 45,
               variant: "blue",
               onAction: () => setActiveTab("titulos"),
+              icon: <Receipt />,
             },
           ]}
         />
@@ -314,7 +319,7 @@ export function RadianAdminDashboard({ onBack }: RadianAdminDashboardProps) {
                                     <TableCell className="text-xs">{m.tipo}</TableCell>
                                     <TableCell className="text-xs">{m.vigencia}</TableCell>
                                     <TableCell className="text-center">
-                                        <Badge className="bg-success/20 text-success hover:bg-success/30 border-none">
+                                        <Badge variant="success-soft-outline">
                                             {m.estado}
                                         </Badge>
                                     </TableCell>
@@ -406,7 +411,7 @@ export function RadianAdminDashboard({ onBack }: RadianAdminDashboardProps) {
                                     <TableCell className="text-xs max-w-[150px] truncate" title={t.tenedor}>{t.tenedor}</TableCell>
                                     <TableCell className="text-xs text-right">{t.valor}</TableCell>
                                     <TableCell className="text-center">
-                                        <Badge variant="outline" className="text-warning border-warning/30 bg-warning/20 text-xs px-2 py-0.5">
+                                        <Badge variant="warning-soft-outline" className="text-xs px-2 py-0.5">
                                             {t.estado}
                                         </Badge>
                                     </TableCell>

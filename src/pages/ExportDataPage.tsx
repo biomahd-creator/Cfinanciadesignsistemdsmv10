@@ -13,7 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "../components/ui/table";
-import { MasterDataGrid } from "../components/patterns/MasterDataGrid";
+import { MasterDataGrid } from "../components/advanced/MasterDataGrid";
 
 // Sample data: Facturas
 const facturasData = [

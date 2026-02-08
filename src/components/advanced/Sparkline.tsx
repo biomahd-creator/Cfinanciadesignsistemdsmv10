@@ -1,6 +1,7 @@
-import { LineChart, Line, ResponsiveContainer } from "recharts";
+import { LineChart, Line } from "recharts";
 import { Card, CardContent } from "../ui/card";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { SafeChartContainer } from "../ui/safe-chart-container";
 
 /**
  * 🔒 ADVANCED COMPONENT - Sparkline
@@ -30,7 +31,7 @@ interface SparklineProps {
 
 export function Sparkline({
   data,
-  color = "hsl(var(--primary))",
+  color = "var(--primary)",
   height = 60,
   showTrend = true,
   title,
@@ -74,37 +75,33 @@ export function Sparkline({
               <span className="text-xs text-muted-foreground">{changeLabel}</span>
             </div>
           )}
-          <div style={{ width: '100%', height, minWidth: 0 }}>
-            <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
-              <LineChart data={data}>
-                <Line
-                  type="monotone"
-                  dataKey="value"
-                  stroke={color}
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+          <SafeChartContainer width="100%" height={height} minHeight={`${height}px`} loadingPlaceholder={null}>
+            <LineChart data={data}>
+              <Line
+                type="monotone"
+                dataKey="value"
+                stroke={color}
+                strokeWidth={2}
+                dot={false}
+              />
+            </LineChart>
+          </SafeChartContainer>
         </CardContent>
       </Card>
     );
   }
 
   return (
-    <div style={{ width: '100%', height, minWidth: 0 }}>
-      <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
-        <LineChart data={data}>
-          <Line
-            type="monotone"
-            dataKey="value"
-            stroke={color}
-            strokeWidth={2}
-            dot={false}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+    <SafeChartContainer width="100%" height={height} minHeight={`${height}px`} loadingPlaceholder={null}>
+      <LineChart data={data}>
+        <Line
+          type="monotone"
+          dataKey="value"
+          stroke={color}
+          strokeWidth={2}
+          dot={false}
+        />
+      </LineChart>
+    </SafeChartContainer>
   );
 }

@@ -31,7 +31,6 @@ export function TransferListPage() {
       category="Advanced"
       preview={<TransferList items={items} />}
       code={transferListCode}
-      usage="Comúnmente usado para asignar permisos, seleccionar columnas o mover items entre estados."
     />
   );
 }

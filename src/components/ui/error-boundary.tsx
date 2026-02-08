@@ -52,7 +52,7 @@ export class ErrorBoundary extends Component<Props, State> {
             <Button
               variant="outline"
               onClick={() => window.location.reload()}
-              className="border-red-200 bg-white hover:bg-red-50 hover:text-red-900 dark:border-red-800 dark:bg-transparent dark:hover:bg-red-900/50 dark:hover:text-red-200"
+              className="border-red-200 bg-card hover:bg-red-50 hover:text-red-900 dark:border-red-800 dark:hover:bg-red-900/50 dark:hover:text-red-200"
             >
               Recargar página
             </Button>

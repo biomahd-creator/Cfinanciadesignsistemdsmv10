@@ -21,10 +21,9 @@ export function BrandLayoutPage() {
     {
       id: "primary",
       name: "Primary",
-      hex: "#884cc16cc16",
-      rgb: "rgb(13132, 20404, 2222)",
+      hex: "#84cc16",
+      rgb: "rgb(132, 204, 22)",
       usage: "CTAs, estados activos, focus rings",
-      contrast: "AA",
       contrast: "WCAG AAA (7.2:1 sobre secondary)",
     },
     {

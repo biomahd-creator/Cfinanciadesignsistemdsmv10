@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
+import { Input } from "../../components/ui/input";
+import { Label } from "../../components/ui/label";
+import { Button } from "../../components/ui/button";
 import { ArrowRight } from "lucide-react";
 import svgPaths from "../../imports/svg-7nnkcr2v8m";
 
@@ -29,7 +29,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
             <g>
               <path d={svgPaths.p2b2bf200} fill="white" />
               <path d={svgPaths.p24669f00} fill="white" />
-              <path d={svgPaths.p1f0ea300} fill="hsl(var(--cfinancia-accent-hover))" />
+              <path d={svgPaths.p1f0ea300} fill="rgb(var(--cfinancia-accent-hover))" />
               <path d={svgPaths.p8e7b700} fill="white" />
               <path d={svgPaths.p3aba2500} fill="white" />
               <path d={svgPaths.p258fa100} fill="white" />

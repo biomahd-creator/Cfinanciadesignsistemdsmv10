@@ -1,6 +1,6 @@
 import { Loader2 } from "lucide-react";
 import { Skeleton } from "./skeleton";
-import { cn } from "../../lib/utils";
+import { cn } from "./utils";
 
 // 1. Simple Spinner
 export function Spinner({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {

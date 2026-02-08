@@ -69,23 +69,6 @@ export function TabsDemo() {
   );
 }`}
       
-      // Usage
-      usage="Importa los componentes Tabs desde @/components/ui/tabs. Usa Tabs como contenedor, TabsList para los botones de navegación, TabsTrigger para cada tab y TabsContent para el contenido de cada panel."
-      usageCode={`import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-function MyComponent() {
-  return (
-    <Tabs defaultValue="tab1">
-      <TabsList>
-        <TabsTrigger value="tab1">Tab 1</TabsTrigger>
-        <TabsTrigger value="tab2">Tab 2</TabsTrigger>
-      </TabsList>
-      <TabsContent value="tab1">Content 1</TabsContent>
-      <TabsContent value="tab2">Content 2</TabsContent>
-    </Tabs>
-  );
-}`}
-      
       // Props Documentation
       props={[
         {

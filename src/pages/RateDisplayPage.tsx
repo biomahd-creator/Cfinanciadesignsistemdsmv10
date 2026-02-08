@@ -39,7 +39,6 @@ export function RateDisplayPage() {
         </div>
       }
       code={rateDisplayCode}
-      usage="Muestra la tasa mensual, anual y el desglose de costos de una operación."
     />
   );
 }

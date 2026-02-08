@@ -63,7 +63,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 
 export function SidebarShowcasePage() {
   return (
-    <div className="space-y-8 max-w-6xl pb-20">
+    <div className="space-y-8 w-full pb-20">
       <div>
         <div className="flex items-center gap-3 mb-2">
           <h1 className="text-2xl font-medium">Sidebar</h1>
@@ -237,7 +237,7 @@ export function SidebarShowcasePage() {
           </p>
         </div>
 
-        <div className="border rounded-xl overflow-hidden shadow-sm bg-zinc-100 dark:bg-zinc-900 h-[500px] relative isolate">
+        <div className="border rounded-xl overflow-hidden shadow-sm bg-muted dark:bg-card h-[500px] relative isolate">
           <SidebarProvider className="min-h-[500px]">
             <Sidebar collapsible="icon" variant="floating" className="absolute top-0 bottom-0 left-0 h-full z-20">
               <SidebarHeader>
@@ -484,6 +484,46 @@ export function SidebarShowcasePage() {
     <main />
   </SidebarInset>
 </SidebarProvider>`}
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* PROPS */}
+      <section className="space-y-4">
+        <h2 className="text-2xl font-semibold">Props</h2>
+        <Card>
+          <CardContent className="p-0">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b bg-muted/50">
+                    <th className="text-left p-3 font-medium">Prop</th>
+                    <th className="text-left p-3 font-medium">Type</th>
+                    <th className="text-left p-3 font-medium">Default</th>
+                    <th className="text-left p-3 font-medium">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { name: "side", type: '"left" | "right"', def: '"left"', desc: "Lado donde se posiciona el sidebar." },
+                    { name: "variant", type: '"sidebar" | "floating" | "inset"', def: '"sidebar"', desc: "Estilo visual: pegado, flotante con bordes, o inset." },
+                    { name: "collapsible", type: '"offcanvas" | "icon" | "none"', def: '"offcanvas"', desc: "Comportamiento al colapsar: ocultar, solo iconos, o fijo." },
+                    { name: "className", type: "string", def: "—", desc: "Clases adicionales para el contenedor." },
+                    { name: "children", type: "ReactNode", def: "—", desc: "SidebarHeader, SidebarContent, SidebarFooter, SidebarRail." },
+                    { name: "defaultOpen", type: "boolean", def: "true", desc: "Estado inicial de apertura (SidebarProvider)." },
+                    { name: "open", type: "boolean", def: "—", desc: "Estado controlado de apertura (SidebarProvider)." },
+                    { name: "onOpenChange", type: "(open: boolean) => void", def: "—", desc: "Callback al cambiar apertura (SidebarProvider)." },
+                  ].map((row) => (
+                    <tr key={row.name} className="border-b last:border-0">
+                      <td className="p-3"><code className="text-xs bg-muted px-1.5 py-0.5 rounded">{row.name}</code></td>
+                      <td className="p-3 text-muted-foreground"><code className="text-xs">{row.type}</code></td>
+                      <td className="p-3 text-muted-foreground"><code className="text-xs">{row.def}</code></td>
+                      <td className="p-3 text-muted-foreground">{row.desc}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </CardContent>
         </Card>

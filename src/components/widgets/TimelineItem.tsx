@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Separator } from "../ui/separator";
 import { LucideIcon } from "lucide-react";
 
-interface TimelineItemProps {
+interface ApprovalTimelineItemProps {
   icon: LucideIcon;
   iconColor: string;
   title: string;
@@ -14,7 +14,7 @@ interface TimelineItemProps {
   statusVariant?: "default" | "secondary" | "outline" | "destructive";
 }
 
-export function TimelineItem({
+export function ApprovalTimelineItem({
   icon: Icon,
   iconColor,
   title,
@@ -23,7 +23,7 @@ export function TimelineItem({
   timestamp,
   status,
   statusVariant = "default",
-}: TimelineItemProps) {
+}: ApprovalTimelineItemProps) {
   return (
     <div className="flex items-start gap-3">
       <div className={`flex-shrink-0 ${iconColor}`}>

@@ -67,7 +67,59 @@ export function InfiniteScrollPage() {
         </div>
       }
       code={infiniteScrollCode}
-      usage="Ideal para feeds de actividad, listas de comentarios o logs extensos."
+      props={[
+        { name: "loadMore", type: "() => Promise<void>", description: "Función async que carga más datos cuando el usuario llega al final del scroll.", required: true },
+        { name: "hasMore", type: "boolean", description: "Indica si hay más datos por cargar. Cuando es false, deja de observar el scroll.", required: true },
+        { name: "isLoading", type: "boolean", default: "false", description: "Estado de carga. Muestra spinner mientras carga." },
+        { name: "children", type: "ReactNode", description: "Contenido scrolleable (lista de items).", required: true },
+        { name: "threshold", type: "number", default: "1.0", description: "Umbral de intersección (0 a 1) para disparar la carga. 1.0 = completamente visible." },
+      ]}
+      examples={[
+        {
+          title: "Carga anticipada (threshold 0.5)",
+          description: "Carga datos cuando el sentinel está 50% visible.",
+          preview: (
+            <div className="text-center py-6 border rounded-lg">
+              <p className="text-sm text-muted-foreground">Threshold bajo pre-carga antes de llegar al final.</p>
+            </div>
+          ),
+          code: `<InfiniteScroll
+  loadMore={fetchNextPage}
+  hasMore={hasNextPage}
+  isLoading={isFetching}
+  threshold={0.5}
+>
+  {invoices.map((inv) => (
+    <InvoiceCard key={inv.id} invoice={inv} />
+  ))}
+</InfiniteScroll>`,
+        },
+        {
+          title: "Con mensaje de fin",
+          description: "Muestra texto cuando no hay más datos.",
+          preview: (
+            <div className="text-center py-6 border rounded-lg">
+              <p className="text-sm text-muted-foreground">Cuando hasMore=false, el observer se desconecta.</p>
+            </div>
+          ),
+          code: `<div className="h-[400px] overflow-auto">
+  <InfiniteScroll
+    loadMore={loadMore}
+    hasMore={hasMore}
+    isLoading={loading}
+  >
+    {items.map((item) => (
+      <ItemRow key={item.id} {...item} />
+    ))}
+  </InfiniteScroll>
+  {!hasMore && (
+    <p className="text-center text-muted-foreground py-4">
+      No hay más resultados
+    </p>
+  )}
+</div>`,
+        },
+      ]}
     />
   );
 }

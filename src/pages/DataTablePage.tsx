@@ -74,7 +74,7 @@ export const columns: ColumnDef<Invoice>[] = [
         pending: { color: "text-yellow-500 bg-yellow-500/10", icon: Clock, label: "Pending" },
         processing: { color: "text-blue-500 bg-blue-500/10", icon: AlertCircle, label: "Processing" },
         failed: { color: "text-red-500 bg-red-500/10", icon: XCircle, label: "Failed" },
-      }[status] || { color: "text-gray-500", icon: Circle, label: status };
+      }[status] || { color: "text-muted-foreground", icon: Circle, label: status };
 
       const Icon = config.icon;
 

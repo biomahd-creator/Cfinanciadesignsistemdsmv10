@@ -110,7 +110,7 @@ const MultiSelect = React.forwardRef<HTMLDivElement, MultiSelectProps>(
                             : "opacity-50 [&_svg]:invisible"
                         )}
                       >
-                        <Check className="size-4" />
+                        <Check className={cn("size-4", isSelected && "text-primary-foreground")} />
                       </div>
                       <span>{option.label}</span>
                     </CommandItem>

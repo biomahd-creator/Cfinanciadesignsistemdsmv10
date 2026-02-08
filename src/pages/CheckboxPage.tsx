@@ -43,19 +43,6 @@ export function CheckboxDemo() {
   );
 }`}
       
-      // Usage
-      usage="Importa el componente Checkbox desde @/components/ui/checkbox. Úsalo con Label para mejor accesibilidad. El checkbox puede ser controlado o no controlado."
-      usageCode={`import { Checkbox } from "@/components/ui/checkbox";
-
-function MyForm() {
-  return (
-    <Checkbox 
-      checked={true}
-      onCheckedChange={(checked) => console.log(checked)}
-    />
-  );
-}`}
-      
       // Props Documentation
       props={[
         {

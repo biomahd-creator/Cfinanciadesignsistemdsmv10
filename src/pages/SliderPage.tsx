@@ -31,24 +31,6 @@ export function SliderDemo() {
   );
 }`}
       
-      // Usage
-      usage="Importa el componente Slider desde @/components/ui/slider. Ideal para volumen, brillo, rangos de precios, porcentajes, y cualquier valor numérico dentro de un rango. Usa siempre con un Label para accesibilidad."
-      usageCode={`import { Slider } from "@/components/ui/slider";
-import { Label } from "@/components/ui/label";
-
-function VolumeControl() {
-  return (
-    <div className="space-y-2">
-      <Label>Volume</Label>
-      <Slider
-        defaultValue={[50]}
-        max={100}
-        step={1}
-      />
-    </div>
-  );
-}`}
-      
       // Props Documentation
       props={[
         {

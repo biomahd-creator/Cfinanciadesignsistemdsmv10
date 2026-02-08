@@ -1,6 +1,7 @@
+import { Badge } from "../../components/ui/badge";
+import { StatusBadge, getStatusIconBg } from "../components/StatusBadge";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
-import { Badge } from "../../components/ui/badge";
 import { Progress } from "../../components/ui/progress";
 import { 
   PlusCircle, 
@@ -93,11 +94,7 @@ export function ClientDashboard({ onNewRequest }: ClientDashboardProps) {
             ].map((op, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 hover:bg-accent/50 rounded-lg transition-colors border border-transparent hover:border-border">
                 <div className="flex items-start gap-4 mb-3 sm:mb-0">
-                  <div className={`p-2 rounded-full mt-1 ${
-                    op.status === 'paid' ? 'bg-success/10 text-success' :
-                    op.status === 'approved' ? 'bg-info/10 text-info' :
-                    'bg-warning/10 text-warning'
-                  }`}>
+                  <div className={`p-2 rounded-full mt-1 ${getStatusIconBg(op.status)}`}>
                     {op.status === 'paid' ? <CheckCircle2 className="h-5 w-5" /> :
                      op.status === 'approved' ? <Wallet className="h-5 w-5" /> :
                      <Clock className="h-5 w-5" />}
@@ -105,13 +102,7 @@ export function ClientDashboard({ onNewRequest }: ClientDashboardProps) {
                   <div>
                     <h4 className="font-medium text-foreground">{op.client}</h4>
                     <p className="text-sm text-muted-foreground">Operación #{op.id} • {op.date}</p>
-                    <Badge variant="outline" className={`mt-2 ${
-                        op.status === 'paid' ? 'text-success border-success/30 bg-success/10' :
-                        op.status === 'approved' ? 'text-info border-info/30 bg-info/10' :
-                        'text-warning border-warning/30 bg-warning/10'
-                    }`}>
-                        {op.statusLabel}
-                    </Badge>
+                    <StatusBadge status={op.status} className="mt-2" />
                   </div>
                 </div>
                 <div className="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto pl-14 sm:pl-0">

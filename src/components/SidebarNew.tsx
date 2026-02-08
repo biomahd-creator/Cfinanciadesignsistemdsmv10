@@ -1,3 +1,4 @@
+import React from "react";
 import { 
   MousePointerClick, 
   FormInput, 
@@ -6,25 +7,20 @@ import {
   MessageSquare, 
   LayoutGrid,
   Layers,
-  Atom,
-  Scale,
   Sparkles,
-  CheckCircle,
   ChevronRight,
-  Accessibility,
   Palette,
-  Paintbrush,
-  Zap,
   Home,
-  TrendingUp,
   Search,
-  PanelLeft,
   X,
-  Briefcase,
-  Box,
+  Paintbrush,
+  Scale,
+  Zap,
   Clapperboard,
   ImageIcon,
-  BookOpen
+  BookOpen,
+  Box,
+  Briefcase,
 } from "lucide-react";
 import { useState } from "react";
 import {
@@ -50,65 +46,74 @@ import {
 } from "./ui/sidebar";
 import { Badge } from "./ui/badge";
 import { Logo } from "./Logo";
+import { useLanguage } from "./i18n/LanguageProvider";
 
 // ⚠️ CRITICAL: PageId es la FUENTE DE VERDAD de todos los IDs de página
-// ⚠️ ANTES DE MODIFICAR: Leer /DSM_ARCHITECTURE.md sección "MAPA COMPLETO DE PageId"
 // ⚠️ Cada PageId DEBE tener:
 //    1. Caso en PageRenderer.tsx (switch statement)
 //    2. Import del componente en PageRenderer.tsx
-//    3. Item en menuSections array (abajo en línea 102+)
-// ⚠️ NO eliminar PageId sin buscar TODAS las referencias (Ctrl+F)
+//    3. Item en algún array de secciones (abajo)
+// ⚠️ NO eliminar PageId sin buscar TODAS las referencias
 export type PageId =
   // Home
   | "home" | "dsm-dashboard"
+
+  // ── PRIMITIVES ──
   // Actions
-  | "button" | "button-new" | "toggle" | "toggle-group"
+  | "button" | "toggle" | "toggle-group" | "split-button" | "fab"
   // Forms
-  | "input" | "input-new" | "input-file" | "select" | "select-new" | "checkbox" | "checkbox-new" | "radio-group" | "switch" | "slider" 
-  | "textarea" | "textarea-new" | "textarea-autoresize" | "calendar" | "calendar-new" | "form" | "form-new" | "input-otp" | "input-otp-new" | "label" | "combobox" | "combobox-new" | "multi-select" | "date-picker" | "date-picker-new" | "date-range-picker"
+  | "input" | "input-new" | "input-file" | "select" | "select-new" | "checkbox" | "checkbox-new" 
+  | "radio-group" | "switch" | "slider" | "textarea" | "textarea-new" | "textarea-autoresize" 
+  | "calendar" | "calendar-new" | "form" | "form-new" | "input-otp" | "input-otp-new" | "label" 
+  | "combobox" | "combobox-new" | "multi-select" | "date-picker" | "date-picker-new" | "date-range-picker"
   // Navigation
   | "tabs" | "tabs-new" | "breadcrumb" | "command" | "dropdown-menu" | "menubar" 
   | "navigation-menu" | "pagination" | "context-menu"
   // Data Display
   | "card" | "card-new" | "table" | "table-new" | "badge" | "badge-new" | "avatar" | "hover-card" | "separator"
   // Feedback
-  | "alert" | "alert-new" | "alert-dialog" | "dialog" | "dialog-new" | "toast" | "tooltip" | "progress" 
-  | "skeleton" | "sheet" | "drawer" | "popover"
+  | "alert" | "alert-new" | "alert-dialog" | "dialog" | "dialog-new" | "toast" | "tooltip" | "progress" | "progress-with-range"
+  | "skeleton" | "sheet" | "drawer" | "popover" | "empty-state" | "error-boundary" | "bottom-sheet" | "loading-states"
   // Layout
-  | "accordion" | "carousel" | "collapsible" | "resizable" | "scroll-area" | "sidebar-showcase"
-  // Patterns
-  | "invoice-generator" | "payment-form" | "editable-table" | "invoice-upload"
-  | "stats-dashboard" | "quick-action" | "data-table-advanced" | "advanced-filter" | "approval-timeline" | "multi-step-wizard" | "multi-step-form" | "multi-step-form-vertical" | "multi-step-wizard-vertical"
-  // Widgets
-  | "widgets-library"
-  | "widget-stat-card"
-  | "widget-search-bar"
-  | "widget-filter-bar"
-  | "widget-navigation"
-  | "widget-timeline"
-  
-  // Advanced
-  | "charts" | "color-picker" | "rating" | "kanban" | "date-range-advanced" | "file-uploader" | "rich-text-editor" | "timeline" | "data-table" | "tree-table" | "pivot-table" | "export-data"
-  // Business Components (High Priority)
-  | "business-components"
-  // Data Visualization (Medium Priority)
-  | "data-visualization"
-  // Advanced Forms (Medium Priority)
-  | "advanced-forms"
-  // Special
-  | "accessibility" | "brand-layout" | "theme-customizer" | "elevation" | "grid-showcase" | "help-system-demo" | "animations" | "animation-system" | "icon-gallery" | "changelog"
-  // New Patterns
-  | "activity-feed" | "user-profile" | "comment-thread" | "pricing-table" | "comparison-table" | "search-results" | "empty-state" | "loading-states" | "error-boundary" | "bottom-sheet" | "fab" | "split-button"
-  // New Business
-  | "liquidity-meter-component" | "risk-indicator" | "rate-display" | "invoice-card" | "payor-card" | "cash-flow-projection" | "collection-timeline" | "doc-verification"
-  // New Advanced
-  | "sankey-diagram" | "gantt-chart" | "org-chart" | "virtualized-list" | "infinite-scroll" | "masonry-grid" | "transfer-list"
-  // Business Components (Old)
-  | "audit-log" | "testimonials" | "contact-form" | "notification-center"
-  // Pages (Real Pages)
-  | "factoring-selection" | "factoring-dashboard" | "operations-list" | "approval-flow" | "kpi-showcase"
-  // C-Financia Platform
-  | "liquidity-calculator" | "onboarding" | "cf-dashboard" | "admin-portal";
+  | "accordion" | "carousel" | "collapsible" | "resizable" | "scroll-area" | "sidebar-showcase" | "grid-showcase"
+
+  // ── PATTERNS ──
+  | "invoice-generator" | "editable-table" | "invoice-upload"
+  | "stats-dashboard" | "quick-action" | "data-table-advanced" | "advanced-filter" 
+  | "approval-timeline" | "multi-step-wizard" | "multi-step-form" 
+  | "multi-step-form-vertical" | "multi-step-wizard-vertical"
+  | "activity-feed" | "user-profile" | "comment-thread"
+  | "search-results" | "notification-center"
+  | "contact-form"
+
+  // ── ADVANCED ──
+  | "charts" | "rating" | "date-range-advanced" 
+  | "file-uploader" | "rich-text-editor" | "timeline" | "data-table" | "tree-table" 
+  | "export-data"
+  | "data-visualization" | "advanced-forms" | "business-components"
+  | "virtualized-list" 
+  | "infinite-scroll" | "masonry-grid" | "transfer-list"
+  | "table-catalog"
+
+  // ── FACTORING ──
+  // Components
+  | "liquidity-meter-component" | "risk-indicator" | "rate-display" | "invoice-card" 
+  | "payor-card" | "collection-timeline" | "doc-verification" | "audit-log"
+  | "factoring-invoice-table"
+  // Pages
+  | "factoring-selection" | "factoring-dashboard" | "operations-list" | "approval-flow" 
+  | "kpi-showcase" | "kpi-dashboard-advanced" | "kpi-standard"
+  | "liquidity-calculator" | "onboarding" | "cf-dashboard" | "admin-portal"
+
+  // ── DESIGN SYSTEM & SPECIAL ──
+  | "brand-layout" | "theme-customizer" | "elevation"
+  | "help-system-demo" | "animations" | "animation-system" | "icon-gallery"
+  | "audit-log"
+
+  // ── LEGACY ALIASES (backward compat for localStorage) ──
+  | "changelog" | "button-new"
+  | "widgets-library" | "widget-stat-card" | "widget-search-bar" 
+  | "widget-filter-bar" | "widget-navigation" | "widget-timeline";
 
 interface SidebarProps extends React.ComponentProps<typeof Sidebar> {
   activePage: PageId;
@@ -124,29 +129,35 @@ interface MenuSection {
   id: string;
   label: string;
   icon: React.ElementType;
-  count?: number;
+  count: number;
   items: MenuItem[];
 }
 
 export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const { toggleSidebar } = useSidebar();
+  const { t } = useLanguage();
 
-  const menuSections: MenuSection[] = [
+  // ═══════════════════════════════════════════════════
+  // 1. COMPONENTS (UI Primitives - shadcn/ui base)
+  // ═══════════════════════════════════════════════════
+  const componentSections: MenuSection[] = [
     {
       id: "actions",
-      label: "Actions",
+      label: t("sidebar.section.actions"),
       icon: MousePointerClick,
-      count: 3,
+      count: 5,
       items: [
         { id: "button", label: "Button" },
         { id: "toggle", label: "Toggle" },
         { id: "toggle-group", label: "Toggle Group" },
+        { id: "split-button", label: "Split Button" },
+        { id: "fab", label: "Floating Action Button" },
       ],
     },
     {
       id: "forms",
-      label: "Forms",
+      label: t("sidebar.section.forms"),
       icon: FormInput,
       count: 17,
       items: [
@@ -171,7 +182,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
     },
     {
       id: "navigation",
-      label: "Navigation",
+      label: t("sidebar.section.navigation"),
       icon: Compass,
       count: 8,
       items: [
@@ -187,7 +198,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
     },
     {
       id: "data-display",
-      label: "Data Display",
+      label: t("sidebar.section.dataDisplay"),
       icon: Grid3x3,
       count: 6,
       items: [
@@ -201,9 +212,9 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
     },
     {
       id: "feedback",
-      label: "Feedback",
+      label: t("sidebar.section.feedback"),
       icon: MessageSquare,
-      count: 10,
+      count: 14,
       items: [
         { id: "alert-new", label: "Alert" },
         { id: "alert-dialog", label: "Alert Dialog" },
@@ -211,15 +222,20 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
         { id: "toast", label: "Toast (Sonner)" },
         { id: "tooltip", label: "Tooltip" },
         { id: "progress", label: "Progress" },
+        { id: "progress-with-range", label: "Progress with Range" },
         { id: "skeleton", label: "Skeleton" },
         { id: "sheet", label: "Sheet" },
         { id: "drawer", label: "Drawer" },
         { id: "popover", label: "Popover" },
+        { id: "empty-state", label: "Empty State" },
+        { id: "error-boundary", label: "Error Boundary" },
+        { id: "bottom-sheet", label: "Bottom Sheet" },
+        { id: "loading-states", label: "Loading States" },
       ],
     },
     {
       id: "layout",
-      label: "Layout",
+      label: t("sidebar.section.layout"),
       icon: LayoutGrid,
       count: 7,
       items: [
@@ -232,20 +248,25 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
         { id: "grid-showcase", label: "Grid Showcase" },
       ],
     },
+  ];
+
+  // ═══════════════════════════════════════════════════
+  // 2. PATTERNS (Composed solutions using primitives)
+  // ═══════════════════════════════════════════════════
+  const patternSections: MenuSection[] = [
     {
       id: "patterns",
-      label: "Business Patterns",
+      label: t("sidebar.section.patterns"),
       icon: Layers,
-      count: 21,
+      count: 18,
       items: [
-        { id: "invoice-generator", label: "Invoice Generator" },
-        { id: "invoice-upload", label: "Carga de Facturas" },
-        { id: "payment-form", label: "Payment Form" },
-        { id: "editable-table", label: "Editable Table" },
         { id: "stats-dashboard", label: "Stats Dashboard" },
-        { id: "quick-action", label: "Quick Action Toolbar" },
         { id: "data-table-advanced", label: "Data Table Advanced" },
         { id: "advanced-filter", label: "Advanced Filter Panel" },
+        { id: "editable-table", label: "Editable Table" },
+        { id: "invoice-generator", label: "Invoice Generator" },
+        { id: "invoice-upload", label: "Carga de Facturas" },
+        { id: "quick-action", label: "Quick Action Toolbar" },
         { id: "approval-timeline", label: "Approval Timeline" },
         { id: "multi-step-wizard", label: "Multi-Step Wizard" },
         { id: "multi-step-form", label: "Multi-Step Form" },
@@ -253,24 +274,64 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
         { id: "multi-step-wizard-vertical", label: "Multi-Step Wizard Vertical" },
         { id: "activity-feed", label: "Activity Feed" },
         { id: "comment-thread", label: "Comment Thread" },
-        { id: "pricing-table", label: "Pricing Table" },
-        { id: "comparison-table", label: "Comparison Table" },
         { id: "search-results", label: "Search Results" },
         { id: "user-profile", label: "User Profile" },
-        { id: "empty-state", label: "Empty State" },
-        { id: "loading-states", label: "Loading States" },
-        { id: "error-boundary", label: "Error Boundary" },
-        { id: "bottom-sheet", label: "Bottom Sheet" },
         { id: "notification-center", label: "Notification Center" },
-        { id: "fab", label: "Floating Action Button" },
-        { id: "split-button", label: "Split Button" },
+        { id: "contact-form", label: "Contact Form" },
       ],
     },
     {
-      id: "business",
-      label: "Business Modules",
+      id: "advanced",
+      label: t("sidebar.section.advanced"),
+      icon: Sparkles,
+      count: 17,
+      items: [
+        { id: "charts", label: "Charts" },
+        { id: "data-visualization", label: "Data Visualization" },
+        { id: "advanced-forms", label: "Advanced Forms" },
+        { id: "business-components", label: "Business Components" },
+        { id: "data-table", label: "Data Table" },
+        { id: "tree-table", label: "Tree Table" },
+        { id: "export-data", label: "Export Data" },
+        { id: "rating", label: "Rating" },
+        { id: "date-range-advanced", label: "Date Range" },
+        { id: "file-uploader", label: "File Uploader" },
+        { id: "rich-text-editor", label: "Rich Text Editor" },
+        { id: "timeline", label: "Timeline" },
+        { id: "virtualized-list", label: "Virtualized List" },
+        { id: "infinite-scroll", label: "Infinite Scroll" },
+        { id: "masonry-grid", label: "Masonry Grid" },
+        { id: "transfer-list", label: "Transfer List" },
+        { id: "table-catalog", label: "Table Catalog" },
+      ],
+    },
+  ];
+
+  // ═══════════════════════════════════════════════════
+  // 3. FACTORING (Domain-specific)
+  // ══════════════════════════════════════════════════
+  const factoringSections: MenuSection[] = [
+    {
+      id: "factoring-components",
+      label: t("sidebar.section.factoringComponents"),
+      icon: Box,
+      count: 8,
+      items: [
+        { id: "liquidity-meter-component", label: "Liquidity Meter" },
+        { id: "risk-indicator", label: "Risk Indicator" },
+        { id: "rate-display", label: "Rate Display" },
+        { id: "invoice-card", label: "Invoice Card" },
+        { id: "payor-card", label: "Payor Card" },
+        { id: "collection-timeline", label: "Collection Timeline" },
+        { id: "doc-verification", label: "Doc Verification" },
+        { id: "factoring-invoice-table", label: "Invoice Table" },
+      ],
+    },
+    {
+      id: "factoring-pages",
+      label: t("sidebar.section.factoringPages"),
       icon: Briefcase,
-      count: 10,
+      count: 9,
       items: [
         { id: "cf-dashboard", label: "Dashboard Principal" },
         { id: "admin-portal", label: "Portal Administrativo" },
@@ -283,124 +344,103 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
         { id: "onboarding", label: "Onboarding" },
       ],
     },
-    /*
-    {
-      id: "atomic",
-      label: "Atomic Design",
-      icon: Atom,
-      count: 5,
-      items: [
-        { id: "atomic-atoms", label: "Atoms" },
-        { id: "atomic-molecules", label: "Molecules" },
-        { id: "atomic-organisms", label: "Organisms" },
-        { id: "atomic-templates", label: "Templates" },
-        { id: "atomic-pages", label: "Pages" },
-      ],
-    },
-    */
-
-    {
-      id: "advanced",
-      label: "Advanced",
-      icon: Sparkles,
-      count: 14,
-      items: [
-        { id: "charts", label: "Charts" },
-        { id: "data-visualization", label: "Data Visualization" },
-        { id: "advanced-forms", label: "Advanced Forms" },
-        { id: "data-table", label: "Data Table" },
-        { id: "tree-table", label: "Tree Table" },
-        { id: "pivot-table", label: "Pivot Table" },
-        { id: "export-data", label: "Export Data" },
-        { id: "color-picker", label: "Color Picker" },
-        { id: "rating", label: "Rating" },
-        { id: "kanban", label: "Kanban Board" },
-        { id: "date-range-advanced", label: "Date Range" },
-        { id: "file-uploader", label: "File Uploader" },
-        { id: "rich-text-editor", label: "Rich Text Editor" },
-        { id: "timeline", label: "Timeline" },
-        { id: "sankey-diagram", label: "Sankey Diagram" },
-        { id: "gantt-chart", label: "Gantt Chart" },
-        { id: "org-chart", label: "Org Chart" },
-        { id: "virtualized-list", label: "Virtualized List" },
-        { id: "infinite-scroll", label: "Infinite Scroll" },
-        { id: "masonry-grid", label: "Masonry Grid" },
-        { id: "transfer-list", label: "Transfer List" },
-      ],
-    },
-    {
-      id: "business-components",
-      label: "Business Components",
-      icon: Box,
-      count: 1,
-      items: [
-        // High Priority (Old)
-        { id: "audit-log", label: "Audit Log Viewer" },
-        { id: "testimonials", label: "Testimonials Carousel" },
-        { id: "contact-form", label: "Contact Form" },
-        // New
-        { id: "liquidity-meter-component", label: "Liquidity Meter" },
-        { id: "risk-indicator", label: "Risk Indicator" },
-        { id: "rate-display", label: "Rate Display" },
-        { id: "invoice-card", label: "Invoice Card" },
-        { id: "payor-card", label: "Payor Card" },
-        { id: "cash-flow-projection", label: "Cash Flow Chart" },
-        { id: "collection-timeline", label: "Collection Timeline" },
-        { id: "doc-verification", label: "Doc Verification" },
-      ],
-    },
   ];
 
+  // ═══════════════════════════════════════════════════
+  // 4. STANDALONE PAGES
+  // ═══════════════════════════════════════════════════
   const designSystemPages: MenuItem[] = [
     { id: "brand-layout", label: "Brand Layout" },
     { id: "theme-customizer", label: "Theme Customizer" },
-    { id: "elevation", label: "Elevation Styles" },
+    { id: "elevation", label: "Elevation & Shadows" },
   ];
 
   const resourcePages: MenuItem[] = [
+    { id: "help-system-demo", label: "Help System" },
     { id: "animations", label: "Animations" },
     { id: "animation-system", label: "Animation System" },
     { id: "icon-gallery", label: "Icon Gallery" },
-    { id: "help-system-demo", label: "Help System" },
+    { id: "audit-log", label: "Audit Log Viewer" },
   ];
 
-  const specialPages: MenuItem[] = [
-    { id: "accessibility", label: "WCAG Accessibility" },
-    { id: "changelog", label: "Changelog" },
-  ];
+  // ═══════════════════════════════════════════════════
+  // HELPERS
+  // ═══════════════════════════════════════════════════
+  const allSections = [...componentSections, ...patternSections, ...factoringSections];
 
-  // Helper to check if a section contains the active page
   const isSectionActive = (sectionItems: MenuItem[]) => {
     return sectionItems.some(item => item.id === activePage);
   };
 
   // Flatten items for search
   const allItems = [
-    ...menuSections.flatMap(section => section.items.map(item => ({ 
+    ...allSections.flatMap(section => section.items.map(item => ({ 
       ...item, 
       section: section.label, 
       icon: section.icon 
     }))),
-    ...resourcePages.map(item => ({ 
-      ...item, 
-      section: "Analysis", 
-      icon: Sparkles 
-    })),
-    ...specialPages.map(item => ({ 
-      ...item, 
-      section: "Analysis", 
-      icon: Sparkles 
-    })),
     ...designSystemPages.map(item => ({ 
       ...item, 
       section: "Design System", 
+      icon: Palette 
+    })),
+    ...resourcePages.map(item => ({ 
+      ...item, 
+      section: t("sidebar.group.resources"), 
       icon: Sparkles 
-    }))
+    })),
   ];
 
   const searchResults = searchQuery 
     ? allItems.filter(item => item.label.toLowerCase().includes(searchQuery.toLowerCase()))
     : [];
+
+  // ═══════════════════════════════════════════════════
+  // Render helper for collapsible sections
+  // ═══════════════════════════════════════════════════
+  const renderCollapsibleSections = (sections: MenuSection[], defaultOpenId?: string) => (
+    sections.map((section) => (
+      <Collapsible
+        key={section.id}
+        asChild
+        defaultOpen={isSectionActive(section.items) || section.id === defaultOpenId}
+        className="group/collapsible"
+      >
+        <SidebarMenuItem>
+          <CollapsibleTrigger asChild>
+            <SidebarMenuButton>
+              <section.icon />
+              <span className="text-sidebar-foreground text-sm font-medium not-italic">{section.label}</span>
+              <span className="ml-auto flex items-center gap-1.5">
+                <Badge variant="outline" className="h-5 px-1.5 text-[10px] border-sidebar-border/50 text-sidebar-foreground/50 font-normal">
+                  {section.count}
+                </Badge>
+                <ChevronRight className="transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 text-sidebar-foreground/80 h-4 w-4" />
+              </span>
+            </SidebarMenuButton>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <SidebarMenuSub>
+              {section.items.map((item) => (
+                <SidebarMenuSubItem key={item.id}>
+                  <SidebarMenuSubButton 
+                    asChild 
+                    isActive={activePage === item.id}
+                    onClick={() => onPageChange(item.id)}
+                    className="cursor-pointer data-[active=true]:bg-primary data-[active=true]:text-primary-foreground"
+                  >
+                    <span className="flex flex-1 items-center gap-2 overflow-hidden">
+                      <span className="truncate">{item.label}</span>
+                    </span>
+                  </SidebarMenuSubButton>
+                </SidebarMenuSubItem>
+              ))}
+            </SidebarMenuSub>
+          </CollapsibleContent>
+        </SidebarMenuItem>
+      </Collapsible>
+    ))
+  );
 
   return (
     <Sidebar 
@@ -422,7 +462,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
                 className="w-full"
               >
                 <Home className="h-4 w-4" />
-                <span className="text-sidebar-foreground">Home</span>
+                <span className="text-sidebar-foreground">{t("sidebar.home")}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -433,7 +473,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-sidebar-foreground/50 transition-colors group-focus-within/search:text-primary" />
               <input
                 type="text"
-                placeholder="Buscar componente..."
+                placeholder={t("sidebar.search")}
                 className="w-full rounded-md bg-sidebar-accent/20 border border-sidebar-border/50 pl-9 pr-8 py-2 text-sm text-sidebar-foreground placeholder:text-sidebar-foreground/40 focus:outline-none focus:ring-1 focus:ring-primary/50 focus:bg-sidebar-accent/30 focus:border-primary/50 transition-all"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -455,7 +495,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
         {searchQuery ? (
           <SidebarGroup>
             <SidebarGroupLabel className="text-sidebar-foreground/90 px-2 mb-2">
-              Resultados ({searchResults.length})
+              {t("sidebar.results")} ({searchResults.length})
             </SidebarGroupLabel>
             <SidebarMenu>
               {searchResults.length > 0 ? (
@@ -463,10 +503,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
                   <SidebarMenuItem key={item.id}>
                     <SidebarMenuButton
                       isActive={activePage === item.id}
-                      onClick={() => {
-                        onPageChange(item.id);
-                        // Optional: keep search active or clear it? keeping it active is usually better for browsing results
-                      }}
+                      onClick={() => onPageChange(item.id)}
                       tooltip={item.label}
                       className="h-auto py-2"
                     >
@@ -484,7 +521,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
                      <Search className="h-6 w-6" />
                    </div>
                    <p className="text-sm text-sidebar-foreground/60">
-                     No se encontraron resultados para "{searchQuery}"
+                     {t("sidebar.noResults")} "{searchQuery}"
                    </p>
                 </div>
               )}
@@ -492,8 +529,9 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
           </SidebarGroup>
         ) : (
           <>
+        {/* DSM Progress */}
         <SidebarGroup>
-          <SidebarGroupLabel className="text-sidebar-foreground/90">DSM Progress</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-sidebar-foreground/90">{t("sidebar.group.dsmProgress")}</SidebarGroupLabel>
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton
@@ -504,81 +542,38 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
               >
                 <Sparkles className="h-4 w-4 text-primary" />
                 <span className="text-sidebar-foreground">DSM Dashboard</span>
-                <Badge variant="success" className="ml-auto h-4 px-1 text-xs border-none font-medium">
-                  100%
-                </Badge>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
 
+        {/* ── COMPONENTS (UI Primitives) ── */}
         <SidebarGroup>
-          <SidebarGroupLabel className="text-sidebar-foreground/90">Components</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-sidebar-foreground/90">{t("sidebar.group.components")}</SidebarGroupLabel>
           <SidebarMenu>
-            {menuSections.map((section) => (
-              <Collapsible
-                key={section.id}
-                asChild
-                defaultOpen={isSectionActive(section.items) || section.id === "actions"}
-                className="group/collapsible"
-              >
-                <SidebarMenuItem>
-                  <CollapsibleTrigger asChild>
-                    <SidebarMenuButton>
-                      <section.icon />
-                      <span className="text-sidebar-foreground text-sm font-medium not-italic">{section.label}</span>
-                      <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 text-sidebar-foreground/80" />
-                    </SidebarMenuButton>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <SidebarMenuSub>
-                      {section.items.map((item) => (
-                        <SidebarMenuSubItem key={item.id}>
-                          <SidebarMenuSubButton 
-                            asChild 
-                            isActive={activePage === item.id}
-                            onClick={() => onPageChange(item.id)}
-                            className="cursor-pointer data-[active=true]:bg-primary data-[active=true]:text-primary-foreground"
-                          >
-                            <span className="flex flex-1 items-center gap-2 overflow-hidden">
-                              <span className="truncate">{item.label}</span>
-                            </span>
-                          </SidebarMenuSubButton>
-                        </SidebarMenuSubItem>
-                      ))}
-                    </SidebarMenuSub>
-                  </CollapsibleContent>
-                </SidebarMenuItem>
-              </Collapsible>
-            ))}
+            {renderCollapsibleSections(componentSections, "actions")}
           </SidebarMenu>
         </SidebarGroup>
 
+        {/* ── PATTERNS & ADVANCED ── */}
         <SidebarGroup>
-          <SidebarGroupLabel className="text-sidebar-foreground/90">Recursos</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-sidebar-foreground/90">{t("sidebar.group.patterns")}</SidebarGroupLabel>
           <SidebarMenu>
-            {resourcePages.map((page) => (
-              <SidebarMenuItem key={page.id}>
-                <SidebarMenuButton 
-                  isActive={activePage === page.id}
-                  onClick={() => onPageChange(page.id)}
-                  tooltip={page.label}
-                >
-                  {page.id === "help-system-demo" && <Zap />}
-                  {page.id === "animations" && <Clapperboard />}
-                  {page.id === "animation-system" && <Box />}
-                  {page.id === "icon-gallery" && <ImageIcon />}
-                  <span className="flex flex-1 items-center gap-2 overflow-hidden text-sidebar-foreground group-data-[active=true]/menu-button:text-sidebar-primary-foreground group-data-[active=true]/menu-button:font-medium">
-                    <span className="truncate">{page.label}</span>
-                  </span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
+            {renderCollapsibleSections(patternSections)}
           </SidebarMenu>
         </SidebarGroup>
 
+        {/* ── FACTORING ── */}
         <SidebarGroup>
-          <SidebarGroupLabel className="text-sidebar-foreground/90">Design System</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-sidebar-foreground/90">{t("sidebar.group.factoring")}</SidebarGroupLabel>
+          <SidebarMenu>
+            {renderCollapsibleSections(factoringSections)}
+          </SidebarMenu>
+        </SidebarGroup>
+
+        {/* ── DESIGN SYSTEM ── */}
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-sidebar-foreground/90">{t("sidebar.group.designSystem")}</SidebarGroupLabel>
           <SidebarMenu>
             {designSystemPages.map((page) => (
               <SidebarMenuItem key={page.id}>
@@ -599,19 +594,25 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
           </SidebarMenu>
         </SidebarGroup>
 
+        {/* ── RECURSOS ── */}
         <SidebarGroup>
-          <SidebarGroupLabel className="text-sidebar-foreground/90">Verificación</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-sidebar-foreground/90">{t("sidebar.group.resources")}</SidebarGroupLabel>
           <SidebarMenu>
-            {specialPages.map((page) => (
+            {resourcePages.map((page) => (
               <SidebarMenuItem key={page.id}>
                 <SidebarMenuButton 
                   isActive={activePage === page.id}
                   onClick={() => onPageChange(page.id)}
                   tooltip={page.label}
                 >
-                  {page.id === "accessibility" && <Accessibility />}
-                  {page.id === "changelog" && <BookOpen />}
-                  <span className="text-sidebar-foreground group-data-[active=true]/menu-button:text-sidebar-primary-foreground group-data-[active=true]/menu-button:font-medium">{page.label}</span>
+                  {page.id === "help-system-demo" && <Zap />}
+                  {page.id === "animations" && <Clapperboard />}
+                  {page.id === "animation-system" && <Clapperboard />}
+                  {page.id === "icon-gallery" && <ImageIcon />}
+                  {page.id === "audit-log" && <BookOpen />}
+                  <span className="flex flex-1 items-center gap-2 overflow-hidden text-sidebar-foreground group-data-[active=true]/menu-button:text-sidebar-primary-foreground group-data-[active=true]/menu-button:font-medium">
+                    <span className="truncate">{page.label}</span>
+                  </span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
@@ -622,19 +623,6 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
       </SidebarContent>
 
       <SidebarFooter>
-
-         
-         <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton 
-                onClick={toggleSidebar} 
-                tooltip="Colapsar Sidebar"
-              >
-                <PanelLeft className="h-4 w-4" />
-                <span>Colapsar Sidebar</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-         </SidebarMenu>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

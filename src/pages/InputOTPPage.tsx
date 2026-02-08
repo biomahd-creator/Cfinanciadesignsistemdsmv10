@@ -51,14 +51,6 @@ export function InputOTPDemo() {
     </InputOTP>
   )
 }`}
-      usage={`import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
-
-<InputOTP maxLength={6}>
-  <InputOTPGroup>
-    <InputOTPSlot index={0} />
-    {/* ... */}
-  </InputOTPGroup>
-</InputOTP>`}
       props={[
         {
           name: "maxLength",

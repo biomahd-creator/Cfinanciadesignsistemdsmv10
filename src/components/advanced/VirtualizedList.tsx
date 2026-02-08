@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
-import { cn } from "../../lib/utils";
+import React, { useRef, useState } from "react";
+import { cn } from "../ui/utils";
 
 interface VirtualizedListProps<T> {
   items: T[];
@@ -41,17 +41,29 @@ export function VirtualizedList<T>({
       <div style={{ height: totalHeight, position: "relative", width: "100%" }}>
         {visibleItems.map((item, index) => {
           const actualIndex = startIndex + index;
+          const style: React.CSSProperties = {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: itemHeight,
+            transform: `translateY(${offsetY + index * itemHeight}px)`,
+          };
+          
+          const element = renderItem(item, actualIndex, style);
+          
+          // If element is a valid React element, clone it with key
+          if (React.isValidElement(element)) {
+            return React.cloneElement(element as React.ReactElement, { 
+              key: actualIndex 
+            });
+          }
+          
+          // Otherwise wrap in a div with key
           return (
-            <React.Fragment key={actualIndex}>
-              {renderItem(item, actualIndex, {
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                height: itemHeight,
-                transform: `translateY(${offsetY + index * itemHeight}px)`,
-              })}
-            </React.Fragment>
+            <div key={actualIndex} style={style}>
+              {element}
+            </div>
           );
         })}
       </div>

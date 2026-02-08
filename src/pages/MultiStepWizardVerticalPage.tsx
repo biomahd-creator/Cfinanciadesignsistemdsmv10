@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import { cn } from "../lib/utils";
 import { motion, AnimatePresence } from "motion/react";
-import { fadeVariants, getTransition } from "@/lib/animation-config";
+import { fadeVariants, getTransition } from "../lib/animation-config";
 
 interface WizardStep {
   id: number;

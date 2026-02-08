@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { cn } from "../../lib/utils";
+import { cn } from "../ui/utils";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { ScrollArea } from "../ui/scroll-area";

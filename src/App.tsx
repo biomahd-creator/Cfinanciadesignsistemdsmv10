@@ -15,6 +15,8 @@ import { HelpCenter } from "./components/help/HelpCenter";
 import { LoadingProvider } from "./components/providers/LoadingProvider";
 import { TransitionProvider } from "./components/providers/TransitionProvider";
 import { LoadingOverlay } from "./components/ui/loading-overlay";
+import { LanguageProvider, useLanguage } from "./components/i18n/LanguageProvider";
+import { LanguageSelector } from "./components/i18n/LanguageSelector";
 import "./styles/tour.css";
 
 /**
@@ -22,34 +24,42 @@ import "./styles/tour.css";
  * 
  * ARQUITECTURA:
  * - Dos modos: DSM (Design System Manager) y Factoring
- * - Providers: Theme, Help, Loading, Transition
+ * - Providers: Theme, Help, Loading, Transition, Language
  * - Accesibilidad: WCAG 2.1 AA compliant
- * 
- * ESTRUCTURA:
- * /components/
- *   ├── ui/          - Componentes base shadcn/ui (60+)
- *   ├── business/    - Componentes genéricos (17)
- *   ├── factoring/   - Componentes específicos Factoring (15+)
- *   ├── advanced/    - Componentes avanzados (30+)
- *   ├── patterns/    - Patrones de diseño (20+)
- *   └── pages/       - Páginas showcase (100+)
- * 
- * TOKENS:
- * - Color primario: #00c951 (Verde)
- * - Ver /guidelines/TOKENS.md para detalles
+ * - i18n: ES / EN
  */
 
 type AppMode = "dsm" | "factoring";
 
 function AppContent() {
   const { theme, toggleTheme } = useTheme();
-  const [activePage, setActivePage] = useState<PageId>("home");
+  const { t, locale } = useLanguage();
+  // Persist activePage in localStorage to survive Figma Make reloads
+  const [activePage, setActivePage] = useState<PageId>(() => {
+    const saved = localStorage.getItem('dsm-active-page');
+    return (saved as PageId) || "home";
+  });
   // Change default mode to "factoring"
   const [appMode, setAppMode] = useState<AppMode>("dsm");
 
   // Set lang attribute for WCAG compliance
   useEffect(() => {
-    document.documentElement.lang = "es";
+    document.documentElement.lang = locale;
+  }, [locale]);
+
+  // Save activePage to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('dsm-active-page', activePage);
+  }, [activePage]);
+
+  // Listen for custom navigation events from child components (e.g., DSM Dashboard category clicks)
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const pageId = (e as CustomEvent<PageId>).detail;
+      if (pageId) setActivePage(pageId);
+    };
+    window.addEventListener('dsm-navigate', handler);
+    return () => window.removeEventListener('dsm-navigate', handler);
   }, []);
 
   // Sync dark mode class with theme state
@@ -111,10 +121,10 @@ function AppContent() {
               <div className="flex items-center gap-4">
                 <div className="hidden md:block">
                   <h1 className="font-semibold text-foreground">
-                    Design System Manager
+                    {t("header.title")}
                   </h1>
                   <p className="text-xs text-muted-foreground">
-                    shadcn/ui · Satoshi · WCAG AA · 240+ Components
+                    {t("header.subtitle")}
                   </p>
                 </div>
               </div>
@@ -126,13 +136,16 @@ function AppContent() {
               {/* Botón: Ir a App Factoring */}
               <Button
                 variant="outline"
-                className="hidden md:flex gap-2 border-primary bg-primary/10 text-secondary hover:bg-primary hover:text-primary-foreground"
+                className="flex gap-2 border-primary bg-primary/10 text-foreground hover:bg-primary hover:text-primary-foreground"
                 onClick={() => setAppMode("factoring")}
               >
                 <LayoutTemplate className="h-4 w-4" />
-                <span>Ir a App Factoring</span>
-                <ArrowRight className="h-3 w-3 opacity-50" />
+                <span className="hidden md:inline">{t("header.goFactoring")}</span>
+                <ArrowRight className="h-3 w-3 opacity-50 hidden md:block" />
               </Button>
+
+              {/* Language Selector */}
+              <LanguageSelector />
 
               {/* Toggle Theme */}
               <Button
@@ -140,7 +153,7 @@ function AppContent() {
                 size="icon"
                 onClick={toggleTheme}
                 className="rounded-full"
-                aria-label={theme === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+                aria-label={theme === "dark" ? t("header.toggleDark") : t("header.toggleLight")}
               >
                 {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
               </Button>
@@ -156,14 +169,14 @@ function AppContent() {
               <div className="flex flex-col items-center gap-4">
                 <Logo size="sm" variant="auto" />
                 <p className="text-sm text-muted-foreground text-center">
-                  Built with React, Tailwind CSS, and shadcn/ui
+                  {t("footer.builtWith")}
                 </p>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <span>240+ Components</span>
+                  <span>{t("footer.components")}</span>
                   <span>·</span>
-                  <span>WCAG 2.1 AA</span>
+                  <span>{t("footer.wcag")}</span>
                   <span>·</span>
-                  <span>Atomic Design</span>
+                  <span>{t("footer.atomic")}</span>
                 </div>
               </div>
             </footer>
@@ -177,14 +190,16 @@ function AppContent() {
 export default function App() {
   return (
     <ThemeProvider>
-      <HelpProvider>
-        <LoadingProvider>
-          <TransitionProvider>
-            <AppContent />
-            <LoadingOverlay />
-          </TransitionProvider>
-        </LoadingProvider>
-      </HelpProvider>
+      <LanguageProvider>
+        <HelpProvider>
+          <LoadingProvider>
+            <TransitionProvider>
+              <AppContent />
+              <LoadingOverlay />
+            </TransitionProvider>
+          </LoadingProvider>
+        </HelpProvider>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }

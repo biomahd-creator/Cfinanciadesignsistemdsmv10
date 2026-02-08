@@ -36,19 +36,6 @@ export function InputDemo() {
   );
 }`}
       
-      usage="Importa el componente Input desde @/components/ui/input y úsalo para campos de formulario. Soporta todos los tipos nativos de HTML input."
-      usageCode={`import { Input } from "@/components/ui/input";
-
-function MyForm() {
-  return (
-    <Input 
-      type="email" 
-      placeholder="Enter your email"
-      onChange={(e) => console.log(e.target.value)}
-    />
-  );
-}`}
-      
       props={[
         {
           name: "type",

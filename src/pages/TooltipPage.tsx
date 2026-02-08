@@ -47,17 +47,6 @@ export function TooltipDemo() {
   )
 }`}
       
-      // Usage
-      usage="Envuelve tu app (o la sección) con TooltipProvider. Usa Tooltip, TooltipTrigger y TooltipContent."
-      usageCode={`<TooltipProvider>
-  <Tooltip>
-    <TooltipTrigger>Hover</TooltipTrigger>
-    <TooltipContent>
-      <p>Content</p>
-    </TooltipContent>
-  </Tooltip>
-</TooltipProvider>`}
-      
       // Props Documentation
       props={[
         {

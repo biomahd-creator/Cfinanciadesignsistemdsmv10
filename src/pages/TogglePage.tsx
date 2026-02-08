@@ -47,19 +47,6 @@ export function ToggleDemo() {
   );
 }`}
       
-      // Usage
-      usage="Importa el componente Toggle desde @/components/ui/toggle y úsalo para estados binarios (on/off). Ideal para barras de herramientas de edición de texto, filtros, y controles de UI que necesitan recordar su estado."
-      usageCode={`import { Toggle } from "@/components/ui/toggle";
-import { Bold } from "lucide-react";
-
-function TextEditor() {
-  return (
-    <Toggle aria-label="Toggle bold">
-      <Bold className="h-4 w-4" />
-    </Toggle>
-  );
-}`}
-      
       // Props Documentation
       props={[
         {

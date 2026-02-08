@@ -1,3 +1,4 @@
+import React from "react";
 import { 
   Dialog, 
   DialogContent, 
@@ -38,21 +39,21 @@ export function UploadInvoicesDialog({ open, onOpenChange }: UploadInvoicesDialo
       <DialogContent className="sm:max-w-[600px] gap-0 p-0 overflow-hidden">
         <DialogHeader className="p-6 pb-2">
           <DialogTitle className="text-xl font-semibold text-secondary">Cargar Facturas</DialogTitle>
-          <DialogDescription className="text-sm text-zinc-500">Selecciona el método de carga de facturas .</DialogDescription>
+          <DialogDescription className="text-sm text-muted-foreground">Selecciona el método de carga de facturas .</DialogDescription>
         </DialogHeader>
         
         <Tabs defaultValue="files" value={activeTab} onValueChange={setActiveTab} className="w-full">
           <div className="px-6 mb-6">
-            <TabsList className="grid w-full grid-cols-2 h-10 bg-zinc-100">
+            <TabsList className="grid w-full grid-cols-2 h-10 bg-muted">
                 <TabsTrigger 
                     value="files" 
-                    className="flex gap-2 text-xs font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                    className="flex gap-2 text-xs font-medium data-[state=active]:bg-card data-[state=active]:shadow-sm"
                 >
-                    <FileText className="h-4 w-4" /> Archivos
+                    <Upload className="h-3.5 w-3.5" /> Archivos
                 </TabsTrigger>
                 <TabsTrigger 
                     value="cufe" 
-                    className="flex gap-2 text-xs font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                    className="flex gap-2 text-xs font-medium data-[state=active]:bg-card data-[state=active]:shadow-sm"
                 >
                     <FileCode className="h-4 w-4" /> Códigos CUFE
                 </TabsTrigger>
@@ -75,21 +76,21 @@ export function UploadInvoicesDialog({ open, onOpenChange }: UploadInvoicesDialo
                 <div 
                     className={`
                         border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center transition-colors
-                        ${dragActive ? "border-primary bg-primary/5" : "border-zinc-200 bg-white hover:bg-zinc-50"}
+                        ${dragActive ? "border-primary bg-primary/5" : "border-border bg-card hover:bg-muted"}
                     `}
                     onDragEnter={handleDrag}
                     onDragLeave={handleDrag}
                     onDragOver={handleDrag}
                     onDrop={handleDrag}
                 >
-                    <div className="flex items-center justify-center h-6 w-6 rounded-full bg-zinc-100 mb-4">
-                        <Upload className="h-6 w-6 text-zinc-400" />
+                    <div className="flex items-center justify-center h-6 w-6 rounded-full bg-muted mb-4">
+                        <Upload className="h-6 w-6 text-muted-foreground" />
                     </div>
                     <p className="text-sm text-secondary mb-1">
                         <span className="text-primary hover:text-primary/90 cursor-pointer transition-colors">Haz clic para cargar</span> o arrastra y suelta aquí
                     </p>
-                    <p className="text-xs text-zinc-400 mb-0.5">Supported: pdf, text/xml, xml</p>
-                    <p className="text-xs text-zinc-400">Max size: 10MB per file</p>
+                    <p className="text-xs text-muted-foreground mb-0.5">Supported: pdf, text/xml, xml</p>
+                    <p className="text-xs text-muted-foreground">Max size: 10MB per file</p>
                 </div>
 
                 {/* Info Alert */}
@@ -112,9 +113,9 @@ export function UploadInvoicesDialog({ open, onOpenChange }: UploadInvoicesDialo
                     <Label className="text-sm font-medium text-secondary">Ingrese los códigos CUFE / CUDE</Label>
                     <Textarea 
                         placeholder="Pegue aquí los códigos (uno por línea o separados por coma)...&#10;cufe1...&#10;cufe2..."
-                        className="min-h-[220px] bg-white resize-none text-sm"
+                        className="min-h-[220px] bg-card resize-none text-sm"
                     />
-                    <div className="flex justify-between text-xs text-zinc-400">
+                    <div className="flex justify-between text-xs text-muted-foreground">
                         <span>Soporta múltiples códigos</span>
                         <span>0 códigos detectados</span>
                     </div>
@@ -137,7 +138,7 @@ export function UploadInvoicesDialog({ open, onOpenChange }: UploadInvoicesDialo
           </div>
         </Tabs>
 
-        <DialogFooter className="p-4 border-t border-zinc-100 bg-white">
+        <DialogFooter className="p-4 border-t border-border bg-card">
           <Button variant="outline" onClick={() => onOpenChange(false)} className="h-10 px-6">Cancelar</Button>
           <Button className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-8 font-medium">Cargar</Button>
         </DialogFooter>

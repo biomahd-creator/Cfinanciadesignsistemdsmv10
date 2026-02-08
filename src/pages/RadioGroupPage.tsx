@@ -54,30 +54,6 @@ export function RadioGroupDemo() {
   );
 }`}
       
-      // Usage
-      usage="Importa RadioGroup y RadioGroupItem desde @/components/ui/radio-group. Usa RadioGroup como contenedor con value/defaultValue para control del estado. Cada RadioGroupItem debe tener un value único y un Label asociado con htmlFor para accesibilidad."
-      usageCode={`import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-
-function NotificationSettings() {
-  return (
-    <RadioGroup defaultValue="all">
-      <div className="flex items-center space-x-2">
-        <RadioGroupItem value="all" id="all" />
-        <Label htmlFor="all">All notifications</Label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <RadioGroupItem value="important" id="important" />
-        <Label htmlFor="important">Important only</Label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <RadioGroupItem value="none" id="none" />
-        <Label htmlFor="none">None</Label>
-      </div>
-    </RadioGroup>
-  );
-}`}
-      
       // Props Documentation
       props={[
         {

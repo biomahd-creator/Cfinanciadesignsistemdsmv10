@@ -1,4 +1,5 @@
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import React from "react";
+import { PieChart, Pie, Cell } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Badge } from "../ui/badge";
 
@@ -36,13 +37,13 @@ export function GaugeChart({
   title,
   description,
   label,
-  color,
+  color = "var(--primary)",
   size = 200,
   showPercentage = true,
   showLabel = true,
   thresholds = { low: 33, medium: 66, high: 100 }
 }: GaugeChartProps) {
-  const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
+  const percentage = Math.min((value / max) * 100, 100);
 
   // Auto-determine color based on thresholds if not provided
   const getColor = () => {
@@ -58,7 +59,7 @@ export function GaugeChart({
   };
 
   const gaugeColor = getColor();
-  const emptyColor = "hsl(var(--muted))";
+  const emptyColor = "var(--muted)";
 
   const data = [
     { name: "value", value: percentage },
@@ -78,9 +79,8 @@ export function GaugeChart({
   const status = getStatus();
 
   const content = (
-    <div className="relative flex flex-col items-center justify-center min-w-0">
-      <ResponsiveContainer width={size} height={size * 0.6} minWidth={0} minHeight={0}>
-        <PieChart>
+    <div className="relative flex flex-col items-center justify-center min-w-0" style={{ minHeight: `${size * 0.7}px` }}>
+      <PieChart width={size} height={Math.round(size * 0.6)}>
           <Pie
             data={data}
             cx="50%"
@@ -96,7 +96,6 @@ export function GaugeChart({
             <Cell fill={emptyColor} />
           </Pie>
         </PieChart>
-      </ResponsiveContainer>
       
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-1/4 text-center">
         {showPercentage && (

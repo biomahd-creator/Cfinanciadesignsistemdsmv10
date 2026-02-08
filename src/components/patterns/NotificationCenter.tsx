@@ -199,7 +199,7 @@ export function NotificationCenter() {
         </div>
 
         <Tabs defaultValue="all" className="w-full">
-          <TabsList className="w-full grid grid-cols-3 rounded-none border-b">
+          <TabsList className="w-full grid grid-cols-3 max-w-lg rounded-none border-b">
             <TabsTrigger value="all" className="rounded-none">
               Todas
               <Badge variant="secondary" className="ml-2 h-5 px-1.5 text-xs">

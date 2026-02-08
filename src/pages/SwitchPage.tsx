@@ -46,20 +46,6 @@ export function SwitchDemo() {
   );
 }`}
       
-      // Usage
-      usage="Importa el componente Switch desde @/components/ui/switch. Ideal para ajustes de configuración, permisos, y cualquier opción binaria (on/off). Siempre usa un Label asociado con htmlFor para accesibilidad."
-      usageCode={`import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-
-function Settings() {
-  return (
-    <div className="flex items-center space-x-2">
-      <Switch id="notifications" />
-      <Label htmlFor="notifications">Enable notifications</Label>
-    </div>
-  );
-}`}
-      
       // Props Documentation
       props={[
         {

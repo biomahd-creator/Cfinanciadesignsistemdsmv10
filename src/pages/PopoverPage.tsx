@@ -53,13 +53,6 @@ export function PopoverDemo() {
   )
 }`}
       
-      // Usage
-      usage="Usa Popover para mostrar contenido flotante al hacer clic en un trigger."
-      usageCode={`<Popover>
-  <PopoverTrigger>Open</PopoverTrigger>
-  <PopoverContent>Content</PopoverContent>
-</Popover>`}
-      
       // Props Documentation
       props={[
         {

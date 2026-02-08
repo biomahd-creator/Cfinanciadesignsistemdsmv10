@@ -99,18 +99,6 @@ export function CommandDemo() {
   )
 }`}
       
-      // Usage
-      usage="Importa los componentes Command desde @/components/ui/command. Command es el contenedor principal, CommandInput es el campo de búsqueda, CommandList contiene los grupos e items."
-      usageCode={`<Command>
-  <CommandInput placeholder="Search..." />
-  <CommandList>
-    <CommandEmpty>No results.</CommandEmpty>
-    <CommandGroup heading="Group">
-      <CommandItem>Item</CommandItem>
-    </CommandGroup>
-  </CommandList>
-</Command>`}
-      
       // Props Documentation
       props={[
         {

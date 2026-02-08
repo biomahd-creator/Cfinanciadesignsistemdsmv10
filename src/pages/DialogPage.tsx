@@ -102,22 +102,7 @@ export function DialogDemo() {
   );
 }`}
       
-      // Usage
-      usage="Importa los componentes Dialog desde @/components/ui/dialog. Usa DialogTrigger para el botón que abre el dialog, DialogContent para el contenedor modal, DialogHeader para el encabezado y DialogFooter para los botones de acción."
-      usageCode={`import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
-function MyComponent() {
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <button>Open</button>
-      </DialogTrigger>
-      <DialogContent>
-        {/* Your content here */}
-      </DialogContent>
-    </Dialog>
-  );
-}`}
       
       // Props Documentation
       props={[

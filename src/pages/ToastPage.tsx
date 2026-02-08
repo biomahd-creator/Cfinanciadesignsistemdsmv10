@@ -6,7 +6,7 @@ export function ToastPage() {
   return (
     <ComponentShowcase
       title="Toast"
-      description="A succinct message that is displayed temporarily."
+      description="Mensaje temporal de notificación. Importa toast de sonner y úsalo para mostrar diferentes tipos de notificaciones."
       category="Feedback"
       
       // Main Preview
@@ -50,17 +50,16 @@ export function ToastDemo() {
   )
 }`}
       
-      // Usage
-      usage="Importa `toast` de `sonner` y úsalo para mostrar notificaciones."
-      usageCode={`import { toast } from "sonner"
-
-// ...
-toast("Message", {
-  description: "Description",
-})`}
-      
       // Props Documentation
-      props={[]}
+      props={[
+        { name: "message", type: "string | ReactNode", description: "Texto principal del toast. Primer argumento de toast().", required: true },
+        { name: "description", type: "string | ReactNode", description: "Texto secundario debajo del mensaje." },
+        { name: "action", type: "{ label: string; onClick: () => void }", description: "Botón de acción dentro del toast." },
+        { name: "duration", type: "number", default: "4000", description: "Duración en ms antes de auto-cerrar. Infinity para persistente." },
+        { name: "position", type: "\"top-left\" | \"top-right\" | \"bottom-left\" | \"bottom-right\" | ...", description: "Posición del toast en pantalla." },
+        { name: "dismissible", type: "boolean", default: "true", description: "Permite cerrar el toast manualmente." },
+        { name: "id", type: "string | number", description: "ID único para actualizar o descartar un toast específico." },
+      ]}
       
       // Examples
       examples={[

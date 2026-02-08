@@ -43,7 +43,6 @@ export function PayorCardPage() {
         </div>
       }
       code={payorCardCode}
-      usage="Muestra detalles clave de un pagador, incluyendo su riesgo y uso de crédito."
     />
   );
 }

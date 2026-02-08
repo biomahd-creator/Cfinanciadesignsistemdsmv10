@@ -7,7 +7,7 @@ export function CardPage() {
   return (
     <ComponentShowcase
       title="Card"
-      description="Displays a card with header, content, and footer."
+      description="Displays a card with header, content, and footer. Importa los componentes de Card desde @/components/ui/card."
       category="Layout"
       
       preview={
@@ -41,22 +41,6 @@ export function CardDemo() {
       <CardFooter>
         <Button>Action</Button>
       </CardFooter>
-    </Card>
-  );
-}`}
-      
-      usage="Importa los componentes de Card desde @/components/ui/card"
-      usageCode={`import { Card, CardHeader, CardContent } from "@/components/ui/card";
-
-function MyComponent() {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Title</CardTitle>
-      </CardHeader>
-      <CardContent>
-        Content goes here
-      </CardContent>
     </Card>
   );
 }`}

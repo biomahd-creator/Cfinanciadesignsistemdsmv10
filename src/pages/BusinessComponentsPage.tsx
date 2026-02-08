@@ -1,6 +1,4 @@
-import { ComponentShowcase } from "../components/ui/component-showcase";
-import { AuditLogViewer } from "../components/widgets/AuditLogViewer";
-import { TestimonialsCarousel } from "../components/widgets/TestimonialsCarousel";
+import { AuditLogViewer } from "../components/patterns/AuditLogViewer";
 import { ContactForm } from "../components/widgets/ContactForm";
 import { BookingCalendar } from "../components/widgets/BookingCalendar";
 import { Badge } from "../components/ui/badge";
@@ -11,9 +9,8 @@ import { Separator } from "../components/ui/separator";
  * 
  * Componentes implementados:
  * 1. Audit Log Viewer - Sistema de auditoría y tracking
- * 2. Testimonials Carousel - Carrusel de testimonios de clientes
- * 3. Contact Form - Formulario de contacto profesional
- * 4. Booking Calendar - Sistema de agendamiento de citas
+ * 2. Contact Form - Formulario de contacto profesional
+ * 3. Booking Calendar - Sistema de agendamiento de citas
  * 
  * Ubicación: /pages/BusinessComponentsPage.tsx
  * Estado: ✅ Completado - 4/4 componentes de alta prioridad
@@ -32,7 +29,7 @@ export function BusinessComponentsPage() {
         </div>
         <p className="text-muted-foreground">
           Componentes empresariales esenciales para aplicaciones profesionales.
-          Incluye sistemas de auditoría, testimonios, formularios de contacto y reservas.
+          Incluye sistemas de auditoría, formularios de contacto y reservas.
         </p>
       </div>
 
@@ -71,41 +68,7 @@ export function BusinessComponentsPage() {
 
       <Separator />
 
-      {/* 2. Testimonials Carousel */}
-      <section className="space-y-6">
-        <div>
-          <div className="flex items-center gap-3 mb-2">
-            <h2 className="font-bold">Testimonials Carousel</h2>
-            <Badge variant="secondary">Social Proof</Badge>
-          </div>
-          <p className="text-muted-foreground">
-            Carrusel elegante de testimonios de clientes con sistema de ratings,
-            avatares y navegación intuitiva. Perfecto para landing pages.
-          </p>
-        </div>
-
-        <div className="rounded-lg border bg-card p-6">
-          <TestimonialsCarousel />
-        </div>
-
-        <div className="space-y-3">
-          <h3 className="font-semibold">Características principales:</h3>
-          <ul className="list-disc list-inside space-y-2 text-sm text-muted-foreground">
-            <li>Navegación con flechas y dots indicator</li>
-            <li>Sistema de ratings con estrellas (1-5)</li>
-            <li>Avatares con iniciales automáticas si no hay imagen</li>
-            <li>Diseño responsive con quote icon decorativo</li>
-            <li>Información de autor: nombre, rol, empresa y fecha</li>
-            <li>Contador de testimonios (X de Y)</li>
-            <li>Transiciones suaves entre testimonios</li>
-            <li>Auto-play opcional (configurable)</li>
-          </ul>
-        </div>
-      </section>
-
-      <Separator />
-
-      {/* 3. Contact Form */}
+      {/* 2. Contact Form */}
       <section className="space-y-6">
         <div>
           <div className="flex items-center gap-3 mb-2">
@@ -141,7 +104,7 @@ export function BusinessComponentsPage() {
 
       <Separator />
 
-      {/* 4. Booking Calendar */}
+      {/* 3. Booking Calendar */}
       <section className="space-y-6">
         <div>
           <div className="flex items-center gap-3 mb-2">
@@ -191,12 +154,7 @@ export function BusinessComponentsPage() {
           <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
             <li>
               <code className="bg-muted px-2 py-1 rounded">
-                import {"{ AuditLogViewer }"} from "./components/widgets/AuditLogViewer"
-              </code>
-            </li>
-            <li>
-              <code className="bg-muted px-2 py-1 rounded">
-                import {"{ TestimonialsCarousel }"} from "./components/widgets/TestimonialsCarousel"
+                import {"{ AuditLogViewer }"} from "./components/patterns/AuditLogViewer"
               </code>
             </li>
             <li>
@@ -216,7 +174,7 @@ export function BusinessComponentsPage() {
             (tipografía Satoshi, tokens de color, sin estilos inline).
           </p>
           <p>
-            <strong>Estado:</strong> ✅ Fase 1 completada - 4 componentes de ALTA PRIORIDAD
+            <strong>Estado:</strong> ✅ Fase 1 completada - 3 componentes de ALTA PRIORIDAD
             implementados y documentados.
           </p>
         </div>

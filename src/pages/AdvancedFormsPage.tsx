@@ -86,7 +86,7 @@ export function AdvancedFormsPage() {
         </div>
 
         <Tabs defaultValue="horizontal" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 max-w-md">
+          <TabsList className="grid w-full grid-cols-4 max-w-lg">
             <TabsTrigger value="horizontal">Horizontal</TabsTrigger>
             <TabsTrigger value="vertical">Vertical</TabsTrigger>
             <TabsTrigger value="compact">Compact</TabsTrigger>

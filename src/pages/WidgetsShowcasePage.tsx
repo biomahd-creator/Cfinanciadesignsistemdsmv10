@@ -4,9 +4,9 @@ import {
   SearchBar, 
   FilterBar, 
   FilterChip, 
-  TimelineItem,
+  ApprovalTimelineItem,
   ActionButton,
-  FormField,
+  SimpleFormField,
   NavigationBar
 } from "../components/widgets";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../components/ui/card";
@@ -142,13 +142,13 @@ export function WidgetsShowcasePage() {
             <h3 className="text-lg font-medium">Form Field</h3>
             <Card>
               <CardContent className="pt-6 space-y-4">
-                <FormField 
+                <SimpleFormField 
                   label="Username" 
                   id="username" 
                   placeholder="Enter username" 
                   required 
                 />
-                <FormField 
+                <SimpleFormField 
                   label="Email" 
                   id="email" 
                   type="email" 
@@ -171,10 +171,10 @@ export function WidgetsShowcasePage() {
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-lg font-medium">Timeline Item</h3>
+          <h3 className="text-lg font-medium">Approval Timeline Item</h3>
           <Card>
             <CardContent className="pt-6 space-y-6">
-              <TimelineItem
+              <ApprovalTimelineItem
                 icon={CheckCircle}
                 iconColor="text-green-500"
                 title="Order Delivered"
@@ -184,7 +184,7 @@ export function WidgetsShowcasePage() {
                 status="Completed"
                 statusVariant="default"
               />
-              <TimelineItem
+              <ApprovalTimelineItem
                 icon={Clock}
                 iconColor="text-amber-500"
                 title="Order Processing"

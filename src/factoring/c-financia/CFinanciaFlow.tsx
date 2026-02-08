@@ -41,7 +41,7 @@ export function CFinanciaFlow({ onExit }: { onExit?: () => void }) {
     // Radian Module
     if (selectedModule === "radian") {
       return (
-        <div className="min-h-screen bg-slate-50">
+        <div className="min-h-screen bg-background">
           <CFinanciaNavbar variant="full" onLogout={onExit} />
           <div className="pt-[80px]">
             <RadianAdminDashboard onBack={() => setView("modules")} />
@@ -52,7 +52,7 @@ export function CFinanciaFlow({ onExit }: { onExit?: () => void }) {
 
     // Otros módulos - Placeholder
     return (
-      <div className="min-h-screen bg-slate-50">
+      <div className="min-h-screen bg-background">
         <CFinanciaNavbar variant="full" onLogout={onExit} />
         <div className="pt-[80px] p-8">
           <h1 className="text-2xl font-bold text-[rgb(var(--cfinancia-navy))]">Workspace: {selectedModule}</h1>

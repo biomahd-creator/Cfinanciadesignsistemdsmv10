@@ -77,15 +77,6 @@ export function DrawerDemo() {
   )
 }`}
       
-      // Usage
-      usage="Ideal para mobile-first interfaces. Usa Drawer como contenedor principal."
-      usageCode={`<Drawer>
-  <DrawerTrigger>Open</DrawerTrigger>
-  <DrawerContent>
-    {/* Content */}
-  </DrawerContent>
-</Drawer>`}
-      
       // Props Documentation
       props={[
         {

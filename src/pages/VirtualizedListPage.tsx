@@ -41,7 +41,6 @@ export function VirtualizedListPage() {
         />
       }
       code={virtualizedListCode}
-      usage="Utiliza 'windowing' para renderizar solo los elementos visibles, mejorando el rendimiento en listas con miles de items."
     />
   );
 }

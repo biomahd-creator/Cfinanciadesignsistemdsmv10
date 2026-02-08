@@ -66,24 +66,6 @@ export function SelectDemo() {
   );
 }`}
       
-      // Usage
-      usage="Importa los componentes Select desde @/components/ui/select. Necesitas SelectTrigger para el botón que abre el menú, SelectValue para el placeholder, SelectContent para el contenedor de opciones y SelectItem para cada opción."
-      usageCode={`import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-function MyForm() {
-  return (
-    <Select onValueChange={(value) => console.log(value)}>
-      <SelectTrigger>
-        <SelectValue placeholder="Choose..." />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="1">Option 1</SelectItem>
-        <SelectItem value="2">Option 2</SelectItem>
-      </SelectContent>
-    </Select>
-  );
-}`}
-      
       // Props Documentation
       props={[
         {

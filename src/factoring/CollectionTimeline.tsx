@@ -74,7 +74,7 @@ export function CollectionTimeline({ events, className }: CollectionTimelineProp
                         {event.user}
                       </span>
                       {event.type === 'dispute' && (
-                        <Badge variant="destructive" className="h-5 text-[10px]">
+                        <Badge variant="destructive-soft-outline" className="h-5 text-[10px]">
                           Disputa
                         </Badge>
                       )}

@@ -85,7 +85,7 @@ export function OperationDetailStep2({ onBack, onFinish }: OperationDetailStep2P
                 <Wallet className="h-5 w-5 text-primary" />
                 Cuentas para Desembolso
             </CardTitle>
-            <Badge variant="outline" className="text-zinc-500">
+            <Badge variant="outline" className="text-muted-foreground">
                 Total a dispersar: $89.383.968
             </Badge>
         </CardHeader>
@@ -110,7 +110,7 @@ export function OperationDetailStep2({ onBack, onFinish }: OperationDetailStep2P
                         <TableCell>900985911</TableCell>
                         <TableCell>
                             <div className="flex items-center gap-2">
-                                <Building2 className="h-4 w-4 text-gray-400" />
+                                <Building2 className="h-4 w-4 text-muted-foreground" />
                                 DAVIVIENDA
                             </div>
                         </TableCell>

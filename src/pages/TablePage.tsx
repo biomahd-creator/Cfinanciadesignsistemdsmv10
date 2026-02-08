@@ -99,29 +99,6 @@ export function TableDemo() {
   );
 }`}
       
-      // Usage
-      usage="Importa los componentes Table desde @/components/ui/table. Usa Table como contenedor, TableHeader para los encabezados, TableBody para las filas de datos y TableCell para cada celda."
-      usageCode={`import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-
-function MyTable() {
-  return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Name</TableHead>
-          <TableHead>Email</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <TableRow>
-          <TableCell>John Doe</TableCell>
-          <TableCell>john@example.com</TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
-  );
-}`}
-      
       // Props Documentation
       props={[
         {

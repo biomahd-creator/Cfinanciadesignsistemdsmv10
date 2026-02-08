@@ -1,3 +1,5 @@
+import { Badge } from "../components/ui/badge";
+import { SidebarButton } from "../components/ui/sidebar-button";
 import { useState } from "react";
 import { 
   LayoutDashboard, 
@@ -13,7 +15,6 @@ import {
   Building2 
 } from "lucide-react";
 import { Button } from "../components/ui/button";
-import { Badge } from "../components/ui/badge";
 import { 
   Sheet, 
   SheetContent, 
@@ -133,63 +134,58 @@ type UserRole = "admin" | "client" | null;
           </div>
           <div>
             <span className="font-bold text-lg tracking-wide block leading-none">FINANCIO</span>
-            <span className="text-xs text-slate-400 uppercase">
+            <span className="text-xs text-secondary-foreground/50 uppercase">
                 {userRole === "admin" ? "Admin Console" : "Empresas"}
             </span>
           </div>
         </div>
 
         <nav className="flex-1 p-4 space-y-2 overflow-y-auto py-6">
-          <div className="text-xs font-medium text-slate-400 uppercase mb-2 px-2">Módulos</div>
+          <div className="text-xs font-medium text-secondary-foreground/50 uppercase mb-2 px-2">Módulos</div>
           
-          <Button
-            variant="ghost"
+          <SidebarButton
+            isActive={["radian-dashboard", "client-dashboard"].includes(currentView)}
+            icon={<LayoutDashboard className="h-4 w-4" />}
             onClick={() => setCurrentView(userRole === "admin" ? "radian-dashboard" : "client-dashboard")}
-            className={`w-full justify-start gap-3 ${["radian-dashboard", "client-dashboard"].includes(currentView) ? "bg-primary text-primary-foreground font-bold" : "text-slate-300 hover:text-white hover:bg-white/10"}`}
           >
-            <LayoutDashboard className="h-4 w-4" />
             Dashboard
-          </Button>
+          </SidebarButton>
 
           {/* Sidebar items */}
           {userRole === "admin" && (
             <>
-              <div className="text-xs font-medium text-slate-400 uppercase mb-2 px-2 mt-6">Desarrollo</div>
-              <Button
-                variant="ghost"
+              <div className="text-xs font-medium text-secondary-foreground/50 uppercase mb-2 px-2 mt-6">Desarrollo</div>
+              <SidebarButton
+                isActive={currentView === "vinculacion"}
+                icon={<UserCheck className="h-4 w-4" />}
                 onClick={() => setCurrentView("vinculacion")}
-                className={`w-full justify-start gap-3 ${currentView === "vinculacion" ? "bg-primary text-primary-foreground font-bold" : "text-slate-300 hover:text-white hover:bg-white/10"}`}
               >
-                <UserCheck className="h-4 w-4" />
                 Vinculación
-              </Button>
-              <Button
-                variant="ghost"
+              </SidebarButton>
+              <SidebarButton
+                isActive={currentView === "playground"}
+                icon={<Beaker className="h-4 w-4" />}
+                badge={<Badge className="ml-auto bg-primary text-primary-foreground text-[10px] px-1.5 py-0">DEV</Badge>}
                 onClick={() => setCurrentView("playground")}
-                className={`w-full justify-start gap-3 ${currentView === "playground" ? "bg-primary text-primary-foreground font-bold" : "text-slate-300 hover:text-white hover:bg-white/10"}`}
               >
-                <Beaker className="h-4 w-4" />
-                <span>Playground</span>
-                <Badge className="ml-auto bg-primary text-primary-foreground text-[10px] px-1.5 py-0">DEV</Badge>
-              </Button>
-              <Button
-                variant="ghost"
+                Playground
+              </SidebarButton>
+              <SidebarButton
+                isActive={currentView === "c-financia"}
+                icon={<FileText className="h-4 w-4" />}
+                badge={<Badge className="ml-auto bg-primary text-primary-foreground text-[10px] px-1.5 py-0">NEW</Badge>}
                 onClick={() => setCurrentView("c-financia")}
-                className={`w-full justify-start gap-3 ${currentView === "c-financia" ? "bg-primary text-primary-foreground font-bold" : "text-slate-300 hover:text-white hover:bg-white/10"}`}
               >
-                <FileText className="h-4 w-4" />
-                <span>C-Financia Admin</span>
-                <Badge className="ml-auto bg-green-500 text-white text-[10px] px-1.5 py-0">NEW</Badge>
-              </Button>
-              <Button
-                variant="ghost"
+                C-Financia Admin
+              </SidebarButton>
+              <SidebarButton
+                isActive={currentView === "c-financia-cliente"}
+                icon={<FileText className="h-4 w-4" />}
+                badge={<Badge className="ml-auto bg-primary text-primary-foreground text-[10px] px-1.5 py-0">NEW</Badge>}
                 onClick={() => setCurrentView("c-financia-cliente")}
-                className={`w-full justify-start gap-3 ${currentView === "c-financia-cliente" ? "bg-primary text-primary-foreground font-bold" : "text-slate-300 hover:text-white hover:bg-white/10"}`}
               >
-                <FileText className="h-4 w-4" />
-                <span>C-Financia Cliente</span>
-                <Badge className="ml-auto bg-green-500 text-white text-[10px] px-1.5 py-0">NEW</Badge>
-              </Button>
+                C-Financia Cliente
+              </SidebarButton>
             </>
           )}
         </nav>
@@ -197,7 +193,7 @@ type UserRole = "admin" | "client" | null;
         <div className="p-4 border-t border-white/10 space-y-2 bg-black/20">
            <Button 
             variant="ghost" 
-            className="w-full justify-start gap-3 text-slate-300 hover:text-white hover:bg-white/10"
+            className="w-full justify-start gap-3 text-secondary-foreground/70 hover:text-secondary-foreground hover:bg-secondary-foreground/10"
             onClick={handleLogout}
           >
             <LogOut className="h-4 w-4" />
@@ -205,7 +201,7 @@ type UserRole = "admin" | "client" | null;
           </Button>
           <Button 
             variant="ghost" 
-            className="w-full justify-start gap-3 text-red-400 hover:text-red-300 hover:bg-red-900/20"
+            className="w-full justify-start gap-3 text-muted-foreground hover:text-muted-foreground hover:bg-muted-foreground/10"
             onClick={onExit}
           >
             <LogOut className="h-4 w-4" />
@@ -223,12 +219,12 @@ type UserRole = "admin" | "client" | null;
                         <Menu className="h-5 w-5" />
                     </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="bg-secondary text-secondary-foreground border-r-zinc-800 p-0 w-64">
+                <SheetContent side="left" className="bg-secondary text-secondary-foreground border-r-border p-0 w-64">
                     <div className="p-4 h-[64px] flex items-center gap-3 border-b border-white/10 bg-black/10">
                         <span className="font-bold text-lg tracking-wide block leading-none">FINANCIO</span>
                     </div>
                      <nav className="flex-1 p-4 space-y-2">
-                        <Button variant="ghost" onClick={() => {setCurrentView("vinculacion"); setIsMobileMenuOpen(false)}} className="w-full justify-start gap-3 text-slate-300">
+                        <Button variant="ghost" onClick={() => {setCurrentView("vinculacion"); setIsMobileMenuOpen(false)}} className="w-full justify-start gap-3 text-secondary-foreground/70">
                             <UserCheck className="h-4 w-4" /> Vinculación
                         </Button>
                      </nav>
@@ -236,39 +232,39 @@ type UserRole = "admin" | "client" | null;
             </Sheet>
 
             <div className="flex items-center gap-2">
-                <span className="font-medium text-gray-400">C-FINANCIA</span>
+                <span className="font-medium text-secondary-foreground/50">C-FINANCIA</span>
                 <>
-                    <span className="text-gray-600">/</span>
-                    <span className="font-semibold text-white capitalize">
+                    <span className="text-secondary-foreground/30">/</span>
+                    <span className="font-semibold text-secondary-foreground capitalize">
                         {currentView === "welcome" ? "Inicio" : currentView.replace("-", " ")}
                     </span>
                 </>
             </div>
 
             <div className="flex items-center gap-4">
-                <Button variant="ghost" className="text-gray-300 hover:text-white hover:bg-white/10 hidden md:flex gap-2">
+                <Button variant="ghost" className="text-secondary-foreground/70 hover:text-secondary-foreground hover:bg-secondary-foreground/10 hidden md:flex gap-2">
                     <BookOpen className="h-4 w-4" />
                     Instructivos
                 </Button>
 
-                <div className="h-6 w-px bg-white/20 mx-1 hidden md:block" />
+                <div className="h-6 w-px bg-secondary-foreground/20 mx-1 hidden md:block" />
 
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="flex items-center gap-3 pl-2 pr-1 h-auto py-1 hover:bg-white/10 text-white">
+                        <Button variant="ghost" className="flex items-center gap-3 pl-2 pr-1 h-auto py-1 hover:bg-secondary-foreground/10 text-secondary-foreground">
                                 <Avatar className="h-9 w-9 border-2 border-primary">
                                     <AvatarFallback className="bg-secondary text-secondary-foreground">SP</AvatarFallback>
                                 </Avatar>
                             <div className="hidden md:flex flex-col items-start text-xs">
-                                <span className="font-medium text-white">soporte.cfinancia</span>
+                                <span className="font-medium text-secondary-foreground">soporte.cfinancia</span>
                                 <span className="text-primary capitalize">
                                     {userRole === "admin" ? "Administrador" : "Cliente"}
                                 </span>
                             </div>
-                            <ChevronDown className="h-3 w-3 text-gray-400" />
+                            <ChevronDown className="h-3 w-3 text-secondary-foreground/50" />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-56 bg-white text-secondary">
+                    <DropdownMenuContent align="end" className="w-56 bg-popover text-popover-foreground">
                         <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem onClick={() => setUserRole(userRole === "admin" ? "client" : "admin")}>
@@ -288,7 +284,7 @@ type UserRole = "admin" | "client" | null;
                             <LogOut className="mr-2 h-4 w-4" />
                             <span>Cerrar Sesión</span>
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={onExit} className="text-zinc-500">
+                        <DropdownMenuItem onClick={onExit} className="text-muted-foreground">
                             <LogOut className="mr-2 h-4 w-4" />
                             <span>Volver al DSM</span>
                         </DropdownMenuItem>

@@ -59,6 +59,62 @@ export function LoadingStatesPage() {
         </div>
       }
       code={code}
+      props={[
+        { name: "Spinner.className", type: "string", description: "Clases adicionales para el contenedor del spinner." },
+        { name: "PageLoader", type: "—", description: "Overlay de pantalla completa con spinner y texto 'Cargando'. Sin props." },
+        { name: "CardSkeleton", type: "—", description: "Skeleton con forma de card (título + contenido + footer). Sin props." },
+        { name: "TableSkeleton.rows", type: "number", default: "5", description: "Número de filas skeleton a mostrar en la tabla." },
+        { name: "ButtonLoader", type: "—", description: "Spinner inline para colocar dentro de un Button disabled. Sin props." },
+        { name: "DotLoader", type: "—", description: "Tres puntos animados con bounce. Sin props." },
+      ]}
+      examples={[
+        {
+          title: "Botón con estado de carga",
+          description: "ButtonLoader dentro de un Button disabled simula procesamiento.",
+          preview: (
+            <div className="flex gap-4 items-center">
+              <Button disabled><ButtonLoader /> Guardando...</Button>
+              <Button disabled variant="outline"><ButtonLoader /> Enviando</Button>
+              <Button disabled variant="secondary"><ButtonLoader /> Procesando</Button>
+            </div>
+          ),
+          code: `<Button disabled>
+  <ButtonLoader /> Guardando...
+</Button>
+
+<Button disabled variant="outline">
+  <ButtonLoader /> Enviando
+</Button>`,
+        },
+        {
+          title: "Skeleton de tabla",
+          description: "TableSkeleton con diferente número de filas.",
+          preview: (
+            <div className="space-y-6 w-full">
+              <TableSkeleton rows={3} />
+            </div>
+          ),
+          code: `{/* 3 filas */}
+<TableSkeleton rows={3} />
+
+{/* 8 filas para tablas largas */}
+<TableSkeleton rows={8} />`,
+        },
+        {
+          title: "DotLoader inline",
+          description: "Indicador de carga con tres puntos animados.",
+          preview: (
+            <div className="flex items-center gap-2 border rounded-lg p-4">
+              <span className="text-sm text-muted-foreground">Cargando datos</span>
+              <DotLoader />
+            </div>
+          ),
+          code: `<div className="flex items-center gap-2">
+  <span>Cargando datos</span>
+  <DotLoader />
+</div>`,
+        },
+      ]}
     />
   );
 }

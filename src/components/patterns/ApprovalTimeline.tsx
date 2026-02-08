@@ -67,8 +67,8 @@ const statusConfig = {
   },
   waiting: {
     icon: AlertCircle,
-    color: "text-gray-500",
-    bg: "bg-gray-500/10",
+    color: "text-muted-foreground",
+    bg: "bg-muted",
     badge: "outline" as const,
   },
   rejected: {

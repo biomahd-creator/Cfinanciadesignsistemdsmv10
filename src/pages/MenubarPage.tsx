@@ -19,7 +19,7 @@ export function MenubarPage() {
   return (
     <ComponentShowcase
       title="Menubar"
-      description="A visually persistent menu common in desktop applications that provides quick access to a consistent set of commands."
+      description="Menú persistente para aplicaciones desktop. Usa Menubar como contenedor, MenubarMenu para cada sección, MenubarTrigger para el botón y MenubarContent para las opciones."
       category="Navigation"
       
       // Main Preview
@@ -142,19 +142,15 @@ export function MenubarDemo() {
   )
 }`}
       
-      // Usage
-      usage="Usa Menubar como contenedor, MenubarMenu para cada sección, MenubarTrigger para el botón y MenubarContent para las opciones."
-      usageCode={`<Menubar>
-  <MenubarMenu>
-    <MenubarTrigger>File</MenubarTrigger>
-    <MenubarContent>
-      <MenubarItem>New...</MenubarItem>
-    </MenubarContent>
-  </MenubarMenu>
-</Menubar>`}
-      
       // Props Documentation
-      props={[]}
+      props={[
+        { name: "children", type: "ReactNode", description: "MenubarMenu items que componen la barra.", required: true },
+        { name: "className", type: "string", description: "Clases adicionales para el contenedor raíz." },
+        { name: "dir", type: "\"ltr\" | \"rtl\"", description: "Dirección de lectura del menú." },
+        { name: "defaultValue", type: "string", description: "Valor del menú abierto por defecto." },
+        { name: "value", type: "string", description: "Valor controlado del menú activo." },
+        { name: "onValueChange", type: "(value: string) => void", description: "Callback al cambiar el menú activo." },
+      ]}
       
       // Examples
       examples={[

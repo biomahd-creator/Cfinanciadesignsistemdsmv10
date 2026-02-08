@@ -1,5 +1,6 @@
-import { Treemap, ResponsiveContainer, Tooltip } from "recharts";
+import { Treemap, Tooltip } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { SafeChartContainer } from "../ui/safe-chart-container";
 
 /**
  * 🔒 ADVANCED COMPONENT - Treemap Chart
@@ -65,7 +66,7 @@ const CustomTreemapContent = ({
   if (width < minSize || height < minSize) return null;
 
   const color = colors[index % colors.length];
-  const textColor = depth === 1 ? "#ffffff" : "hsl(var(--foreground))";
+  const textColor = depth === 1 ? "#ffffff" : "var(--foreground)";
   const fontSize = Math.max(Math.min(width / 8, height / 4, 14), 10);
 
   return (
@@ -117,9 +118,8 @@ export function TreemapChart({
   colors = DEFAULT_COLORS
 }: TreemapChartProps) {
   const content = (
-    <div className="w-full min-w-0" style={{ height }}>
-      <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
-        <Treemap
+    <SafeChartContainer width="100%" height="100%" minHeight={`${height}px`}>
+      <Treemap
         data={data}
         dataKey="size"
         stroke="#fff"
@@ -143,8 +143,7 @@ export function TreemapChart({
           }}
         />
       </Treemap>
-    </ResponsiveContainer>
-    </div>
+    </SafeChartContainer>
   );
 
   if (title || description) {

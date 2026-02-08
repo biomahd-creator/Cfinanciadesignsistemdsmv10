@@ -14,44 +14,28 @@ import {
   Loader2, 
   ArrowRight, 
   TrendingUp, 
-  Code, 
-  Box, 
-  Palette 
+  Code
 } from "lucide-react";
 import { useState } from "react";
-import { PageTransition, FadeInView, StaggerContainer, StaggerItem } from "../components/ui/page-transition";
-import { LoadingOverlay, InlineSpinner, ButtonLoading } from "../components/ui/loading-overlay";
-import { 
-  SkeletonTable, 
-  SkeletonCard, 
-  SkeletonCardGrid, 
-  SkeletonForm, 
-  SkeletonList, 
-  SkeletonKpiCard, 
-  SkeletonKpiCardGroup 
-} from "../components/ui/skeleton-variants";
-import { useLoadingState, useAsyncOperation } from "../hooks/useLoadingState";
-import { Input } from "../components/ui/input";
+import { AnimationSystemContent } from "./AnimationSystemPage";
 
 /**
  * AnimationsPage
  * 
- * Página de showcase completa de animaciones y microinteracciones usando motion/react.
- * Organizada en 4 categorías principales: Basic, Microinteractions, Page Transitions, Advanced.
+ * Página de showcase consolidada de animaciones:
+ * - Playground: demos interactivos de motion/react
+ * - System Architecture: componentes, hooks, skeletons y CSS utilities del sistema
  * 
  * @component
- * @example
- * ```tsx
- * <AnimationsPage />
- * ```
  */
 export function AnimationsPage() {
   const [isLiked, setIsLiked] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [count, setCount] = useState(0);
+  const [mode, setMode] = useState<"playground" | "system">("playground");
 
   return (
-    <div className="space-y-8 max-w-6xl pb-16">
+    <div className="space-y-8 w-full pb-16">
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-3">
@@ -63,13 +47,37 @@ export function AnimationsPage() {
           </Badge>
         </div>
         <p className="text-lg text-muted-foreground max-w-3xl">
-          Colección de animaciones fluidas y microinteracciones que mejoran la experiencia de usuario.
-          Implementadas con <strong>motion/react</strong> (Framer Motion).
+          Colección completa de animaciones: playground interactivo y sistema de arquitectura global.
         </p>
       </div>
 
+      {/* Mode Switcher */}
+      <div className="flex gap-2 border-b pb-4">
+        <Button
+          variant={mode === "playground" ? "default" : "outline"}
+          size="sm"
+          onClick={() => setMode("playground")}
+          className="gap-2"
+        >
+          <Sparkles className="h-4 w-4" />
+          Playground
+        </Button>
+        <Button
+          variant={mode === "system" ? "default" : "outline"}
+          size="sm"
+          onClick={() => setMode("system")}
+          className="gap-2"
+        >
+          <Code className="h-4 w-4" />
+          System Architecture
+        </Button>
+      </div>
+
+      {mode === "system" ? (
+        <AnimationSystemContent />
+      ) : (
       <Tabs defaultValue="basic" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-4 max-w-lg">
           <TabsTrigger value="basic">Basic Animations</TabsTrigger>
           <TabsTrigger value="interactions">Microinteractions</TabsTrigger>
           <TabsTrigger value="page">Page Transitions</TabsTrigger>
@@ -548,7 +556,7 @@ export function AnimationsPage() {
                 <motion.path
                   d="M 0 50 Q 100 0, 200 50 T 400 50"
                   fill="none"
-                  stroke="hsl(var(--primary))"
+                  stroke="var(--primary)"
                   strokeWidth="3"
                   initial={{ pathLength: 0 }}
                   animate={{ pathLength: 1 }}
@@ -582,40 +590,7 @@ export function AnimationsPage() {
           </Card>
         </TabsContent>
       </Tabs>
-
-      {/* Best Practices */}
-      <Card className="border-primary/20 bg-primary/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <AlertCircle className="h-5 w-5 text-primary" />
-            Best Practices
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li className="flex gap-2">
-              <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-              <span>Mantén las animaciones cortas (200-500ms) para microinteracciones</span>
-            </li>
-            <li className="flex gap-2">
-              <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-              <span>Usa easing curves naturales: easeOut para entrada, easeIn para salida</span>
-            </li>
-            <li className="flex gap-2">
-              <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-              <span>Respeta prefers-reduced-motion para accesibilidad</span>
-            </li>
-            <li className="flex gap-2">
-              <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-              <span>No animes propiedades que causan reflow (width, height). Prefiere transform y opacity</span>
-            </li>
-            <li className="flex gap-2">
-              <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-              <span>Usa animaciones para guiar la atención, no para distraer</span>
-            </li>
-          </ul>
-        </CardContent>
-      </Card>
+      )}
     </div>
   );
 }

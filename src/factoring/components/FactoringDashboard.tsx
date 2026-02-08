@@ -1,19 +1,24 @@
-import {
-  TrendingUp,
-  TrendingDown,
-  AlertCircle,
-  CheckCircle,
-  Clock,
-  DollarSign,
-  Users,
-  FileText,
-  Percent,
-} from "lucide-react";
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import React from "react";
 import { getThemeColor, getChartColorsMap, getBrandColors, getUIColors } from "../../lib/theme-utils";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
+import { SafeChartContainer } from "../../components/ui/safe-chart-container";
 import { Progress } from "../../components/ui/progress";
+import { 
+  TrendingUp, 
+  TrendingDown,
+  DollarSign,
+  Users,
+  FileText,
+  Activity,
+  Target,
+  Zap,
+  Percent,
+  CheckCircle,
+  Clock,
+  AlertCircle
+} from "lucide-react";
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Cell } from "recharts";
 
 // Mock data para gráficos
 const monthlyData = [
@@ -113,7 +118,7 @@ export function FactoringDashboard() {
         />
         
         <KPICard
-          title="Tasa de Aprobación"
+          title="Tasa de Aprobacin"
           value={`${tasaAprobacion}%`}
           description="Últimos 30 días"
           trend="up"
@@ -176,36 +181,34 @@ export function FactoringDashboard() {
             <CardDescription>Monto financiado por mes (USD)</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="w-full h-[300px] min-w-0" style={{ minHeight: '300px' }}>
-              <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
+            <SafeChartContainer width="100%" height="300px">
                 <LineChart data={monthlyData}>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                <XAxis 
-                  dataKey="month" 
-                  className="text-xs"
-                  tick={{ fill: mutedForegroundColor }}
-                />
-                <YAxis 
-                  className="text-xs"
-                  tick={{ fill: mutedForegroundColor }}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: cardBg,
-                    border: `1px solid ${borderColor}`,
-                    borderRadius: '8px'
-                  }}
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="monto" 
-                  stroke={primaryColor} 
-                  strokeWidth={2}
-                  dot={{ fill: primaryColor }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-            </div>
+                  <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                  <XAxis 
+                    dataKey="month" 
+                    className="text-xs"
+                    tick={{ fill: mutedForegroundColor }}
+                  />
+                  <YAxis 
+                    className="text-xs"
+                    tick={{ fill: mutedForegroundColor }}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: cardBg,
+                      border: `1px solid ${borderColor}`,
+                      borderRadius: '8px'
+                    }}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="monto" 
+                    stroke={primaryColor} 
+                    strokeWidth={2}
+                    dot={{ fill: primaryColor }}
+                  />
+                </LineChart>
+              </SafeChartContainer>
           </CardContent>
         </Card>
 
@@ -216,38 +219,36 @@ export function FactoringDashboard() {
             <CardDescription>Distribución actual de operaciones</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="w-full h-[300px] min-w-0" style={{ minHeight: '300px' }}>
-              <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
+            <SafeChartContainer width="100%" height="300px">
                 <BarChart data={statusData}>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                <XAxis 
-                  dataKey="status" 
-                  className="text-xs"
-                  tick={{ fill: mutedForegroundColor }}
-                />
-                <YAxis 
-                  className="text-xs"
-                  tick={{ fill: mutedForegroundColor }}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: cardBg,
-                    border: `1px solid ${borderColor}`,
-                    borderRadius: '8px'
-                  }}
-                />
-                <Bar 
-                  dataKey="count" 
-                  fill={primaryColor}
-                  radius={[8, 8, 0, 0]}
-                >
-                  {statusData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-            </div>
+                  <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                  <XAxis 
+                    dataKey="status" 
+                    className="text-xs"
+                    tick={{ fill: mutedForegroundColor }}
+                  />
+                  <YAxis 
+                    className="text-xs"
+                    tick={{ fill: mutedForegroundColor }}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: cardBg,
+                      border: `1px solid ${borderColor}`,
+                      borderRadius: '8px'
+                    }}
+                  />
+                  <Bar 
+                    dataKey="count" 
+                    fill={primaryColor}
+                    radius={[8, 8, 0, 0]}
+                  >
+                    {statusData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </SafeChartContainer>
           </CardContent>
         </Card>
       </div>
@@ -289,9 +290,9 @@ export function FactoringDashboard() {
                     <p className="text-xs text-muted-foreground">{op.fecha}</p>
                   </div>
                   <Badge variant={
-                    op.estado === "Aprobada" ? "default" :
-                    op.estado === "En Proceso" ? "secondary" :
-                    "outline"
+                    op.estado === "Aprobada" ? "success-soft-outline" :
+                    op.estado === "En Proceso" ? "warning-soft-outline" :
+                    "info-soft-outline"
                   }>
                     {op.estado}
                   </Badge>

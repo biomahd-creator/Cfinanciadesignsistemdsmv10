@@ -62,7 +62,7 @@ export function FactoringDashboardPage() {
                 <li>• LineChart (tendencia mensual)</li>
                 <li>• BarChart (operaciones por estado)</li>
                 <li>• Tooltip (info en hover)</li>
-                <li>• ResponsiveContainer</li>
+                <li>• SafeChartContainer</li>
               </ul>
             </div>
 
@@ -201,7 +201,7 @@ export function FactoringDashboardPage() {
               <h4 className="font-semibold mb-3 text-lime-700 dark:text-primary">Responsive Design</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>✅ Grid adaptativo (1/2/4 columnas)</li>
-                <li>✅ Gráficos responsive (ResponsiveContainer)</li>
+                <li>✅ Gráficos responsive (SafeChartContainer)</li>
                 <li>✅ Cards apilables en mobile</li>
                 <li>✅ Tablas scrollables en pantallas pequeñas</li>
               </ul>

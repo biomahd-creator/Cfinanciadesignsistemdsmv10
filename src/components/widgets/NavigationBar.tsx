@@ -1,6 +1,7 @@
-import { TrendingUp, FileText, Users, User, ChevronDown } from "lucide-react";
-import { cn } from "../../lib/utils";
+import React from "react";
+import { cn } from "../ui/utils";
 import { Button } from "../ui/button";
+import { ChevronDown, TrendingUp, FileText, Users, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,

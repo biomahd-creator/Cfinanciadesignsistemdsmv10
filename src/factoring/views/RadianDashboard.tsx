@@ -11,7 +11,9 @@ import {
   ChevronLeft,
   ChevronRight,
   Download,
-  Edit
+  Edit,
+  FileCheck2,
+  Receipt,
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -39,8 +41,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
-import { KpiCardGroup } from "../../components/patterns/KpiCard";
-import { MasterDataGrid } from "../../components/patterns/MasterDataGrid";
+import { FactoringKpiCardGroup } from "../../components/patterns/FactoringKpiCardGroup";
+import { MasterDataGrid } from "../../components/advanced/MasterDataGrid";
 
 export function RadianDashboard() {
   const [activeTab, setActiveTab] = useState("operaciones");
@@ -166,7 +168,7 @@ export function RadianDashboard() {
       <Tabs defaultValue="operaciones" value={activeTab} onValueChange={setActiveTab} className="w-full">
         
         {/* KPI Tabs Replacement */}
-        <KpiCardGroup
+        <FactoringKpiCardGroup
           className="mb-8"
           activeId={activeTab}
           cards={[
@@ -178,6 +180,7 @@ export function RadianDashboard() {
               count: 12,
               variant: "yellow",
               onAction: () => setActiveTab("operaciones"),
+              icon: <FileText />,
             },
             {
               id: "mandatos",
@@ -187,6 +190,7 @@ export function RadianDashboard() {
               count: 5,
               variant: "orange",
               onAction: () => setActiveTab("mandatos"),
+              icon: <FileCheck2 />,
             },
             {
               id: "titulos",
@@ -196,6 +200,7 @@ export function RadianDashboard() {
               count: 45,
               variant: "blue",
               onAction: () => setActiveTab("titulos"),
+              icon: <Receipt />,
             },
           ]}
         />
@@ -302,7 +307,7 @@ export function RadianDashboard() {
                                 <TableCell className="text-xs">{m.tipo}</TableCell>
                                 <TableCell className="text-xs">{m.vigencia}</TableCell>
                                 <TableCell className="text-center">
-                                    <Badge className="bg-success/20 text-success hover:bg-success/30 border-none">
+                                    <Badge variant="success-soft-outline">
                                         {m.estado}
                                     </Badge>
                                 </TableCell>
@@ -393,7 +398,7 @@ export function RadianDashboard() {
                                     <TableCell className="text-xs max-w-[150px] truncate" title={t.tenedor}>{t.tenedor}</TableCell>
                                     <TableCell className="text-xs text-right">{t.valor}</TableCell>
                                     <TableCell className="text-center">
-                                        <Badge variant="outline" className="text-warning border-warning/30 bg-warning/20 text-xs px-2 py-0.5">
+                                        <Badge variant="warning-soft-outline" className="text-xs px-2 py-0.5">
                                             {t.estado}
                                         </Badge>
                                     </TableCell>

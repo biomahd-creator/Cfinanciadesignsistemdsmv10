@@ -29,7 +29,7 @@ import {
   TableRow,
 } from "../ui/table";
 
-import { MasterDataGrid } from "../patterns/MasterDataGrid";
+import { MasterDataGrid } from "./MasterDataGrid";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

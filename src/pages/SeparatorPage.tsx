@@ -52,11 +52,6 @@ export function SeparatorDemo() {
   )
 }`}
       
-      // Usage
-      usage="Usa Separator para dividir secciones de contenido horizontal o verticalmente."
-      usageCode={`<Separator className="my-4" />
-<Separator orientation="vertical" />`}
-      
       // Props Documentation
       props={[
         {

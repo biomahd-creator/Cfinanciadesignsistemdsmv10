@@ -413,7 +413,7 @@ export function TreeTablePage() {
                 <li>• Indicador visual de scroll en dispositivos móviles</li>
                 <li>• Hover states con transiciones suaves</li>
                 <li>• Compatible con modo claro/oscuro</li>
-                <li>• Tipografía Satoshi y tokens de color #884cc16cc16 (Primary Verde Lima) / #1C2D3A (Secondary Azul Oscuro)</li>
+                <li>• Tipografía Satoshi y tokens de color #84cc16 (Primary Verde Lima) / #1C2D3A (Secondary Azul Oscuro)</li>
                 <li>• Espaciado consistente (Tailwind spacing)</li>
                 <li>• Truncado de texto largo con ellipsis</li>
                 <li>• Accesibilidad WCAG AA (aria-labels, keyboard navigation)</li>

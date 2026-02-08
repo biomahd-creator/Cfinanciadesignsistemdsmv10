@@ -1,8 +1,6 @@
+import { ComponentShowcase } from "../components/ui/component-showcase";
 import { MultiSelect, MultiSelectOption } from "../components/ui/multi-select";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
-import { Badge } from "../components/ui/badge";
 import { useState } from "react";
-import { ListChecks } from "lucide-react";
 
 const frameworks: MultiSelectOption[] = [
   { label: "React", value: "react" },
@@ -32,134 +30,7 @@ const departments: MultiSelectOption[] = [
   { label: "Recursos Humanos", value: "hr" },
 ];
 
-export function MultiSelectPage() {
-  const [selected1, setSelected1] = useState<string[]>([]);
-  const [selected2, setSelected2] = useState<string[]>(["react", "nextjs"]);
-  const [selected3, setSelected3] = useState<string[]>([]);
-  const [selected4, setSelected4] = useState<string[]>([]);
-
-  return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div>
-        <div className="mb-2 flex items-center gap-3">
-          <h1 className="text-foreground">Multi Select</h1>
-          <Badge variant="secondary">Forms</Badge>
-          <Badge variant="outline" className="gap-1">
-            <ListChecks className="size-3" />
-            NEW
-          </Badge>
-        </div>
-        <p className="text-muted-foreground">
-          Componente de selección múltiple con búsqueda, badges para elementos seleccionados
-          y soporte para teclado. Ideal para formularios con opciones múltiples.
-        </p>
-      </div>
-
-      {/* Preview Principal */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Preview</CardTitle>
-          <CardDescription>
-            Multi Select con todas las características
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <label className="text-foreground font-medium">Selecciona frameworks</label>
-            <MultiSelect
-              options={frameworks}
-              selected={selected1}
-              onChange={setSelected1}
-              placeholder="Selecciona uno o más frameworks..."
-            />
-            {selected1.length > 0 && (
-              <p className="text-muted-foreground text-sm">
-                Seleccionados: {selected1.join(", ")}
-              </p>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Variantes */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Variantes</CardTitle>
-          <CardDescription>
-            Diferentes estados y configuraciones
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Con valores por defecto */}
-          <div className="space-y-2">
-            <label className="text-foreground font-medium">Con valores por defecto</label>
-            <p className="text-muted-foreground text-sm">
-              Multi Select con opciones preseleccionadas.
-            </p>
-            <MultiSelect
-              options={frameworks}
-              selected={selected2}
-              onChange={setSelected2}
-              placeholder="Selecciona frameworks..."
-            />
-          </div>
-
-          {/* Opciones diferentes */}
-          <div className="space-y-2">
-            <label className="text-foreground font-medium">Países</label>
-            <p className="text-muted-foreground text-sm">
-              Multi Select con diferentes opciones.
-            </p>
-            <MultiSelect
-              options={countries}
-              selected={selected3}
-              onChange={setSelected3}
-              placeholder="Selecciona países..."
-            />
-          </div>
-
-          {/* En formulario */}
-          <div className="space-y-2">
-            <label className="text-foreground font-medium">Departamentos</label>
-            <p className="text-muted-foreground text-sm">
-              Multi Select integrado en un formulario.
-            </p>
-            <MultiSelect
-              options={departments}
-              selected={selected4}
-              onChange={setSelected4}
-              placeholder="Selecciona departamentos..."
-            />
-          </div>
-
-          {/* Deshabilitado */}
-          <div className="space-y-2">
-            <label className="text-foreground font-medium">Deshabilitado</label>
-            <p className="text-muted-foreground text-sm">
-              Estado deshabilitado del componente.
-            </p>
-            <MultiSelect
-              options={frameworks}
-              selected={["react", "vue"]}
-              onChange={() => {}}
-              disabled
-              placeholder="Multi Select deshabilitado"
-            />
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Uso */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Uso Básico</CardTitle>
-          <CardDescription>Implementación del componente</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="bg-muted/50 rounded-md p-4">
-            <pre className="text-sm">
-              <code>{`import { MultiSelect, MultiSelectOption } from "@/components/ui/multi-select";
+const code = `import { MultiSelect, MultiSelectOption } from "@/components/ui/multi-select";
 import { useState } from "react";
 
 const options: MultiSelectOption[] = [
@@ -168,146 +39,136 @@ const options: MultiSelectOption[] = [
   { label: "Angular", value: "angular" },
 ];
 
-export function MyForm() {
+export function MultiSelectDemo() {
   const [selected, setSelected] = useState<string[]>([]);
 
-  const handleSubmit = () => {
-    console.log("Seleccionados:", selected);
-  };
+  return (
+    <MultiSelect
+      options={options}
+      selected={selected}
+      onChange={setSelected}
+      placeholder="Selecciona uno o más..."
+    />
+  );
+}`;
+
+export function MultiSelectPage() {
+  const [selected1, setSelected1] = useState<string[]>([]);
+  const [selected2, setSelected2] = useState<string[]>(["react", "nextjs"]);
+  const [selected3, setSelected3] = useState<string[]>([]);
+  const [selected4, setSelected4] = useState<string[]>([]);
 
   return (
-    <div>
-      <label>Frameworks</label>
-      <MultiSelect
-        options={options}
-        selected={selected}
-        onChange={setSelected}
-        placeholder="Selecciona uno o más..."
-      />
-      <button onClick={handleSubmit}>
-        Enviar
-      </button>
-    </div>
-  );
-}`}</code>
-            </pre>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Props */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Propiedades</CardTitle>
-          <CardDescription>API del componente</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left p-2">Prop</th>
-                  <th className="text-left p-2">Tipo</th>
-                  <th className="text-left p-2">Default</th>
-                  <th className="text-left p-2">Descripción</th>
-                </tr>
-              </thead>
-              <tbody className="text-muted-foreground text-sm">
-                <tr className="border-b">
-                  <td className="p-2 font-mono">options *</td>
-                  <td className="p-2">MultiSelectOption[]</td>
-                  <td className="p-2">-</td>
-                  <td className="p-2">Array de opciones disponibles</td>
-                </tr>
-                <tr className="border-b">
-                  <td className="p-2 font-mono">selected *</td>
-                  <td className="p-2">string[]</td>
-                  <td className="p-2">-</td>
-                  <td className="p-2">Array de valores seleccionados</td>
-                </tr>
-                <tr className="border-b">
-                  <td className="p-2 font-mono">onChange *</td>
-                  <td className="p-2">(selected: string[]) =&gt; void</td>
-                  <td className="p-2">-</td>
-                  <td className="p-2">Callback cuando cambia la selección</td>
-                </tr>
-                <tr className="border-b">
-                  <td className="p-2 font-mono">placeholder</td>
-                  <td className="p-2">string</td>
-                  <td className="p-2">"Selecciona opciones..."</td>
-                  <td className="p-2">Texto cuando no hay selección</td>
-                </tr>
-                <tr className="border-b">
-                  <td className="p-2 font-mono">disabled</td>
-                  <td className="p-2">boolean</td>
-                  <td className="p-2">false</td>
-                  <td className="p-2">Deshabilita el componente</td>
-                </tr>
-                <tr className="border-b">
-                  <td className="p-2 font-mono">className</td>
-                  <td className="p-2">string</td>
-                  <td className="p-2">-</td>
-                  <td className="p-2">Clases CSS adicionales</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div className="bg-muted/50 mt-4 rounded-md p-4">
-            <p className="text-foreground mb-2 font-medium">MultiSelectOption Type:</p>
-            <pre className="text-sm">
-              <code>{`interface MultiSelectOption {
-  label: string;  // Texto visible
-  value: string;  // Valor único
-}`}</code>
-            </pre>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Características */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Características</CardTitle>
-          <CardDescription>Funcionalidades incluidas</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ul className="text-muted-foreground space-y-2 text-sm">
-            <li className="flex items-start gap-2">
-              <span className="text-primary mt-1">✓</span>
-              <span>Búsqueda en tiempo real de opciones</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary mt-1">✓</span>
-              <span>Badges visuales para elementos seleccionados</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary mt-1">✓</span>
-              <span>Eliminar elementos con botón X individual</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary mt-1">✓</span>
-              <span>Checkbox visual en cada opción</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary mt-1">✓</span>
-              <span>Navegación completa por teclado</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary mt-1">✓</span>
-              <span>Popover con Command para búsqueda rápida</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary mt-1">✓</span>
-              <span>Auto-ajuste de altura según elementos seleccionados</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary mt-1">✓</span>
-              <span>Accesible con ARIA labels y roles</span>
-            </li>
-          </ul>
-        </CardContent>
-      </Card>
-    </div>
+    <ComponentShowcase
+      title="Multi Select"
+      description="Componente de selección múltiple con búsqueda integrada, badges para elementos seleccionados y soporte completo de teclado. Ideal para formularios con opciones múltiples."
+      category="Forms"
+      preview={
+        <div className="w-full max-w-md space-y-2">
+          <label className="text-foreground font-medium">Selecciona frameworks</label>
+          <MultiSelect
+            options={frameworks}
+            selected={selected1}
+            onChange={setSelected1}
+            placeholder="Selecciona uno o más frameworks..."
+          />
+          {selected1.length > 0 && (
+            <p className="text-muted-foreground text-sm">
+              Seleccionados: {selected1.join(", ")}
+            </p>
+          )}
+        </div>
+      }
+      code={code}
+      props={[
+        { name: "options", type: "MultiSelectOption[]", description: "Array de opciones disponibles", required: true },
+        { name: "selected", type: "string[]", description: "Array de valores seleccionados", required: true },
+        { name: "onChange", type: "(selected: string[]) => void", description: "Callback cuando cambia la selección", required: true },
+        { name: "placeholder", type: "string", default: '"Selecciona opciones..."', description: "Texto cuando no hay selección" },
+        { name: "disabled", type: "boolean", default: "false", description: "Deshabilita el componente" },
+        { name: "className", type: "string", description: "Clases CSS adicionales" },
+      ]}
+      examples={[
+        {
+          title: "Con valores por defecto",
+          description: "Multi Select con opciones preseleccionadas.",
+          preview: (
+            <div className="w-full max-w-md">
+              <MultiSelect
+                options={frameworks}
+                selected={selected2}
+                onChange={setSelected2}
+                placeholder="Selecciona frameworks..."
+              />
+            </div>
+          ),
+          code: `<MultiSelect
+  options={frameworks}
+  selected={["react", "nextjs"]}
+  onChange={setSelected}
+/>`,
+        },
+        {
+          title: "Países",
+          description: "Multi Select con diferentes conjuntos de opciones.",
+          preview: (
+            <div className="w-full max-w-md">
+              <MultiSelect
+                options={countries}
+                selected={selected3}
+                onChange={setSelected3}
+                placeholder="Selecciona países..."
+              />
+            </div>
+          ),
+          code: `<MultiSelect
+  options={countries}
+  selected={selected}
+  onChange={setSelected}
+  placeholder="Selecciona países..."
+/>`,
+        },
+        {
+          title: "Departamentos",
+          description: "Multi Select integrado en un formulario.",
+          preview: (
+            <div className="w-full max-w-md">
+              <MultiSelect
+                options={departments}
+                selected={selected4}
+                onChange={setSelected4}
+                placeholder="Selecciona departamentos..."
+              />
+            </div>
+          ),
+          code: `<MultiSelect
+  options={departments}
+  selected={selected}
+  onChange={setSelected}
+/>`,
+        },
+        {
+          title: "Deshabilitado",
+          description: "Estado deshabilitado del componente.",
+          preview: (
+            <div className="w-full max-w-md">
+              <MultiSelect
+                options={frameworks}
+                selected={["react", "vue"]}
+                onChange={() => {}}
+                disabled
+                placeholder="Multi Select deshabilitado"
+              />
+            </div>
+          ),
+          code: `<MultiSelect
+  options={frameworks}
+  selected={["react", "vue"]}
+  onChange={() => {}}
+  disabled
+/>`,
+        },
+      ]}
+    />
   );
 }

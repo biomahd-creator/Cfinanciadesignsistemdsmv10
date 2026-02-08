@@ -40,10 +40,6 @@ export function SkeletonDemo() {
   )
 }`}
       
-      // Usage
-      usage="Usa Skeleton para simular la estructura del contenido mientras carga. Ajusta altura, anchura y bordes con clases de utilidad."
-      usageCode={`<Skeleton className="h-4 w-[250px]" />`}
-      
       // Props Documentation
       props={[
         {

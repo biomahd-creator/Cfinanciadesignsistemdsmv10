@@ -26,7 +26,6 @@ export function NotificationCenterPage() {
         </div>
       }
       code={notificationCenterCode}
-      usage="Ideal para headers de dashboard o barras de navegación donde el usuario necesita acceso rápido a alertas y actualizaciones."
     />
   );
 }

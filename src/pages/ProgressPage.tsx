@@ -58,10 +58,6 @@ export function ProgressDemo() {
   return <Progress value={60} />
 }`}
       
-      // Usage
-      usage="Usa el componente Progress para mostrar el progreso de una tarea."
-      usageCode={`<Progress value={33} />`}
-      
       // Props Documentation
       props={[
         {

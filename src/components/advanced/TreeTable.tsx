@@ -31,7 +31,7 @@ import {
   ChevronsDown,
   Loader2,
 } from "lucide-react";
-import { MasterDataGrid } from "../patterns/MasterDataGrid";
+import { MasterDataGrid } from "./MasterDataGrid";
 
 export interface TreeNode {
   id: string;

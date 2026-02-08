@@ -18,12 +18,12 @@ type Story = StoryObj<typeof PageTransition>;
 
 export const DefaultPageTransition: Story = {
   render: () => (
-    <div className="h-[400px] bg-slate-100 p-8 rounded relative overflow-hidden">
+    <div className="h-[400px] bg-muted p-8 rounded relative overflow-hidden">
       <PageTransition>
-        <div className="bg-white p-8 rounded shadow-lg max-w-md mx-auto">
+        <div className="bg-card p-8 rounded shadow-lg max-w-md mx-auto">
           <h2 className="text-2xl font-bold mb-4">Page Content</h2>
           <p>This content fades in and slides up when mounted.</p>
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm text-muted-foreground">
             It simulates a smooth page navigation effect.
           </p>
         </div>
@@ -35,7 +35,7 @@ export const DefaultPageTransition: Story = {
 export const FadeInOnScroll: Story = {
   render: () => (
     <div className="h-[300px] overflow-y-auto border rounded p-4 space-y-32">
-      <div className="text-center p-10 bg-slate-100 rounded">Scroll Down 👇</div>
+      <div className="text-center p-10 bg-muted rounded">Scroll Down 👇</div>
       
       <FadeInView>
         <Card className="p-6 bg-blue-50">

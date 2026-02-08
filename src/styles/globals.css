@@ -29,6 +29,7 @@
   --border: var(--input-border-light, #e4e4e7);
   --input: var(--input-border-light, #e4e4e7);
   --input-border: var(--input-border-light, #e4e4e7);
+  --input-border-width: 1px;
   --input-background-light: #ffffff;
   --input-background-dark: #334155;
   --input-background: var(--input-background-light);
@@ -76,6 +77,27 @@
   --shadow-elevation-2: 0 4px 6px -1px rgb(28 45 58 / 0.1), 0 2px 4px -2px rgb(28 45 58 / 0.1);
   --shadow-elevation-3: 0 10px 15px -3px rgb(28 45 58 / 0.1), 0 4px 6px -4px rgb(28 45 58 / 0.1);
   --shadow-elevation-4: 0 20px 25px -5px rgb(28 45 58 / 0.1), 0 8px 10px -6px rgb(28 45 58 / 0.1);
+
+  /* Colored Glow Shadows - Light Mode */
+  --shadow-glow-blue-sm: 0 2px 8px 0 rgb(59 130 246 / 0.15), 0 1px 3px 0 rgb(59 130 246 / 0.1);
+  --shadow-glow-blue-md: 0 4px 14px -2px rgb(59 130 246 / 0.2), 0 2px 6px -1px rgb(59 130 246 / 0.15);
+  --shadow-glow-blue-lg: 0 10px 25px -3px rgb(59 130 246 / 0.25), 0 4px 10px -4px rgb(59 130 246 / 0.2);
+  --shadow-glow-blue-xl: 0 20px 40px -5px rgb(59 130 246 / 0.3), 0 8px 16px -6px rgb(59 130 246 / 0.2);
+
+  --shadow-glow-green-sm: 0 2px 8px 0 rgb(34 197 94 / 0.15), 0 1px 3px 0 rgb(34 197 94 / 0.1);
+  --shadow-glow-green-md: 0 4px 14px -2px rgb(34 197 94 / 0.2), 0 2px 6px -1px rgb(34 197 94 / 0.15);
+  --shadow-glow-green-lg: 0 10px 25px -3px rgb(34 197 94 / 0.25), 0 4px 10px -4px rgb(34 197 94 / 0.2);
+  --shadow-glow-green-xl: 0 20px 40px -5px rgb(34 197 94 / 0.3), 0 8px 16px -6px rgb(34 197 94 / 0.2);
+
+  --shadow-glow-yellow-sm: 0 2px 8px 0 rgb(234 179 8 / 0.15), 0 1px 3px 0 rgb(234 179 8 / 0.1);
+  --shadow-glow-yellow-md: 0 4px 14px -2px rgb(234 179 8 / 0.2), 0 2px 6px -1px rgb(234 179 8 / 0.15);
+  --shadow-glow-yellow-lg: 0 10px 25px -3px rgb(234 179 8 / 0.25), 0 4px 10px -4px rgb(234 179 8 / 0.2);
+  --shadow-glow-yellow-xl: 0 20px 40px -5px rgb(234 179 8 / 0.3), 0 8px 16px -6px rgb(234 179 8 / 0.2);
+
+  --shadow-glow-primary-sm: 0 2px 8px 0 rgb(0 201 81 / 0.15), 0 1px 3px 0 rgb(0 201 81 / 0.1);
+  --shadow-glow-primary-md: 0 4px 14px -2px rgb(0 201 81 / 0.2), 0 2px 6px -1px rgb(0 201 81 / 0.15);
+  --shadow-glow-primary-lg: 0 10px 25px -3px rgb(0 201 81 / 0.25), 0 4px 10px -4px rgb(0 201 81 / 0.2);
+  --shadow-glow-primary-xl: 0 20px 40px -5px rgb(0 201 81 / 0.3), 0 8px 16px -6px rgb(0 201 81 / 0.2);
 }
 
 .dark {
@@ -104,6 +126,7 @@
   --input: var(--input-border-dark, #334155);
   --input-border: var(--input-border-dark, #334155);
   --input-background: var(--input-background-dark);
+  --switch-background: #475569;
   /* ring inherited from root */
   /* font weights inherited from root */
   --chart-1: oklch(0.488 0.243 264.376);
@@ -120,14 +143,14 @@
   --sidebar-border: #334155;
   --sidebar-ring: #00c951;
 
-  /* Elevation Shadows - Dark Mode (Stronger Black) */
-  --shadow-elevation-1: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-  --shadow-elevation-2: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
-  --shadow-elevation-3: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
-  --shadow-elevation-4: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3);
-}
-
-@theme inline {
+  /* ==========================================================
+     @theme bridge: Override --color-* custom properties so that
+     Tailwind utility classes (bg-accent, text-muted-foreground…)
+     resolve to dark values via normal CSS cascade.
+     @theme generates :root { --color-X: <light value> }.
+     We override here so .dark { --color-X } wins over :root.
+     Uses var(--X) to stay DRY with the source variables above.
+     ========================================================== */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -160,10 +183,6 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -172,12 +191,120 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Elevation Shadows - Dark Mode (Stronger Black) */
+  --shadow-elevation-1: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-elevation-2: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-elevation-3: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --shadow-elevation-4: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+
+  /* Colored Glow Shadows - Dark Mode (more intense for visibility) */
+  --shadow-glow-blue-sm: 0 2px 8px 0 rgb(59 130 246 / 0.2), 0 1px 3px 0 rgb(59 130 246 / 0.15);
+  --shadow-glow-blue-md: 0 4px 14px -2px rgb(59 130 246 / 0.3), 0 2px 6px -1px rgb(59 130 246 / 0.2);
+  --shadow-glow-blue-lg: 0 10px 25px -3px rgb(59 130 246 / 0.35), 0 4px 10px -4px rgb(59 130 246 / 0.25);
+  --shadow-glow-blue-xl: 0 20px 40px -5px rgb(59 130 246 / 0.4), 0 8px 16px -6px rgb(59 130 246 / 0.3);
+
+  --shadow-glow-green-sm: 0 2px 8px 0 rgb(34 197 94 / 0.2), 0 1px 3px 0 rgb(34 197 94 / 0.15);
+  --shadow-glow-green-md: 0 4px 14px -2px rgb(34 197 94 / 0.3), 0 2px 6px -1px rgb(34 197 94 / 0.2);
+  --shadow-glow-green-lg: 0 10px 25px -3px rgb(34 197 94 / 0.35), 0 4px 10px -4px rgb(34 197 94 / 0.25);
+  --shadow-glow-green-xl: 0 20px 40px -5px rgb(34 197 94 / 0.4), 0 8px 16px -6px rgb(34 197 94 / 0.3);
+
+  --shadow-glow-yellow-sm: 0 2px 8px 0 rgb(234 179 8 / 0.2), 0 1px 3px 0 rgb(234 179 8 / 0.15);
+  --shadow-glow-yellow-md: 0 4px 14px -2px rgb(234 179 8 / 0.3), 0 2px 6px -1px rgb(234 179 8 / 0.2);
+  --shadow-glow-yellow-lg: 0 10px 25px -3px rgb(234 179 8 / 0.35), 0 4px 10px -4px rgb(234 179 8 / 0.25);
+  --shadow-glow-yellow-xl: 0 20px 40px -5px rgb(234 179 8 / 0.4), 0 8px 16px -6px rgb(234 179 8 / 0.3);
+
+  --shadow-glow-primary-sm: 0 2px 8px 0 rgb(0 201 81 / 0.2), 0 1px 3px 0 rgb(0 201 81 / 0.15);
+  --shadow-glow-primary-md: 0 4px 14px -2px rgb(0 201 81 / 0.3), 0 2px 6px -1px rgb(0 201 81 / 0.2);
+  --shadow-glow-primary-lg: 0 10px 25px -3px rgb(0 201 81 / 0.35), 0 4px 10px -4px rgb(0 201 81 / 0.25);
+  --shadow-glow-primary-xl: 0 20px 40px -5px rgb(0 201 81 / 0.4), 0 8px 16px -6px rgb(0 201 81 / 0.3);
+}
+
+/* ============================================================
+   THEME: Runtime resolution (no inline) for dark-mode-aware tokens.
+   Colors use different names (--color-X vs --X), so no circular refs.
+   Tailwind utilities like bg-accent will now emit var(--color-accent)
+   which chains to var(--accent), resolving at runtime per .dark {}.
+   ============================================================ */
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* ============================================================
+   THEME INLINE: Static resolution for values that either:
+   - Don't change between light/dark (radius, font weights, KPI, brand)
+   - Have same-name self-references (shadows: --shadow-X: var(--shadow-X))
+     which would be circular without inline resolution.
+   ============================================================ */
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Shadows — same-name refs, must resolve statically */
   --shadow-elevation-1: var(--shadow-elevation-1);
   --shadow-elevation-2: var(--shadow-elevation-2);
   --shadow-elevation-3: var(--shadow-elevation-3);
   --shadow-elevation-4: var(--shadow-elevation-4);
+
+  --shadow-glow-blue-sm: var(--shadow-glow-blue-sm);
+  --shadow-glow-blue-md: var(--shadow-glow-blue-md);
+  --shadow-glow-blue-lg: var(--shadow-glow-blue-lg);
+  --shadow-glow-blue-xl: var(--shadow-glow-blue-xl);
+  --shadow-glow-green-sm: var(--shadow-glow-green-sm);
+  --shadow-glow-green-md: var(--shadow-glow-green-md);
+  --shadow-glow-green-lg: var(--shadow-glow-green-lg);
+  --shadow-glow-green-xl: var(--shadow-glow-green-xl);
+  --shadow-glow-yellow-sm: var(--shadow-glow-yellow-sm);
+  --shadow-glow-yellow-md: var(--shadow-glow-yellow-md);
+  --shadow-glow-yellow-lg: var(--shadow-glow-yellow-lg);
+  --shadow-glow-yellow-xl: var(--shadow-glow-yellow-xl);
+  --shadow-glow-primary-sm: var(--shadow-glow-primary-sm);
+  --shadow-glow-primary-md: var(--shadow-glow-primary-md);
+  --shadow-glow-primary-lg: var(--shadow-glow-primary-lg);
+  --shadow-glow-primary-xl: var(--shadow-glow-primary-xl);
   
-  /* KPI Card Variants */
+  /* KPI Card Variants — no dark override */
   --color-kpi-yellow: rgb(var(--kpi-yellow));
   --color-kpi-yellow-dark: rgb(var(--kpi-yellow-dark));
   --color-kpi-yellow-bg: rgb(var(--kpi-yellow-bg));
@@ -191,7 +318,7 @@
   --color-kpi-lime-dark: rgb(var(--kpi-lime-dark));
   --color-kpi-lime-bg: rgb(var(--kpi-lime-bg));
   
-  /* C-Financia Brand Colors */
+  /* C-Financia Brand Colors — no dark override */
   --color-cfinancia-accent: rgb(var(--cfinancia-accent));
   --color-cfinancia-accent-hover: rgb(var(--cfinancia-accent-hover));
   --color-cfinancia-navy: rgb(var(--cfinancia-navy));
@@ -335,7 +462,7 @@
     transition: box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
   }
   .hover-glow:hover {
-    box-shadow: 0 0 0 3px hsl(var(--ring) / 0.2);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 20%, transparent);
   }
 
   .hover-brightness {
@@ -377,9 +504,9 @@
 
   /* Glassmorphism Effect */
   .glass-effect {
-    background: hsl(var(--background) / 0.7);
+    background: color-mix(in srgb, var(--background) 70%, transparent);
     backdrop-filter: blur(12px);
-    border: 1px solid hsl(var(--border) / 0.3);
+    border: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
   }
 
   /* Skeleton Pulse Animation */

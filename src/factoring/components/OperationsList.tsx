@@ -1,22 +1,15 @@
-import { useState, useEffect } from "react";
-import { MasterDataGrid } from "../../components/patterns/MasterDataGrid";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
-import { KpiCardGroup } from "../../components/patterns/KpiCard";
+import { FactoringKpiCardGroup } from "../../components/patterns/FactoringKpiCardGroup";
 import { SkeletonKpiCardGroup, SkeletonTable } from "../../components/ui/skeleton-variants";
 import { useLoadingState } from "../../hooks/useLoadingState";
 import { FadeInView } from "../../components/ui/page-transition";
-import { motion, AnimatePresence } from "framer-motion";
-import { ReportsConsultation } from "./ReportsConsultation";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "../../components/ui/breadcrumb";
+import { motion, AnimatePresence } from "motion/react";
+import { ReportsConsultation } from "../../components/patterns/ReportsConsultation";
+import { MasterDataGrid } from "../../components/advanced/MasterDataGrid";
+import { cn } from "../../lib/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,6 +33,8 @@ import {
   FileSearch,
   Plus,
   Home,
+  FileCheck2,
+  Receipt,
 } from "lucide-react";
 
 type OperationStatus = "Creada" | "En Proceso" | "Negociada" | "Endosada" | "Liquidada" | "Rechazada";
@@ -537,18 +532,6 @@ const mockOperations: Operation[] = [
   },
 ];
 
-const getStatusColor = (status: OperationStatus) => {
-  const colors = {
-    Creada: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
-    "En Proceso": "bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border-yellow-500/20",
-    Negociada: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
-    Endosada: "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20",
-    Liquidada: "bg-gray-500/10 text-gray-600 dark:text-gray-400 border-gray-500/20",
-    Rechazada: "bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20",
-  };
-  return colors[status] || "";
-};
-
 const getStatusIcon = (status: OperationStatus) => {
   const icons = {
     Creada: <FileText className="h-3.5 w-3.5" />,
@@ -559,6 +542,22 @@ const getStatusIcon = (status: OperationStatus) => {
     Rechazada: <XCircle className="h-3.5 w-3.5" />,
   };
   return icons[status] || null;
+};
+
+// Función para obtener colores de estados
+const getStatusColor = (status: string) => {
+  const colors: Record<string, string> = {
+    "Creada": "bg-muted text-muted-foreground border-border",
+    "En Proceso": "bg-amber-100 text-amber-700 border-amber-300 dark:border-amber-500/40 dark:bg-amber-500/15 dark:text-amber-400",
+    "Negociada": "bg-blue-100 text-blue-700 border-blue-300 dark:border-blue-500/40 dark:bg-blue-500/15 dark:text-blue-400",
+    "Endosada": "bg-green-100 text-green-700 border-green-300 dark:border-green-500/40 dark:bg-green-500/15 dark:text-green-400",
+    "Liquidada": "bg-green-100 text-green-700 border-green-300 dark:border-green-500/40 dark:bg-green-500/15 dark:text-green-400",
+    "Rechazada": "bg-red-100 text-red-700 border-red-300 dark:border-red-500/40 dark:bg-red-500/15 dark:text-red-400",
+    // Sub-estados
+    "Desistida por Fondeador": "bg-red-100 text-red-700 border-red-300 dark:border-red-500/40 dark:bg-red-500/15 dark:text-red-400",
+    "Operacion notificada": "bg-green-100 text-green-700 border-green-300 dark:border-green-500/40 dark:bg-green-500/15 dark:text-green-400",
+  };
+  return colors[status] || "bg-muted text-muted-foreground";
 };
 
 // Función para obtener colores de sub-estados específicos
@@ -733,6 +732,7 @@ export function OperationsList({ onNewOperation }: OperationsListProps = {}) {
       count: mockOperations.filter(op => op.estado === "Creada").length,
       variant: "yellow" as const,
       onAction: () => handleKpiClick("Creada"),
+      icon: <FileCheck2 />,
     },
     {
       id: "en-proceso",
@@ -742,6 +742,7 @@ export function OperationsList({ onNewOperation }: OperationsListProps = {}) {
       count: mockOperations.filter(op => op.estado === "En Proceso").length,
       variant: "orange" as const,
       onAction: () => handleKpiClick("En Proceso"),
+      icon: <Clock />,
     },
     {
       id: "negociadas",
@@ -751,6 +752,7 @@ export function OperationsList({ onNewOperation }: OperationsListProps = {}) {
       count: mockOperations.filter(op => op.estado === "Negociada").length,
       variant: "blue" as const,
       onAction: () => handleKpiClick("Negociada"),
+      icon: <FileText />,
     },
     {
       id: "endosadas",
@@ -760,6 +762,7 @@ export function OperationsList({ onNewOperation }: OperationsListProps = {}) {
       count: mockOperations.filter(op => op.estado === "Endosada").length,
       variant: "lime" as const,
       onAction: () => handleKpiClick("Endosada"),
+      icon: <Receipt />,
     },
   ];
 
@@ -819,9 +822,12 @@ export function OperationsList({ onNewOperation }: OperationsListProps = {}) {
         </div>
       </FadeInView>
 
+      {/* Banner de monto total */}
+      {/* Removed FactoringTotalBanner */}
+
       {/* Stats rápidas con KPIs */}
       <FadeInView delay={0.2}>
-        <KpiCardGroup cards={kpiCards} activeId={getActiveCardId()} />
+        <FactoringKpiCardGroup cards={kpiCards} activeId={getActiveCardId()} />
       </FadeInView>
 
       {/* Tabla Principal Usando MasterDataGrid */}
@@ -997,7 +1003,7 @@ export function OperationsList({ onNewOperation }: OperationsListProps = {}) {
                       )}
                       {visibleColumns.plazo && (
                         <td className="text-center py-3 px-4">
-                          <Badge variant="outline" className="text-xs">
+                          <Badge variant="info-soft-outline" className="text-xs">
                             {op.plazo} días
                           </Badge>
                         </td>
@@ -1009,7 +1015,10 @@ export function OperationsList({ onNewOperation }: OperationsListProps = {}) {
                           {(activeKpiFilter === "Negociada" || activeKpiFilter === "Endosada") && op.subEstado ? (
                             <Badge 
                               variant="outline" 
-                              className={`${getSubEstadoColor(op.subEstado)} flex items-center gap-1 justify-center w-fit mx-auto`}
+                              className={cn(
+                                getStatusColor(op.subEstado),
+                                "flex items-center gap-1 justify-center w-fit mx-auto"
+                              )}
                             >
                               {getSubEstadoIcon(op.subEstado)}
                               {op.subEstado}
@@ -1017,7 +1026,10 @@ export function OperationsList({ onNewOperation }: OperationsListProps = {}) {
                           ) : (
                             <Badge 
                               variant="outline" 
-                              className={`${getStatusColor(op.estado)} flex items-center gap-1 justify-center w-fit mx-auto`}
+                              className={cn(
+                                getStatusColor(op.estado),
+                                "flex items-center gap-1 justify-center w-fit mx-auto"
+                              )}
                             >
                               {getStatusIcon(op.estado)}
                               {op.estado}
@@ -1030,7 +1042,10 @@ export function OperationsList({ onNewOperation }: OperationsListProps = {}) {
                         <td className="text-center py-3 px-4">
                           <Badge 
                             variant="outline" 
-                            className={`${getStatusColor(op.estado)} flex items-center gap-1 justify-center w-fit mx-auto`}
+                            className={cn(
+                              getStatusColor(op.estado),
+                              "flex items-center gap-1 justify-center w-fit mx-auto"
+                            )}
                           >
                             {getStatusIcon(op.estado)}
                             {op.estado}
@@ -1040,9 +1055,6 @@ export function OperationsList({ onNewOperation }: OperationsListProps = {}) {
                       {visibleColumns.fecha && (
                         <td className="py-3 px-4">
                           <div className="text-sm">{op.fechaCreacion}</div>
-                          <div className="text-xs text-muted-foreground">
-                            Vence: {op.fechaVencimiento}
-                          </div>
                         </td>
                       )}
                       {visibleColumns.acciones && (

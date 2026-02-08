@@ -5,7 +5,7 @@ export function AccordionPage() {
   return (
     <ComponentShowcase
       title="Accordion"
-      description="A vertically stacked set of interactive headings that reveal content."
+      description="A vertically stacked set of interactive headings that reveal content. Usa Accordion como contenedor y anida AccordionItem para cada sección."
       category="Layout"
       
       // Main Preview
@@ -64,17 +64,6 @@ export function AccordionDemo() {
     </Accordion>
   )
 }`}
-      
-      // Usage
-      usage="Importa los componentes Accordion desde @/components/ui/accordion. Usa Accordion como contenedor y anida AccordionItem para cada sección."
-      usageCode={`import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
-
-<Accordion type="single" collapsible>
-  <AccordionItem value="item-1">
-    <AccordionTrigger>Trigger</AccordionTrigger>
-    <AccordionContent>Content</AccordionContent>
-  </AccordionItem>
-</Accordion>`}
       
       // Props Documentation
       props={[

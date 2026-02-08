@@ -14,7 +14,7 @@ export function BreadcrumbPage() {
   return (
     <ComponentShowcase
       title="Breadcrumb"
-      description="Displays the path to the current resource using a hierarchy of links."
+      description="Displays the path to the current resource using a hierarchy of links. Construye breadcrumbs usando BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator y BreadcrumbPage."
       category="Navigation"
       
       // Main Preview
@@ -65,20 +65,6 @@ export function BreadcrumbDemo() {
     </Breadcrumb>
   )
 }`}
-      
-      // Usage
-      usage="Construye breadcrumbs usando BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator y BreadcrumbPage."
-      usageCode={`<Breadcrumb>
-  <BreadcrumbList>
-    <BreadcrumbItem>
-      <BreadcrumbLink href="/">Home</BreadcrumbLink>
-    </BreadcrumbItem>
-    <BreadcrumbSeparator />
-    <BreadcrumbItem>
-      <BreadcrumbPage>Current</BreadcrumbPage>
-    </BreadcrumbItem>
-  </BreadcrumbList>
-</Breadcrumb>`}
       
       // Props Documentation
       props={[
@@ -175,18 +161,30 @@ export function BreadcrumbDemo() {
             </Breadcrumb>
           ),
           code: `<Breadcrumb>
-  {/* ... */}
-  <BreadcrumbItem>
-    <DropdownMenu>
-      <DropdownMenuTrigger>
-        <BreadcrumbEllipsis />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        {/* Menu items */}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  </BreadcrumbItem>
-  {/* ... */}
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <BreadcrumbEllipsis />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          {/* Menu items */}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/docs/components">Components</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+    </BreadcrumbItem>
+  </BreadcrumbList>
 </Breadcrumb>`
         }
       ]}

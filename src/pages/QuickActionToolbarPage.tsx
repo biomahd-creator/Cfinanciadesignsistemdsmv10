@@ -15,7 +15,6 @@ export function QuickActionToolbarPage() {
       category="Business Pattern"
       preview={<QuickActionToolbar />}
       code={quickActionCode}
-      usage="Barra de herramientas para acciones rápidas y atajos de teclado."
     />
   );
 }

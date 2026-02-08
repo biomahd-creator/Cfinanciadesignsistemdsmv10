@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
@@ -31,7 +31,7 @@ import {
   CalendarClock,
   X
 } from "lucide-react";
-import { cn } from "../../lib/utils";
+import { cn } from "../ui/utils";
 
 /**
  * 🔒 ADVANCED COMPONENT - Form Builder

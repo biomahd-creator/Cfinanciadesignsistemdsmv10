@@ -92,16 +92,6 @@ export function ContextMenuDemo() {
   )
 }`}
       
-      // Usage
-      usage="Envuelve el área disparadora con ContextMenu y ContextMenuTrigger. Define el menú en ContextMenuContent."
-      usageCode={`<ContextMenu>
-  <ContextMenuTrigger>Right click</ContextMenuTrigger>
-  <ContextMenuContent>
-    <ContextMenuItem>Item 1</ContextMenuItem>
-    <ContextMenuItem>Item 2</ContextMenuItem>
-  </ContextMenuContent>
-</ContextMenu>`}
-      
       // Props Documentation
       props={[
         {

@@ -158,7 +158,7 @@ export function ModulosScreen({ onSelectModule, onLogout }: ModulosScreenProps) 
             <div className="flex flex-col gap-4 w-full max-w-[480px]">
                 {/* Factoring Card */}
                 <Card 
-                  className="bg-white hover-lift cursor-pointer border-none shadow-md overflow-hidden"
+                  className="bg-card hover-lift cursor-pointer border-none shadow-md overflow-hidden"
                   onClick={() => onSelectModule("factoring")}
                 >
                     <CardContent className="p-6 flex items-center gap-6">
@@ -174,7 +174,7 @@ export function ModulosScreen({ onSelectModule, onLogout }: ModulosScreenProps) 
 
                 {/* Eventos RADIAN Card */}
                 <Card 
-                  className="bg-white hover-lift cursor-pointer border-none shadow-md overflow-hidden"
+                  className="bg-card hover-lift cursor-pointer border-none shadow-md overflow-hidden"
                   onClick={() => onSelectModule("radian")}
                 >
                     <CardContent className="p-6 flex items-center gap-6">
@@ -190,7 +190,7 @@ export function ModulosScreen({ onSelectModule, onLogout }: ModulosScreenProps) 
 
                 {/* Vinculaciones Card */}
                 <Card 
-                  className="bg-white hover-lift cursor-pointer border-none shadow-md overflow-hidden"
+                  className="bg-card hover-lift cursor-pointer border-none shadow-md overflow-hidden"
                   onClick={() => onSelectModule("vinculaciones")}
                 >
                     <CardContent className="p-6 flex items-center gap-6">

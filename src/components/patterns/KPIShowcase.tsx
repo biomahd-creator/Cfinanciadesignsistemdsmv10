@@ -1,7 +1,11 @@
+import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Badge } from "../ui/badge";
-import { Progress } from "../ui/progress";
 import { Button } from "../ui/button";
+import { Progress } from "../ui/progress";
+import { Separator } from "../ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { useState } from "react";
 import { 
   TrendingUp, 
@@ -26,74 +30,29 @@ import {
   HandCoins,
   CheckCircle,
   AlertCircle,
-  XCircle
+  XCircle,
+  Eye,
+  MoreHorizontal,
+  Download,
+  Share2,
+  Filter,
+  Calendar,
+  TrendingUpIcon,
+  Circle,
+  Info,
+  Bell,
+  ChevronDown,
+  ChevronUp,
+  Star,
+  Award,
+  Percent,
+  Building2,
+  Package,
+  TrendingDownIcon,
+  FileCheck2,
+  Receipt
 } from "lucide-react";
-import { 
-  LineChart, 
-  Line, 
-  BarChart, 
-  Bar, 
-  AreaChart,
-  Area,
-  PieChart,
-  Pie,
-  Cell,
-  RadarChart,
-  Radar,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  ComposedChart,
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  Legend,
-  ResponsiveContainer 
-} from "recharts";
-import { getThemeColor, getChartColorsMap, getBrandColors, getUIColors } from "../../lib/theme-utils";
-
-// Data para gráficos
-const monthlyRevenueData = [
-  { mes: "Ene", ingresos: 45000, gastos: 28000, meta: 50000 },
-  { mes: "Feb", ingresos: 52000, gastos: 31000, meta: 50000 },
-  { mes: "Mar", ingresos: 48000, gastos: 29000, meta: 50000 },
-  { mes: "Abr", ingresos: 61000, gastos: 35000, meta: 55000 },
-  { mes: "May", ingresos: 55000, gastos: 32000, meta: 55000 },
-  { mes: "Jun", ingresos: 67000, gastos: 38000, meta: 60000 },
-  { mes: "Jul", ingresos: 72000, gastos: 41000, meta: 65000 },
-  { mes: "Ago", ingresos: 68000, gastos: 39000, meta: 65000 },
-  { mes: "Sep", ingresos: 75000, gastos: 43000, meta: 70000 },
-  { mes: "Oct", ingresos: 81000, gastos: 46000, meta: 75000 },
-  { mes: "Nov", ingresos: 78000, gastos: 44000, meta: 75000 },
-  { mes: "Dic", ingresos: 85000, gastos: 48000, meta: 80000 },
-];
-
-const clientGrowthData = [
-  { mes: "Ene", nuevos: 5, activos: 32, inactivos: 3 },
-  { mes: "Feb", nuevos: 8, activos: 37, inactivos: 2 },
-  { mes: "Mar", nuevos: 6, activos: 41, inactivos: 4 },
-  { mes: "Abr", nuevos: 10, activos: 47, inactivos: 3 },
-  { mes: "May", nuevos: 7, activos: 51, inactivos: 5 },
-  { mes: "Jun", nuevos: 12, activos: 58, inactivos: 2 },
-];
-
-const performanceMetrics = [
-  { categoria: "Aprobación", score: 92, fullMark: 100 },
-  { categoria: "Cobranza", score: 88, fullMark: 100 },
-  { categoria: "Liquidez", score: 75, fullMark: 100 },
-  { categoria: "Satisfacción", score: 94, fullMark: 100 },
-  { categoria: "Eficiencia", score: 85, fullMark: 100 },
-];
-
-const operationalData = [
-  { dia: "Lun", operaciones: 12, monto: 145000, tiempo: 2.3 },
-  { dia: "Mar", operaciones: 15, monto: 178000, tiempo: 2.1 },
-  { dia: "Mié", operaciones: 18, monto: 210000, tiempo: 1.9 },
-  { dia: "Jue", operaciones: 14, monto: 165000, tiempo: 2.2 },
-  { dia: "Vie", operaciones: 20, monto: 235000, tiempo: 1.8 },
-  { dia: "Sáb", operaciones: 8, monto: 95000, tiempo: 2.5 },
-];
+import { FactoringKpiCard } from "./FactoringKpiCard";
 
 interface KPICardProps {
   title: string;
@@ -149,28 +108,7 @@ function KPICard({ title, value, change, changeLabel, icon, trend, format = "num
 }
 
 export function KPIShowcase() {
-  // Estado para tabs activos
-  const [activeTab, setActiveTab] = useState<string>("revenue");
-
-  // Colores dinámicos
-  const primaryColor = getBrandColors().primary;
-  const chart1Color = getChartColorsMap().chart1;
-  const chart2Color = getChartColorsMap().chart2;
-  const chart3Color = getChartColorsMap().chart3;
-  const chart4Color = getChartColorsMap().chart4;
-  const chart5Color = getChartColorsMap().chart5;
-  const mutedForegroundColor = getUIColors().mutedForeground;
-  const cardBg = getUIColors().card;
-  const borderColor = getUIColors().border;
-
-  // Portfolio distribution con colores dinámicos
-  const portfolioDistribution = [
-    { sector: "Retail", value: 35, color: chart1Color },
-    { sector: "Manufactura", value: 25, color: chart2Color },
-    { sector: "Servicios", value: 20, color: chart3Color },
-    { sector: "Construcción", value: 15, color: chart4Color },
-    { sector: "Otros", value: 5, color: chart5Color },
-  ];
+  const [activeFactoringCard, setActiveFactoringCard] = useState<string | null>(null);
 
   return (
     <div className="space-y-6">
@@ -218,318 +156,6 @@ export function KPIShowcase() {
           trend="up"
           icon={<Target className="h-6 w-6" />}
         />
-      </div>
-
-      {/* Gráfico de Línea - Tendencia de Ingresos */}
-      <Card className="elevation-2">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-primary" />
-            Tendencia de Ingresos vs Gastos
-          </CardTitle>
-          <CardDescription>
-            Comparación mensual de ingresos, gastos y meta (últimos 12 meses)
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="w-full h-[350px] min-w-0" style={{ minHeight: '350px' }}>
-            <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
-              <LineChart data={monthlyRevenueData}>
-              <CartesianGrid strokeDasharray="3 3" stroke={borderColor} opacity={0.3} />
-              <XAxis 
-                dataKey="mes"
-                tick={{ fill: mutedForegroundColor, fontSize: 12 }}
-              />
-              <YAxis 
-                tick={{ fill: mutedForegroundColor, fontSize: 12 }}
-                tickFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
-              />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: cardBg,
-                  border: `1px solid ${borderColor}`,
-                  borderRadius: '8px',
-                  fontSize: '12px'
-                }}
-                formatter={(value: number) => [`$${value.toLocaleString()}`, '']}
-              />
-              <Legend />
-              <Line 
-                type="monotone" 
-                dataKey="ingresos" 
-                name="Ingresos"
-                stroke={chart2Color}
-                strokeWidth={3}
-                dot={{ fill: chart2Color, r: 4 }}
-                activeDot={{ r: 6 }}
-              />
-              <Line 
-                type="monotone" 
-                dataKey="gastos" 
-                name="Gastos"
-                stroke={chart5Color}
-                strokeWidth={2}
-                strokeDasharray="5 5"
-                dot={{ fill: chart5Color, r: 3 }}
-              />
-              <Line 
-                type="monotone" 
-                dataKey="meta" 
-                name="Meta"
-                stroke={mutedForegroundColor}
-                strokeWidth={2}
-                strokeDasharray="3 3"
-                dot={false}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-          </div>
-        </CardContent>
-      </Card>
-
-      <div className="grid gap-6 md:grid-cols-2">
-        {/* Gráfico de Área - Crecimiento de Clientes */}
-        <Card className="elevation-2">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Users className="h-5 w-5 text-primary" />
-              Crecimiento de Clientes
-            </CardTitle>
-            <CardDescription>
-              Nuevos, activos e inactivos por mes
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="w-full h-[300px] min-w-0" style={{ minHeight: '300px' }}>
-              <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
-                <AreaChart data={clientGrowthData}>
-                <CartesianGrid strokeDasharray="3 3" stroke={borderColor} opacity={0.3} />
-                <XAxis 
-                  dataKey="mes"
-                  tick={{ fill: mutedForegroundColor, fontSize: 12 }}
-                />
-                <YAxis 
-                  tick={{ fill: mutedForegroundColor, fontSize: 12 }}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: cardBg,
-                    border: `1px solid ${borderColor}`,
-                    borderRadius: '8px',
-                    fontSize: '12px'
-                  }}
-                />
-                <Legend />
-                <Area 
-                  type="monotone" 
-                  dataKey="activos" 
-                  name="Activos"
-                  stackId="1"
-                  stroke={chart2Color}
-                  fill={chart2Color}
-                  fillOpacity={0.6}
-                />
-                <Area 
-                  type="monotone" 
-                  dataKey="nuevos" 
-                  name="Nuevos"
-                  stackId="1"
-                  stroke={chart1Color}
-                  fill={chart1Color}
-                  fillOpacity={0.6}
-                />
-                <Area 
-                  type="monotone" 
-                  dataKey="inactivos" 
-                  name="Inactivos"
-                  stackId="1"
-                  stroke={chart5Color}
-                  fill={chart5Color}
-                  fillOpacity={0.6}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Gráfico de Radar - Métricas de Performance */}
-        <Card className="elevation-2">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Target className="h-5 w-5 text-primary" />
-              Métricas de Performance
-            </CardTitle>
-            <CardDescription>
-              Evaluación de 5 indicadores clave
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="w-full h-[300px] min-w-0" style={{ minHeight: '300px' }}>
-              <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
-                <RadarChart data={performanceMetrics}>
-                <PolarGrid stroke={borderColor} />
-                <PolarAngleAxis 
-                  dataKey="categoria" 
-                  tick={{ fill: mutedForegroundColor, fontSize: 11 }}
-                />
-                <PolarRadiusAxis 
-                  angle={90} 
-                  domain={[0, 100]}
-                  tick={{ fill: mutedForegroundColor, fontSize: 10 }}
-                />
-                <Radar 
-                  name="Score" 
-                  dataKey="score" 
-                  stroke={chart1Color}
-                  fill={chart1Color}
-                  fillOpacity={0.5}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: cardBg,
-                    border: `1px solid ${borderColor}`,
-                    borderRadius: '8px',
-                    fontSize: '12px'
-                  }}
-                  formatter={(value: number) => [`${value}%`, 'Score']}
-                />
-              </RadarChart>
-            </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-2">
-        {/* Gráfico de Barras - Operaciones por Día */}
-        <Card className="elevation-2">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Zap className="h-5 w-5 text-primary" />
-              Actividad Semanal
-            </CardTitle>
-            <CardDescription>
-              Operaciones y montos procesados
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="w-full h-[300px] min-w-0">
-              <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-                <BarChart data={operationalData}>
-                <CartesianGrid strokeDasharray="3 3" stroke={borderColor} opacity={0.3} />
-                <XAxis 
-                  dataKey="dia"
-                  tick={{ fill: mutedForegroundColor, fontSize: 12 }}
-                />
-                <YAxis 
-                  yAxisId="left"
-                  tick={{ fill: mutedForegroundColor, fontSize: 12 }}
-                />
-                <YAxis 
-                  yAxisId="right"
-                  orientation="right"
-                  tick={{ fill: mutedForegroundColor, fontSize: 12 }}
-                  tickFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: cardBg,
-                    border: `1px solid ${borderColor}`,
-                    borderRadius: '8px',
-                    fontSize: '12px'
-                  }}
-                />
-                <Legend />
-                <Bar 
-                  yAxisId="left"
-                  dataKey="operaciones" 
-                  name="Operaciones"
-                  fill={chart3Color}
-                  radius={[8, 8, 0, 0]}
-                />
-                <Bar 
-                  yAxisId="right"
-                  dataKey="monto" 
-                  name="Monto ($)"
-                  fill={chart1Color}
-                  radius={[8, 8, 0, 0]}
-                />
-              </BarChart>
-            </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Gráfico Compuesto - Vista Completa */}
-        <Card className="elevation-2">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Activity className="h-5 w-5 text-primary" />
-              Análisis Operacional Semanal
-            </CardTitle>
-            <CardDescription>
-              Operaciones, montos y tiempo promedio de procesamiento
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="w-full h-[350px] min-w-0">
-              <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-                <ComposedChart data={operationalData}>
-                <CartesianGrid strokeDasharray="3 3" stroke={borderColor} opacity={0.3} />
-                <XAxis 
-                  dataKey="dia"
-                  tick={{ fill: mutedForegroundColor, fontSize: 12 }}
-                />
-                <YAxis 
-                  yAxisId="left"
-                  tick={{ fill: mutedForegroundColor, fontSize: 12 }}
-                />
-                <YAxis 
-                  yAxisId="right"
-                  orientation="right"
-                  tick={{ fill: mutedForegroundColor, fontSize: 12 }}
-                  domain={[0, 3]}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: cardBg,
-                    border: `1px solid ${borderColor}`,
-                    borderRadius: '8px',
-                    fontSize: '12px'
-                  }}
-                />
-                <Legend />
-                <Bar 
-                  yAxisId="left"
-                  dataKey="operaciones" 
-                  name="Operaciones"
-                  fill={chart3Color}
-                  radius={[8, 8, 0, 0]}
-                />
-                <Area 
-                  yAxisId="left"
-                  type="monotone" 
-                  dataKey="monto" 
-                  name="Monto ($)"
-                  fill={chart1Color}
-                  stroke={chart1Color}
-                  fillOpacity={0.3}
-                />
-                <Line 
-                  yAxisId="right"
-                  type="monotone" 
-                  dataKey="tiempo" 
-                  name="Tiempo (hrs)"
-                  stroke={chart5Color}
-                  strokeWidth={2}
-                  dot={{ fill: chart5Color, r: 4 }}
-                />
-              </ComposedChart>
-            </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
       {/* Mini KPIs adicionales */}
@@ -583,9 +209,9 @@ export function KPIShowcase() {
           </p>
         </div>
 
-        {/* KPI Cards con Mini Sparklines */}
+        {/* KPI Cards avanzadas con acciones */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
-          {/* Revenue Card con Sparkline */}
+          {/* Revenue Card */}
           <Card className="elevation-2 hover:elevation-3 transition-all">
             <CardContent className="p-6">
               <div className="space-y-3">
@@ -601,26 +227,13 @@ export function KPIShowcase() {
                 <div>
                   <p className="text-sm text-muted-foreground">Revenue</p>
                   <p className="text-2xl font-bold">$845.2K</p>
-                </div>
-                <div className="w-full h-[40px] min-w-0">
-                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-                    <AreaChart data={monthlyRevenueData.slice(-6)}>
-                    <Area
-                      type="monotone"
-                      dataKey="ingresos"
-                      stroke={chart1Color}
-                      fill={chart1Color}
-                      fillOpacity={0.3}
-                      strokeWidth={2}
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
+                  <p className="text-xs text-muted-foreground mt-1">vs mes anterior</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Users Card con Sparkline */}
+          {/* Users Card */}
           <Card className="elevation-2 hover:elevation-3 transition-all">
             <CardContent className="p-6">
               <div className="space-y-3">
@@ -636,25 +249,13 @@ export function KPIShowcase() {
                 <div>
                   <p className="text-sm text-muted-foreground">Active Users</p>
                   <p className="text-2xl font-bold">2,543</p>
-                </div>
-                <div className="w-full h-[40px] min-w-0">
-                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-                    <LineChart data={clientGrowthData}>
-                    <Line
-                      type="monotone"
-                      dataKey="activos"
-                      stroke={chart2Color}
-                      strokeWidth={2}
-                      dot={false}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
+                  <p className="text-xs text-muted-foreground mt-1">este mes</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Orders Card con Sparkline */}
+          {/* Orders Card */}
           <Card className="elevation-2 hover:elevation-3 transition-all">
             <CardContent className="p-6">
               <div className="space-y-3">
@@ -670,23 +271,13 @@ export function KPIShowcase() {
                 <div>
                   <p className="text-sm text-muted-foreground">Orders</p>
                   <p className="text-2xl font-bold">1,248</p>
-                </div>
-                <div className="w-full h-[40px] min-w-0">
-                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-                    <BarChart data={operationalData}>
-                    <Bar
-                      dataKey="operaciones"
-                      fill={chart3Color}
-                      radius={[4, 4, 0, 0]}
-                    />
-                  </BarChart>
-                </ResponsiveContainer>
+                  <p className="text-xs text-muted-foreground mt-1">esta semana</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Conversion Card con Sparkline */}
+          {/* Conversion Card */}
           <Card className="elevation-2 hover:elevation-3 transition-all">
             <CardContent className="p-6">
               <div className="space-y-3">
@@ -694,7 +285,7 @@ export function KPIShowcase() {
                   <div className="h-10 w-10 rounded-lg bg-green-500/10 flex items-center justify-center">
                     <Target className="h-5 w-5 text-green-600 dark:text-green-400" />
                   </div>
-                  <Badge className="bg-gray-500/10 text-gray-600 border-gray-500/20">
+                  <Badge className="bg-muted text-muted-foreground border-border">
                     <Minus className="h-3 w-3 mr-1" />
                     0%
                   </Badge>
@@ -702,844 +293,562 @@ export function KPIShowcase() {
                 <div>
                   <p className="text-sm text-muted-foreground">Conversion</p>
                   <p className="text-2xl font-bold">3.24%</p>
-                </div>
-                <div className="w-full h-[40px] min-w-0">
-                  <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-                    <LineChart data={monthlyRevenueData.slice(-6)}>
-                    <Line
-                      type="monotone"
-                      dataKey="meta"
-                      stroke={chart4Color}
-                      strokeWidth={2}
-                      dot={false}
-                      strokeDasharray="3 3"
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
+                  <p className="text-xs text-muted-foreground mt-1">sin cambios</p>
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* KPI Cards con Progress Bars */}
+        {/* KPI Cards con comparación de períodos */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-6">
-          {/* Revenue Goal Card */}
+          {/* Card con comparación mes anterior */}
           <Card className="elevation-2">
             <CardContent className="p-6">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <div className="space-y-1">
-                    <p className="text-sm text-muted-foreground">Revenue Goal</p>
-                    <p className="text-2xl font-bold">$85K / $100K</p>
+                  <div className="h-10 w-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+                    <DollarSign className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                   </div>
-                  <div className="h-12 w-12 rounded-full bg-chart-1/10 flex items-center justify-center">
-                    <Target className="h-6 w-6 text-chart-1" />
+                  <Badge className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20">
+                    <ArrowUp className="h-3 w-3 mr-1" />
+                    18.2%
+                  </Badge>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Ingresos Mensuales</p>
+                  <p className="text-2xl font-bold">$125,430</p>
+                </div>
+                <div className="pt-2 border-t border-border">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-muted-foreground">Mes anterior:</span>
+                    <span className="font-medium">$106,250</span>
+                  </div>
+                  <div className="flex justify-between text-xs mt-1">
+                    <span className="text-muted-foreground">Promedio 3 meses:</span>
+                    <span className="font-medium">$112,890</span>
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Progress</span>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Card con métricas múltiples */}
+          <Card className="elevation-2">
+            <CardContent className="p-6">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="h-10 w-10 rounded-lg bg-indigo-500/10 flex items-center justify-center">
+                    <FileText className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                  </div>
+                  <Badge className="bg-indigo-500/10 text-indigo-600 border-indigo-500/20">
+                    <ArrowUp className="h-3 w-3 mr-1" />
+                    5.7%
+                  </Badge>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Total Documentos</p>
+                  <p className="text-2xl font-bold">1,847</p>
+                </div>
+                <div className="pt-2 border-t border-border">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-muted-foreground">Aprobados:</span>
+                    <span className="font-medium text-green-600 dark:text-green-400">1,698 (92%)</span>
+                  </div>
+                  <div className="flex justify-between text-xs mt-1">
+                    <span className="text-muted-foreground">Pendientes:</span>
+                    <span className="font-medium text-yellow-600 dark:text-yellow-400">112 (6%)</span>
+                  </div>
+                  <div className="flex justify-between text-xs mt-1">
+                    <span className="text-muted-foreground">Rechazados:</span>
+                    <span className="font-medium text-red-600 dark:text-red-400">37 (2%)</span>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Card con objetivo y progreso */}
+          <Card className="elevation-2">
+            <CardContent className="p-6">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="h-10 w-10 rounded-lg bg-cyan-500/10 flex items-center justify-center">
+                    <Target className="h-5 w-5 text-cyan-600 dark:text-cyan-400" />
+                  </div>
+                  <Badge className="bg-cyan-500/10 text-cyan-600 border-cyan-500/20">
+                    85% completado
+                  </Badge>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Meta Trimestral</p>
+                  <p className="text-2xl font-bold">$340K / $400K</p>
+                </div>
+                <div className="pt-2 border-t border-border">
+                  <div className="flex justify-between text-xs mb-2">
+                    <span className="text-muted-foreground">Progreso:</span>
                     <span className="font-medium">85%</span>
                   </div>
                   <Progress value={85} className="h-2" />
-                  <p className="text-xs text-muted-foreground">$15K remaining to goal</p>
+                  <p className="text-xs text-muted-foreground mt-2">Faltan $60K para alcanzar la meta</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* ===== HERO UI STYLE KPIs CON ACCIONES ===== */}
+        <div className="mb-6">
+          <h3 className="text-xl font-semibold mb-4">KPIs con Acciones (Hero UI Style)</h3>
+        </div>
+
+        {/* KPIs con botones de acción tipo "View All" */}
+        <div className="grid gap-4 md:grid-cols-2 mb-6">
+          {/* Top Products Card */}
+          <Card className="elevation-2">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-base font-medium">Top Products</CardTitle>
+              <Button variant="ghost" size="sm" className="text-xs gap-1">
+                View All
+                <ArrowRight className="h-3 w-3" />
+              </Button>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <ShoppingCart className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Producto A</p>
+                      <p className="text-xs text-muted-foreground">342 ventas</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-bold">$45,280</p>
+                    <Badge className="bg-green-500/10 text-green-600 border-green-500/20 text-xs">
+                      <ArrowUp className="h-2 w-2 mr-0.5" />
+                      12%
+                    </Badge>
+                  </div>
+                </div>
+                <Separator />
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+                      <ShoppingCart className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Producto B</p>
+                      <p className="text-xs text-muted-foreground">298 ventas</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-bold">$38,120</p>
+                    <Badge className="bg-green-500/10 text-green-600 border-green-500/20 text-xs">
+                      <ArrowUp className="h-2 w-2 mr-0.5" />
+                      8%
+                    </Badge>
+                  </div>
+                </div>
+                <Separator />
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-lg bg-orange-500/10 flex items-center justify-center">
+                      <ShoppingCart className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Producto C</p>
+                      <p className="text-xs text-muted-foreground">187 ventas</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-bold">$29,450</p>
+                    <Badge className="bg-red-500/10 text-red-600 border-red-500/20 text-xs">
+                      <ArrowDown className="h-2 w-2 mr-0.5" />
+                      3%
+                    </Badge>
+                  </div>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Customer Satisfaction Card */}
+          {/* Recent Activity Card */}
           <Card className="elevation-2">
-            <CardContent className="p-6">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-base font-medium">Recent Activity</CardTitle>
+              <Button variant="ghost" size="sm" className="text-xs gap-1">
+                View More
+                <ArrowRight className="h-3 w-3" />
+              </Button>
+            </CardHeader>
+            <CardContent>
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="space-y-1">
-                    <p className="text-sm text-muted-foreground">Customer Satisfaction</p>
-                    <p className="text-2xl font-bold">94%</p>
+                <div className="flex items-start gap-3">
+                  <div className="h-8 w-8 rounded-full bg-green-500/10 flex items-center justify-center shrink-0">
+                    <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
                   </div>
-                  <div className="h-12 w-12 rounded-full bg-chart-2/10 flex items-center justify-center">
-                    <Users className="h-6 w-6 text-chart-2" />
+                  <div className="flex-1 space-y-1">
+                    <p className="text-sm font-medium">Nueva operación aprobada</p>
+                    <p className="text-xs text-muted-foreground">Factura #INV-2024-1523 por $12,450</p>
+                    <p className="text-xs text-muted-foreground">Hace 5 minutos</p>
                   </div>
                 </div>
+                <Separator />
+                <div className="flex items-start gap-3">
+                  <div className="h-8 w-8 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0">
+                    <AlertCircle className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+                  </div>
+                  <div className="flex-1 space-y-1">
+                    <p className="text-sm font-medium">Documento pendiente de revisión</p>
+                    <p className="text-xs text-muted-foreground">Cliente: Empresa XYZ S.A.</p>
+                    <p className="text-xs text-muted-foreground">Hace 23 minutos</p>
+                  </div>
+                </div>
+                <Separator />
+                <div className="flex items-start gap-3">
+                  <div className="h-8 w-8 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0">
+                    <Users className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <div className="flex-1 space-y-1">
+                    <p className="text-sm font-medium">Nuevo cliente registrado</p>
+                    <p className="text-xs text-muted-foreground">ABC Trading Corp.</p>
+                    <p className="text-xs text-muted-foreground">Hace 1 hora</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Performance Metrics con Progress Bars */}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
+          {/* Approval Rate */}
+          <Card className="elevation-2">
+            <CardContent className="p-6">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-muted-foreground">Tasa de Aprobación</p>
+                  <Badge variant="secondary" className="text-xs">92%</Badge>
+                </div>
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Rating</span>
-                    <span className="font-medium">4.7/5.0</span>
+                  <div className="flex items-baseline gap-2">
+                    <p className="text-2xl font-bold">1,698</p>
+                    <span className="text-xs text-muted-foreground">/ 1,847</span>
+                  </div>
+                  <Progress value={92} className="h-2" />
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  +5.2% vs mes anterior
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Collection Efficiency */}
+          <Card className="elevation-2">
+            <CardContent className="p-6">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-muted-foreground">Eficiencia Cobranza</p>
+                  <Badge variant="secondary" className="text-xs">88%</Badge>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-baseline gap-2">
+                    <p className="text-2xl font-bold">$742K</p>
+                    <span className="text-xs text-muted-foreground">/ $845K</span>
+                  </div>
+                  <Progress value={88} className="h-2" />
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  -1.3% vs mes anterior
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Customer Satisfaction */}
+          <Card className="elevation-2">
+            <CardContent className="p-6">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-muted-foreground">Satisfacción Cliente</p>
+                  <Badge variant="secondary" className="text-xs">94%</Badge>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-baseline gap-2">
+                    <p className="text-2xl font-bold">4.7</p>
+                    <span className="text-xs text-muted-foreground">/ 5.0</span>
                   </div>
                   <Progress value={94} className="h-2" />
-                  <p className="text-xs text-muted-foreground">Based on 1,234 reviews</p>
                 </div>
+                <p className="text-xs text-muted-foreground">
+                  +2.1% vs mes anterior
+                </p>
               </div>
             </CardContent>
           </Card>
 
-          {/* Task Completion Card */}
+          {/* Processing Speed */}
           <Card className="elevation-2">
             <CardContent className="p-6">
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <div className="space-y-1">
-                    <p className="text-sm text-muted-foreground">Task Completion</p>
-                    <p className="text-2xl font-bold">67 / 89</p>
-                  </div>
-                  <div className="h-12 w-12 rounded-full bg-chart-3/10 flex items-center justify-center">
-                    <FileText className="h-6 w-6 text-chart-3" />
-                  </div>
+                  <p className="text-sm text-muted-foreground">Velocidad Proceso</p>
+                  <Badge variant="secondary" className="text-xs">75%</Badge>
                 </div>
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Completed</span>
-                    <span className="font-medium">75%</span>
+                  <div className="flex items-baseline gap-2">
+                    <p className="text-2xl font-bold">1.9</p>
+                    <span className="text-xs text-muted-foreground">hrs promedio</span>
                   </div>
                   <Progress value={75} className="h-2" />
-                  <p className="text-xs text-muted-foreground">22 tasks remaining</p>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Comparison KPI Cards (This Month vs Last Month) */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {/* Sales Comparison */}
-          <Card className="elevation-2 border-l-4 border-l-blue-500">
-            <CardContent className="p-6">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <p className="text-sm font-medium text-muted-foreground">Total Sales</p>
-                  <CreditCard className="h-4 w-4 text-muted-foreground" />
-                </div>
-                <div className="space-y-1">
-                  <p className="text-2xl font-bold">$125,420</p>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Badge variant="secondary" className="bg-blue-500/10 text-blue-600 border-blue-500/20">
-                      This Month
-                    </Badge>
-                  </div>
-                </div>
-                <div className="pt-3 border-t border-border">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">vs Last Month</span>
-                    <div className="flex items-center gap-1 text-green-600">
-                      <ArrowUpRight className="h-3 w-3" />
-                      <span className="font-medium">+15.3%</span>
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-1">$108,750 last month</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Traffic Comparison */}
-          <Card className="elevation-2 border-l-4 border-l-purple-500">
-            <CardContent className="p-6">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <p className="text-sm font-medium text-muted-foreground">Website Traffic</p>
-                  <BarChart3 className="h-4 w-4 text-muted-foreground" />
-                </div>
-                <div className="space-y-1">
-                  <p className="text-2xl font-bold">45.2K</p>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Badge variant="secondary" className="bg-purple-500/10 text-purple-600 border-purple-500/20">
-                      This Month
-                    </Badge>
-                  </div>
-                </div>
-                <div className="pt-3 border-t border-border">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">vs Last Month</span>
-                    <div className="flex items-center gap-1 text-green-600">
-                      <ArrowUpRight className="h-3 w-3" />
-                      <span className="font-medium">+8.1%</span>
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-1">41.8K last month</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* New Customers Comparison */}
-          <Card className="elevation-2 border-l-4 border-l-green-500">
-            <CardContent className="p-6">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <p className="text-sm font-medium text-muted-foreground">New Customers</p>
-                  <Users className="h-4 w-4 text-muted-foreground" />
-                </div>
-                <div className="space-y-1">
-                  <p className="text-2xl font-bold">1,245</p>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Badge variant="secondary" className="bg-green-500/10 text-green-600 border-green-500/20">
-                      This Month
-                    </Badge>
-                  </div>
-                </div>
-                <div className="pt-3 border-t border-border">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">vs Last Month</span>
-                    <div className="flex items-center gap-1 text-green-600">
-                      <ArrowUpRight className="h-3 w-3" />
-                      <span className="font-medium">+22.4%</span>
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-1">1,017 last month</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Response Time Comparison */}
-          <Card className="elevation-2 border-l-4 border-l-orange-500">
-            <CardContent className="p-6">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <p className="text-sm font-medium text-muted-foreground">Avg Response Time</p>
-                  <Clock className="h-4 w-4 text-muted-foreground" />
-                </div>
-                <div className="space-y-1">
-                  <p className="text-2xl font-bold">1.8h</p>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Badge variant="secondary" className="bg-orange-500/10 text-orange-600 border-orange-500/20">
-                      This Month
-                    </Badge>
-                  </div>
-                </div>
-                <div className="pt-3 border-t border-border">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">vs Last Month</span>
-                    <div className="flex items-center gap-1 text-green-600">
-                      <ArrowDownRight className="h-3 w-3" />
-                      <span className="font-medium">-15.4%</span>
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-1">2.1h last month (improved)</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* ===== TREND CARDS (HERO UI PRO STRUCTURE) ===== */}
-        <div className="mt-8">
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-2">Trend Cards</h3>
-            <p className="text-sm text-muted-foreground">
-              Cards compactos con badges de tendencia posicionados absolutos
-            </p>
-          </div>
-
-          {/* Trend Cards con Badge Top-Right */}
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
-            {/* Total Revenue */}
-            <Card className="elevation-2 relative">
-              <CardContent className="p-4">
-                <div className="flex flex-col gap-y-2">
-                  <dt className="text-sm text-muted-foreground font-medium">Total Revenue</dt>
-                  <dd className="text-2xl font-semibold">$228,451</dd>
-                </div>
-                <Badge 
-                  className="absolute top-4 right-4 bg-green-500/10 text-green-600 border-green-500/20"
-                  variant="secondary"
-                >
-                  <ArrowUpRight className="h-3 w-3 mr-1" />
-                  33%
-                </Badge>
-              </CardContent>
-            </Card>
-
-            {/* Total Expenses */}
-            <Card className="elevation-2 relative">
-              <CardContent className="p-4">
-                <div className="flex flex-col gap-y-2">
-                  <dt className="text-sm text-muted-foreground font-medium">Total Expenses</dt>
-                  <dd className="text-2xl font-semibold">$71,887</dd>
-                </div>
-                <Badge 
-                  className="absolute top-4 right-4 bg-red-500/10 text-red-600 border-red-500/20"
-                  variant="secondary"
-                >
-                  <ArrowUpRight className="h-3 w-3 mr-1" />
-                  13.0%
-                </Badge>
-              </CardContent>
-            </Card>
-
-            {/* Total Profit */}
-            <Card className="elevation-2 relative">
-              <CardContent className="p-4">
-                <div className="flex flex-col gap-y-2">
-                  <dt className="text-sm text-muted-foreground font-medium">Total Profit</dt>
-                  <dd className="text-2xl font-semibold">$156,540</dd>
-                </div>
-                <Badge 
-                  className="absolute top-4 right-4 bg-yellow-500/10 text-yellow-600 border-yellow-500/20"
-                  variant="secondary"
-                >
-                  <ArrowRight className="h-3 w-3 mr-1" />
-                  0.0%
-                </Badge>
-              </CardContent>
-            </Card>
-
-            {/* New Customers */}
-            <Card className="elevation-2 relative">
-              <CardContent className="p-4">
-                <div className="flex flex-col gap-y-2">
-                  <dt className="text-sm text-muted-foreground font-medium">New Customers</dt>
-                  <dd className="text-2xl font-semibold">1,234</dd>
-                </div>
-                <Badge 
-                  className="absolute top-4 right-4 bg-green-500/10 text-green-600 border-green-500/20"
-                  variant="secondary"
-                >
-                  <ArrowUpRight className="h-3 w-3 mr-1" />
-                  1.0%
-                </Badge>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Trend Cards con Badge Bottom-Right */}
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {/* Monthly Sales */}
-            <Card className="elevation-2 relative">
-              <CardContent className="p-4">
-                <div className="flex flex-col gap-y-2">
-                  <dt className="text-sm text-muted-foreground font-medium">Monthly Sales</dt>
-                  <dd className="text-2xl font-semibold">$345,892</dd>
-                </div>
-                <Badge 
-                  className="absolute bottom-4 right-4 bg-green-500 text-white border-none"
-                  variant="default"
-                >
-                  <ArrowUpRight className="h-3 w-3 mr-1" />
-                  12.5%
-                </Badge>
-              </CardContent>
-            </Card>
-
-            {/* Operating Costs */}
-            <Card className="elevation-2 relative">
-              <CardContent className="p-4">
-                <div className="flex flex-col gap-y-2">
-                  <dt className="text-sm text-muted-foreground font-medium">Operating Costs</dt>
-                  <dd className="text-2xl font-semibold">$98,234</dd>
-                </div>
-                <Badge 
-                  className="absolute bottom-4 right-4 bg-red-500 text-white border-none"
-                  variant="default"
-                >
-                  <ArrowUpRight className="h-3 w-3 mr-1" />
-                  18.3%
-                </Badge>
-              </CardContent>
-            </Card>
-
-            {/* Net Income */}
-            <Card className="elevation-2 relative">
-              <CardContent className="p-4">
-                <div className="flex flex-col gap-y-2">
-                  <dt className="text-sm text-muted-foreground font-medium">Net Income</dt>
-                  <dd className="text-2xl font-semibold">$247,658</dd>
-                </div>
-                <Badge 
-                  className="absolute bottom-4 right-4 bg-yellow-500 text-white border-none"
-                  variant="default"
-                >
-                  <ArrowRight className="h-3 w-3 mr-1" />
-                  15.2%
-                </Badge>
-              </CardContent>
-            </Card>
-
-            {/* Active Users */}
-            <Card className="elevation-2 relative">
-              <CardContent className="p-4">
-                <div className="flex flex-col gap-y-2">
-                  <dt className="text-sm text-muted-foreground font-medium">Active Users</dt>
-                  <dd className="text-2xl font-semibold">2,847</dd>
-                </div>
-                <Badge 
-                  className="absolute bottom-4 right-4 bg-green-500 text-white border-none"
-                  variant="default"
-                >
-                  <ArrowUpRight className="h-3 w-3 mr-1" />
-                  4.7%
-                </Badge>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
-        {/* ===== KPI CARDS WITH ICONS & ACTION BUTTON ===== */}
-        <div className="mt-8">
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-2">KPI Cards con Iconos y Acción</h3>
-            <p className="text-sm text-muted-foreground">
-              Cards con iconos coloridos, badges de tendencia y botón de acción en footer
-            </p>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {/* Total Users Card */}
-            <Card className="elevation-2 relative overflow-hidden">
-              <CardContent className="p-4">
-                <div className="flex gap-3">
-                  <div className="mt-1 flex h-8 w-8 items-center justify-center rounded-md bg-green-500/10">
-                    <Users className="h-5 w-5 text-green-600 dark:text-green-400" />
-                  </div>
-                  <div className="flex flex-col gap-y-2">
-                    <dt className="text-sm text-muted-foreground font-medium">Total Users</dt>
-                    <dd className="text-2xl font-semibold">5,400</dd>
-                  </div>
-                  <Badge 
-                    className="absolute top-4 right-4 bg-green-500/10 text-green-600 border-green-500/20"
-                    variant="secondary"
-                  >
-                    <ArrowUpRight className="h-3 w-3 mr-1" />
-                    33%
-                  </Badge>
-                </div>
-              </CardContent>
-              <div className="bg-muted/50">
-                <Button 
-                  variant="ghost" 
-                  className="w-full justify-start text-xs h-9 rounded-none hover:bg-muted"
-                >
-                  View All
-                </Button>
-              </div>
-            </Card>
-
-            {/* Total Sales Card */}
-            <Card className="elevation-2 relative overflow-hidden">
-              <CardContent className="p-4">
-                <div className="flex gap-3">
-                  <div className="mt-1 flex h-8 w-8 items-center justify-center rounded-md bg-yellow-500/10">
-                    <Wallet className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
-                  </div>
-                  <div className="flex flex-col gap-y-2">
-                    <dt className="text-sm text-muted-foreground font-medium">Total Sales</dt>
-                    <dd className="text-2xl font-semibold">$15,400</dd>
-                  </div>
-                  <Badge 
-                    className="absolute top-4 right-4 bg-yellow-500/10 text-yellow-600 border-yellow-500/20"
-                    variant="secondary"
-                  >
-                    <ArrowRight className="h-3 w-3 mr-1" />
-                    0.0%
-                  </Badge>
-                </div>
-              </CardContent>
-              <div className="bg-muted/50">
-                <Button 
-                  variant="ghost" 
-                  className="w-full justify-start text-xs h-9 rounded-none hover:bg-muted"
-                >
-                  View All
-                </Button>
-              </div>
-            </Card>
-
-            {/* Net Profit Card */}
-            <Card className="elevation-2 relative overflow-hidden">
-              <CardContent className="p-4">
-                <div className="flex gap-3">
-                  <div className="mt-1 flex h-8 w-8 items-center justify-center rounded-md bg-red-500/10">
-                    <HandCoins className="h-5 w-5 text-red-600 dark:text-red-400" />
-                  </div>
-                  <div className="flex flex-col gap-y-2">
-                    <dt className="text-sm text-muted-foreground font-medium">Net Profit</dt>
-                    <dd className="text-2xl font-semibold">$10,400</dd>
-                  </div>
-                  <Badge 
-                    className="absolute top-4 right-4 bg-red-500/10 text-red-600 border-red-500/20"
-                    variant="secondary"
-                  >
-                    <ArrowDownRight className="h-3 w-3 mr-1" />
-                    3.3%
-                  </Badge>
-                </div>
-              </CardContent>
-              <div className="bg-muted/50">
-                <Button 
-                  variant="ghost" 
-                  className="w-full justify-start text-xs h-9 rounded-none hover:bg-muted"
-                >
-                  View All
-                </Button>
-              </div>
-            </Card>
-          </div>
-        </div>
-
-        {/* ===== KPI TABS (COMPACT & ACTIVE VERSION) ===== */}
-        <div className="mt-8">
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-2">KPI Tabs (Versión Compacta y Activa)</h3>
-            <p className="text-sm text-muted-foreground">
-              Cards tipo tabs clickeables con estados hover y active. Perfectos para navegación entre métricas.
-            </p>
-          </div>
-
-          {/* Tabs Navigation */}
-          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-            {/* Revenue Tab */}
-            <button
-              onClick={() => setActiveTab("revenue")}
-              className={`
-                group relative overflow-hidden rounded-lg border transition-all text-left
-                ${activeTab === "revenue" 
-                  ? "border-primary bg-primary/5 elevation-3" 
-                  : "border-border bg-card elevation-1 hover:elevation-2 hover:border-primary/50"
-                }
-              `}
-            >
-              <div className="p-3">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className={`
-                    h-7 w-7 rounded-md flex items-center justify-center transition-colors
-                    ${activeTab === "revenue" 
-                      ? "bg-blue-500 text-white" 
-                      : "bg-blue-500/10 text-blue-600 dark:text-blue-400"
-                    }
-                  `}>
-                    <DollarSign className="h-4 w-4" />
-                  </div>
-                  <div className="flex-1">
-                    <dt className="text-xs text-muted-foreground font-medium">Revenue</dt>
-                    <dd className="text-lg font-semibold">$345K</dd>
-                  </div>
-                  <Badge 
-                    className="bg-green-500/10 text-green-600 border-green-500/20 text-[0.65rem]"
-                    variant="secondary"
-                  >
-                    <ArrowUpRight className="h-2.5 w-2.5 mr-0.5" />
-                    12%
-                  </Badge>
-                </div>
-              </div>
-              
-              {/* Hover Overlay Link */}
-              <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <span className="text-xs font-medium text-primary flex items-center gap-1 bg-background/95 px-2 py-0.5 rounded-full shadow-sm backdrop-blur-sm border border-primary/20">
-                  Ver más <ArrowRight className="h-2.5 w-2.5" />
-                </span>
-              </div>
-              
-              {/* Active Indicator */}
-              {activeTab === "revenue" && (
-                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary animate-in fade-in zoom-in duration-300" />
-              )}
-            </button>
-
-            {/* Users Tab */}
-            <button
-              onClick={() => setActiveTab("users")}
-              className={`
-                group relative overflow-hidden rounded-lg border transition-all text-left
-                ${activeTab === "users" 
-                  ? "border-primary bg-primary/5 elevation-3" 
-                  : "border-border bg-card elevation-1 hover:elevation-2 hover:border-primary/50"
-                }
-              `}
-            >
-              <div className="p-3">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className={`
-                    h-7 w-7 rounded-md flex items-center justify-center transition-colors
-                    ${activeTab === "users" 
-                      ? "bg-purple-500 text-white" 
-                      : "bg-purple-500/10 text-purple-600 dark:text-purple-400"
-                    }
-                  `}>
-                    <Users className="h-4 w-4" />
-                  </div>
-                  <div className="flex-1">
-                    <dt className="text-xs text-muted-foreground font-medium">Users</dt>
-                    <dd className="text-lg font-semibold">5,400</dd>
-                  </div>
-                  <Badge 
-                    className="bg-green-500/10 text-green-600 border-green-500/20 text-[0.65rem]"
-                    variant="secondary"
-                  >
-                    <ArrowUpRight className="h-2.5 w-2.5 mr-0.5" />
-                    33%
-                  </Badge>
-                </div>
-              </div>
-
-              {/* Hover Overlay Link */}
-              <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <span className="text-xs font-medium text-primary flex items-center gap-1 bg-background/95 px-2 py-0.5 rounded-full shadow-sm backdrop-blur-sm border border-primary/20">
-                  Ver más <ArrowRight className="h-2.5 w-2.5" />
-                </span>
-              </div>
-
-              {/* Active Indicator */}
-              {activeTab === "users" && (
-                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary animate-in fade-in zoom-in duration-300" />
-              )}
-            </button>
-
-            {/* Orders Tab */}
-            <button
-              onClick={() => setActiveTab("orders")}
-              className={`
-                group relative overflow-hidden rounded-lg border transition-all text-left
-                ${activeTab === "orders" 
-                  ? "border-primary bg-primary/5 elevation-3" 
-                  : "border-border bg-card elevation-1 hover:elevation-2 hover:border-primary/50"
-                }
-              `}
-            >
-              <div className="p-3">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className={`
-                    h-7 w-7 rounded-md flex items-center justify-center transition-colors
-                    ${activeTab === "orders" 
-                      ? "bg-orange-500 text-white" 
-                      : "bg-orange-500/10 text-orange-600 dark:text-orange-400"
-                    }
-                  `}>
-                    <ShoppingCart className="h-4 w-4" />
-                  </div>
-                  <div className="flex-1">
-                    <dt className="text-xs text-muted-foreground font-medium">Orders</dt>
-                    <dd className="text-lg font-semibold">1,248</dd>
-                  </div>
-                  <Badge 
-                    className="bg-red-500/10 text-red-600 border-red-500/20 text-[0.65rem]"
-                    variant="secondary"
-                  >
-                    <ArrowDown className="h-2.5 w-2.5 mr-0.5" />
-                    2.4%
-                  </Badge>
-                </div>
-              </div>
-
-              {/* Hover Overlay Link */}
-              <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <span className="text-xs font-medium text-primary flex items-center gap-1 bg-background/95 px-2 py-0.5 rounded-full shadow-sm backdrop-blur-sm border border-primary/20">
-                  Ver más <ArrowRight className="h-2.5 w-2.5" />
-                </span>
-              </div>
-
-              {/* Active Indicator */}
-              {activeTab === "orders" && (
-                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary animate-in fade-in zoom-in duration-300" />
-              )}
-            </button>
-
-            {/* Conversion Tab */}
-            <button
-              onClick={() => setActiveTab("conversion")}
-              className={`
-                group relative overflow-hidden rounded-lg border transition-all text-left
-                ${activeTab === "conversion" 
-                  ? "border-primary bg-primary/5 elevation-3" 
-                  : "border-border bg-card elevation-1 hover:elevation-2 hover:border-primary/50"
-                }
-              `}
-            >
-              <div className="p-3">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className={`
-                    h-7 w-7 rounded-md flex items-center justify-center transition-colors
-                    ${activeTab === "conversion" 
-                      ? "bg-green-500 text-white" 
-                      : "bg-green-500/10 text-green-600 dark:text-green-400"
-                    }
-                  `}>
-                    <Target className="h-4 w-4" />
-                  </div>
-                  <div className="flex-1">
-                    <dt className="text-xs text-muted-foreground font-medium">Conversion</dt>
-                    <dd className="text-lg font-semibold">3.24%</dd>
-                  </div>
-                  <Badge 
-                    className="bg-gray-500/10 text-gray-600 border-gray-500/20 text-[0.65rem]"
-                    variant="secondary"
-                  >
-                    <Minus className="h-2.5 w-2.5 mr-0.5" />
-                    0%
-                  </Badge>
-                </div>
-              </div>
-
-              {/* Hover Overlay Link */}
-              <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <span className="text-xs font-medium text-primary flex items-center gap-1 bg-background/95 px-2 py-0.5 rounded-full shadow-sm backdrop-blur-sm border border-primary/20">
-                  Ver más <ArrowRight className="h-2.5 w-2.5" />
-                </span>
-              </div>
-
-              {/* Active Indicator */}
-              {activeTab === "conversion" && (
-                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary animate-in fade-in zoom-in duration-300" />
-              )}
-            </button>
-          </div>
-
-          {/* Content based on active tab */}
-          <Card className="mt-4 elevation-2">
-            <CardContent className="p-6">
-              <p className="text-sm text-muted-foreground mb-4">
-                Contenido dinámico para: <span className="font-semibold text-foreground capitalize">{activeTab}</span>
-              </p>
-              <div className="h-40 rounded-lg bg-muted/30 flex items-center justify-center">
-                <p className="text-sm text-muted-foreground">
-                  Aquí irían gráficos o detalles específicos de "{activeTab}"
+                <p className="text-xs text-muted-foreground">
+                  -0.4 hrs vs semana anterior
                 </p>
               </div>
             </CardContent>
           </Card>
         </div>
+
+        {/* Financial Overview con múltiples acciones */}
+        <Card className="elevation-2 mb-6">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle>Financial Overview</CardTitle>
+              <CardDescription>Resumen financiero del último trimestre</CardDescription>
+            </div>
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm">
+                <Download className="h-4 w-4 mr-2" />
+                Export
+              </Button>
+              <Button variant="outline" size="sm">
+                <Share2 className="h-4 w-4 mr-2" />
+                Share
+              </Button>
+              <Button variant="outline" size="sm">
+                <Eye className="h-4 w-4 mr-2" />
+                View Report
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-6 md:grid-cols-3">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="h-8 w-8 rounded-lg bg-green-500/10 flex items-center justify-center">
+                    <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Total Revenue</p>
+                    <p className="text-xl font-bold">$2.4M</p>
+                  </div>
+                </div>
+                <Badge className="bg-green-500/10 text-green-600 border-green-500/20">
+                  <ArrowUp className="h-3 w-3 mr-1" />
+                  18.2% vs Q3
+                </Badge>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="h-8 w-8 rounded-lg bg-blue-500/10 flex items-center justify-center">
+                    <Wallet className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Net Profit</p>
+                    <p className="text-xl font-bold">$985K</p>
+                  </div>
+                </div>
+                <Badge className="bg-green-500/10 text-green-600 border-green-500/20">
+                  <ArrowUp className="h-3 w-3 mr-1" />
+                  12.5% vs Q3
+                </Badge>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="h-8 w-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
+                    <HandCoins className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Operating Costs</p>
+                    <p className="text-xl font-bold">$1.42M</p>
+                  </div>
+                </div>
+                <Badge className="bg-red-500/10 text-red-600 border-red-500/20">
+                  <ArrowDown className="h-3 w-3 mr-1" />
+                  3.8% vs Q3
+                </Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Team Performance */}
+        <Card className="elevation-2">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-base font-medium">Team Performance</CardTitle>
+            <div className="flex gap-2">
+              <Button variant="ghost" size="sm">
+                <Filter className="h-4 w-4 mr-2" />
+                Filter
+              </Button>
+              <Button variant="ghost" size="sm" className="text-xs gap-1">
+                View All
+                <ArrowRight className="h-3 w-3" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {/* Team Member 1 */}
+              <div className="flex items-center gap-4">
+                <Avatar className="h-10 w-10">
+                  <AvatarImage src="" alt="User" />
+                  <AvatarFallback className="bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                    JD
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-1">
+                    <p className="text-sm font-medium">John Doe</p>
+                    <span className="text-xs text-muted-foreground">45 operaciones</span>
+                  </div>
+                  <Progress value={90} className="h-1.5" />
+                </div>
+                <Badge className="bg-green-500/10 text-green-600 border-green-500/20">
+                  90%
+                </Badge>
+              </div>
+
+              {/* Team Member 2 */}
+              <div className="flex items-center gap-4">
+                <Avatar className="h-10 w-10">
+                  <AvatarImage src="" alt="User" />
+                  <AvatarFallback className="bg-purple-500/10 text-purple-600 dark:text-purple-400">
+                    SM
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-1">
+                    <p className="text-sm font-medium">Sarah Martinez</p>
+                    <span className="text-xs text-muted-foreground">38 operaciones</span>
+                  </div>
+                  <Progress value={85} className="h-1.5" />
+                </div>
+                <Badge className="bg-green-500/10 text-green-600 border-green-500/20">
+                  85%
+                </Badge>
+              </div>
+
+              {/* Team Member 3 */}
+              <div className="flex items-center gap-4">
+                <Avatar className="h-10 w-10">
+                  <AvatarImage src="" alt="User" />
+                  <AvatarFallback className="bg-orange-500/10 text-orange-600 dark:text-orange-400">
+                    RC
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-1">
+                    <p className="text-sm font-medium">Robert Chen</p>
+                    <span className="text-xs text-muted-foreground">32 operaciones</span>
+                  </div>
+                  <Progress value={78} className="h-1.5" />
+                </div>
+                <Badge className="bg-yellow-500/10 text-yellow-600 border-yellow-500/20">
+                  78%
+                </Badge>
+              </div>
+
+              {/* Team Member 4 */}
+              <div className="flex items-center gap-4">
+                <Avatar className="h-10 w-10">
+                  <AvatarImage src="" alt="User" />
+                  <AvatarFallback className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                    LK
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-1">
+                    <p className="text-sm font-medium">Lisa Kim</p>
+                    <span className="text-xs text-muted-foreground">41 operaciones</span>
+                  </div>
+                  <Progress value={88} className="h-1.5" />
+                </div>
+                <Badge className="bg-green-500/10 text-green-600 border-green-500/20">
+                  88%
+                </Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* ===== FACTORING INVOICE STATUS ===== */}
-      <div className="mt-8">
+      {/* ===== FACTORING KPI CARDS (FIGMA IMPORT) ===== */}
+      <div className="pt-8 border-t border-border">
         <div className="mb-6">
-          <h3 className="text-xl font-semibold mb-2">Estado de las Facturas (Factoring)</h3>
+          <h2 className="text-2xl font-semibold mb-2">Factoring KPI Cards</h2>
           <p className="text-sm text-muted-foreground">
-            Indicadores de estado para operaciones de factoring
+            Estados de facturas con borde inferior de color, interacción click para activar y badges de conteo
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {/* Card 1: Facturas Elegibles */}
-          <Card className="elevation-2 border-l-4 border-l-blue-500">
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h4 className="text-lg font-semibold text-foreground">Facturas Elegibles</h4>
-                  <p className="text-sm text-muted-foreground">Disponibles para anticipo</p>
-                </div>
-                <div className="h-10 w-10 rounded-full bg-blue-500/10 flex items-center justify-center">
-                  <FileText className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4 pt-2">
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground font-medium uppercase">Facturas</p>
-                  <p className="text-2xl font-bold">68</p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground font-medium uppercase">Monto</p>
-                  <p className="text-2xl font-bold">$2,145,000</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Card 2: Pendientes */}
-          <Card className="elevation-2 border-l-4 border-l-orange-500">
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h4 className="text-lg font-semibold text-foreground">Pendientes</h4>
-                  <p className="text-sm text-muted-foreground">En revisión de riesgo</p>
-                </div>
-                <div className="h-10 w-10 rounded-full bg-orange-500/10 flex items-center justify-center">
-                  <AlertCircle className="h-5 w-5 text-orange-600 dark:text-orange-400" />
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4 pt-2">
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground font-medium uppercase">Facturas</p>
-                  <p className="text-2xl font-bold">5</p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground font-medium uppercase">Monto</p>
-                  <p className="text-2xl font-bold">$85,300</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Card 3: En Negociación */}
-          <Card className="elevation-2 border-l-4 border-l-yellow-500">
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h4 className="text-lg font-semibold text-foreground">En Negociación</h4>
-                  <p className="text-sm text-muted-foreground">Pendientes de confirmación</p>
-                </div>
-                <div className="h-10 w-10 rounded-full bg-yellow-500/10 flex items-center justify-center">
-                  <Clock className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4 pt-2">
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground font-medium uppercase">Facturas</p>
-                  <p className="text-2xl font-bold">12</p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground font-medium uppercase">Monto</p>
-                  <p className="text-2xl font-bold">$145,200</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Card 4: Desembolsadas */}
-          <Card className="elevation-2 border-l-4 border-l-green-500">
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h4 className="text-lg font-semibold text-foreground">Desembolsadas</h4>
-                  <p className="text-sm text-muted-foreground">Operaciones finalizadas</p>
-                </div>
-                <div className="h-10 w-10 rounded-full bg-green-500/10 flex items-center justify-center">
-                  <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4 pt-2">
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground font-medium uppercase">Facturas</p>
-                  <p className="text-2xl font-bold">45</p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground font-medium uppercase">Monto</p>
-                  <p className="text-2xl font-bold">$890,500</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Card 5: No Elegibles */}
-          <Card className="elevation-2 border-l-4 border-l-red-500">
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h4 className="text-lg font-semibold text-foreground">No Elegibles</h4>
-                  <p className="text-sm text-muted-foreground">Rechazadas por riesgo</p>
-                </div>
-                <div className="h-10 w-10 rounded-full bg-red-500/10 flex items-center justify-center">
-                  <XCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4 pt-2">
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground font-medium uppercase">Facturas</p>
-                  <p className="text-2xl font-bold">8</p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground font-medium uppercase">Monto</p>
-                  <p className="text-2xl font-bold">$95,400</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Interactive Demo - Con manejo de estado */}
+        <div>
+          <h3 className="text-lg font-medium mb-4">Interactive Demo (Click to Activate)</h3>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <FactoringKpiCard
+              label="Creadas"
+              description="Facturas registradas para evaluación"
+              value="$125,420"
+              count={234}
+              variant="blue"
+              isActive={activeFactoringCard === "creadas"}
+              onClick={() => setActiveFactoringCard(activeFactoringCard === "creadas" ? null : "creadas")}
+              icon={<FileCheck2 />}
+            />
+            <FactoringKpiCard
+              label="En Proceso"
+              description="En proceso de revisión"
+              value="$125,420"
+              count={234}
+              variant="yellow"
+              isActive={activeFactoringCard === "proceso"}
+              onClick={() => setActiveFactoringCard(activeFactoringCard === "proceso" ? null : "proceso")}
+              icon={<Clock />}
+            />
+            <FactoringKpiCard
+              label="Negociadas"
+              description="En proceso de revisión"
+              value="$125,420"
+              count={234}
+              variant="green"
+              isActive={activeFactoringCard === "negociadas"}
+              onClick={() => setActiveFactoringCard(activeFactoringCard === "negociadas" ? null : "negociadas")}
+              icon={<FileCheck2 />}
+            />
+            <FactoringKpiCard
+              label="Endosadas a Fondeador"
+              description="Transferida para desembolso"
+              value="$125,420"
+              count={234}
+              variant="green"
+              isActive={activeFactoringCard === "endosadas"}
+              onClick={() => setActiveFactoringCard(activeFactoringCard === "endosadas" ? null : "endosadas")}
+              icon={<Receipt />}
+            />
+          </div>
+          {activeFactoringCard && (
+            <div className="mt-4 p-4 bg-muted rounded-lg">
+              <p className="text-sm text-muted-foreground">
+                Estado activo: <span className="font-medium text-foreground capitalize">{activeFactoringCard}</span>
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

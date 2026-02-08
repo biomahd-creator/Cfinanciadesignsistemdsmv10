@@ -99,35 +99,6 @@ export function ToggleGroupDemo() {
   );
 }`}
       
-      // Usage
-      usage="Importa ToggleGroup y ToggleGroupItem desde @/components/ui/toggle-group. Usa type='single' para selección exclusiva (como tabs) o type='multiple' para seleccionar múltiples opciones. Ideal para barras de herramientas, controles de vista, y filtros."
-      usageCode={`import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-
-// Single Selection
-function AlignmentControls() {
-  return (
-    <ToggleGroup type="single" defaultValue="left">
-      <ToggleGroupItem value="left">Left</ToggleGroupItem>
-      <ToggleGroupItem value="center">Center</ToggleGroupItem>
-      <ToggleGroupItem value="right">Right</ToggleGroupItem>
-    </ToggleGroup>
-  );
-}
-
-// Multiple Selection
-function TextFormattingControls() {
-  return (
-    <ToggleGroup type="multiple">
-      <ToggleGroupItem value="bold">
-        <Bold className="h-4 w-4" />
-      </ToggleGroupItem>
-      <ToggleGroupItem value="italic">
-        <Italic className="h-4 w-4" />
-      </ToggleGroupItem>
-    </ToggleGroup>
-  );
-}`}
-      
       // Props Documentation
       props={[
         {

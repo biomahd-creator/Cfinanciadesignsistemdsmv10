@@ -67,7 +67,76 @@ export function InvoiceCardPage() {
         </div>
       }
       code={invoiceCardCode}
-      usage="Representación visual compacta de una factura en listas o dashboards."
+      props={[
+        { name: "invoice", type: "InvoiceData", description: "Datos de la factura: id, invoiceNumber, clientName, amount, dueDate, issueDate, status ('pending'|'approved'|'rejected'|'paid'|'overdue'), probability.", required: true },
+        { name: "className", type: "string", description: "Clases adicionales para la card." },
+        { name: "onAction", type: "(action: string) => void", description: "Callback al seleccionar una acción del menú contextual (ver detalles, aprobar, rechazar, etc.)." },
+      ]}
+      examples={[
+        {
+          title: "Factura aprobada",
+          description: "Card con estado aprobado y alta probabilidad.",
+          preview: (
+            <div className="w-full max-w-md">
+              <InvoiceCard
+                invoice={{
+                  id: "3",
+                  number: "FV-9923",
+                  clientName: "Construcciones del Pacífico",
+                  amount: 78500000,
+                  dueDate: "20 Nov 2024",
+                  issueDate: "20 Sep 2024",
+                  status: "approved",
+                  probability: 95,
+                }}
+              />
+            </div>
+          ),
+          code: `<InvoiceCard
+  invoice={{
+    id: "3",
+    number: "FV-9923",
+    clientName: "Construcciones del Pacífico",
+    amount: 78500000,
+    dueDate: "20 Nov 2024",
+    issueDate: "20 Sep 2024",
+    status: "approved",
+    probability: 95,
+  }}
+  onAction={(action) => console.log(action)}
+/>`,
+        },
+        {
+          title: "Factura pagada",
+          description: "Card con estado de pago completado.",
+          preview: (
+            <div className="w-full max-w-md">
+              <InvoiceCard
+                invoice={{
+                  id: "4",
+                  number: "FV-9900",
+                  clientName: "Alimentos del Valle SA",
+                  amount: 22000000,
+                  dueDate: "01 Oct 2024",
+                  issueDate: "01 Ago 2024",
+                  status: "paid",
+                }}
+              />
+            </div>
+          ),
+          code: `<InvoiceCard
+  invoice={{
+    id: "4",
+    number: "FV-9900",
+    clientName: "Alimentos del Valle SA",
+    amount: 22000000,
+    dueDate: "01 Oct 2024",
+    issueDate: "01 Ago 2024",
+    status: "paid",
+  }}
+/>`,
+        },
+      ]}
     />
   );
 }

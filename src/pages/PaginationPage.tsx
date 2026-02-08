@@ -74,22 +74,6 @@ export function PaginationDemo() {
   )
 }`}
       
-      // Usage
-      usage="Usa los componentes de paginación para navegar entre páginas de datos."
-      usageCode={`<Pagination>
-  <PaginationContent>
-    <PaginationItem>
-      <PaginationPrevious />
-    </PaginationItem>
-    <PaginationItem>
-      <PaginationLink>1</PaginationLink>
-    </PaginationItem>
-    <PaginationItem>
-      <PaginationNext />
-    </PaginationItem>
-  </PaginationContent>
-</Pagination>`}
-      
       // Props Documentation
       props={[
         {

@@ -208,7 +208,7 @@ export function HelpCenter({ variant = "header" }: HelpCenterProps) {
 
         {/* Tabs for different help sections */}
         <Tabs defaultValue="faqs" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-6">
+          <TabsList className="grid w-full grid-cols-3 max-w-lg mb-6">
             <TabsTrigger value="faqs" className="text-xs">
               FAQs
             </TabsTrigger>

@@ -1,7 +1,7 @@
 import { ComponentShowcase } from "../components/ui/component-showcase";
-import { AuditLogViewer } from "../components/widgets/AuditLogViewer";
+import { AuditLogViewer } from "../components/patterns/AuditLogViewer";
 
-const auditLogCode = `import { AuditLogViewer } from "@/components/widgets/AuditLogViewer";
+const auditLogCode = `import { AuditLogViewer } from "@/components/patterns/AuditLogViewer";
 
 export function AuditLogDemo() {
   return <AuditLogViewer />;
@@ -19,7 +19,35 @@ export function AuditLogViewerPage() {
         </div>
       }
       code={auditLogCode}
-      usage="Ideal para compliance, seguridad y debugging de acciones de usuarios."
+      props={[
+        { name: "logs", type: "AuditLogEntry[]", description: "Array de entradas de log. Cada entry: id, timestamp, user, action, resource, status ('success'|'warning'|'error'), ipAddress, details.", default: "mockLogs" },
+        { name: "onExport", type: "() => void", description: "Callback al clickear el botón de exportar logs." },
+        { name: "onFilterChange", type: "(filter: string) => void", description: "Callback al cambiar el filtro de estado." },
+      ]}
+      examples={[
+        {
+          title: "Integración con API",
+          description: "Carga logs desde un endpoint y permite exportar.",
+          preview: (
+            <div className="text-center py-6 border rounded-lg">
+              <p className="text-sm text-muted-foreground">Integra con tu API REST para logs en tiempo real.</p>
+            </div>
+          ),
+          code: `const [logs, setLogs] = useState([]);
+
+useEffect(() => {
+  fetch("/api/audit-logs")
+    .then(res => res.json())
+    .then(setLogs);
+}, []);
+
+<AuditLogViewer
+  logs={logs}
+  onExport={() => downloadCSV(logs)}
+  onFilterChange={(status) => refetchLogs({ status })}
+/>`,
+        },
+      ]}
     />
   );
 }

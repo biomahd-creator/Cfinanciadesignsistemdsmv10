@@ -166,7 +166,7 @@ export function DataVisualizationPage() {
             <CardDescription>Solo la línea de datos, ideal para embeddings</CardDescription>
           </CardHeader>
           <CardContent>
-            <Sparkline data={sparklineData} height={80} color="hsl(var(--primary))" />
+            <Sparkline data={sparklineData} height={80} color="var(--primary)" />
           </CardContent>
         </Card>
 
@@ -303,7 +303,7 @@ export function DataVisualizationPage() {
             <li>Colores automáticos diferenciados</li>
             <li>Labels con nombre y valor</li>
             <li>Tooltip interactivo en hover</li>
-            <li>Responsive con ResponsiveContainer</li>
+            <li>Responsive con SafeChartContainer</li>
             <li>Paleta de colores personalizable</li>
           </ul>
         </div>

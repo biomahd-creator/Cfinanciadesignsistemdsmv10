@@ -2,7 +2,7 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Badge } from "../ui/badge";
 
-interface FormFieldProps {
+interface SimpleFormFieldProps {
   label: string;
   id: string;
   type?: string;
@@ -12,7 +12,7 @@ interface FormFieldProps {
   helperText?: string;
 }
 
-export function FormField({
+export function SimpleFormField({
   label,
   id,
   type = "text",
@@ -20,7 +20,7 @@ export function FormField({
   required = false,
   error,
   helperText,
-}: FormFieldProps) {
+}: SimpleFormFieldProps) {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">

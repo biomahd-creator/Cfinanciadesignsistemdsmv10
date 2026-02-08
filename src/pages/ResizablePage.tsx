@@ -42,14 +42,6 @@ export function ResizableDemo() {
   )
 }`}
       
-      // Usage
-      usage="Usa ResizablePanelGroup como contenedor y ResizablePanel para las secciones. Usa ResizableHandle para el control de redimensionamiento."
-      usageCode={`<ResizablePanelGroup direction="horizontal">
-  <ResizablePanel>One</ResizablePanel>
-  <ResizableHandle />
-  <ResizablePanel>Two</ResizablePanel>
-</ResizablePanelGroup>`}
-      
       // Props Documentation
       props={[
         {

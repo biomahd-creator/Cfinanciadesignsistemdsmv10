@@ -1,3 +1,4 @@
+import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Badge } from "../ui/badge";
 
@@ -54,6 +55,17 @@ export function Heatmap({
   min,
   max
 }: HeatmapProps) {
+  // Validación: si no hay datos, mostrar mensaje
+  if (!data || data.length === 0 || !rows || rows.length === 0 || !columns || columns.length === 0) {
+    return (
+      <Card className="w-full">
+        <CardContent className="p-12 text-center">
+          <p className="text-muted-foreground">No hay datos para mostrar en el heatmap</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   // Calculate min and max if not provided
   const values = data.map(d => d.value);
   const minValue = min ?? Math.min(...values);
@@ -79,7 +91,7 @@ export function Heatmap({
 
   const getTextColor = (value: number) => {
     const normalized = (value - minValue) / (maxValue - minValue);
-    return normalized > 0.5 ? "#ffffff" : "hsl(var(--foreground))";
+    return normalized > 0.5 ? "#ffffff" : "var(--foreground)";
   };
 
   const content = (

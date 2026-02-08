@@ -14,9 +14,9 @@ const sampleCode = `import React from 'react';
 
 function HelloWorld() {
   return (
-    <div className="p-4 bg-white rounded shadow">
+    <div className="p-4 bg-card rounded shadow">
       <h1 className="text-2xl font-bold">Hello World!</h1>
-      <p className="mt-2 text-gray-600">This is a code block.</p>
+      <p className="mt-2 text-muted-foreground">This is a code block.</p>
     </div>
   );
 }`;

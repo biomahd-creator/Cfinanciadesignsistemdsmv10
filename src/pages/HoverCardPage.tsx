@@ -61,13 +61,6 @@ export function HoverCardDemo() {
   )
 }`}
       
-      // Usage
-      usage="Usa HoverCard como contenedor, HoverCardTrigger para el elemento que activa el hover, y HoverCardContent para el contenido."
-      usageCode={`<HoverCard>
-  <HoverCardTrigger>Hover me</HoverCardTrigger>
-  <HoverCardContent>Content</HoverCardContent>
-</HoverCard>`}
-      
       // Props Documentation
       props={[
         {

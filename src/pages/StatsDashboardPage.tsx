@@ -15,7 +15,6 @@ export function StatsDashboardPage() {
       category="Business Pattern"
       preview={<StatsDashboard />}
       code={statsDashboardCode}
-      usage="Utilizado para visualizar métricas clave en el dashboard principal."
     />
   );
 }

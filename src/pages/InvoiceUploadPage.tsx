@@ -109,7 +109,7 @@ export function InvoiceUploadPage() {
                   
                   <div className="flex-1 overflow-y-auto p-6 pt-2">
                     <Tabs defaultValue="files" value={activeTab} onValueChange={setActiveTab} className="w-full">
-                      <TabsList className="grid w-full grid-cols-2 mb-6">
+                      <TabsList className="grid w-full grid-cols-2 max-w-lg mb-6">
                         <TabsTrigger value="files" className="gap-2">
                           <FileText className="h-4 w-4" />
                           Archivos
