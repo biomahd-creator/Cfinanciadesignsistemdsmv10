@@ -175,7 +175,9 @@
     --color-slate-950: oklch(.129 .042 264.695);
     --color-gray-100: oklch(.967 .003 264.542);
     --color-gray-300: oklch(.872 .01 258.338);
+    --color-gray-400: oklch(.707 .022 261.325);
     --color-gray-500: oklch(.551 .027 264.364);
+    --color-gray-700: oklch(.373 .034 259.733);
     --color-black: #000;
     --color-white: #fff;
     --spacing: .25rem;
@@ -5018,6 +5020,10 @@
     color: var(--color-gray-300);
   }
 
+  .text-gray-700 {
+    color: var(--color-gray-700);
+  }
+
   .text-green-500 {
     color: var(--color-green-500);
   }
@@ -8957,6 +8963,16 @@
     border-color: var(--color-blue-900);
   }
 
+  .dark\:border-gray-500\/40:is(.dark *) {
+    border-color: color-mix(in srgb, oklch(.551 .027 264.364) 40%, transparent);
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .dark\:border-gray-500\/40:is(.dark *) {
+      border-color: color-mix(in oklab, var(--color-gray-500) 40%, transparent);
+    }
+  }
+
   .dark\:border-green-500\/20:is(.dark *) {
     border-color: color-mix(in srgb, oklch(.723 .219 149.579) 20%, transparent);
   }
@@ -9187,6 +9203,16 @@
     }
   }
 
+  .dark\:bg-gray-500\/15:is(.dark *) {
+    background-color: color-mix(in srgb, oklch(.551 .027 264.364) 15%, transparent);
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .dark\:bg-gray-500\/15:is(.dark *) {
+      background-color: color-mix(in oklab, var(--color-gray-500) 15%, transparent);
+    }
+  }
+
   .dark\:bg-green-400:is(.dark *) {
     background-color: var(--color-green-400);
   }
@@ -9379,6 +9405,10 @@
 
   .dark\:text-emerald-400:is(.dark *) {
     color: var(--color-emerald-400);
+  }
+
+  .dark\:text-gray-400:is(.dark *) {
+    color: var(--color-gray-400);
   }
 
   .dark\:text-green-200:is(.dark *) {

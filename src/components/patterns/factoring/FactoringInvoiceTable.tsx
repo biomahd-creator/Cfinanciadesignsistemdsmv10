@@ -282,7 +282,9 @@ export function FactoringInvoiceTable({
       case "discardReason":
         return (
           <TableCell>
-            <BadgeCell variant="muted">{invoice.discardReason}</BadgeCell>
+            <Badge variant="outline" className="border-gray-300 bg-gray-100 text-gray-700 dark:border-gray-500/40 dark:bg-gray-500/15 dark:text-gray-400">
+              {invoice.discardReason}
+            </Badge>
           </TableCell>
         );
       case "discardDate":
