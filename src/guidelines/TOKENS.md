@@ -17,6 +17,7 @@
 8. [Animaciones](#8-animaciones)
 9. [Z-Index](#9-z-index)
 10. [Reglas de Uso Rapido](#10-reglas-de-uso-rapido)
+11. [Sistema de Temas](#11-sistema-de-temas)
 
 ---
 
@@ -687,12 +688,50 @@ Color NO es el unico indicador de estado
 | Archivo | Proposito |
 |---------|-----------|
 | `/styles/globals.css` | CSS custom properties (SSoT para CSS) |
+| `/styles/themes/theme-*.css` | 7 temas CSS independientes (overrides de globals.css) |
 | `/figma-tokens.json` | Export para Figma Tokens plugin |
 | `/tailwind-preset.js` | Configuracion de Tailwind |
 | `/lib/animation-config.ts` | Configuracion centralizada de animaciones |
+| `/components/ThemeProvider.tsx` | Provider con STYLE_THEMES array y estado styleTheme |
 
 ---
 
-*Version: 1.0.0*
+## 11. SISTEMA DE TEMAS
+
+### Arquitectura
+
+Los temas overridean las variables de `globals.css` usando especificidad CSS:
+
+```
+:root (0,0,1)                    <- globals.css (default CESIONBNK)
+html[data-theme="X"] (0,1,1)     <- theme CSS (light overrides)
+.dark (0,1,0)                    <- globals.css (dark mode)
+html.dark[data-theme="X"] (0,2,1) <- theme CSS (dark overrides + bridges)
+```
+
+### Variables que cada tema DEBE definir
+
+**Light mode** (`html[data-theme="X"]`):
+- `--background`, `--foreground`, `--card`, `--card-foreground`
+- `--popover`, `--popover-foreground`, `--secondary`, `--secondary-foreground`
+- `--muted`, `--muted-foreground`, `--accent`, `--accent-foreground`
+- `--destructive/success/warning/info` + sus `-foreground`
+- `--border`, `--input`, `--input-border`, `--input-background`
+- `--switch-background`, `--radius`
+- `--sidebar-*` (8 variables)
+- `--shadow-elevation-{1-4}`
+
+**Dark mode** (`html.dark[data-theme="X"]`): 
+- Todas las anteriores + **puentes `--color-*`** (30+ variables)
+
+### Reglas criticas
+
+1. **`--primary` y `--ring`**: Se heredan de `:root`. NO overridear en temas (mantener brand green)
+2. **`globals.css` nunca se modifica**: Es el punto de restauracion
+3. **Cada tema incluye enhancements CSS**: Cards, focus, transitions scoped a `html[data-theme="X"]`
+
+---
+
+*Version: 1.1.0*
 *Ultima actualizacion: Febrero 2026*
 *Licencia: Privada - C-Financia / CESIONBNK*

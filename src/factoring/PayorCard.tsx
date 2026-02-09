@@ -24,10 +24,10 @@ interface PayorCardProps {
 }
 
 const behaviorConfig = {
-  excellent: { label: "Excelente", color: "text-green-600 bg-green-50" },
-  good: { label: "Bueno", color: "text-blue-600 bg-blue-50" },
-  fair: { label: "Regular", color: "text-yellow-600 bg-yellow-50" },
-  poor: { label: "Malo", color: "text-red-600 bg-red-50" },
+  excellent: { label: "Excelente", variant: "success-soft-outline" as const },
+  good: { label: "Bueno", variant: "info-soft-outline" as const },
+  fair: { label: "Regular", variant: "warning-soft-outline" as const },
+  poor: { label: "Malo", variant: "destructive-soft-outline" as const },
 };
 
 export function PayorCard({ payor, className, onViewDetails }: PayorCardProps) {
@@ -50,7 +50,7 @@ export function PayorCard({ payor, className, onViewDetails }: PayorCardProps) {
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
             <h3 className="font-semibold text-lg truncate pr-2">{payor.name}</h3>
-            <Badge variant="secondary" className={cn("shrink-0", behavior.color)}>
+            <Badge variant={behavior.variant} className="shrink-0">
               {behavior.label}
             </Badge>
           </div>

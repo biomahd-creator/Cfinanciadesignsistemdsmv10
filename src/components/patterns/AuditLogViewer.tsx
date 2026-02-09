@@ -151,13 +151,13 @@ export function AuditLogViewer({
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "success":
-        return <Badge className="bg-green-100 text-green-700 hover:bg-green-100">Success</Badge>;
+        return <Badge variant="success-soft-outline">Success</Badge>;
       case "warning":
-        return <Badge className="bg-yellow-100 text-yellow-700 hover:bg-yellow-100">Warning</Badge>;
+        return <Badge variant="warning-soft-outline">Warning</Badge>;
       case "error":
-        return <Badge className="bg-red-100 text-red-700 hover:bg-red-100">Error</Badge>;
+        return <Badge variant="destructive-soft-outline">Error</Badge>;
       default:
-        return <Badge variant="secondary">{status}</Badge>;
+        return <Badge variant="info-soft-outline">{status}</Badge>;
     }
   };
 

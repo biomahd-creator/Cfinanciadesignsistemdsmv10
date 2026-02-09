@@ -164,7 +164,7 @@ export function MultiStepWizardVerticalPage() {
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-[320px,1fr] gap-6">
+      <div className="grid lg:grid-cols-[320px_1fr] gap-6">
         {/* Vertical Stepper - Enhanced Left Sidebar */}
         <div className="h-fit lg:sticky lg:top-6">
           <div className="space-y-4">

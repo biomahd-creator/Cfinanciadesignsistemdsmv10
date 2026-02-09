@@ -48,9 +48,9 @@ export function TablePage() {
                   <TableCell>
                     <Badge 
                       variant={
-                        invoice.status === "Paid" ? "default" : 
-                        invoice.status === "Pending" ? "secondary" : 
-                        "destructive"
+                        invoice.status === "Paid" ? "success-soft-outline" : 
+                        invoice.status === "Pending" ? "warning-soft-outline" : 
+                        "destructive-soft-outline"
                       }
                     >
                       {invoice.status}
@@ -134,7 +134,7 @@ export function TableDemo() {
                     <TableRow key={invoice.id}>
                       <TableCell className="font-medium">{invoice.id}</TableCell>
                       <TableCell>
-                        <Badge variant={invoice.status === "Paid" ? "default" : "secondary"}>
+                        <Badge variant={invoice.status === "Paid" ? "success-soft-outline" : invoice.status === "Pending" ? "warning-soft-outline" : "destructive-soft-outline"}>
                           {invoice.status}
                         </Badge>
                       </TableCell>
@@ -264,7 +264,14 @@ export function TableDemo() {
                     <TableRow key={invoice.id} className="h-8">
                       <TableCell className="py-2 font-medium">{invoice.id}</TableCell>
                       <TableCell className="py-2">
-                        <Badge variant="outline" className="text-xs">
+                        <Badge 
+                          variant={
+                            invoice.status === "Paid" ? "success-soft-outline" : 
+                            invoice.status === "Pending" ? "warning-soft-outline" : 
+                            "destructive-soft-outline"
+                          } 
+                          className="text-xs"
+                        >
                           {invoice.status}
                         </Badge>
                       </TableCell>
@@ -363,7 +370,7 @@ export function TableDemo() {
                       <TableCell>{user.role}</TableCell>
                       <TableCell>
                         <Badge 
-                          variant={user.status === "Active" ? "default" : "secondary"}
+                          variant={user.status === "Active" ? "success-soft-outline" : "warning-soft-outline"}
                         >
                           {user.status}
                         </Badge>
@@ -495,7 +502,15 @@ export function TableDemo() {
                     <TableRow key={invoice.id}>
                       <TableCell className="font-medium">{invoice.id}</TableCell>
                       <TableCell>
-                        <Badge variant="outline">{invoice.status}</Badge>
+                        <Badge 
+                          variant={
+                            invoice.status === "Paid" ? "success-soft-outline" : 
+                            invoice.status === "Pending" ? "warning-soft-outline" : 
+                            "destructive-soft-outline"
+                          }
+                        >
+                          {invoice.status}
+                        </Badge>
                       </TableCell>
                       <TableCell className="text-right">{invoice.amount}</TableCell>
                     </TableRow>

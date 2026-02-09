@@ -89,6 +89,7 @@ export type PageId =
   // ── ADVANCED ──
   | "charts" | "rating" | "date-range-advanced" 
   | "file-uploader" | "rich-text-editor" | "timeline" | "data-table" | "tree-table" 
+  | "tree-table-v2"
   | "export-data"
   | "data-visualization" | "advanced-forms" | "business-components"
   | "virtualized-list" 
@@ -284,7 +285,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
       id: "advanced",
       label: t("sidebar.section.advanced"),
       icon: Sparkles,
-      count: 17,
+      count: 18,
       items: [
         { id: "charts", label: "Charts" },
         { id: "data-visualization", label: "Data Visualization" },
@@ -292,6 +293,7 @@ export function SidebarNew({ activePage, onPageChange, ...props }: SidebarProps)
         { id: "business-components", label: "Business Components" },
         { id: "data-table", label: "Data Table" },
         { id: "tree-table", label: "Tree Table" },
+        { id: "tree-table-v2", label: "Tree Table v2" },
         { id: "export-data", label: "Export Data" },
         { id: "rating", label: "Rating" },
         { id: "date-range-advanced", label: "Date Range" },

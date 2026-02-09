@@ -254,12 +254,12 @@ export function ExportDataPage() {
                     <Badge
                       variant={
                         factura.estado === "Pagada"
-                          ? "outline"
+                          ? "success-soft-outline"
                           : factura.estado === "Aprobada"
-                          ? "default"
+                          ? "info-soft-outline"
                           : factura.estado === "Pendiente"
-                          ? "secondary"
-                          : "destructive"
+                          ? "warning-soft-outline"
+                          : "destructive-soft-outline"
                       }
                     >
                       {factura.estado}
@@ -312,7 +312,12 @@ export function ExportDataPage() {
                     ${factura.monto.toLocaleString("es-ES")}
                   </TableCell>
                   <TableCell>
-                    <Badge variant="secondary">{factura.estado}</Badge>
+                    <Badge variant={
+                      factura.estado === "Pagada" ? "success-soft-outline" :
+                      factura.estado === "Aprobada" ? "info-soft-outline" :
+                      factura.estado === "Pendiente" ? "warning-soft-outline" :
+                      "destructive-soft-outline"
+                    }>{factura.estado}</Badge>
                   </TableCell>
                   <TableCell>
                     {new Date(factura.fecha).toLocaleDateString("es-ES")}

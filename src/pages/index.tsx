@@ -116,6 +116,7 @@ export * from "./TogglePage";
 export * from "./TooltipPage";
 export * from "./TransferListPage";
 export * from "./TreeTablePage";
+export * from "./TreeTableV2Page";
 export * from "./UserProfilePage";
 export * from "./VirtualizedListPage";
 export * from "./WidgetsShowcasePage";

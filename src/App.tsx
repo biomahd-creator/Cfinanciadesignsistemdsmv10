@@ -17,7 +17,15 @@ import { TransitionProvider } from "./components/providers/TransitionProvider";
 import { LoadingOverlay } from "./components/ui/loading-overlay";
 import { LanguageProvider, useLanguage } from "./components/i18n/LanguageProvider";
 import { LanguageSelector } from "./components/i18n/LanguageSelector";
+import { ThemeStyleSelector } from "./components/ThemeStyleSelector";
 import "./styles/tour.css";
+import "./styles/themes/theme-premium.css";
+import "./styles/themes/theme-glass.css";
+import "./styles/themes/theme-minimal.css";
+import "./styles/themes/theme-tailwindpro.css";
+import "./styles/themes/theme-heroui.css";
+import "./styles/themes/theme-soft.css";
+import "./styles/themes/theme-highcontrast.css";
 
 /**
  * App.tsx - Punto de Entrada Principal
@@ -146,6 +154,9 @@ function AppContent() {
 
               {/* Language Selector */}
               <LanguageSelector />
+
+              {/* Style Theme Selector */}
+              <ThemeStyleSelector />
 
               {/* Toggle Theme */}
               <Button

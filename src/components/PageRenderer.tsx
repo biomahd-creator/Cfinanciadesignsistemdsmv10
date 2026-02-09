@@ -67,6 +67,7 @@ import {
   TimelinePage,
   DataTablePage,
   TreeTablePage,
+  TreeTableV2Page,
   ExportDataPage,
   InvoiceGeneratorPage,
   InvoiceUploadPage,
@@ -333,6 +334,8 @@ export function PageRenderer({ pageId }: PageRendererProps) {
       return <DataTablePage />;
     case "tree-table":
       return <TreeTablePage />;
+    case "tree-table-v2":
+      return <TreeTableV2Page />;
     case "export-data":
       return <ExportDataPage />;
     case "rating":

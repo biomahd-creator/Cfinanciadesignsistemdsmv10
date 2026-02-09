@@ -134,27 +134,6 @@ export function MasterDataGrid({
 
   return (
     <Card className="elevation-2 border-none shadow-md overflow-hidden bg-background">
-      {/* Header Section */}
-      {(title || description || onNewAction || headerActions) && (
-        <div className="border-b bg-muted/40 p-4">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              {title && <CardTitle className="text-lg font-semibold tracking-tight">{title}</CardTitle>}
-              {description && <CardDescription className="text-sm text-muted-foreground mt-1">{description}</CardDescription>}
-            </div>
-            <div className="flex items-center gap-2">
-              {headerActions}
-              {onNewAction && (
-                <Button size="sm" className="h-9" onClick={onNewAction}>
-                  {newActionIcon}
-                  {newActionLabel}
-                </Button>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
       <CardHeader className="pb-3 px-4 pt-4">
         {/* Master Toolbar */}
         <div className="flex flex-col gap-3 md:flex-row md:items-center justify-between">

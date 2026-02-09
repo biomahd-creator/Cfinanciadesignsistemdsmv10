@@ -730,7 +730,7 @@ export function OperationsList({ onNewOperation }: OperationsListProps = {}) {
       description: "Facturas registradas para operacion",
       value: `$ ${calculateTotalMonto("Creada").toLocaleString("es-CL")}`,
       count: mockOperations.filter(op => op.estado === "Creada").length,
-      variant: "yellow" as const,
+      variant: "blue" as const,
       onAction: () => handleKpiClick("Creada"),
       icon: <FileCheck2 />,
     },

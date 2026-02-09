@@ -201,41 +201,41 @@ import { ColumnDef } from "@tanstack/react-table";`,
 />`,
   },
   {
-    id: "tree-table",
-    name: "TreeTable",
+    id: "tree-table-v2",
+    name: "TreeTable V2",
     layer: "advanced",
-    path: "/components/advanced/TreeTable.tsx",
-    pageId: "tree-table",
+    path: "/components/advanced/TreeTableV2.tsx",
+    pageId: "tree-table-v2",
     usesMasterDataGrid: true,
     description:
-      "Tabla jerárquica con expand/collapse por nodos. Soporta 3 niveles (Cliente → Proyecto → Factura), checkboxes de selección, lazy load de hijos, dropdown de acciones por fila, y badges de estado.",
+      "Variante avanzada del TreeTable con badges Soft-Outline del DSM, seleccion multiple en cascada (padre auto-selecciona hijos), checkbox indeterminate, propagacion bottom-up (hijos completos auto-check padre), select-all en header y barra de resumen de seleccion.",
     bestFor: [
-      "Datos jerárquicos (parent-child)",
-      "Vista de portafolio: clientes > proyectos > facturas",
-      "Necesidad de expand/collapse con lazy load",
+      "Operaciones batch sobre jerarquias completas",
+      "Seleccion de facturas por cliente/proyecto en bloque",
+      "Tablas con badges semanticos Soft-Outline",
     ],
     features: [
-      "Expand/collapse por nodo con animación",
-      "3 niveles: client → project → invoice",
-      "Iconos por tipo (Building2, FolderOpen, FileText)",
-      "Checkbox de selección por nodo",
-      "Lazy load con paginación por nodo",
-      "DropdownMenu de acciones (ver, editar, eliminar, descargar)",
-      "Badges de estado configurables",
-      "Indentación visual con padding dinámico",
+      "Badges Soft-Outline: warning, success, info, destructive",
+      "Seleccion cascada: padre → todos los descendientes",
+      "Checkbox indeterminate en seleccion parcial",
+      "Propagacion bottom-up: hijos completos → padre auto-check",
+      "Select All en header con 3 estados",
+      "Barra de resumen con contador + limpiar",
+      "Callback onSelectionChange(Set<string>)",
+      "Lazy load + paginacion por nodo",
     ],
     icon: TreePine,
     layerColor: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
-    imports: `import { TreeTable, TreeNode } from "@/components/advanced/TreeTable";`,
-    usageCode: `const data: TreeNode[] = [
+    imports: `import { TreeTableV2, TreeNodeV2 } from "@/components/advanced/TreeTableV2";`,
+    usageCode: `const data: TreeNodeV2[] = [
   {
     id: "client-1",
-    name: "Corporación Global S.A.",
+    name: "Corporacion Global S.A.",
     type: "client",
     children: [
       {
         id: "project-1",
-        name: "Proyecto Expansión",
+        name: "Proyecto Expansion",
         type: "project",
         children: [
           { id: "inv-1", name: "F-001", type: "invoice",
@@ -246,11 +246,11 @@ import { ColumnDef } from "@tanstack/react-table";`,
   }
 ];
 
-<TreeTable
+<TreeTableV2
   data={data}
   showCheckboxes
-  onRowClick={handleClick}
-  title="Portafolio de Clientes"
+  onSelectionChange={(ids) => console.log(ids)}
+  title="Portafolio V2"
 />`,
   },
   {

@@ -70,7 +70,7 @@ export function MultiStepForm() {
   return (
     <div className="w-full">
       <div className="max-w-[1400px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr,4fr] gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_4fr] gap-6">
           {/* Stepper Vertical - Izquierda (20%) */}
           <div className="lg:sticky lg:top-6 h-fit w-full">
             <Card className="w-full">
@@ -533,7 +533,7 @@ export function MultiStepForm() {
   return (
     <div className="w-full">
       <div className="max-w-[1400px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr,4fr] gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_4fr] gap-6">
           {/* Stepper Vertical - Izquierda (20%) */}
           <div className="lg:sticky lg:top-6 h-fit w-full">
             <Card className="w-full">

@@ -4,7 +4,7 @@ import { Badge } from "../components/ui/badge";
 import { Separator } from "../components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../components/ui/collapsible";
-import { CheckCircle2, Code2, Sparkles, Layers, Palette, MousePointerClick, MessageSquare, Database, FileCode, Layout, TrendingUp, Award, BookOpen, Shield, GitBranch, Component, Box, Puzzle, LayoutTemplate, Calendar, Package, Wrench, AlertTriangle, Rocket, Zap, FileText, BarChart3, ChevronDown, ChevronRight, Eye, Keyboard, Accessibility as AccessibilityIcon } from "lucide-react";
+import { CheckCircle2, Code2, Sparkles, Layers, Palette, MousePointerClick, MessageSquare, Database, FileCode, Layout, TrendingUp, Award, BookOpen, Shield, GitBranch, Component, Box, Puzzle, LayoutTemplate, Calendar, Package, Wrench, AlertTriangle, Rocket, Zap, FileText, BarChart3, ChevronDown, ChevronRight, Eye, Keyboard, Accessibility as AccessibilityIcon, Paintbrush } from "lucide-react";
 import { Logo } from "../components/Logo";
 import { useLanguage } from "../components/i18n/LanguageProvider";
 import { Progress } from "../components/ui/progress";
@@ -27,6 +27,36 @@ interface VersionEntry {
 }
 
 const versionHistory: VersionEntry[] = [
+  {
+    version: "6.4.0",
+    date: "February 9, 2026",
+    type: "Minor",
+    sections: [
+      {
+        icon: Paintbrush,
+        title: "Theme Selector Expansion — 8 Styles",
+        items: [
+          "**4 New Themes**: Tailwind Pro, Hero UI Pro, Soft, High Contrast added to the style selector.",
+          "**Tailwind Pro**: Slate neutrals, crisp 1px borders, ring-based focus, clean SaaS dashboard aesthetic.",
+          "**Hero UI Pro**: Generous 14px radius, soft shadows with color tint, hover lift on cards, modern SaaS feel.",
+          "**Soft**: Warm stone neutrals, 16px radius, pastel semantics, pillow-soft shadows, cozy and friendly.",
+          "**High Contrast**: WCAG AAA — 2px borders, zero transparency, thick focus indicators, underlined links.",
+          "**ThemeStyleSelector Updated**: Preview swatches and scrollable popover for all 8 themes.",
+          "**Documentation Updated**: Guidelines, TOKENS, COMPONENTS updated with theme system architecture.",
+        ],
+      },
+      {
+        icon: Wrench,
+        title: "Infrastructure & Quality",
+        items: [
+          "**Each theme**: Full light + dark mode with `--color-*` bridge overrides.",
+          "**CSS Architecture**: `html[data-theme]` (0,1,1) > `:root`, `html.dark[data-theme]` (0,2,1) for cascading.",
+          "**Zero breakage**: `globals.css` untouched — remains as restoration point.",
+          "**Plug & play**: Add/remove themes by editing 3 files (CSS, App.tsx import, STYLE_THEMES array).",
+        ],
+      },
+    ],
+  },
   {
     version: "6.3.0",
     date: "February 8, 2026",
@@ -507,10 +537,10 @@ export function DSMDashboardPage() {
         <div className="flex items-center gap-2">
           <Badge variant="default" className="gap-1.5">
             <GitBranch className="h-3 w-3" />
-            v6.3.0
+            v6.4.0
           </Badge>
           <Badge variant="outline" className="gap-1.5 text-muted-foreground">
-            Feb 8, 2026
+            Feb 9, 2026
           </Badge>
         </div>
       </div>
@@ -557,371 +587,376 @@ export function DSMDashboardPage() {
         </Card>
       </div>
 
-      {/* ── Architecture ── */}
-      <section>
-        <h2 className="text-lg text-foreground mb-4">{t("dashboard.architecture")}</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {architectureLayers.map((layer) => (
-            <Card key={layer.name} className={`border ${layer.borderColor} hover:shadow-md transition-shadow`}>
-              <CardContent className="pt-5 pb-4 px-5 space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className={`p-2 rounded-lg ${layer.bgColor}`}>
-                    <layer.icon className={`h-5 w-5 ${layer.color}`} />
+      {/* ── Architecture + Categories (2-column row) ── */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        {/* Architecture */}
+        <section>
+          <h2 className="text-lg text-foreground mb-4">{t("dashboard.architecture")}</h2>
+          <div className="grid gap-3 grid-cols-2">
+            {architectureLayers.map((layer) => (
+              <Card key={layer.name} className={`border ${layer.borderColor} hover:shadow-md transition-shadow`}>
+                <CardContent className="pt-4 pb-3 px-4 space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <div className={`p-1.5 rounded-lg ${layer.bgColor}`}>
+                      <layer.icon className={`h-4 w-4 ${layer.color}`} />
+                    </div>
+                    <div>
+                      <div className="text-sm text-foreground">{layer.name}</div>
+                      <div className="text-xs text-muted-foreground">{layer.count} {t("dashboard.layer.components")}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-sm text-foreground">{layer.name}</div>
-                    <div className="text-xs text-muted-foreground">{layer.count} {t("dashboard.layer.components")}</div>
-                  </div>
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {layer.description}
-                </p>
-                <code className="text-[10px] text-muted-foreground/70 block">{layer.path}</code>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Categories ── */}
-      <section>
-        <h2 className="text-lg text-foreground mb-4">{t("dashboard.categories")}</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-          {categories.map((cat) => (
-            <Card
-              key={cat.name}
-              className="hover:bg-muted/50 hover:shadow-sm transition-all cursor-pointer group"
-              onClick={() => navigateTo(cat.pageId)}
-            >
-              <CardContent className="pt-4 pb-3 px-4">
-                <div className="flex items-center gap-2.5 mb-1">
-                  <div className={`p-1.5 rounded-md ${cat.bgColor}`}>
-                    <cat.icon className={`h-3.5 w-3.5 ${cat.color}`} />
-                  </div>
-                  <span className="text-sm text-foreground group-hover:text-primary transition-colors">{cat.name}</span>
-                </div>
-                <div className="text-xs text-muted-foreground pl-9">{cat.count} {t("dashboard.layer.components")}</div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Changelog ── */}
-      <section>
-        <div className="flex items-center gap-3 mb-4">
-          <GitBranch className="h-5 w-5 text-primary" />
-          <h2 className="text-lg text-foreground">{t("dashboard.changelog")}</h2>
-          <Badge variant="outline" className="text-[10px] px-1.5 py-0">
-            {versionHistory.length} {t("dashboard.releases")}
-          </Badge>
-        </div>
-
-        <Tabs defaultValue="releases" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 max-w-lg">
-            <TabsTrigger value="releases">{t("dashboard.tab.releases")}</TabsTrigger>
-            <TabsTrigger value="summary">{t("dashboard.tab.summary")}</TabsTrigger>
-            <TabsTrigger value="roadmap">{t("dashboard.tab.roadmap")}</TabsTrigger>
-          </TabsList>
-
-          {/* Releases */}
-          <TabsContent value="releases" className="mt-4">
-            <div className="space-y-3">
-              {versionHistory.map((entry, idx) => (
-                <VersionCard key={entry.version} entry={entry} defaultOpen={idx === 0} />
-              ))}
-            </div>
-          </TabsContent>
-
-          {/* Summary */}
-          <TabsContent value="summary" className="mt-4">
-            <div className="grid gap-4 md:grid-cols-2">
-              <Card>
-                <CardHeader className="pb-3">
-                  <div className="flex items-center gap-2">
-                    <Layers className="h-5 w-5 text-primary" />
-                    <CardTitle className="text-foreground text-sm">{t("dashboard.summary.componentDist")}</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {[
-                      { label: t("dashboard.summary.coreComponents"), count: 60 },
-                      { label: t("dashboard.summary.advancedComponents"), count: 25 },
-                      { label: t("dashboard.summary.businessPatterns"), count: 27 },
-                      { label: "Widgets", count: 19 },
-                    ].map((row) => (
-                      <li key={row.label} className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">{row.label}</span>
-                        <span className="text-foreground">{row.count}</span>
-                      </li>
-                    ))}
-                    <Separator className="my-2" />
-                    <li className="flex justify-between">
-                      <span className="text-foreground">{t("dashboard.summary.total")}</span>
-                      <span className="text-primary">{totalComponents}</span>
-                    </li>
-                  </ul>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {layer.description}
+                  </p>
+                  <code className="text-[10px] text-muted-foreground/70 block">{layer.path}</code>
                 </CardContent>
               </Card>
+            ))}
+          </div>
+        </section>
 
-              <Card>
-                <CardHeader className="pb-3">
-                  <div className="flex items-center gap-2">
-                    <BarChart3 className="h-5 w-5 text-primary" />
-                    <CardTitle className="text-foreground text-sm">{t("dashboard.summary.systemHealth")}</CardTitle>
+        {/* Categories */}
+        <section>
+          <h2 className="text-lg text-foreground mb-4">{t("dashboard.categories")}</h2>
+          <div className="grid grid-cols-2 gap-3">
+            {categories.map((cat) => (
+              <Card
+                key={cat.name}
+                className="hover:bg-muted/50 hover:shadow-sm transition-all cursor-pointer group"
+                onClick={() => navigateTo(cat.pageId)}
+              >
+                <CardContent className="pt-3 pb-2.5 px-3">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <div className={`p-1.5 rounded-md ${cat.bgColor}`}>
+                      <cat.icon className={`h-3.5 w-3.5 ${cat.color}`} />
+                    </div>
+                    <span className="text-sm text-foreground group-hover:text-primary transition-colors">{cat.name}</span>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {[
-                      { label: t("dashboard.summary.propsCoverage"), value: "100%" },
-                      { label: t("dashboard.summary.docCoverage"), value: "100%" },
-                      { label: t("dashboard.summary.tsStrictness"), value: "100%" },
-                      { label: t("dashboard.summary.accessibility"), value: "98%" },
-                      { label: t("dashboard.summary.responsive"), value: "100%" },
-                      { label: t("dashboard.summary.dark"), value: "100%" },
-                    ].map((row) => (
-                      <li key={row.label} className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">{row.label}</span>
-                        <span className="text-green-600">{row.value}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="text-xs text-muted-foreground pl-8">{cat.count} {t("dashboard.layer.components")}</div>
                 </CardContent>
               </Card>
-            </div>
-          </TabsContent>
+            ))}
+          </div>
+        </section>
+      </div>
 
-          {/* Roadmap */}
-          <TabsContent value="roadmap" className="mt-4">
-            <Card>
-              <CardContent className="pt-6">
-                <div className="relative border-l border-primary/20 ml-4 space-y-8 py-2">
-                  <div className="relative pl-8">
-                    <div className="absolute -left-1.5 top-1.5 h-3 w-3 rounded-full border-2 border-primary bg-background" />
-                    <div className="mb-1 text-sm text-primary">{t("dashboard.roadmap.current")}</div>
-                    <h3 className="text-foreground">{t("dashboard.roadmap.performance")}</h3>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      {t("dashboard.roadmap.performanceDesc")}
-                    </p>
-                    <Badge variant="outline">{t("dashboard.roadmap.inProgress")}</Badge>
-                  </div>
-                  <div className="relative pl-8">
-                    <div className="absolute -left-1.5 top-1.5 h-3 w-3 rounded-full border-2 border-muted-foreground bg-background" />
-                    <div className="mb-1 text-sm text-muted-foreground">Q2 2026</div>
-                    <h3 className="text-foreground">{t("dashboard.roadmap.mobile")}</h3>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      {t("dashboard.roadmap.mobileDesc")}
-                    </p>
-                    <Badge variant="secondary">{t("dashboard.roadmap.planned")}</Badge>
-                  </div>
-                  <div className="relative pl-8">
-                    <div className="absolute -left-1.5 top-1.5 h-3 w-3 rounded-full border-2 border-muted-foreground bg-background" />
-                    <div className="mb-1 text-sm text-muted-foreground">Q3 2026</div>
-                    <h3 className="text-foreground">{t("dashboard.roadmap.theming")}</h3>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      {t("dashboard.roadmap.themingDesc")}
-                    </p>
-                    <Badge variant="secondary">{t("dashboard.roadmap.planned")}</Badge>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      </section>
+      {/* ── Changelog + WCAG (2-column row) ── */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
+        {/* Changelog */}
+        <section>
+          <div className="flex items-center gap-3 mb-4">
+            <GitBranch className="h-5 w-5 text-primary" />
+            <h2 className="text-lg text-foreground">{t("dashboard.changelog")}</h2>
+            <Badge variant="outline" className="text-[10px] px-1.5 py-0">
+              {versionHistory.length} {t("dashboard.releases")}
+            </Badge>
+          </div>
 
-      {/* ── WCAG Accessibility ── */}
-      <section>
-        <div className="flex items-center gap-3 mb-4">
-          <AccessibilityIcon className="h-5 w-5 text-green-500" />
-          <h2 className="text-lg text-foreground">{t("dashboard.wcag.title")}</h2>
-          <Badge className="bg-green-500 text-white">AA</Badge>
-        </div>
+          <Tabs defaultValue="releases" className="w-full">
+            <TabsList className="grid w-full grid-cols-3 max-w-lg">
+              <TabsTrigger value="releases">{t("dashboard.tab.releases")}</TabsTrigger>
+              <TabsTrigger value="summary">{t("dashboard.tab.summary")}</TabsTrigger>
+              <TabsTrigger value="roadmap">{t("dashboard.tab.roadmap")}</TabsTrigger>
+            </TabsList>
 
-        {/* Score Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <Card className="border-green-500/20 bg-green-500/5">
-            <CardContent className="pt-5 pb-4 px-5">
-              <div className="text-xs text-muted-foreground mb-1">{t("dashboard.wcag.score")}</div>
-              <div className="text-3xl text-green-500 mb-2">98%</div>
-              <Progress value={98} className="h-1.5" />
-              <p className="text-xs text-muted-foreground mt-2">{t("dashboard.wcag.levelComplete", { level: "AA" })}</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-5 pb-4 px-5">
-              <div className="text-xs text-muted-foreground mb-1">{t("dashboard.wcag.criteriaMet")}</div>
-              <div className="text-3xl text-foreground mb-2">18/18</div>
-              <p className="text-xs text-muted-foreground">100% {t("dashboard.wcag.ofCriteria")}</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-5 pb-4 px-5">
-              <div className="text-xs text-muted-foreground mb-1">{t("dashboard.wcag.conformance")}</div>
-              <div className="flex items-center gap-2 mb-2">
-                <CheckCircle2 className="h-6 w-6 text-green-500" />
-                <span className="text-2xl text-foreground">WCAG 2.1</span>
+            {/* Releases */}
+            <TabsContent value="releases" className="mt-4">
+              <div className="space-y-3">
+                {versionHistory.map((entry, idx) => (
+                  <VersionCard key={entry.version} entry={entry} defaultOpen={idx === 0} />
+                ))}
               </div>
-              <p className="text-xs text-muted-foreground">Level AA (Enhanced)</p>
-            </CardContent>
-          </Card>
-        </div>
+            </TabsContent>
 
-        {/* WCAG Details Tabs */}
-        <Tabs defaultValue="criteria" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 max-w-lg">
-            <TabsTrigger value="criteria">{t("dashboard.wcag.tab.criteria")}</TabsTrigger>
-            <TabsTrigger value="features">{t("dashboard.wcag.tab.features")}</TabsTrigger>
-            <TabsTrigger value="contrast">{t("dashboard.wcag.tab.contrast")}</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="criteria" className="mt-4">
-            <div className="grid gap-4 md:grid-cols-2">
-              {[
-                {
-                  title: t("dashboard.wcag.perceivable"),
-                  items: [
-                    { id: "1.1.1", name: "Text alternatives", level: "A" },
-                    { id: "1.3.1", name: "Info & relationships", level: "A" },
-                    { id: "1.4.1", name: "Use of color", level: "A" },
-                    { id: "1.4.3", name: "Contrast (min)", level: "AA" },
-                    { id: "1.4.11", name: "Non-text contrast", level: "AA" },
-                  ],
-                },
-                {
-                  title: t("dashboard.wcag.operable"),
-                  items: [
-                    { id: "2.1.1", name: "Keyboard", level: "A" },
-                    { id: "2.1.2", name: "No keyboard trap", level: "A" },
-                    { id: "2.4.1", name: "Bypass blocks", level: "A" },
-                    { id: "2.4.3", name: "Focus order", level: "A" },
-                    { id: "2.4.7", name: "Focus visible", level: "AA" },
-                  ],
-                },
-                {
-                  title: t("dashboard.wcag.understandable"),
-                  items: [
-                    { id: "3.1.1", name: "Language of page", level: "A" },
-                    { id: "3.2.1", name: "On focus", level: "A" },
-                    { id: "3.3.1", name: "Error identification", level: "A" },
-                    { id: "3.3.2", name: "Labels / instructions", level: "A" },
-                  ],
-                },
-                {
-                  title: t("dashboard.wcag.robust"),
-                  items: [
-                    { id: "4.1.1", name: "Parsing", level: "A" },
-                    { id: "4.1.2", name: "Name, role, value", level: "A" },
-                    { id: "4.1.3", name: "Status messages", level: "AA" },
-                  ],
-                },
-              ].map((group) => (
-                <Card key={group.title}>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm text-foreground">{group.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-1.5">
-                      {group.items.map((item) => (
-                        <div key={item.id} className="flex items-center justify-between py-1.5 px-2 rounded bg-green-500/5">
-                          <div className="flex items-center gap-2">
-                            <CheckCircle2 className="h-3.5 w-3.5 text-green-500 shrink-0" />
-                            <span className="text-xs text-muted-foreground">{item.id}</span>
-                            <span className="text-sm text-foreground">{item.name}</span>
-                          </div>
-                          <Badge variant="outline" className="text-[10px] px-1.5 py-0">{item.level}</Badge>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="features" className="mt-4">
-            <div className="grid gap-4 md:grid-cols-2">
-              {[
-                {
-                  title: t("dashboard.wcag.keyboardNav"),
-                  icon: Keyboard,
-                  items: ["Tab / Shift+Tab navigation", "Skip links", "Focus trap (modals)", "Escape to close", "Arrow keys (menus)"],
-                },
-                {
-                  title: t("dashboard.wcag.ariaAttrs"),
-                  icon: Eye,
-                  items: ["aria-label (navigation)", "aria-expanded (accordions)", "aria-selected (tabs)", "aria-live regions", "Semantic roles"],
-                },
-                {
-                  title: t("dashboard.wcag.colorContrast"),
-                  icon: Palette,
-                  items: ["Main text: 7.2:1 (AAA)", "Secondary text: 5.1:1 (AA)", "Primary: 7.22:1 (AAA)", "Buttons: 4.8:1 (AA)", "Borders: 3.2:1 (AA)"],
-                },
-                {
-                  title: t("dashboard.wcag.semanticHTML"),
-                  icon: Code2,
-                  items: ["<nav> for navigation", "<main> for content", "<aside> for sidebar", "Hierarchical headings (h1-h6)", "ARIA landmarks"],
-                },
-              ].map((feature) => (
-                <Card key={feature.title}>
-                  <CardHeader className="pb-2">
+            {/* Summary */}
+            <TabsContent value="summary" className="mt-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <Card>
+                  <CardHeader className="pb-3">
                     <div className="flex items-center gap-2">
-                      <feature.icon className="h-4 w-4 text-primary" />
-                      <CardTitle className="text-sm text-foreground">{feature.title}</CardTitle>
+                      <Layers className="h-5 w-5 text-primary" />
+                      <CardTitle className="text-foreground text-sm">{t("dashboard.summary.componentDist")}</CardTitle>
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-1.5">
-                      {feature.items.map((item) => (
-                        <div key={item} className="flex items-center gap-2 py-1">
-                          <CheckCircle2 className="h-3.5 w-3.5 text-green-500 shrink-0" />
-                          <span className="text-sm text-muted-foreground">{item}</span>
-                        </div>
+                    <ul className="space-y-2">
+                      {[
+                        { label: t("dashboard.summary.coreComponents"), count: 60 },
+                        { label: t("dashboard.summary.advancedComponents"), count: 25 },
+                        { label: t("dashboard.summary.businessPatterns"), count: 27 },
+                        { label: "Widgets", count: 19 },
+                      ].map((row) => (
+                        <li key={row.label} className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">{row.label}</span>
+                          <span className="text-foreground">{row.count}</span>
+                        </li>
                       ))}
-                    </div>
+                      <Separator className="my-2" />
+                      <li className="flex justify-between">
+                        <span className="text-foreground">{t("dashboard.summary.total")}</span>
+                        <span className="text-primary">{totalComponents}</span>
+                      </li>
+                    </ul>
                   </CardContent>
                 </Card>
-              ))}
-            </div>
-          </TabsContent>
 
-          <TabsContent value="contrast" className="mt-4">
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm text-foreground">{t("dashboard.wcag.contrastRatios")}</CardTitle>
-                <CardDescription>{t("dashboard.wcag.allColorsPass")}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {[
-                    { name: "Primary on Secondary", fg: "#00c951", bg: "#1C2D3A", ratio: "7.22:1", level: "AAA" },
-                    { name: "White on Secondary", fg: "#FFFFFF", bg: "#1C2D3A", ratio: "7.2:1", level: "AAA" },
-                    { name: "Muted Text", fg: "#A0AEC0", bg: "#FFFFFF", ratio: "5.1:1", level: "AA" },
-                    { name: "Border on Background", fg: "#E2E8F0", bg: "#FFFFFF", ratio: "3.2:1", level: "AA Large" },
-                  ].map((c) => (
-                    <div key={c.name} className="flex items-center justify-between p-3 border rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-1.5">
-                          <div className="w-5 h-5 rounded border" style={{ backgroundColor: c.fg }} />
-                          <span className="text-xs text-muted-foreground">on</span>
-                          <div className="w-5 h-5 rounded border" style={{ backgroundColor: c.bg }} />
-                        </div>
-                        <span className="text-sm text-foreground">{c.name}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-foreground">{c.ratio}</span>
-                        <Badge className="bg-green-500 text-white text-[10px] px-1.5 py-0">{c.level}</Badge>
-                      </div>
+                <Card>
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center gap-2">
+                      <BarChart3 className="h-5 w-5 text-primary" />
+                      <CardTitle className="text-foreground text-sm">{t("dashboard.summary.systemHealth")}</CardTitle>
                     </div>
-                  ))}
-                </div>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2">
+                      {[
+                        { label: t("dashboard.summary.propsCoverage"), value: "100%" },
+                        { label: t("dashboard.summary.docCoverage"), value: "100%" },
+                        { label: t("dashboard.summary.tsStrictness"), value: "100%" },
+                        { label: t("dashboard.summary.accessibility"), value: "98%" },
+                        { label: t("dashboard.summary.responsive"), value: "100%" },
+                        { label: t("dashboard.summary.dark"), value: "100%" },
+                      ].map((row) => (
+                        <li key={row.label} className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">{row.label}</span>
+                          <span className="text-green-600">{row.value}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            {/* Roadmap */}
+            <TabsContent value="roadmap" className="mt-4">
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="relative border-l border-primary/20 ml-4 space-y-8 py-2">
+                    <div className="relative pl-8">
+                      <div className="absolute -left-1.5 top-1.5 h-3 w-3 rounded-full border-2 border-primary bg-background" />
+                      <div className="mb-1 text-sm text-primary">{t("dashboard.roadmap.current")}</div>
+                      <h3 className="text-foreground">{t("dashboard.roadmap.performance")}</h3>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        {t("dashboard.roadmap.performanceDesc")}
+                      </p>
+                      <Badge variant="outline">{t("dashboard.roadmap.inProgress")}</Badge>
+                    </div>
+                    <div className="relative pl-8">
+                      <div className="absolute -left-1.5 top-1.5 h-3 w-3 rounded-full border-2 border-muted-foreground bg-background" />
+                      <div className="mb-1 text-sm text-muted-foreground">Q2 2026</div>
+                      <h3 className="text-foreground">{t("dashboard.roadmap.mobile")}</h3>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        {t("dashboard.roadmap.mobileDesc")}
+                      </p>
+                      <Badge variant="secondary">{t("dashboard.roadmap.planned")}</Badge>
+                    </div>
+                    <div className="relative pl-8">
+                      <div className="absolute -left-1.5 top-1.5 h-3 w-3 rounded-full border-2 border-muted-foreground bg-background" />
+                      <div className="mb-1 text-sm text-muted-foreground">Q3 2026</div>
+                      <h3 className="text-foreground">{t("dashboard.roadmap.theming")}</h3>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        {t("dashboard.roadmap.themingDesc")}
+                      </p>
+                      <Badge variant="secondary">{t("dashboard.roadmap.planned")}</Badge>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </section>
+
+        {/* WCAG Accessibility */}
+        <section>
+          <div className="flex items-center gap-3 mb-4">
+            <AccessibilityIcon className="h-5 w-5 text-green-500" />
+            <h2 className="text-lg text-foreground">{t("dashboard.wcag.title")}</h2>
+            <Badge className="bg-green-500 text-white">AA</Badge>
+          </div>
+
+          {/* Score Cards */}
+          <div className="grid grid-cols-3 gap-3 mb-5">
+            <Card className="border-green-500/20 bg-green-500/5">
+              <CardContent className="pt-4 pb-3 px-4">
+                <div className="text-xs text-muted-foreground mb-1">{t("dashboard.wcag.score")}</div>
+                <div className="text-2xl text-green-500 mb-1.5">98%</div>
+                <Progress value={98} className="h-1.5" />
               </CardContent>
             </Card>
-          </TabsContent>
-        </Tabs>
-      </section>
+            <Card>
+              <CardContent className="pt-4 pb-3 px-4">
+                <div className="text-xs text-muted-foreground mb-1">{t("dashboard.wcag.criteriaMet")}</div>
+                <div className="text-2xl text-foreground mb-1.5">18/18</div>
+                <p className="text-xs text-muted-foreground">100% {t("dashboard.wcag.ofCriteria")}</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="pt-4 pb-3 px-4">
+                <div className="text-xs text-muted-foreground mb-1">{t("dashboard.wcag.conformance")}</div>
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <CheckCircle2 className="h-5 w-5 text-green-500" />
+                  <span className="text-lg text-foreground">WCAG 2.1</span>
+                </div>
+                <p className="text-xs text-muted-foreground">Level AA</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* WCAG Details Tabs */}
+          <Tabs defaultValue="criteria" className="w-full">
+            <TabsList className="grid w-full grid-cols-3 max-w-lg">
+              <TabsTrigger value="criteria">{t("dashboard.wcag.tab.criteria")}</TabsTrigger>
+              <TabsTrigger value="features">{t("dashboard.wcag.tab.features")}</TabsTrigger>
+              <TabsTrigger value="contrast">{t("dashboard.wcag.tab.contrast")}</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="criteria" className="mt-4">
+              <div className="grid gap-3 grid-cols-2">
+                {[
+                  {
+                    title: t("dashboard.wcag.perceivable"),
+                    items: [
+                      { id: "1.1.1", name: "Text alternatives", level: "A" },
+                      { id: "1.3.1", name: "Info & relationships", level: "A" },
+                      { id: "1.4.1", name: "Use of color", level: "A" },
+                      { id: "1.4.3", name: "Contrast (min)", level: "AA" },
+                      { id: "1.4.11", name: "Non-text contrast", level: "AA" },
+                    ],
+                  },
+                  {
+                    title: t("dashboard.wcag.operable"),
+                    items: [
+                      { id: "2.1.1", name: "Keyboard", level: "A" },
+                      { id: "2.1.2", name: "No keyboard trap", level: "A" },
+                      { id: "2.4.1", name: "Bypass blocks", level: "A" },
+                      { id: "2.4.3", name: "Focus order", level: "A" },
+                      { id: "2.4.7", name: "Focus visible", level: "AA" },
+                    ],
+                  },
+                  {
+                    title: t("dashboard.wcag.understandable"),
+                    items: [
+                      { id: "3.1.1", name: "Language of page", level: "A" },
+                      { id: "3.2.1", name: "On focus", level: "A" },
+                      { id: "3.3.1", name: "Error identification", level: "A" },
+                      { id: "3.3.2", name: "Labels / instructions", level: "A" },
+                    ],
+                  },
+                  {
+                    title: t("dashboard.wcag.robust"),
+                    items: [
+                      { id: "4.1.1", name: "Parsing", level: "A" },
+                      { id: "4.1.2", name: "Name, role, value", level: "A" },
+                      { id: "4.1.3", name: "Status messages", level: "AA" },
+                    ],
+                  },
+                ].map((group) => (
+                  <Card key={group.title}>
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-sm text-foreground">{group.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-1.5">
+                        {group.items.map((item) => (
+                          <div key={item.id} className="flex items-center justify-between py-1.5 px-2 rounded bg-green-500/5">
+                            <div className="flex items-center gap-2">
+                              <CheckCircle2 className="h-3.5 w-3.5 text-green-500 shrink-0" />
+                              <span className="text-xs text-muted-foreground">{item.id}</span>
+                              <span className="text-sm text-foreground">{item.name}</span>
+                            </div>
+                            <Badge variant="outline" className="text-[10px] px-1.5 py-0">{item.level}</Badge>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="features" className="mt-4">
+              <div className="grid gap-3 grid-cols-2">
+                {[
+                  {
+                    title: t("dashboard.wcag.keyboardNav"),
+                    icon: Keyboard,
+                    items: ["Tab / Shift+Tab navigation", "Skip links", "Focus trap (modals)", "Escape to close", "Arrow keys (menus)"],
+                  },
+                  {
+                    title: t("dashboard.wcag.ariaAttrs"),
+                    icon: Eye,
+                    items: ["aria-label (navigation)", "aria-expanded (accordions)", "aria-selected (tabs)", "aria-live regions", "Semantic roles"],
+                  },
+                  {
+                    title: t("dashboard.wcag.colorContrast"),
+                    icon: Palette,
+                    items: ["Main text: 7.2:1 (AAA)", "Secondary text: 5.1:1 (AA)", "Primary: 7.22:1 (AAA)", "Buttons: 4.8:1 (AA)", "Borders: 3.2:1 (AA)"],
+                  },
+                  {
+                    title: t("dashboard.wcag.semanticHTML"),
+                    icon: Code2,
+                    items: ["<nav> for navigation", "<main> for content", "<aside> for sidebar", "Hierarchical headings (h1-h6)", "ARIA landmarks"],
+                  },
+                ].map((feature) => (
+                  <Card key={feature.title}>
+                    <CardHeader className="pb-2">
+                      <div className="flex items-center gap-2">
+                        <feature.icon className="h-4 w-4 text-primary" />
+                        <CardTitle className="text-sm text-foreground">{feature.title}</CardTitle>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-1.5">
+                        {feature.items.map((item) => (
+                          <div key={item} className="flex items-center gap-2 py-1">
+                            <CheckCircle2 className="h-3.5 w-3.5 text-green-500 shrink-0" />
+                            <span className="text-sm text-muted-foreground">{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="contrast" className="mt-4">
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm text-foreground">{t("dashboard.wcag.contrastRatios")}</CardTitle>
+                  <CardDescription>{t("dashboard.wcag.allColorsPass")}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {[
+                      { name: "Primary on Secondary", fg: "#00c951", bg: "#1C2D3A", ratio: "7.22:1", level: "AAA" },
+                      { name: "White on Secondary", fg: "#FFFFFF", bg: "#1C2D3A", ratio: "7.2:1", level: "AAA" },
+                      { name: "Muted Text", fg: "#A0AEC0", bg: "#FFFFFF", ratio: "5.1:1", level: "AA" },
+                      { name: "Border on Background", fg: "#E2E8F0", bg: "#FFFFFF", ratio: "3.2:1", level: "AA Large" },
+                    ].map((c) => (
+                      <div key={c.name} className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-1.5">
+                            <div className="w-5 h-5 rounded border" style={{ backgroundColor: c.fg }} />
+                            <span className="text-xs text-muted-foreground">on</span>
+                            <div className="w-5 h-5 rounded border" style={{ backgroundColor: c.bg }} />
+                          </div>
+                          <span className="text-sm text-foreground">{c.name}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-foreground">{c.ratio}</span>
+                          <Badge className="bg-green-500 text-white text-[10px] px-1.5 py-0">{c.level}</Badge>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </section>
+      </div>
 
       {/* ── Quality Bar ── */}
       <Card className="border-primary/20 bg-primary/5">

@@ -58,13 +58,78 @@ interface ThemeConfig {
 interface ThemeContextType {
   config: ThemeConfig;
   theme: "light" | "dark";
+  styleTheme: string;
+  availableStyleThemes: readonly StyleThemeOption[];
   updateConfig: (updates: Partial<ThemeConfig>) => void;
   resetToDefaults: () => void;
   exportConfig: () => string;
   importConfig: (jsonString: string) => void;
   applyPreset: (preset: string) => void;
   toggleTheme: () => void;
+  setStyleTheme: (themeId: string) => void;
 }
+
+/**
+ * Style Theme metadata — cada entrada corresponde a un CSS file
+ * en /styles/themes/. Eliminar un tema = borrar su CSS + quitar de aquí.
+ */
+export interface StyleThemeOption {
+  id: string;
+  name: string;
+  description: string;
+  icon: string; // emoji for simple UI
+}
+
+export const STYLE_THEMES: readonly StyleThemeOption[] = [
+  {
+    id: "default",
+    name: "CESIONBNK",
+    description: "Look original: Green + Dark Blue, bancario profesional",
+    icon: "🏦",
+  },
+  {
+    id: "premium",
+    name: "Premium",
+    description: "Inspirado en Linear/Vercel: zinc neutrals, bordes sutiles",
+    icon: "✨",
+  },
+  {
+    id: "glass",
+    name: "Glass",
+    description: "Glassmorphism: blur, transparencias, bordes luminosos",
+    icon: "🪟",
+  },
+  {
+    id: "minimal",
+    name: "Minimal",
+    description: "Ultra limpio: stone neutrals, casi sin bordes, flat",
+    icon: "◻️",
+  },
+  {
+    id: "tailwindpro",
+    name: "Tailwind Pro",
+    description: "Tailwind UI: slate neutrals, bordes crisp, ring focus, SaaS dashboard",
+    icon: "🎨",
+  },
+  {
+    id: "heroui",
+    name: "Hero UI Pro",
+    description: "HeroUI/NextUI: corners generosos, sombras soft, moderno premium",
+    icon: "🚀",
+  },
+  {
+    id: "soft",
+    name: "Soft",
+    description: "Pastel y acogedor: warm tones, super rounded, amigable",
+    icon: "🌸",
+  },
+  {
+    id: "highcontrast",
+    name: "High Contrast",
+    description: "WCAG AAA: contraste máximo, bordes gruesos, accesibilidad extrema",
+    icon: "♿",
+  },
+] as const;
 
 const defaultConfig: ThemeConfig = {
   primary: "#00c951",
@@ -189,6 +254,29 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     return savedTheme ? (savedTheme as "light" | "dark") : "light";
   });
 
+  /**
+   * Style Theme — controla el data-theme attribute en <html>.
+   * "default" = sin atributo (globals.css original, punto de restauración).
+   * Otros valores activan los CSS files en /styles/themes/.
+   */
+  const [styleTheme, setStyleThemeState] = useState<string>(() => {
+    return localStorage.getItem("style-theme") || "default";
+  });
+
+  // Apply style theme to DOM
+  useEffect(() => {
+    const root = document.documentElement;
+    if (styleTheme === "default") {
+      root.removeAttribute("data-theme");
+    } else {
+      root.setAttribute("data-theme", styleTheme);
+    }
+    localStorage.setItem("style-theme", styleTheme);
+    // Re-apply inline styles after data-theme attribute changes,
+    // so applyThemeToDOM sees the correct isStyled value
+    applyThemeToDOM(config, theme);
+  }, [styleTheme]);
+
   useEffect(() => {
     localStorage.setItem("theme-config", JSON.stringify(config));
     applyThemeToDOM(config, theme);
@@ -225,10 +313,14 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const applyThemeToDOM = (themeConfig: ThemeConfig, currentTheme: "light" | "dark") => {
     const root = document.documentElement;
 
+    // When a non-default style theme is active, only apply --primary, --ring,
+    // --font-size, font-weights, and input source vars inline.
+    // All other tokens come from the theme CSS file via cascade.
+    const isStyled = styleTheme !== "default";
+
     // ── Mode-independent: safe to always set inline ──
     root.style.setProperty("--primary", themeConfig.primary);
     root.style.setProperty("--primary-foreground", themeConfig.primaryForeground);
-    root.style.setProperty("--radius", themeConfig.radius);
     root.style.setProperty("--font-size", themeConfig.fontSize);
     root.style.setProperty("--font-weight-light", themeConfig.fontWeightLight);
     root.style.setProperty("--font-weight-normal", themeConfig.fontWeightNormal);
@@ -236,6 +328,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     root.style.setProperty("--font-weight-semibold", themeConfig.fontWeightSemibold);
     root.style.setProperty("--font-weight-bold", themeConfig.fontWeightBold);
     root.style.setProperty("--ring", themeConfig.focusRing);
+
+    // Radius: only set inline if default theme (styled themes control it via CSS)
+    if (!isStyled) {
+      root.style.setProperty("--radius", themeConfig.radius);
+    } else {
+      root.style.removeProperty("--radius");
+    }
 
     // Input SOURCE variables (CSS uses these with var() to derive actual values)
     root.style.setProperty("--input-background-light", themeConfig.inputBackgroundLight);
@@ -247,6 +346,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     // ── Mode-dependent: set in light, REMOVE in dark ──
     // These properties have different values in .dark {} (globals.css).
     // Inline styles would override .dark {}, breaking dark mode.
+    // When a style theme is active, ALSO remove in light mode so CSS cascade wins.
     const modeDependentProps = [
       ["--secondary", themeConfig.secondary],
       ["--secondary-foreground", themeConfig.secondaryForeground],
@@ -268,13 +368,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       ["--selection", themeConfig.selection],
     ] as const;
 
-    if (currentTheme === "light") {
-      // Light mode: set inline (overrides :root CSS defaults for customization)
+    if (currentTheme === "light" && !isStyled) {
+      // Light mode + default theme: set inline (overrides :root CSS defaults for customization)
       for (const [prop, value] of modeDependentProps) {
         root.style.setProperty(prop, value);
       }
     } else {
-      // Dark mode: REMOVE inline so CSS .dark {} takes effect
+      // Dark mode OR styled theme: REMOVE inline so CSS cascade takes effect
       for (const [prop] of modeDependentProps) {
         root.style.removeProperty(prop);
       }
@@ -309,6 +409,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const setStyleTheme = (themeId: string) => {
+    setStyleThemeState(themeId);
+  };
+
   const toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
@@ -318,12 +422,15 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       value={{
         config,
         theme,
+        styleTheme,
+        availableStyleThemes: STYLE_THEMES,
         updateConfig,
         resetToDefaults,
         exportConfig,
         importConfig,
         applyPreset,
         toggleTheme,
+        setStyleTheme,
       }}
     >
       {children}

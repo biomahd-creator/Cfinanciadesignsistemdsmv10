@@ -30,11 +30,11 @@ interface InvoiceCardProps {
 }
 
 const statusConfig = {
-  pending: { label: "Pendiente", color: "bg-yellow-100 text-yellow-800 border-yellow-200" },
-  approved: { label: "Aprobada", color: "bg-green-100 text-green-800 border-green-200" },
-  rejected: { label: "Rechazada", color: "bg-red-100 text-red-800 border-red-200" },
-  paid: { label: "Pagada", color: "bg-blue-100 text-blue-800 border-blue-200" },
-  overdue: { label: "Vencida", color: "bg-orange-100 text-orange-800 border-orange-200" },
+  pending: { label: "Pendiente", variant: "warning-soft-outline" as const },
+  approved: { label: "Aprobada", variant: "success-soft-outline" as const },
+  rejected: { label: "Rechazada", variant: "destructive-soft-outline" as const },
+  paid: { label: "Pagada", variant: "info-soft-outline" as const },
+  overdue: { label: "Vencida", variant: "destructive-soft-outline" as const },
 };
 
 export function InvoiceCard({ invoice, className, onAction }: InvoiceCardProps) {
@@ -57,8 +57,7 @@ export function InvoiceCard({ invoice, className, onAction }: InvoiceCardProps) 
         </div>
         <div className="flex items-start gap-2">
           <Badge 
-            variant="outline" 
-            className={cn("font-medium border", statusConfig[invoice.status].color)}
+            variant={statusConfig[invoice.status].variant}
           >
             {statusConfig[invoice.status].label}
           </Badge>
